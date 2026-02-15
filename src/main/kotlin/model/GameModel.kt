@@ -8,17 +8,20 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
 import com.redpup.justsendit.util.TextProtoReaderImpl
 
 /** Top level joined game model state. */
-class GameModel {
+class GameModel(
+  private val tilesPath: String = "src/main/resources/model/board/tile/tiles.textproto",
+  private val locationsPath: String = "src/main/resources/model/board/tile/tile_locations.textproto",
+) {
   val tileMap: HexGrid<MountainTile> by lazy {
     constructMap(
       TextProtoReaderImpl(
-        "src/main/resources/model/board/tile/tiles.textproto",
+        tilesPath,
         MountainTileList::newBuilder,
         MountainTileList.Builder::getTilesList,
         shuffle = true
       ),
       TextProtoReaderImpl(
-        "src/main/resources/model/board/tile/tile_locations.textproto",
+        locationsPath,
         MountainTileLocationList::newBuilder,
         MountainTileLocationList.Builder::getLocationList
       ),
