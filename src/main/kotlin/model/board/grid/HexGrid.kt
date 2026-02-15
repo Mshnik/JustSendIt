@@ -1,5 +1,7 @@
 package com.redpup.justsendit.model.board.grid
 
+import com.redpup.justsendit.model.board.grid.HexExtensions.toX
+import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 
 /**
@@ -39,10 +41,19 @@ class HexGrid<T> : Iterable<Pair<HexPoint, T>> {
   override fun iterator(): Iterator<Pair<HexPoint, T>> =
     cells.asSequence().map { Pair(it.key, it.value) }.iterator()
 
-  /** Returns the height of the grid in hexes. */
-  fun height(): Double =
-    if (keys().isEmpty()) 0.0 else 1 + keys().maxOf { it.r + it.q / 2.0 } - keys().minOf { it.r + it.q / 2.0 }
+  /** Returns the 2d x,y grid bounds of this hex grid. */
+  fun bounds(): Bounds {
+    if (keys().isEmpty()) {
+      return Bounds(0.0, 0.0, 0.0, 0.0)
+    } else {
+      return Bounds(keys().minOf { it.toX() }, keys().minOf { it.toY() },
+                    keys().maxOf { it.toX() }, keys().maxOf { it.toY() })
+    }
+  }
+}
 
-  /** Returns the width of the grid in hexes. */
-  fun width(): Int = if (keys().isEmpty()) 0 else 1 + keys().maxOf { it.q } - keys().minOf { it.q }
+/** 2D x,y bounds of a grid. */
+data class Bounds(val minX: Double, val minY: Double, val maxX: Double, val maxY: Double) {
+  val height = maxY - minY + 1.0
+  val width = maxX - minX + 1.0
 }

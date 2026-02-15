@@ -4,6 +4,7 @@ import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 /** Extensions on hex protos. */
 object HexExtensions {
@@ -58,4 +59,12 @@ object HexExtensions {
         + abs(r - other.r)
       ) / 2
   }
+
+  /** Converts this hex point to x in x,y space. */
+  fun HexPoint.toX() = q * 1.5
+
+  private val SQRT_3 = sqrt(3.0)
+
+  /** Converts this hex point to y in x,y space. */
+  fun HexPoint.toY() = (r + q / 2.0) * SQRT_3
 }

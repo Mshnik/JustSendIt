@@ -1,5 +1,8 @@
 package com.redpup.justsendit.view.board
 
+import com.redpup.justsendit.model.board.grid.Bounds
+import com.redpup.justsendit.model.board.grid.HexExtensions.toX
+import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.tile.TileMap.toMap
 import com.redpup.justsendit.model.board.tile.TileReaderImpl
@@ -16,22 +19,24 @@ import javafx.stage.Stage
 import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
-import kotlin.math.sqrt
 
 class HexGridViewer : Application() {
   private val hexSize = 60.0 // Radius from center to corner
+  private val margin = 60.0 // Extra space on sides.
   private lateinit var tileMap: HexGrid<MountainTile>
+  private lateinit var bounds: Bounds
 
   override fun init() {
     tileMap = TileReaderImpl(
       "src/main/resources/model/board/tile/tiles.textproto",
       "src/main/resources/model/board/tile/tile_locations.textproto"
     ).toMap()
+    bounds = tileMap.bounds()
   }
 
   override fun start(stage: Stage) {
-    val canvas =
-      Canvas((tileMap.width() + 1) * hexSize * 1.5, (tileMap.height() + 1) * hexSize * sqrt(3.0))
+    println("Creating canvas with bounds ${bounds.width * hexSize}, ${bounds.height * hexSize}")
+    val canvas = Canvas(bounds.width * hexSize + margin, bounds.height * hexSize + margin)
     val gc = canvas.graphicsContext2D
     drawGrid(gc)
 
@@ -41,13 +46,10 @@ class HexGridViewer : Application() {
   }
 
   private fun drawGrid(gc: GraphicsContext) {
-    val offsetX = 100.0
-    val offsetY = 100.0
-
     tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
-      val x = hexSize * 1.5 * pt.q + offsetX
-      val y = hexSize * sqrt(3.0) * (pt.r + pt.q / 2.0) + offsetY
+      val x = hexSize * pt.toX() + margin - (bounds.minX - hexSize * 1.5)
+      val y = hexSize * pt.toY() + margin - bounds.minY
 
       val tile = tileMap[pt]!!
       drawHexagon(gc, x, y, tile.slope)

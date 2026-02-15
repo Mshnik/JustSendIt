@@ -1,6 +1,7 @@
 # proto-file: model/board/tile/tile_location.proto
-# proto-message: TileLocationList
+# proto-message: MountainTileLocationList
 
+# Middle Column
 location {
   point {
     q: 0
@@ -58,3 +59,46 @@ location {
   apres_link: 2
 }
 
+# Left-1 Column
+location {
+  point {
+    q: -1
+    r: 1
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -1
+    r: 2
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -1
+    r: 3
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -1
+    r: 4
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -1
+    r: 5
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -1
+    r: 6
+  }
+  grade: GRADE_GREEN
+}
