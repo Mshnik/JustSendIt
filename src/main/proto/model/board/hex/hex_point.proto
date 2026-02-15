@@ -1,0 +1,23 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.board.hex;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.board.hex.proto";
+
+/** Location in hexagonal space. */
+message HexPoint {
+  int32 q = 1;
+  int32 r = 2;
+}
+
+/** Directions of travel in a hex grid. */
+enum HexDirection {
+  HEX_DIRECTION_UNSET = 0;
+  HEX_DIRECTION_NORTH = 1;
+  HEX_DIRECTION_NORTH_EAST = 2;
+  HEX_DIRECTION_SOUTH_EAST = 3;
+  HEX_DIRECTION_SOUTH = 4;
+  HEX_DIRECTION_SOUTH_WEST = 5;
+  HEX_DIRECTION_NORTH_WEST = 6;
+}

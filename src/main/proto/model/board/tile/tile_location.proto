@@ -1,0 +1,26 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.board.tile;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.board.tile.proto";
+
+import "model/board/hex/hex_point.proto";
+import "model/board/tile/slope.proto";
+import "model/board/tile/lift.proto";
+
+/** A tile location on the mountain and what kind of tile is allowed to be there. */
+message MountainTileLocation {
+  hex.HexPoint point = 1;
+  // What is present at the given location. One case must be set.
+  oneof content {
+    Grade grade = 2;
+    LiftTile lift = 3;
+  }
+  int32 apres_link = 4;
+}
+
+/** List of tile locations that make up the mountain.  */
+message MountainTileLocationList {
+  repeated MountainTileLocation location = 1;
+}

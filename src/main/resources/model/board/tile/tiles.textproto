@@ -1,0 +1,820 @@
+# proto-file: model/board/tile/tile.proto
+# proto-message: MountainTileList
+
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 1
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_ICY
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_ICY
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLUE
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+  }
+}
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 13
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 13
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 13
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 13
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_CLIFFS
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_CLIFFS
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICY
+  }
+}
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+  }
+}
+tiles {
+  slope {
+    difficulty: 15
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 15
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 15
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+  }
+}
+tiles {
+  slope {
+    difficulty: 16
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 16
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+  }
+}
+tiles {
+  slope {
+    difficulty: 17
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_CLIFFS
+  }
+}
+tiles {
+  slope {
+    difficulty: 17
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICY
+    hazards: HAZARD_CLIFFS
+  }
+}
+tiles {
+  slope {
+    difficulty: 18
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_CLIFFS
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_GREY
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_PURPLE
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+  apres_link: 1
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_GREY
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+  apres_link: 2
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_PURPLE
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+  apres_link: 3
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+}
+tiles {
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+}

@@ -1,5 +1,7 @@
 package com.redpup.justsendit.model.board.grid
 
+import com.redpup.justsendit.model.board.hex.proto.HexPoint
+
 /**
  * A generic hexagonal grid that stores elements of type T.
  * The grid grows dynamically as elements are added.

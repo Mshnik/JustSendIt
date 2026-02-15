@@ -1,19 +1,21 @@
 package com.redpup.justsendit
 
-import com.redpup.justsendit.model.board.grid.HexDirection
+import com.redpup.justsendit.model.board.grid.HexExtensions.neighbor
 import com.redpup.justsendit.model.board.grid.HexGrid
-import com.redpup.justsendit.model.board.grid.HexPoint
+import com.redpup.justsendit.model.board.hex.proto.HexDirection.HEX_DIRECTION_NORTH_EAST
+import com.redpup.justsendit.model.board.hex.proto.HexDirection.HEX_DIRECTION_SOUTH
+import com.redpup.justsendit.model.board.hex.proto.hexPoint
 
 /**
  *
  */
 fun main() {
   val grid = HexGrid<String>()
-  val start = HexPoint(0, 0)
+  val start = hexPoint {}
 
   // Setting values
   grid[start] = "Town Center"
-  val neighbor = start.neighbor(HexDirection.NORTH_EAST)
+  val neighbor = start.neighbor(HEX_DIRECTION_NORTH_EAST)
   grid[neighbor] = "Forest"
 
   // Getting values
@@ -23,7 +25,7 @@ fun main() {
   // Moving around
   var current = start
   repeat(3) {
-    current = current.neighbor(HexDirection.SOUTH)
+    current = current.neighbor(HEX_DIRECTION_SOUTH)
     grid[current] = "Path segment"
   }
 }

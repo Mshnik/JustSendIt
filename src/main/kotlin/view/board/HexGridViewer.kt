@@ -1,8 +1,11 @@
 package com.redpup.justsendit.view.board
 
 import com.redpup.justsendit.model.board.grid.HexGrid
-import com.redpup.justsendit.model.board.grid.HexPoint
-import com.redpup.justsendit.model.board.tile.proto.*
+import com.redpup.justsendit.model.board.tile.TileMap.toMap
+import com.redpup.justsendit.model.board.tile.TileReaderImpl
+import com.redpup.justsendit.model.board.tile.proto.Grade
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
+import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
@@ -17,11 +20,16 @@ import kotlin.math.sqrt
 
 class HexGridViewer : Application() {
   private val hexSize = 60.0 // Radius from center to corner
-  private val grid = HexGrid<MountainTile>()
+  private lateinit var tileMap: HexGrid<MountainTile>
+
+  override fun init() {
+    tileMap = TileReaderImpl(
+      "src/main/resources/model/board/tile/tiles.textproto",
+      "src/main/resources/model/board/tile/tile_locations.textproto"
+    ).toMap()
+  }
 
   override fun start(stage: Stage) {
-    setupMockData()
-
     val canvas = Canvas(800.0, 600.0)
     val gc = canvas.graphicsContext2D
     drawGrid(gc)
@@ -35,12 +43,12 @@ class HexGridViewer : Application() {
     val offsetX = 100.0
     val offsetY = 100.0
 
-    grid.getAllPoints().forEach { pt ->
+    tileMap.getAllPoints().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
       val x = hexSize * 1.5 * pt.q + offsetX
       val y = hexSize * sqrt(3.0) * (pt.r + pt.q / 2.0) + offsetY
 
-      val tile = grid[pt]!!
+      val tile = tileMap[pt]!!
       drawHexagon(gc, x, y, tile.slope)
     }
   }
@@ -92,41 +100,6 @@ class HexGridViewer : Application() {
       doubleArrayOf(cx, cx + 10, cx, cx - 10),
       doubleArrayOf(cy - 10, cy, cy + 10, cy), 4
     )
-  }
-
-  private fun setupMockData() {
-    grid[HexPoint(0, 0)] = mountainTile {
-      slope = slopeTile {
-        difficulty = 1
-        grade = Grade.GRADE_GREEN
-        condition = Condition.CONDITION_GROOMED
-      }
-    }
-    grid[HexPoint(1, 0)] = mountainTile {
-      slope = slopeTile {
-        difficulty = 3
-        grade = Grade.GRADE_BLUE
-        condition = Condition.CONDITION_POWDER
-        hazards += Hazard.HAZARD_TREES
-      }
-    }
-    grid[HexPoint(0, 1)] = mountainTile {
-      slope = slopeTile {
-        difficulty = 5
-        grade = Grade.GRADE_BLACK
-        condition = Condition.CONDITION_ICY
-        hazards += Hazard.HAZARD_MOGULS
-      }
-    }
-    grid[HexPoint(1, -1)] = mountainTile {
-      slope = slopeTile {
-        difficulty = 9
-        grade = Grade.GRADE_DOUBLE_BLACK
-        condition = Condition.CONDITION_POWDER
-        hazards += Hazard.HAZARD_CLIFFS
-        hazards += Hazard.HAZARD_MOGULS
-      }
-    }
   }
 }
 
