@@ -30,7 +30,8 @@ class HexGridViewer : Application() {
   }
 
   override fun start(stage: Stage) {
-    val canvas = Canvas(800.0, 600.0)
+    val canvas =
+      Canvas((tileMap.width() + 1) * hexSize * 1.5, (tileMap.height() + 1) * hexSize * sqrt(3.0))
     val gc = canvas.graphicsContext2D
     drawGrid(gc)
 
@@ -43,7 +44,7 @@ class HexGridViewer : Application() {
     val offsetX = 100.0
     val offsetY = 100.0
 
-    tileMap.getAllPoints().forEach { pt ->
+    tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
       val x = hexSize * 1.5 * pt.q + offsetX
       val y = hexSize * sqrt(3.0) * (pt.r + pt.q / 2.0) + offsetY
@@ -97,8 +98,7 @@ class HexGridViewer : Application() {
   private fun drawDiamond(gc: GraphicsContext, cx: Double, cy: Double, color: Color) {
     gc.fill = color
     gc.fillPolygon(
-      doubleArrayOf(cx, cx + 10, cx, cx - 10),
-      doubleArrayOf(cy - 10, cy, cy + 10, cy), 4
+      doubleArrayOf(cx, cx + 10, cx, cx - 10), doubleArrayOf(cy - 10, cy, cy + 10, cy), 4
     )
   }
 }

@@ -30,12 +30,19 @@ class HexGrid<T> : Iterable<Pair<HexPoint, T>> {
   fun contains(point: HexPoint): Boolean = cells.containsKey(point)
 
   /** Returns all points currently stored in the grid. */
-  fun getAllPoints(): Set<HexPoint> = cells.keys
+  fun keys(): Set<HexPoint> = cells.keys
 
   /** Returns all values currently stored in the grid. */
-  fun getAllValues(): Collection<T> = cells.values
+  fun values(): Collection<T> = cells.values
 
   /** Returns iterable access to this board. */
   override fun iterator(): Iterator<Pair<HexPoint, T>> =
     cells.asSequence().map { Pair(it.key, it.value) }.iterator()
+
+  /** Returns the height of the grid in hexes. */
+  fun height(): Double =
+    if (keys().isEmpty()) 0.0 else 1 + keys().maxOf { it.r + it.q / 2.0 } - keys().minOf { it.r + it.q / 2.0 }
+
+  /** Returns the width of the grid in hexes. */
+  fun width(): Int = if (keys().isEmpty()) 0 else 1 + keys().maxOf { it.q } - keys().minOf { it.q }
 }
