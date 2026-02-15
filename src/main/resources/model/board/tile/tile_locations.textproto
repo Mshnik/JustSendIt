@@ -142,3 +142,138 @@ location {
     direction: LIFT_DIRECTION_BOTTOM
   }
 }
+
+# Left-3 Column
+location {
+  point {
+    q: -3
+    r: 3
+  }
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+location {
+  point {
+    q: -3
+    r: 4
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -3
+    r: 5
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -3
+    r: 6
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -3
+    r: 7
+  }
+  grade: GRADE_BLUE
+}
+
+# Left-4 Column
+location {
+  point {
+    q: -4
+    r: 3
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -4
+    r: 4
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -4
+    r: 5
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -4
+    r: 6
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -4
+    r: 7
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: -4
+    r: 8
+  }
+  lift {
+    color: LIFT_COLOR_PURPLE
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+  apres_link: 1
+}
+
+# Left-5 Column
+location {
+  point {
+    q: -5
+    r: 3
+  }
+  lift {
+    color: LIFT_COLOR_PURPLE
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+location {
+  point {
+    q: -5
+    r: 4
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: -5
+    r: 5
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: -5
+    r: 6
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: -5
+    r: 7
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: -5
+    r: 8
+  }
+  grade: GRADE_DOUBLE_BLACK
+}
