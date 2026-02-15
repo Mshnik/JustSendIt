@@ -277,3 +277,222 @@ location {
   }
   grade: GRADE_DOUBLE_BLACK
 }
+
+# Right-1 Column
+location {
+  point {
+    q: 1
+    r: 0
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: 1
+    r: 1
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: 1
+    r: 2
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: 1
+    r: 3
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: 1
+    r: 4
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: 1
+    r: 5
+  }
+  grade: GRADE_GREEN
+}
+
+# Right-2 Column
+location {
+  point {
+    q: 2
+    r: 0
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: 2
+    r: 1
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: 2
+    r: 2
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 2
+    r: 3
+  }
+  grade: GRADE_BLUE
+}
+location {
+  point {
+    q: 2
+    r: 4
+  }
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+}
+
+# Right-3 Column
+location {
+  point {
+    q: 3
+    r: 0
+  }
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+location {
+  point {
+    q: 3
+    r: 1
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 3
+    r: 2
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 3
+    r: 3
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 3
+    r: 4
+  }
+  grade: GRADE_BLUE
+}
+
+# Right-4 Column
+location {
+  point {
+    q: 4
+    r: -1
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 4
+    r: 0
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 4
+    r: 1
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 4
+    r: 2
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 4
+    r: 3
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 4
+    r: 4
+  }
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+  apres_link: 3
+}
+
+# Right-5 Column
+location {
+  point {
+    q: 5
+    r: -2
+  }
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_TOP
+  }
+}
+location {
+  point {
+    q: 5
+    r: -1
+  }
+  grade: GRADE_BLACK
+}
+location {
+  point {
+    q: 5
+    r: 0
+  }
+  grade: GRADE_DOUBLE_BLACK
+}
+location {
+  point {
+    q: 5
+    r: 1
+  }
+  grade: GRADE_DOUBLE_BLACK
+}
+location {
+  point {
+    q: 5
+    r: 2
+  }
+  grade: GRADE_DOUBLE_BLACK
+}
+location {
+  point {
+    q: 5
+    r: 3
+  }
+  grade: GRADE_BLACK
+}
