@@ -1,11 +1,9 @@
 package com.redpup.justsendit.view.board
 
+import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.Bounds
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
-import com.redpup.justsendit.model.board.grid.HexGrid
-import com.redpup.justsendit.model.board.tile.TileMap.toMap
-import com.redpup.justsendit.model.board.tile.TileReaderImpl
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.proto.Grade
 import javafx.application.Application
@@ -22,15 +20,12 @@ import kotlin.math.sin
 class HexGridViewer : Application() {
   private val hexSize = 60.0 // Radius from center to corner
   private val margin = 60.0 // Extra space on sides.
-  private lateinit var tileMap: HexGrid<MountainTile>
+  private lateinit var gameModel: GameModel
   private lateinit var bounds: Bounds
 
   override fun init() {
-    tileMap = TileReaderImpl(
-      "src/main/resources/model/board/tile/tiles.textproto",
-      "src/main/resources/model/board/tile/tile_locations.textproto"
-    ).toMap()
-    bounds = tileMap.bounds()
+    gameModel = GameModel()
+    bounds = gameModel.tileMap.bounds()
   }
 
   override fun start(stage: Stage) {
@@ -44,12 +39,12 @@ class HexGridViewer : Application() {
   }
 
   private fun drawGrid(gc: GraphicsContext) {
-    tileMap.keys().forEach { pt ->
+    gameModel.tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
       val x = hexSize * (pt.toX() - bounds.minX) + margin
       val y = hexSize * (pt.toY() - bounds.minY) + margin
 
-      tileMap[pt]!!.draw(gc, x, y)
+      gameModel.tileMap[pt]!!.draw(gc, x, y)
     }
   }
 
