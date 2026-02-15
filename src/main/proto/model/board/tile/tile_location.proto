@@ -17,7 +17,6 @@ message MountainTileLocation {
     Grade grade = 2;
     LiftTile lift = 3;
   }
-  int32 apres_link = 4;
 }
 
 /** List of tile locations that make up the mountain.  */

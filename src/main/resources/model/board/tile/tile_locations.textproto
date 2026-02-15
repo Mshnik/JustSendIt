@@ -56,7 +56,6 @@ location {
     direction: LIFT_DIRECTION_BOTTOM
     color: LIFT_COLOR_GREY
   }
-  apres_link: 2
 }
 
 # Left-1 Column
@@ -228,7 +227,6 @@ location {
     color: LIFT_COLOR_PURPLE
     direction: LIFT_DIRECTION_BOTTOM
   }
-  apres_link: 1
 }
 
 # Left-5 Column
@@ -447,7 +445,6 @@ location {
     color: LIFT_COLOR_YELLOW
     direction: LIFT_DIRECTION_BOTTOM
   }
-  apres_link: 3
 }
 
 # Right-5 Column

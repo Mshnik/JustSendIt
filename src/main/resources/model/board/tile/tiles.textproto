@@ -790,7 +790,7 @@ tiles {
     color: LIFT_COLOR_YELLOW
     direction: LIFT_DIRECTION_BOTTOM
   }
-  apres_link: 1
+  apres_link: 3
 }
 tiles {
   lift {
@@ -804,7 +804,7 @@ tiles {
     color: LIFT_COLOR_PURPLE
     direction: LIFT_DIRECTION_BOTTOM
   }
-  apres_link: 3
+  apres_link: 1
 }
 tiles {
   lift {

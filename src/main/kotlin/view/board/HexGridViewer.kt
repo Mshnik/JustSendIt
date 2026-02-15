@@ -65,20 +65,29 @@ class HexGridViewer : Application() {
       MountainTile.TileCase.LIFT -> lift.draw(gc, cx, cy)
       MountainTile.TileCase.TILE_NOT_SET -> {}
     }
+
+    if (apresLink > 0) {
+      gc.drawCircledText(cx, cy + 20, Color.MEDIUMPURPLE, apresLink.toString())
+    }
   }
 
   private fun SlopeTile.draw(gc: GraphicsContext, cx: Double, cy: Double) {
     // 2. Draw Grade Symbol (Top)
     when (grade) {
       Grade.GRADE_GREEN -> {
-        gc.fill = Color.GREEN; gc.fillOval(cx - 10, cy - 40, 20.0, 20.0)
+        gc.fill = Color.GREEN
+        gc.fillOval(cx - 10, cy - 40, 20.0, 20.0)
       }
 
       Grade.GRADE_BLUE -> {
-        gc.fill = Color.BLUE; gc.fillRect(cx - 10, cy - 40, 20.0, 20.0)
+        gc.fill = Color.BLUE
+        gc.fillRect(cx - 10, cy - 40, 20.0, 20.0)
       }
 
-      Grade.GRADE_BLACK -> gc.drawDiamond(cx, cy - 30, Color.BLACK)
+      Grade.GRADE_BLACK -> {
+        gc.drawDiamond(cx, cy - 30, Color.BLACK)
+      }
+
       Grade.GRADE_DOUBLE_BLACK -> {
         gc.drawDiamond(cx - 12, cy - 30, Color.BLACK)
         gc.drawDiamond(cx + 12, cy - 30, Color.BLACK)
@@ -136,6 +145,13 @@ class HexGridViewer : Application() {
     fillPolygon(
       doubleArrayOf(cx - 15, cx, cx + 15), doubleArrayOf(cy, cy - 20 * yInvert, cy), 3
     )
+  }
+
+  private fun GraphicsContext.drawCircledText(cx: Double, cy: Double, color: Color, text: String) {
+    fill = color
+    stroke = color
+    strokeOval(cx-10, cy-10, 20.0, 20.0)
+    fillText(text, cx-5, cy+5)
   }
 }
 
