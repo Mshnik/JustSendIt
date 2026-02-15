@@ -1,4 +1,6 @@
-package com.redpup.justsendit.model.board
+package com.redpup.justsendit.model.board.grid
+
+import kotlin.math.abs
 
 /**
  * Represents a point in a 2D hexagonal grid using Axial Coordinates (q, r).
@@ -10,6 +12,17 @@ data class HexPoint(val q: Int, val r: Int) {
    */
   fun neighbor(direction: HexDirection): HexPoint {
     return HexPoint(q + direction.dq, r + direction.dr)
+  }
+
+  /**
+   * Calculates the Manhattan-style distance between two hexes.
+   */
+  fun distanceTo(other: HexPoint): Int {
+    return (
+      abs(q - other.q)
+        + abs(q + r - other.q - other.r)
+        + abs(r - other.r)
+      ) / 2
   }
 }
 

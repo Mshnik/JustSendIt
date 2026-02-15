@@ -1,0 +1,29 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.board.tile;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.board.tile.proto";
+
+/** Colors of lift tiles. */
+enum LiftColor {
+  LIFT_COLOR_UNSET = 0;
+  LIFT_COLOR_CYAN = 1;
+  LIFT_COLOR_RED = 2;
+  LIFT_COLOR_YELLOW = 3;
+  LIFT_COLOR_PURPLE = 4;
+  LIFT_COLOR_GREY = 5;
+}
+
+/** Pieces of a lift tile. */
+enum LiftDirection {
+  LIFT_DIRECTION_UNSET = 0;
+  LIFT_DIRECTION_BOTTOM = 1;
+  LIFT_DIRECTION_TOP = 2;
+}
+
+/** Description of a lift tile on the mountain. */
+message LiftTile {
+  LiftColor color = 1;
+  LiftDirection direction = 2;
+}

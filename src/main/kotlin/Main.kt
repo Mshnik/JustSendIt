@@ -1,8 +1,8 @@
 package com.redpup.justsendit
 
-import com.redpup.justsendit.model.board.HexDirection
-import com.redpup.justsendit.model.board.HexGrid
-import com.redpup.justsendit.model.board.HexPoint
+import com.redpup.justsendit.model.board.grid.HexDirection
+import com.redpup.justsendit.model.board.grid.HexGrid
+import com.redpup.justsendit.model.board.grid.HexPoint
 
 /**
  *

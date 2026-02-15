@@ -1,0 +1,41 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.board.tile;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.board.tile.proto";
+
+/** Difficulty grades of a ski trail. */
+enum Grade {
+  GRADE_UNSET = 0;
+  GRADE_GREEN = 1;
+  GRADE_BLUE = 2;
+  GRADE_BLACK = 3;
+  GRADE_DOUBLE_BLACK = 4;
+}
+
+/** Snow conditions of a ski trail. */
+enum Condition {
+  CONDITION_UNSET = 0;
+  CONDITION_GROOMED = 1;
+  CONDITION_POWDER = 2;
+  CONDITION_ICY = 3;
+}
+
+/** Types of hazards found on a ski trail. */
+enum Hazard {
+  HAZARD_UNSET = 0;
+  HAZARD_MOGULS = 1;
+  HAZARD_TREES = 2;
+  HAZARD_CLIFFS = 3;
+}
+
+/** Parameters for a slope tile on the board. */
+message SlopeTile {
+  // Difficulty of the slope - must be positive.
+  int32 difficulty = 1;
+  Grade grade = 2;
+  Condition condition = 3;
+  repeated Hazard hazards = 4;
+  bool slow = 5;
+}

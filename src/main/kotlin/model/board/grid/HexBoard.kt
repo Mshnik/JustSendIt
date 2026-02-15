@@ -1,4 +1,4 @@
-package com.redpup.justsendit.model.board
+package com.redpup.justsendit.model.board.grid
 
 /**
  * A generic hexagonal grid that stores elements of type T.
