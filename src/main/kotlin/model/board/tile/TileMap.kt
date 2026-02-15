@@ -12,7 +12,7 @@ object TileMap {
     val grid = HexGrid<MountainTile>()
     val slopesByGrade =
       getTilesList().filter { it.hasSlope() }.groupBy { it.slope.grade }
-        .mapValues { it.value.toMutableList() }
+        .mapValues { it.value.shuffled().toMutableList() }
     val liftsByColorAndDirection =
       getTilesList().filter { it.hasLift() }
         .groupBy { Pair(it.lift.color, it.lift.direction) }
@@ -24,10 +24,8 @@ object TileMap {
 
     /** Picks, returns, and removes a random tile matching [location]'s specifications. */
     fun pickTile(location: MountainTileLocation): MountainTile = when (location.contentCase) {
-      MountainTileLocation.ContentCase.GRADE -> {
-        val gradeList = slopesByGrade[location.grade] ?: throw IllegalArgumentException()
-        gradeList.removeAt(gradeList.indices.random())
-      }
+      MountainTileLocation.ContentCase.GRADE -> slopesByGrade[location.grade]?.removeFirst()
+        ?: throw IllegalArgumentException("No slope tile found with grade ${location.grade} in $slopesByGrade")
 
       MountainTileLocation.ContentCase.LIFT -> liftsByColorAndDirection.remove(
         Pair(

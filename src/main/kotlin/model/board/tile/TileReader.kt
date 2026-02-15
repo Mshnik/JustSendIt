@@ -25,7 +25,7 @@ class TileReaderImpl(
   private val tiles: List<MountainTile> by lazy {
     val builder = MountainTileList.newBuilder()
     TextFormat.merge(Files.readString(Path.of(tilesPath)), builder)
-    builder.build().tilesList
+    builder.build().tilesList.shuffled()
   }
 
   private val tileLocations: List<MountainTileLocation> by lazy {
