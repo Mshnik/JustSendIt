@@ -102,3 +102,43 @@ location {
   }
   grade: GRADE_GREEN
 }
+
+# Left-2 Column
+location {
+  point {
+    q: -2
+    r: 2
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -2
+    r: 3
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -2
+    r: 4
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -2
+    r: 5
+  }
+  grade: GRADE_GREEN
+}
+location {
+  point {
+    q: -2
+    r: 6
+  }
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+}

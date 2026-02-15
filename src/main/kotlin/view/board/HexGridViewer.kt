@@ -48,8 +48,8 @@ class HexGridViewer : Application() {
   private fun drawGrid(gc: GraphicsContext) {
     tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
-      val x = hexSize * pt.toX() + margin - (bounds.minX - hexSize * 1.5)
-      val y = hexSize * pt.toY() + margin - bounds.minY
+      val x = hexSize * (pt.toX() - bounds.minX) + margin
+      val y = hexSize * (pt.toY() - bounds.minY) + margin
 
       val tile = tileMap[pt]!!
       drawHexagon(gc, x, y, tile.slope)
