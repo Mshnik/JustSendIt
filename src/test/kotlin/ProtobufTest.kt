@@ -25,8 +25,5 @@ class ProtobufTest {
     // Verify both produce the same underlying data
     assertEquals(expectedValue, javaMessage.value)
     assertEquals(javaMessage, kotlinMessage)
-
-    println("Protobuf Java Value: ${javaMessage.value}")
-    println("Protobuf Kotlin Value: ${kotlinMessage.value}")
   }
 }
