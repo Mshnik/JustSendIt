@@ -8,6 +8,7 @@ option java_package = "com.redpup.justsendit.model.board.tile.proto";
 import "model/board/hex/hex_point.proto";
 import "model/board/tile/slope.proto";
 import "model/board/tile/lift.proto";
+import "model/grade.proto";
 
 /** A tile location on the mountain and what kind of tile is allowed to be there. */
 message MountainTileLocation {

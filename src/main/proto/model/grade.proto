@@ -1,0 +1,15 @@
+edition = "2023";
+
+package com.redpup.justsendit.model;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.proto";
+
+/** Difficulty grades of a ski trail or skill card. */
+enum Grade {
+  GRADE_UNSET = 0;
+  GRADE_GREEN = 1;
+  GRADE_BLUE = 2;
+  GRADE_BLACK = 3;
+  GRADE_DOUBLE_BLACK = 4;
+}

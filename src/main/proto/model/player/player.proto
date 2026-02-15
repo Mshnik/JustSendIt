@@ -1,0 +1,39 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.player;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.player.proto";
+
+import "model/grade.proto";
+import "model/board/tile/slope.proto";
+
+message PlayerCard {
+  string name = 1;
+  repeated Grade small_upgrade = 2;
+  repeated Grade large_upgrade = 3;
+  PlayerTraining training = 4;
+  repeated Ability abilities = 5;
+}
+
+/** Training this player can invest in. */
+message PlayerTraining {
+  /** A single type of training this player can do. */
+  message Training {
+    oneof type {
+      Grade grade = 1;
+      model.board.tile.Condition condition = 2;
+      model.board.tile.Hazard hazard = 3;
+    }
+    int32 value = 4;
+  }
+
+  repeated Training training = 1;
+}
+
+/** A player's unique ability. */
+message Ability {
+  string name = 1;
+  int32 cost = 2;
+  string text = 3;
+}

@@ -1,9 +1,25 @@
 package com.redpup.justsendit.model.supply
 
-import com.redpup.justsendit.model.board.tile.proto.Grade
+import com.redpup.justsendit.model.proto.Grade
+
+/** Access to skill decks in the supply. */
+interface SkillDecks {
+  /** Draws the top card of the given grade. */
+  fun draw(grade: Grade): Int
+
+  /** Converts an integer to the grade of deck it was drawn from. */
+  fun Int.getSkillGrade() {
+    when (this) {
+      in 1..3 -> Grade.GRADE_GREEN
+      in 4..6 -> Grade.GRADE_BLUE
+      in 7..9 -> Grade.GRADE_BLACK
+      else -> Grade.GRADE_UNSET
+    }
+  }
+}
 
 /** The skill decks available for interaction in the supply. */
-class SkillDecks {
+object SkillDecksInstance : SkillDecks {
   private val decks: Map<Grade, MutableList<Int>> = buildMap {
     put(Grade.GRADE_GREEN, createDeck(mapOf(1 to 16, 2 to 16, 3 to 16)))
     put(Grade.GRADE_BLUE, createDeck(mapOf(4 to 12, 5 to 12, 6 to 12)))
@@ -23,5 +39,5 @@ class SkillDecks {
   }
 
   /** Draws the top card of the deck for the given grade. */
-  fun draw(grade: Grade): Int = decks[grade]!!.removeFirst()
+  override fun draw(grade: Grade): Int = decks[grade]!!.removeFirst()
 }

@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.tile.TileMap.toMap
 import com.redpup.justsendit.model.board.tile.TileReaderImpl
 import com.redpup.justsendit.model.board.tile.proto.*
+import com.redpup.justsendit.model.proto.Grade
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
@@ -150,8 +151,8 @@ class HexGridViewer : Application() {
   private fun GraphicsContext.drawCircledText(cx: Double, cy: Double, color: Color, text: String) {
     fill = color
     stroke = color
-    strokeOval(cx-10, cy-10, 20.0, 20.0)
-    fillText(text, cx-5, cy+5)
+    strokeOval(cx - 10, cy - 10, 20.0, 20.0)
+    fillText(text, cx - 5, cy + 5)
   }
 }
 
