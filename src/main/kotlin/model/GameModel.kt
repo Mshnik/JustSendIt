@@ -68,7 +68,7 @@ class MutableGameModel(
   }
 
   /** Executes one turn for all players. Returns true if the day is now over, false otherwise. */
-  private fun turn(): Boolean {
+  fun turn(): Boolean {
     for (player in players) {
       do {
         val decision = player.handler.makeMountainDecision(player, this)
@@ -87,7 +87,7 @@ class MutableGameModel(
    * Sorts players in ascending order of points.
    * Returns true if the game is over, false otherwise.
    */
-  private fun cleanup(): Boolean {
+  fun cleanup(): Boolean {
     players.sortBy { it.points }
     if (clock.day < Clock.Params.MAX_DAY) {
       clock.nextDay()
@@ -101,7 +101,7 @@ class MutableGameModel(
    * Executes the given [decision] for the given [player]. Returns true if the
    * player's turn continues, false if their turn is now over.
    */
-  private fun executeDecision(player: Player, decision: MountainDecision): Boolean {
+  private fun executeDecision(player: MutablePlayer, decision: MountainDecision): Boolean {
     return when (decision.decisionCase) {
       MountainDecision.DecisionCase.SKI_RIDE -> executeSkiRide(player, decision.skiRide)
       MountainDecision.DecisionCase.REST -> {
@@ -124,10 +124,25 @@ class MutableGameModel(
     }
   }
 
-  private fun executeSkiRide(player: Player, hexDirection: HexDirection): Boolean = TODO()
-  private fun executeRest(player: Player): Unit = TODO()
-  private fun executeLift(player: Player): Unit = TODO()
-  private fun executeExit(player: Player): Unit = TODO()
+  private fun executeSkiRide(player: MutablePlayer, hexDirection: HexDirection): Boolean = TODO()
+
+  /** Executes the player taking a rest. */
+  private fun executeRest(player: MutablePlayer) {
+    player.refreshSkillDeck()
+  }
+
+  /** Executes the player taking a lift. */
+  private fun executeLift(player: MutablePlayer) {
+    val location = player.location
+    check(location != null) { "Player is off-map." }
+    check(tileMap[location]!!.hasLift()) { "Location $location does not have a lift" }
+
+    // TODO: update location to other half of lift.
+
+    player.refreshSkillDeck()
+  }
+
+  private fun executeExit(player: MutablePlayer): Unit = TODO()
 }
 
 /** Recording of time in game. */
