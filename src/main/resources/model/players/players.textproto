@@ -1,0 +1,158 @@
+# proto-file: model/player/player.proto
+# proto-message: PlayerCardList
+
+player {
+  name: "Test-1"
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_BLACK
+  training {
+    training {
+      grade: GRADE_BLUE
+      value: 1
+    }
+    training {
+      condition: CONDITION_POWDER
+      value: 1
+    }
+    training {
+      condition: CONDITION_ICY
+      value: 1
+    }
+  }
+  abilities {
+    name: "All Rounder"
+    cost: 2
+    text: "You get 1 +skill"
+  }
+  abilities {
+    name: "Down for anything"
+    cost: 2
+    text: "When you gain 5 or more fun, gain 1 fun"
+  }
+}
+
+player {
+  name: "Test-2"
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_BLACK
+  training {
+    training {
+      grade: GRADE_BLUE
+      value: 1
+    }
+    training {
+      condition: CONDITION_POWDER
+      value: 1
+    }
+    training {
+      condition: CONDITION_ICY
+      value: 1
+    }
+  }
+  abilities {
+    name: "All Rounder"
+    cost: 2
+    text: "You get 1 +skill"
+  }
+  abilities {
+    name: "Down for anything"
+    cost: 2
+    text: "When you gain 5 or more fun, gain 1 fun"
+  }
+}
+
+
+player {
+  name: "Test-3"
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_BLACK
+  training {
+    training {
+      grade: GRADE_BLUE
+      value: 1
+    }
+    training {
+      condition: CONDITION_POWDER
+      value: 1
+    }
+    training {
+      condition: CONDITION_ICY
+      value: 1
+    }
+  }
+  abilities {
+    name: "All Rounder"
+    cost: 2
+    text: "You get 1 +skill"
+  }
+  abilities {
+    name: "Down for anything"
+    cost: 2
+    text: "When you gain 5 or more fun, gain 1 fun"
+  }
+}
+
+
+player {
+  name: "Test-4"
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLUE
+  small_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_GREEN
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLUE
+  large_upgrade: GRADE_BLACK
+  large_upgrade: GRADE_BLACK
+  training {
+    training {
+      grade: GRADE_BLUE
+      value: 1
+    }
+    training {
+      condition: CONDITION_POWDER
+      value: 1
+    }
+    training {
+      condition: CONDITION_ICY
+      value: 1
+    }
+  }
+  abilities {
+    name: "All Rounder"
+    cost: 2
+    text: "You get 1 +skill"
+  }
+  abilities {
+    name: "Down for anything"
+    cost: 2
+    text: "When you gain 5 or more fun, gain 1 fun"
+  }
+}
+
+

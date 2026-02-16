@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.player
 
+import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.proto.PlayerCard
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDecks
@@ -27,6 +28,9 @@ interface Player {
   /** The abilities the player has unlocked. */
   val abilities: List<Boolean>
 
+  /** The player's current location on the mountain. Null if not on mountain. */
+  val location: HexPoint?
+
   /** A single turn for the player. */
   interface Turn {
     /** How many points (fun) this player has gained in this turn. */
@@ -51,6 +55,7 @@ class MutablePlayer(override val playerCard: PlayerCard) : Player {
   override val skillDiscard = mutableListOf<Int>()
   override val training = mutableListOf(0, 0, 0)
   override val abilities = mutableListOf(false, false)
+  override var location: HexPoint? = null
   override var turn = MutableTurn()
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
@@ -74,6 +79,16 @@ class MutablePlayer(override val playerCard: PlayerCard) : Player {
     points += turn.points
     experience += turn.experience
     turn.clear()
+  }
+
+  /** Buys the starting deck of cards. */
+  fun buyStartingDeck(skillDecks: SkillDecks) {
+    gainSkillCards(
+      listOf(List(5) { Grade.GRADE_GREEN },
+             List(3) { Grade.GRADE_BLUE },
+             List(2) { Grade.GRADE_BLACK }).flatten(),
+      skillDecks
+    )
   }
 
   /** Buys the small upgrade from the player card. */

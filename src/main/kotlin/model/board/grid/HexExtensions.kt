@@ -17,8 +17,7 @@ object HexExtensions {
     HexDirection.HEX_DIRECTION_SOUTH -> 0
     HexDirection.HEX_DIRECTION_SOUTH_WEST -> -1
     HexDirection.HEX_DIRECTION_NORTH_WEST -> -1
-    HexDirection.HEX_DIRECTION_UNSET -> throw IllegalArgumentException()
-    HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
   }
 
   /** Returns the delta in the q direction of this direction. */
@@ -29,8 +28,14 @@ object HexExtensions {
     HexDirection.HEX_DIRECTION_SOUTH -> 1
     HexDirection.HEX_DIRECTION_SOUTH_WEST -> 1
     HexDirection.HEX_DIRECTION_NORTH_WEST -> 0
-    HexDirection.HEX_DIRECTION_UNSET -> throw IllegalArgumentException()
-    HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+  }
+
+  /** Returns true iff the given direction is down-mountain. */
+  fun HexDirection.isDownMountain() = when (this) {
+    HexDirection.HEX_DIRECTION_NORTH, HexDirection.HEX_DIRECTION_NORTH_EAST, HexDirection.HEX_DIRECTION_SOUTH_EAST -> false
+    HexDirection.HEX_DIRECTION_SOUTH, HexDirection.HEX_DIRECTION_SOUTH_WEST, HexDirection.HEX_DIRECTION_NORTH_WEST -> true
+    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
   }
 
   /** Constructs a [HexPoint] with the given args. */
@@ -53,11 +58,7 @@ object HexExtensions {
    * Calculates the Manhattan-style distance between two hexes.
    */
   fun HexPoint.distanceTo(other: HexPoint): Int {
-    return (
-      abs(q - other.q)
-        + abs(q + r - other.q - other.r)
-        + abs(r - other.r)
-      ) / 2
+    return (abs(q - other.q) + abs(q + r - other.q - other.r) + abs(r - other.r)) / 2
   }
 
   /** Converts this hex point to x in x,y space. */

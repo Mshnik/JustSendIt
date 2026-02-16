@@ -8,6 +8,7 @@ option java_package = "com.redpup.justsendit.model.player.proto";
 import "model/grade.proto";
 import "model/board/tile/slope.proto";
 
+/** The immutable params associated with a player. */
 message PlayerCard {
   string name = 1;
   repeated Grade small_upgrade = 2;
@@ -36,4 +37,9 @@ message Ability {
   string name = 1;
   int32 cost = 2;
   string text = 3;
+}
+
+/** A list of player cards. */
+message PlayerCardList {
+  repeated PlayerCard player = 1;
 }
