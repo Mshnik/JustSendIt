@@ -1,11 +1,13 @@
 package com.redpup.justsendit.view.board
 
 import com.redpup.justsendit.model.GameModel
+import com.redpup.justsendit.model.MutableGameModel
 import com.redpup.justsendit.model.board.grid.Bounds
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.supply.SkillDecksInstance
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.canvas.Canvas
@@ -24,7 +26,7 @@ class HexGridViewer : Application() {
   private lateinit var bounds: Bounds
 
   override fun init() {
-    gameModel = GameModel()
+    gameModel = MutableGameModel(skillDecks = SkillDecksInstance)
     bounds = gameModel.tileMap.bounds()
   }
 

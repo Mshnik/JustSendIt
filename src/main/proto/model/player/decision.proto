@@ -1,0 +1,19 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.player;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.player.proto";
+
+import "model/board/hex/hex_point.proto";
+import "google/protobuf/empty.proto";
+
+/** Different decisions a player can make while on the mountain. */
+message MountainDecision {
+  oneof decision {
+    model.board.hex.HexDirection ski_ride = 1;
+    google.protobuf.Empty rest = 2;
+    google.protobuf.Empty lift = 3;
+    google.protobuf.Empty exit = 4;
+  }
+}
