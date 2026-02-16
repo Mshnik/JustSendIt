@@ -10,6 +10,9 @@ interface Player {
   /** The input parameters of the player from the player card. */
   val playerCard: PlayerCard
 
+  /** The handler for making decisions. */
+  val handler: PlayerHandler
+
   /** How many points (fun) this player has. */
   val points: Int
 
@@ -48,7 +51,8 @@ interface Player {
 }
 
 /** Mutable access to a player object. */
-class MutablePlayer(override val playerCard: PlayerCard) : Player {
+class MutablePlayer(override val playerCard: PlayerCard, override val handler: PlayerHandler) :
+  Player {
   override var points = 0
   override var experience = 0
   override val skillDeck = mutableListOf<Int>()

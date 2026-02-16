@@ -14,6 +14,7 @@ message MountainDecision {
     model.board.hex.HexDirection ski_ride = 1;
     google.protobuf.Empty rest = 2;
     google.protobuf.Empty lift = 3;
-    google.protobuf.Empty exit = 4;
+    google.protobuf.Empty pass = 4;
+    google.protobuf.Empty exit = 5;
   }
 }

@@ -8,3 +8,9 @@ interface PlayerHandler {
   /** Queues the player to make a mountain decision. */
   fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
 }
+
+class BasicPlayerHandler : PlayerHandler {
+  override fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {
+    TODO("Not yet implemented")
+  }
+}
