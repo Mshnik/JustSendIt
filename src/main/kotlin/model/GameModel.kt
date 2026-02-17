@@ -153,7 +153,7 @@ class MutableGameModel(
     // Check directions of ski/ride, make sure we don't go off mountain.
     val location = player.location
     check(location != null) { "Player is off-map." }
-    check(skiRideDecision.direction.isDownMountain()) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
+    check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
     val destination = location + skiRideDecision.direction
     val destinationTile = tileMap[destination]
     check(destinationTile != null) { "Destination is invalid: $destination" }

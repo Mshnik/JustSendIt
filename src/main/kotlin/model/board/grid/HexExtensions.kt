@@ -10,33 +10,36 @@ import kotlin.math.sqrt
 object HexExtensions {
 
   /** Returns the delta in the q direction of this direction. */
-  fun HexDirection.dq() = when (this) {
-    HexDirection.HEX_DIRECTION_NORTH -> 0
-    HexDirection.HEX_DIRECTION_NORTH_EAST -> 1
-    HexDirection.HEX_DIRECTION_SOUTH_EAST -> 1
-    HexDirection.HEX_DIRECTION_SOUTH -> 0
-    HexDirection.HEX_DIRECTION_SOUTH_WEST -> -1
-    HexDirection.HEX_DIRECTION_NORTH_WEST -> -1
-    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
-  }
+  val HexDirection.dq
+    get() = when (this) {
+      HexDirection.HEX_DIRECTION_NORTH -> 0
+      HexDirection.HEX_DIRECTION_NORTH_EAST -> 1
+      HexDirection.HEX_DIRECTION_SOUTH_EAST -> 1
+      HexDirection.HEX_DIRECTION_SOUTH -> 0
+      HexDirection.HEX_DIRECTION_SOUTH_WEST -> -1
+      HexDirection.HEX_DIRECTION_NORTH_WEST -> -1
+      HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+    }
 
   /** Returns the delta in the q direction of this direction. */
-  fun HexDirection.dr() = when (this) {
-    HexDirection.HEX_DIRECTION_NORTH -> -1
-    HexDirection.HEX_DIRECTION_NORTH_EAST -> -1
-    HexDirection.HEX_DIRECTION_SOUTH_EAST -> 0
-    HexDirection.HEX_DIRECTION_SOUTH -> 1
-    HexDirection.HEX_DIRECTION_SOUTH_WEST -> 1
-    HexDirection.HEX_DIRECTION_NORTH_WEST -> 0
-    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
-  }
+  val HexDirection.dr
+    get() = when (this) {
+      HexDirection.HEX_DIRECTION_NORTH -> -1
+      HexDirection.HEX_DIRECTION_NORTH_EAST -> -1
+      HexDirection.HEX_DIRECTION_SOUTH_EAST -> 0
+      HexDirection.HEX_DIRECTION_SOUTH -> 1
+      HexDirection.HEX_DIRECTION_SOUTH_WEST -> 1
+      HexDirection.HEX_DIRECTION_NORTH_WEST -> 0
+      HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+    }
 
   /** Returns true iff the given direction is down-mountain. */
-  fun HexDirection.isDownMountain() = when (this) {
-    HexDirection.HEX_DIRECTION_NORTH, HexDirection.HEX_DIRECTION_NORTH_EAST, HexDirection.HEX_DIRECTION_SOUTH_EAST -> false
-    HexDirection.HEX_DIRECTION_SOUTH, HexDirection.HEX_DIRECTION_SOUTH_WEST, HexDirection.HEX_DIRECTION_NORTH_WEST -> true
-    HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
-  }
+  val HexDirection.isDownMountain
+    get() = when (this) {
+      HexDirection.HEX_DIRECTION_NORTH, HexDirection.HEX_DIRECTION_NORTH_EAST, HexDirection.HEX_DIRECTION_SOUTH_EAST -> false
+      HexDirection.HEX_DIRECTION_SOUTH, HexDirection.HEX_DIRECTION_SOUTH_WEST, HexDirection.HEX_DIRECTION_NORTH_WEST -> true
+      HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
+    }
 
   /** Constructs a [HexPoint] with the given args. */
   fun HexPoint(q: Int, r: Int) = hexPoint {
@@ -49,8 +52,8 @@ object HexExtensions {
    */
   operator fun HexPoint.plus(direction: HexDirection): HexPoint {
     return hexPoint {
-      q = this@plus.q + direction.dq()
-      r = this@plus.r + direction.dr()
+      q = this@plus.q + direction.dq
+      r = this@plus.r + direction.dr
     }
   }
 

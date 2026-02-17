@@ -16,17 +16,17 @@ class HexExtensionsTest {
 
   @Test
   fun `test coordinate deltas`() {
-    assertThat(HexDirection.HEX_DIRECTION_NORTH.dq()).isEqualTo(0)
-    assertThat(HexDirection.HEX_DIRECTION_NORTH.dr()).isEqualTo(-1)
-    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dq()).isEqualTo(1)
-    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dr()).isEqualTo(0)
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.dq).isEqualTo(0)
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.dr).isEqualTo(-1)
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dq).isEqualTo(1)
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dr).isEqualTo(0)
   }
 
   @Test
   fun `test down-mountain logic`() {
-    assertThat(HexDirection.HEX_DIRECTION_SOUTH.isDownMountain()).isTrue()
-    assertThat(HexDirection.HEX_DIRECTION_SOUTH_WEST.isDownMountain()).isTrue()
-    assertThat(HexDirection.HEX_DIRECTION_NORTH.isDownMountain()).isFalse()
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH.isDownMountain).isTrue()
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_WEST.isDownMountain).isTrue()
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.isDownMountain).isFalse()
   }
 
   @Test
