@@ -13,6 +13,7 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
 import com.redpup.justsendit.model.player.BasicPlayerHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.player.proto.PlayerCardList
@@ -36,7 +37,7 @@ class MutableGameModel(
   tilesPath: String = "src/main/resources/model/board/tile/tiles.textproto",
   locationsPath: String = "src/main/resources/model/board/tile/tile_locations.textproto",
   playersPath: String = "src/main/resources/model/players/players.textproto",
-  val playerCount: Int = 4,
+  playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
   val skillDecks: SkillDecks,
 ) : GameModel {
   override val tileMap: HexGrid<MountainTile> =
@@ -63,8 +64,8 @@ class MutableGameModel(
       PlayerCardList.Builder::getPlayerList, shuffle = true
     ).invoke()
       .shuffled()
-      .subList(0, playerCount)
-      .map { MutablePlayer(it, BasicPlayerHandler()) }
+      .subList(0, playerHandlers.size)
+      .mapIndexed { index, card -> MutablePlayer(card, playerHandlers[index]) }
       .toMutableList()
   override val clock = MutableClock()
 
@@ -175,10 +176,10 @@ class MutableGameModel(
     }
 
     // Actually play cards and compare to difficulty.
-    val skill = IntRange(
-      0,
-      skiRideDecision.numCards
-    ).sumOf { player.playSkillCard()!! } + player.computeBonus(destinationTile.slope)
+    val skill =
+      (1..skiRideDecision.numCards).sumOf { player.playSkillCard()!! } + player.computeBonus(
+        destinationTile.slope
+      )
     val difficulty =
       destinationTile.slope.difficulty + player.turn.speed * SPEED_DIFFICULTY_MODIFIER
 
