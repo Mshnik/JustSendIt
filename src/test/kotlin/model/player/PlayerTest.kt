@@ -10,7 +10,7 @@ import com.redpup.justsendit.model.supply.SkillDecksInstance
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito
+import org.mockito.kotlin.mock
 
 class PlayerTest {
 
@@ -30,7 +30,7 @@ class PlayerTest {
       }
       abilities += ability { name = "Test Ability"; cost = 2 }
     }
-    player = MutablePlayer(playerCard, Mockito.mock(PlayerHandler::class.java))
+    player = MutablePlayer(playerCard, mock<PlayerHandler>())
   }
 
   @Test
