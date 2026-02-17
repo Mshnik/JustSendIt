@@ -1,8 +1,9 @@
 package com.redpup.justsendit.model
 
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
+import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
+import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
-import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMap.constructMap
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
@@ -13,6 +14,7 @@ import com.redpup.justsendit.model.player.BasicPlayerHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.player.proto.PlayerCardList
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.util.TextProtoReaderImpl
@@ -83,6 +85,7 @@ class MutableGameModel(
           val continueTurn = executeDecision(player, decision, subTurn)
           subTurn++
         } while (continueTurn)
+        player.ingestTurn()
       }
     }
     if (clock.turn < Clock.Params.MAX_TURN) {
@@ -145,7 +148,53 @@ class MutableGameModel(
     }
   }
 
-  private fun executeSkiRide(player: MutablePlayer, hexDirection: HexDirection): Boolean = TODO()
+  private fun executeSkiRide(player: MutablePlayer, skiRideDecision: SkiRideDecision): Boolean {
+    // Check directions of ski/ride, make sure we don't go off mountain.
+    val location = player.location
+    check(location != null) { "Player is off-map." }
+    check(skiRideDecision.direction.isDownMountain()) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
+    val destination = location + skiRideDecision.direction
+    val destinationTile = tileMap[destination]
+    check(destinationTile != null) { "Destination is invalid: $destination" }
+
+    // If destination has lift, player just goes there.
+    if (destinationTile.hasLift()) {
+      player.location = destination
+      check(skiRideDecision.numCards == 0) {
+        "Must play 0 cards to ski/ride onto lift, got ${skiRideDecision.numCards}"
+      }
+      return true
+    }
+
+    // Check number of cards played.
+    check(skiRideDecision.numCards >= 1 && skiRideDecision.numCards <= clock.day) {
+      "Must play between [1,${clock.day}] cards, got ${skiRideDecision.numCards}"
+    }
+    check(skiRideDecision.numCards <= player.skillDeck.size) {
+      "Only ${player.skillDeck.size} cards remaining, cannot play ${skiRideDecision.numCards} cards"
+    }
+
+    // Actually play cards and compare to difficulty.
+    val skill = IntRange(
+      0,
+      skiRideDecision.numCards
+    ).sumOf { player.playSkillCard()!! } + player.computeBonus(destinationTile.slope)
+    val difficulty =
+      destinationTile.slope.difficulty + player.turn.speed * SPEED_DIFFICULTY_MODIFIER
+
+    // Compute and apply result to turn.
+    val success = skill >= difficulty
+    if (success) {
+      player.turn.points += difficulty
+      player.turn.speed++
+    }
+    if (skill <= difficulty && skill >= difficulty.toDouble() / 2.0) {
+      player.turn.experience++
+    }
+
+    // Turn continues if successful.
+    return success
+  }
 
   /** Executes the player taking a rest. */
   private fun executeRest(player: MutablePlayer) {
@@ -175,6 +224,11 @@ class MutableGameModel(
 
     player.location = null
     // TODO: Claim apres reward.
+  }
+
+  companion object {
+    /** Multiplier of speed to difficulty. */
+    const val SPEED_DIFFICULTY_MODIFIER = 2
   }
 }
 

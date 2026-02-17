@@ -1,7 +1,9 @@
 package com.redpup.justsendit.model.player
 
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.proto.PlayerTraining
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDecks
 
@@ -132,6 +134,26 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
     check(experience >= cost) { "Need $cost experience, found $experience" }
     experience -= cost
     abilities[index] = true
+  }
+
+  /** Computes the bonus this player gets against the given [tile]. */
+  fun computeBonus(tile: SlopeTile): Int {
+    return (0..playerCard.training.trainingCount).sumOf { i ->
+      val cardTraining = playerCard.training.trainingList[i]
+
+      val applies = when (cardTraining.typeCase) {
+        PlayerTraining.Training.TypeCase.GRADE -> tile.grade == cardTraining.grade
+        PlayerTraining.Training.TypeCase.CONDITION -> tile.condition == cardTraining.condition
+        PlayerTraining.Training.TypeCase.HAZARD -> tile.hazardsList.contains(cardTraining.hazard)
+        PlayerTraining.Training.TypeCase.TYPE_NOT_SET, null -> throw IllegalArgumentException("Invalid training type")
+      }
+
+      if (applies) {
+        training[i] * cardTraining.value
+      } else {
+        0
+      }
+    }
   }
 }
 

@@ -11,10 +11,16 @@ import "google/protobuf/empty.proto";
 /** Different decisions a player can make while on the mountain. */
 message MountainDecision {
   oneof decision {
-    model.board.hex.HexDirection ski_ride = 1;
+    SkiRideDecision ski_ride = 1;
     google.protobuf.Empty rest = 2;
     google.protobuf.Empty lift = 3;
     google.protobuf.Empty pass = 4;
     google.protobuf.Empty exit = 5;
+  }
+
+  /** A decision to ski or ride in a given direction. */
+  message SkiRideDecision {
+    model.board.hex.HexDirection direction = 1;
+    int32 num_cards = 2;
   }
 }

@@ -1,6 +1,6 @@
 package com.redpup.justsendit
 
-import com.redpup.justsendit.model.board.grid.HexExtensions.neighbor
+import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection.HEX_DIRECTION_NORTH_EAST
 import com.redpup.justsendit.model.board.hex.proto.HexDirection.HEX_DIRECTION_SOUTH
@@ -15,7 +15,7 @@ fun main() {
 
   // Setting values
   grid[start] = "Town Center"
-  val neighbor = start.neighbor(HEX_DIRECTION_NORTH_EAST)
+  val neighbor = start + HEX_DIRECTION_NORTH_EAST
   grid[neighbor] = "Forest"
 
   // Getting values
@@ -25,7 +25,7 @@ fun main() {
   // Moving around
   var current = start
   repeat(3) {
-    current = current.neighbor(HEX_DIRECTION_SOUTH)
+    current += HEX_DIRECTION_SOUTH
     grid[current] = "Path segment"
   }
 }

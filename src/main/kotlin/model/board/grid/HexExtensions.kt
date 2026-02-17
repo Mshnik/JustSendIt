@@ -47,10 +47,10 @@ object HexExtensions {
   /**
    * Returns a new HexPoint adjacent to this one in the specified direction.
    */
-  fun HexPoint.neighbor(direction: HexDirection): HexPoint {
+  operator fun HexPoint.plus(direction: HexDirection): HexPoint {
     return hexPoint {
-      q = this@neighbor.q + direction.dq()
-      r = this@neighbor.r + direction.dr()
+      q = this@plus.q + direction.dq()
+      r = this@plus.r + direction.dr()
     }
   }
 
