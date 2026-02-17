@@ -37,6 +37,9 @@ class HexGrid<T> : Iterable<Pair<HexPoint, T>> {
   /** Returns all values currently stored in the grid. */
   fun values(): Collection<T> = cells.values
 
+  /** Returns all entries in the grid. */
+  fun entries(): Collection<Map.Entry<HexPoint, T>> = cells.entries
+
   /** Returns iterable access to this board. */
   override fun iterator(): Iterator<Pair<HexPoint, T>> =
     cells.asSequence().map { Pair(it.key, it.value) }.iterator()

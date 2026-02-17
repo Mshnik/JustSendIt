@@ -3,7 +3,9 @@ package com.redpup.justsendit.model
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
+import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMap.constructMap
+import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileList
 import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
@@ -29,9 +31,9 @@ interface GameModel {
 
 /** Top level joined game model state. */
 class MutableGameModel(
-  private val tilesPath: String = "src/main/resources/model/board/tile/tiles.textproto",
-  private val locationsPath: String = "src/main/resources/model/board/tile/tile_locations.textproto",
-  private val playersPath: String = "src/main/resources/model/players/players.textproto",
+  tilesPath: String = "src/main/resources/model/board/tile/tiles.textproto",
+  locationsPath: String = "src/main/resources/model/board/tile/tile_locations.textproto",
+  playersPath: String = "src/main/resources/model/players/players.textproto",
   val playerCount: Int = 4,
   val skillDecks: SkillDecks,
 ) : GameModel {
@@ -49,6 +51,10 @@ class MutableGameModel(
         MountainTileLocationList.Builder::getLocationList
       ),
     )
+  private val lifts =
+    tileMap.entries().filter { it.value.hasLift() }
+      .groupBy { it.value.lift.color }
+
   override val players: MutableList<MutablePlayer> =
     TextProtoReaderImpl(
       playersPath, PlayerCardList::newBuilder,
@@ -70,10 +76,14 @@ class MutableGameModel(
   /** Executes one turn for all players. Returns true if the day is now over, false otherwise. */
   fun turn(): Boolean {
     for (player in players) {
-      do {
-        val decision = player.handler.makeMountainDecision(player, this)
-        val continueTurn = executeDecision(player, decision)
-      } while (continueTurn)
+      if (player.isOnMountain) {
+        var subTurn = 0
+        do {
+          val decision = player.handler.makeMountainDecision(player, this)
+          val continueTurn = executeDecision(player, decision, subTurn)
+          subTurn++
+        } while (continueTurn)
+      }
     }
     if (clock.turn < Clock.Params.MAX_TURN) {
       clock.next()
@@ -91,6 +101,9 @@ class MutableGameModel(
     players.sortBy { it.points }
     if (clock.day < Clock.Params.MAX_DAY) {
       clock.nextDay()
+      for (player in players) {
+        player.location = player.handler.getStartingLocation(player, this)
+      }
       return false
     } else {
       return true
@@ -101,7 +114,11 @@ class MutableGameModel(
    * Executes the given [decision] for the given [player]. Returns true if the
    * player's turn continues, false if their turn is now over.
    */
-  private fun executeDecision(player: MutablePlayer, decision: MountainDecision): Boolean {
+  private fun executeDecision(
+    player: MutablePlayer,
+    decision: MountainDecision,
+    subTurn: Int,
+  ): Boolean {
     return when (decision.decisionCase) {
       MountainDecision.DecisionCase.SKI_RIDE -> executeSkiRide(player, decision.skiRide)
       MountainDecision.DecisionCase.REST -> {
@@ -114,7 +131,11 @@ class MutableGameModel(
         false
       }
 
-      MountainDecision.DecisionCase.PASS -> false
+      MountainDecision.DecisionCase.PASS -> {
+        check(subTurn > 0) { "Can't pass without taking at least one action" }
+        false
+      }
+
       MountainDecision.DecisionCase.EXIT -> {
         executeExit(player)
         false
@@ -135,14 +156,26 @@ class MutableGameModel(
   private fun executeLift(player: MutablePlayer) {
     val location = player.location
     check(location != null) { "Player is off-map." }
-    check(tileMap[location]!!.hasLift()) { "Location $location does not have a lift" }
-
-    // TODO: update location to other half of lift.
-
+    val tile = tileMap[location]!!
+    check(tile.hasLift()) { "Location $location does not have a lift" }
+    player.location = getOtherLiftLocation(tile.lift.color, location)
     player.refreshSkillDeck()
   }
 
-  private fun executeExit(player: MutablePlayer): Unit = TODO()
+  /** Returns the matching lift location for [color] that is not [location]. */
+  private fun getOtherLiftLocation(color: LiftColor, location: HexPoint): HexPoint =
+    lifts[color]!!.find { it.key != location }!!.key
+
+  /** Executes the player leaving the mountain. */
+  private fun executeExit(player: MutablePlayer) {
+    val location = player.location
+    check(location != null) { "Player is off-map." }
+    val tile = tileMap[location]!!
+    check(tile.apresLink > 0) { "Location $location does not have an exit" }
+
+    player.location = null
+    // TODO: Claim apres reward.
+  }
 }
 
 /** Recording of time in game. */

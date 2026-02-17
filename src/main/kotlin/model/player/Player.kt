@@ -34,6 +34,9 @@ interface Player {
   /** The player's current location on the mountain. Null if not on mountain. */
   val location: HexPoint?
 
+  /** Returns true iff the player is on the mountain. */
+  val isOnMountain: Boolean get() = location != null
+
   /** A single turn for the player. */
   interface Turn {
     /** How many points (fun) this player has gained in this turn. */
