@@ -1,6 +1,6 @@
 package com.redpup.justsendit.model
 
-import com.google.protobuf.Empty
+import com.google.common.truth.Truth.assertThat
 import com.google.protobuf.empty
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
@@ -11,11 +11,9 @@ import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
-
-import java.io.File
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
-import org.junit.jupiter.api.Assertions.*
+import java.io.File
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -92,22 +90,23 @@ class GameModelTest {
     )
   }
 
-  private fun createGameModel(playerCount: Int = 1, skillDecks: SkillDecks = this.skillDecks) = MutableGameModel(
-    tilesPath = tilesFile.absolutePath,
-    locationsPath = locationsFile.absolutePath,
-    playersPath = playersFile.absolutePath,
-    playerHandlers = List(playerCount) { testDecisionHandler },
-    skillDecks = skillDecks
-  )
+  private fun createGameModel(playerCount: Int = 1, skillDecks: SkillDecks = this.skillDecks) =
+    MutableGameModel(
+      tilesPath = tilesFile.absolutePath,
+      locationsPath = locationsFile.absolutePath,
+      playersPath = playersFile.absolutePath,
+      playerHandlers = List(playerCount) { testDecisionHandler },
+      skillDecks = skillDecks
+    )
 
   @Test
   fun `game model initializes correctly`() {
     skillDecks.setGreenDeck(List(10) { 1 }) // Set up for starting deck
     val game = createGameModel(2)
-    assertEquals(2, game.players.size)
-    assertEquals(3, game.tileMap.size())
-    assertEquals(10, game.players[0].skillDeck.size) // Starting deck
-    assertEquals(HexPoint(0, 0), game.players[0].location)
+    assertThat(game.players.size).isEqualTo(2)
+    assertThat(game.tileMap.size()).isEqualTo(3)
+    assertThat(game.players[0].skillDeck.size).isEqualTo(10) // Starting deck
+    assertThat(game.players[0].location).isEqualTo(HexPoint(0, 0))
   }
 
   @Test
@@ -117,17 +116,17 @@ class GameModelTest {
     player.skillDeck.clear() // Clear existing cards from buyStartingDeck
     player.skillDeck.addAll(listOf(1, 2, 3))
     player.playSkillCard() // card -> discard
-    assertEquals(1, player.skillDiscard.size)
+    assertThat(player.skillDiscard.size).isEqualTo(1)
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
-      rest = Empty.getDefaultInstance()
+      rest = empty {}
     })
 
     game.turn()
 
-    assertEquals(0, player.skillDiscard.size)
-    assertEquals(3, player.skillDeck.size)
-    assertEquals(2, game.clock.turn)
+    assertThat(player.skillDiscard.size).isEqualTo(0)
+    assertThat(player.skillDeck.size).isEqualTo(3)
+    assertThat(game.clock.turn).isEqualTo(2)
   }
 
   @Test
@@ -137,13 +136,13 @@ class GameModelTest {
     player.location = hexPoint { q = 0; r = 0 }
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
-      lift = Empty.getDefaultInstance()
+      lift = empty {}
     })
 
     game.turn()
 
-    assertEquals(hexPoint { q = 0; r = -1 }, player.location)
-    assertEquals(2, game.clock.turn)
+    assertThat(player.location).isEqualTo(hexPoint { q = 0; r = -1 })
+    assertThat(game.clock.turn).isEqualTo(2)
   }
 
   @Test
@@ -153,14 +152,14 @@ class GameModelTest {
     player.location = hexPoint { q = 0; r = 0 } // Location with apres_link
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
-      exit = Empty.getDefaultInstance()
+      exit = empty {}
     })
 
     game.turn()
 
-    assertNull(player.location)
-    assertFalse(player.isOnMountain)
-    assertEquals(2, game.clock.turn)
+    assertThat(player.location).isNull()
+    assertThat(player.isOnMountain).isFalse()
+    assertThat(game.clock.turn).isEqualTo(2)
   }
 
   @Test
@@ -179,14 +178,14 @@ class GameModelTest {
       }
     })
     testDecisionHandler.decisionQueue.add(mountainDecision {
-      pass = Empty.getDefaultInstance()
+      pass = empty {}
     }) // End turn
 
     game.turn()
 
-    assertEquals(5, player.points)
+    assertThat(player.points).isEqualTo(5)
     // turn.speed is reset after turn, so we can't check it here.
-    assertEquals(0, player.experience)
+    assertThat(player.experience).isEqualTo(0)
   }
 
   @Test
@@ -195,9 +194,9 @@ class GameModelTest {
     testDecisionHandler.startLocation = hexPoint { q = -1; r = -1 }
     game.cleanup()
 
-    assertEquals(2, game.clock.day)
-    assertEquals(1, game.clock.turn)
-    assertEquals(hexPoint { q = -1;r = -1 }, game.players[0].location)
+    assertThat(game.clock.day).isEqualTo(2)
+    assertThat(game.clock.turn).isEqualTo(1)
+    assertThat(game.players[0].location).isEqualTo(hexPoint { q = -1; r = -1 })
   }
 
   /** A test implementation of [PlayerHandler] that returns decisions from a queue. */

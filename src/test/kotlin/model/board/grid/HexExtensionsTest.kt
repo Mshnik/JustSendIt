@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.board.grid
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.distanceTo
 import com.redpup.justsendit.model.board.grid.HexExtensions.dq
@@ -9,36 +10,35 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class HexExtensionsTest {
 
   @Test
   fun `test coordinate deltas`() {
-    assertEquals(0, HexDirection.HEX_DIRECTION_NORTH.dq())
-    assertEquals(-1, HexDirection.HEX_DIRECTION_NORTH.dr())
-    assertEquals(1, HexDirection.HEX_DIRECTION_SOUTH_EAST.dq())
-    assertEquals(0, HexDirection.HEX_DIRECTION_SOUTH_EAST.dr())
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.dq()).isEqualTo(0)
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.dr()).isEqualTo(-1)
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dq()).isEqualTo(1)
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.dr()).isEqualTo(0)
   }
 
   @Test
   fun `test down-mountain logic`() {
-    assertTrue(HexDirection.HEX_DIRECTION_SOUTH.isDownMountain())
-    assertTrue(HexDirection.HEX_DIRECTION_SOUTH_WEST.isDownMountain())
-    assertFalse(HexDirection.HEX_DIRECTION_NORTH.isDownMountain())
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH.isDownMountain()).isTrue()
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_WEST.isDownMountain()).isTrue()
+    assertThat(HexDirection.HEX_DIRECTION_NORTH.isDownMountain()).isFalse()
   }
 
   @Test
   fun `test hex adjacency operator`() {
     val start = HexPoint(0, 0)
     val north = start + HexDirection.HEX_DIRECTION_NORTH
-    assertEquals(0, north.q)
-    assertEquals(-1, north.r)
+    assertThat(north.q).isEqualTo(0)
+    assertThat(north.r).isEqualTo(-1)
 
     val southEast = start + HexDirection.HEX_DIRECTION_SOUTH_EAST
-    assertEquals(1, southEast.q)
-    assertEquals(0, southEast.r)
+    assertThat(southEast.q).isEqualTo(1)
+    assertThat(southEast.r).isEqualTo(0)
   }
 
   @Test
@@ -46,13 +46,13 @@ class HexExtensionsTest {
     val a = HexPoint(0, 0)
     val b = HexPoint(2, 3) // Manhattan distance in hex grid
     // q:2, r:3, s:-5. Dist = (abs(2)+abs(5)+abs(3))/2 = 5
-    assertEquals(5, a.distanceTo(b))
+    assertThat(a.distanceTo(b)).isEqualTo(5)
   }
 
   @Test
   fun `test pixel conversions`() {
     val p = HexPoint(2, 0)
-    assertEquals(3.0, p.toX()) // 2 * 1.5
-    assertEquals(Math.sqrt(3.0), p.toY()) // (0 + 2/2) * sqrt(3)
+    assertThat(p.toX()).isEqualTo(3.0) // 2 * 1.5
+    assertThat(p.toY()) // (0 + 2/2) * sqrt(3).isEqualTo(Math.sqrt(3.0))
   }
 }

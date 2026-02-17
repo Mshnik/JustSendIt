@@ -1,7 +1,8 @@
 package com.redpup.justsendit.model.supply
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.proto.Grade
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -15,26 +16,26 @@ class SkillDecksTest {
   @Test
   fun `draw returns card of correct grade`() {
     val greenCard = SkillDecksInstance.draw(Grade.GRADE_GREEN)
-    assertTrue(greenCard in 1..3)
+    assertThat(greenCard in 1..3).isTrue()
 
     val blueCard = SkillDecksInstance.draw(Grade.GRADE_BLUE)
-    assertTrue(blueCard in 4..6)
+    assertThat(blueCard in 4..6).isTrue()
 
     val blackCard = SkillDecksInstance.draw(Grade.GRADE_BLACK)
-    assertTrue(blackCard in 7..9)
+    assertThat(blackCard in 7..9).isTrue()
   }
 
   @Test
   fun `getSkillGrade returns correct grade for card value`() {
     with(SkillDecksInstance) {
-      assertEquals(Grade.GRADE_GREEN, 1.getSkillGrade())
-      assertEquals(Grade.GRADE_GREEN, 3.getSkillGrade())
-      assertEquals(Grade.GRADE_BLUE, 4.getSkillGrade())
-      assertEquals(Grade.GRADE_BLUE, 6.getSkillGrade())
-      assertEquals(Grade.GRADE_BLACK, 7.getSkillGrade())
-      assertEquals(Grade.GRADE_BLACK, 9.getSkillGrade())
-      assertEquals(Grade.GRADE_UNSET, 0.getSkillGrade())
-      assertEquals(Grade.GRADE_UNSET, 10.getSkillGrade())
+      assertThat(1.getSkillGrade()).isEqualTo(Grade.GRADE_GREEN)
+      assertThat(3.getSkillGrade()).isEqualTo(Grade.GRADE_GREEN)
+      assertThat(4.getSkillGrade()).isEqualTo(Grade.GRADE_BLUE)
+      assertThat(6.getSkillGrade()).isEqualTo(Grade.GRADE_BLUE)
+      assertThat(7.getSkillGrade()).isEqualTo(Grade.GRADE_BLACK)
+      assertThat(9.getSkillGrade()).isEqualTo(Grade.GRADE_BLACK)
+      assertThat(0.getSkillGrade()).isEqualTo(Grade.GRADE_UNSET)
+      assertThat(10.getSkillGrade()).isEqualTo(Grade.GRADE_UNSET)
     }
   }
 
@@ -45,13 +46,13 @@ class SkillDecksTest {
     val blackDeckSize = 12 * 3
 
     val greenCards = (1..greenDeckSize).map { SkillDecksInstance.draw(Grade.GRADE_GREEN) }
-    assertEquals(greenDeckSize, greenCards.size)
+    assertThat(greenCards.size).isEqualTo(greenDeckSize)
 
     val blueCards = (1..blueDeckSize).map { SkillDecksInstance.draw(Grade.GRADE_BLUE) }
-    assertEquals(blueDeckSize, blueCards.size)
+    assertThat(blueCards.size).isEqualTo(blueDeckSize)
 
     val blackCards = (1..blackDeckSize).map { SkillDecksInstance.draw(Grade.GRADE_BLACK) }
-    assertEquals(blackDeckSize, blackCards.size)
+    assertThat(blackCards.size).isEqualTo(blackDeckSize)
 
     // Decks should be empty now
     assertThrows(NoSuchElementException::class.java) {

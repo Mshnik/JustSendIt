@@ -1,12 +1,12 @@
 package com.redpup.justsendit.util
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.proto.Test
-import org.junit.jupiter.api.Assertions.assertEquals
+import java.io.File
 import org.junit.jupiter.api.Assertions.assertNotEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test as JUnitTest
 import org.junit.jupiter.api.io.TempDir
-import java.io.File
 
 class TextProtoReaderTest {
 
@@ -31,8 +31,8 @@ class TextProtoReaderTest {
     )
 
     val result = reader()
-    assertEquals(1, result.size)
-    assertEquals(42, result[0].value)
+    assertThat(result.size).isEqualTo(1)
+    assertThat(result[0].value).isEqualTo(42)
   }
 
   @JUnitTest
@@ -45,7 +45,7 @@ class TextProtoReaderTest {
     // And the textproto is `tests: { value: 1 } tests: { value: 2 }`
     // We can't do that. So we adjust the test. `get` is `B.() -> List<T>`. So we can use a real list proto.
     // But we don't have one for Test. We can use MountainTileList with a single tile.
-    
+
     // The class under test is `TextProtoReaderImpl`. The `get` function is `B.() -> List<T>`.
     // It's designed to extract a repeated field from a top-level message.
     // For `Test` message, it does not have a repeated field.
@@ -53,10 +53,10 @@ class TextProtoReaderTest {
     // TextProtoReaderImpl(tilesPath, MountainTileList::newBuilder, MountainTileList.Builder::getTilesList, shuffle = true)
     // MountainTileList has `repeated MountainTile tiles = 1;`.
     // The `get` lambda is `MountainTileList.Builder::getTilesList`. This returns `MutableList<MountainTile>`.
-    
+
     // So to test multiple elements, I need a message with a repeated field.
     // I can't use `Test`. I will use `PlayerCardList` from `player.proto`.
-    
+
     val protoText = """
     player {
       name: "Player A"
@@ -72,15 +72,15 @@ class TextProtoReaderTest {
 
 
     val listReader = TextProtoReaderImpl(
-        testFile.absolutePath,
-        com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
-        com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList
+      testFile.absolutePath,
+      com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
+      com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList
     )
-    
+
     val result = listReader()
-    assertEquals(2, result.size)
-    assertEquals("Player A", result[0].name)
-    assertEquals("Player B", result[1].name)
+    assertThat(result.size).isEqualTo(2)
+    assertThat(result[0].name).isEqualTo("Player A")
+    assertThat(result[1].name).isEqualTo("Player B")
   }
 
   @JUnitTest
@@ -95,38 +95,38 @@ class TextProtoReaderTest {
     testFile.writeText(protoText)
 
     val readerNoShuffle = TextProtoReaderImpl(
-        testFile.absolutePath,
-        com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
-        com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList,
-        shuffle = false
+      testFile.absolutePath,
+      com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
+      com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList,
+      shuffle = false
     )
-    
+
     val readerShuffle = TextProtoReaderImpl(
-        testFile.absolutePath,
-        com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
-        com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList,
-        shuffle = true
+      testFile.absolutePath,
+      com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
+      com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList,
+      shuffle = true
     )
 
     val resultNoShuffle = readerNoShuffle()
     val resultShuffle = readerShuffle()
 
-    assertEquals(5, resultNoShuffle.size)
-    assertEquals(5, resultShuffle.size)
-    
+    assertThat(resultNoShuffle.size).isEqualTo(5)
+    assertThat(resultShuffle.size).isEqualTo(5)
+
     // The shuffled list *could* be the same, but with 5 elements it's very unlikely.
     // A better test is to check if the elements are the same, but the order is not guaranteed.
     // But what we really want to test is that the shuffle flag is respected.
     // Let's run it multiple times, the shuffled one should change order.
     val firstRead = readerNoShuffle()
     val secondRead = readerNoShuffle()
-    assertEquals(firstRead.map { it.name }, secondRead.map { it.name })
-    
+    assertThat(secondRead.map { it.name }).isEqualTo(firstRead.map { it.name })
+
     val firstShuffleRead = readerShuffle()
     val secondShuffleRead = readerShuffle()
     // The reader implementation has `by lazy`, so it will only be read and shuffled once.
     // So `firstShuffleRead` and `secondShuffleRead` will be identical.
-    
+
     // The best we can do is to compare the shuffled and non-shuffled list.
     assertNotEquals(resultNoShuffle.map { it.name }, resultShuffle.map { it.name })
   }

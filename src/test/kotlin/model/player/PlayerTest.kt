@@ -1,18 +1,18 @@
 package com.redpup.justsendit.model.player
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.proto.PlayerTrainingKt.training
 import com.redpup.justsendit.model.player.proto.ability
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.playerTraining
 import com.redpup.justsendit.model.proto.Grade
-
-import org.junit.jupiter.api.Assertions.*
+import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
-import com.redpup.justsendit.model.supply.SkillDecks
-import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 
 class PlayerTest {
 
@@ -40,32 +40,32 @@ class PlayerTest {
   @Test
   fun `playSkillCard moves card from deck to discard`() {
     player.skillDeck.addAll(listOf(1, 2, 3))
-    assertEquals(3, player.skillDeck.size)
-    assertTrue(player.skillDiscard.isEmpty())
+    assertThat(player.skillDeck.size).isEqualTo(3)
+    assertThat(player.skillDiscard.isEmpty()).isTrue()
 
     val card = player.playSkillCard()
 
-    assertEquals(1, card)
-    assertEquals(2, player.skillDeck.size)
-    assertEquals(1, player.skillDiscard.size)
-    assertEquals(1, player.skillDiscard.first())
+    assertThat(card).isEqualTo(1)
+    assertThat(player.skillDeck.size).isEqualTo(2)
+    assertThat(player.skillDiscard.size).isEqualTo(1)
+    assertThat(player.skillDiscard.first()).isEqualTo(1)
   }
 
   @Test
   fun `playSkillCard on empty deck returns null`() {
-    assertTrue(player.skillDeck.isEmpty())
+    assertThat(player.skillDeck.isEmpty()).isTrue()
     val card = player.playSkillCard()
-    assertNull(card)
+    assertThat(card).isNull()
   }
 
   @Test
   fun `refreshSkillDeck moves discard to deck and shuffles`() {
     player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5))
     player.refreshSkillDeck()
-    assertEquals(5, player.skillDeck.size)
-    assertTrue(player.skillDiscard.isEmpty())
+    assertThat(player.skillDeck.size).isEqualTo(5)
+    assertThat(player.skillDiscard.isEmpty()).isTrue()
     // The deck is shuffled, so we can't assert order, but it should contain the elements.
-    assertTrue(player.skillDeck.containsAll(listOf(1, 2, 3, 4, 5)))
+    assertThat(player.skillDeck.containsAll(listOf(1, 2, 3, 4, 5))).isTrue()
   }
 
   @Test
@@ -74,10 +74,10 @@ class PlayerTest {
     player.turn.experience = 5
     player.ingestTurn()
 
-    assertEquals(10, player.points)
-    assertEquals(5, player.experience)
-    assertEquals(0, player.turn.points)
-    assertEquals(0, player.turn.experience)
+    assertThat(player.points).isEqualTo(10)
+    assertThat(player.experience).isEqualTo(5)
+    assertThat(player.turn.points).isEqualTo(0)
+    assertThat(player.turn.experience).isEqualTo(0)
   }
 
   @Test
@@ -86,7 +86,7 @@ class PlayerTest {
     skillDecks.setBlueDeck(List(3) { 4 })
     skillDecks.setBlackDeck(List(2) { 7 })
     player.buyStartingDeck(skillDecks)
-    assertEquals(10, player.skillDeck.size) // 5 green, 3 blue, 2 black
+    assertThat(player.skillDeck.size).isEqualTo(10) // 5 green, 3 blue, 2 black
   }
 
   @Test
@@ -97,8 +97,8 @@ class PlayerTest {
     player.experience = 1
     skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
     player.buySmallUpgrade(skillDecks)
-    assertEquals(0, player.experience)
-    assertEquals(1, player.skillDeck.size)
+    assertThat(player.experience).isEqualTo(0)
+    assertThat(player.skillDeck.size).isEqualTo(1)
     assertEquals(
       Grade.GRADE_GREEN,
       with(skillDecks) { player.skillDeck.first().getSkillGrade() })
@@ -112,8 +112,8 @@ class PlayerTest {
     player.experience = 1
     skillDecks.setBlueDeck(listOf(4)) // Card to be drawn
     player.buyLargeUpgrade(skillDecks)
-    assertEquals(0, player.experience)
-    assertEquals(1, player.skillDeck.size)
+    assertThat(player.experience).isEqualTo(0)
+    assertThat(player.skillDeck.size).isEqualTo(1)
     assertEquals(
       Grade.GRADE_BLUE,
       with(skillDecks) { player.skillDeck.first().getSkillGrade() })
@@ -126,8 +126,8 @@ class PlayerTest {
     }
     player.experience = 1
     player.buyTraining(0)
-    assertEquals(0, player.experience)
-    assertEquals(1, player.training[0])
+    assertThat(player.experience).isEqualTo(0)
+    assertThat(player.training[0]).isEqualTo(1)
   }
 
   @Test
@@ -137,8 +137,8 @@ class PlayerTest {
     }
     player.experience = 2
     player.buyAbility(0)
-    assertEquals(0, player.experience)
-    assertTrue(player.abilities[0])
+    assertThat(player.experience).isEqualTo(0)
+    assertThat(player.abilities[0]).isTrue()
   }
 
   @Test
@@ -147,10 +147,10 @@ class PlayerTest {
     val greenSlope = slopeTile { grade = Grade.GRADE_GREEN }
 
     // No training level yet
-    assertEquals(0, player.computeBonus(blueSlope))
+    assertThat(player.computeBonus(blueSlope)).isEqualTo(0)
 
     player.training[0] = 2 // Training for blue grade has value 2 from playerCard
-    assertEquals(4, player.computeBonus(blueSlope)) // 2 * 2
-    assertEquals(0, player.computeBonus(greenSlope))
+    assertThat(player.computeBonus(blueSlope)).isEqualTo(4) // 2 * 2
+    assertThat(player.computeBonus(greenSlope)).isEqualTo(0)
   }
 }

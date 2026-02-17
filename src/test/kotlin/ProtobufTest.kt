@@ -1,8 +1,8 @@
 package com.redpup.justsendit
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.proto.Test
 import com.redpup.justsendit.proto.test
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test as JUnitTest
 
 class ProtobufTest {
@@ -23,7 +23,7 @@ class ProtobufTest {
     }
 
     // Verify both produce the same underlying data
-    assertEquals(expectedValue, javaMessage.value)
-    assertEquals(javaMessage, kotlinMessage)
+    assertThat(javaMessage.value).isEqualTo(expectedValue)
+    assertThat(kotlinMessage).isEqualTo(javaMessage)
   }
 }

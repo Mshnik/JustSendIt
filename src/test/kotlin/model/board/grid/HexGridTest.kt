@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.board.grid
 
+import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
 class HexGridTest {
@@ -11,27 +11,27 @@ class HexGridTest {
     val grid = HexGrid<String>()
     val pt = HexPoint(5, 5)
 
-    assertNull(grid[pt])
+    assertThat(grid[pt]).isNull()
     grid[pt] = "Summit"
-    assertEquals("Summit", grid[pt])
-    assertEquals(1, grid.size())
-    assertTrue(grid.contains(pt))
+    assertThat(grid[pt]).isEqualTo("Summit")
+    assertThat(grid.size()).isEqualTo(1)
+    assertThat(grid.contains(pt)).isTrue()
 
     grid.clear()
-    assertEquals(0, grid.size())
+    assertThat(grid.size()).isEqualTo(0)
   }
 
   @Test
   fun `test bounds calculation`() {
     val grid = HexGrid<Int>()
-    
+
     grid[HexPoint(0, 0)] = 1
     grid[HexPoint(2, 2)] = 2
 
     val bounds = grid.bounds()
-    assertTrue(bounds.minX <= bounds.maxX)
-    assertTrue(bounds.minY <= bounds.maxY)
-    assertEquals(4.0, bounds.width) // Based on HexPoint.toX() logic
+    assertThat(bounds.minX <= bounds.maxX).isTrue()
+    assertThat(bounds.minY <= bounds.maxY).isTrue()
+    assertThat(bounds.width) // Based on HexPoint.toX().isEqualTo(4.0) logic
   }
 
   @Test
@@ -41,7 +41,7 @@ class HexGridTest {
     grid[HexPoint(1, 1)] = 20
 
     val list = grid.toList()
-    assertEquals(2, list.size)
-    assertTrue(list.any { it.second == 10 })
+    assertThat(list.size).isEqualTo(2)
+    assertThat(list.any { it.second == 10 }).isTrue()
   }
 }
