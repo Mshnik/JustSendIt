@@ -11,8 +11,10 @@ import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.supply.SkillDecksInstance
+
 import java.io.File
+import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -29,11 +31,17 @@ class GameModelTest {
 
   private val testDecisionHandler = TestDecisionHandler()
 
+  private lateinit var skillDecks: FakeSkillDecks
+
   @BeforeEach
   fun setup() {
     tilesFile = File(tempDir, "tiles.textproto")
     locationsFile = File(tempDir, "locations.textproto")
     playersFile = File(tempDir, "players.textproto")
+    skillDecks = FakeSkillDecks()
+    skillDecks.setGreenDeck(List(100) { 1 })
+    skillDecks.setBlueDeck(List(100) { 4 })
+    skillDecks.setBlackDeck(List(100) { 7 })
 
     tilesFile.writeText(
       """
@@ -84,16 +92,17 @@ class GameModelTest {
     )
   }
 
-  private fun createGameModel(playerCount: Int = 1) = MutableGameModel(
+  private fun createGameModel(playerCount: Int = 1, skillDecks: SkillDecks = this.skillDecks) = MutableGameModel(
     tilesPath = tilesFile.absolutePath,
     locationsPath = locationsFile.absolutePath,
     playersPath = playersFile.absolutePath,
     playerHandlers = List(playerCount) { testDecisionHandler },
-    skillDecks = SkillDecksInstance
+    skillDecks = skillDecks
   )
 
   @Test
   fun `game model initializes correctly`() {
+    skillDecks.setGreenDeck(List(10) { 1 }) // Set up for starting deck
     val game = createGameModel(2)
     assertEquals(2, game.players.size)
     assertEquals(3, game.tileMap.size())
@@ -105,6 +114,7 @@ class GameModelTest {
   fun `turn with REST decision works`() {
     val game = createGameModel()
     val player = game.players[0]
+    player.skillDeck.clear() // Clear existing cards from buyStartingDeck
     player.skillDeck.addAll(listOf(1, 2, 3))
     player.playSkillCard() // card -> discard
     assertEquals(1, player.skillDiscard.size)
@@ -156,6 +166,7 @@ class GameModelTest {
   @Test
   fun `successful SKI_RIDE turn`() {
     val game = createGameModel()
+    game.clock.day = 2 // Advance day to allow playing 2 cards
     val player = game.players[0]
     player.location = hexPoint { q = 0; r = 0 }
     player.skillDeck.clear()

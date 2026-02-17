@@ -6,18 +6,22 @@ import com.redpup.justsendit.model.player.proto.ability
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.playerTraining
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecksInstance
+
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
+import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 
 class PlayerTest {
 
   private lateinit var player: MutablePlayer
+  private lateinit var skillDecks: FakeSkillDecks
 
   @BeforeEach
   fun setUp() {
+    skillDecks = FakeSkillDecks()
     val playerCard = playerCard {
       name = "Test Player"
       smallUpgrade.add(Grade.GRADE_GREEN)
@@ -78,36 +82,41 @@ class PlayerTest {
 
   @Test
   fun `buyStartingDeck adds correct number of cards`() {
-    player.buyStartingDeck(SkillDecksInstance)
+    skillDecks.setGreenDeck(List(5) { 1 })
+    skillDecks.setBlueDeck(List(3) { 4 })
+    skillDecks.setBlackDeck(List(2) { 7 })
+    player.buyStartingDeck(skillDecks)
     assertEquals(10, player.skillDeck.size) // 5 green, 3 blue, 2 black
   }
 
   @Test
   fun `buySmallUpgrade requires experience and adds card`() {
     assertThrows(IllegalStateException::class.java) {
-      player.buySmallUpgrade(SkillDecksInstance)
+      player.buySmallUpgrade(skillDecks)
     }
     player.experience = 1
-    player.buySmallUpgrade(SkillDecksInstance)
+    skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
+    player.buySmallUpgrade(skillDecks)
     assertEquals(0, player.experience)
     assertEquals(1, player.skillDeck.size)
     assertEquals(
       Grade.GRADE_GREEN,
-      with(SkillDecksInstance) { player.skillDeck.first().getSkillGrade() })
+      with(skillDecks) { player.skillDeck.first().getSkillGrade() })
   }
 
   @Test
   fun `buyLargeUpgrade requires experience and adds card`() {
     assertThrows(IllegalStateException::class.java) {
-      player.buyLargeUpgrade(SkillDecksInstance)
+      player.buyLargeUpgrade(skillDecks)
     }
     player.experience = 1
-    player.buyLargeUpgrade(SkillDecksInstance)
+    skillDecks.setBlueDeck(listOf(4)) // Card to be drawn
+    player.buyLargeUpgrade(skillDecks)
     assertEquals(0, player.experience)
     assertEquals(1, player.skillDeck.size)
     assertEquals(
       Grade.GRADE_BLUE,
-      with(SkillDecksInstance) { player.skillDeck.first().getSkillGrade() })
+      with(skillDecks) { player.skillDeck.first().getSkillGrade() })
   }
 
   @Test

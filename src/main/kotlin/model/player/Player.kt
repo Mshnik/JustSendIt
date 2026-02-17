@@ -138,7 +138,7 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
 
   /** Computes the bonus this player gets against the given [tile]. */
   fun computeBonus(tile: SlopeTile): Int {
-    return (0..playerCard.training.trainingCount).sumOf { i ->
+    return (0 until playerCard.training.trainingCount).sumOf { i ->
       val cardTraining = playerCard.training.trainingList[i]
 
       val applies = when (cardTraining.typeCase) {
