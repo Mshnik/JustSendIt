@@ -4,16 +4,19 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.Bounds
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
+import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.view.player.PlayerRenderer
 import javafx.animation.AnimationTimer
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
+import kotlin.math.round
 
 class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
   private val hexSize = 60.0 // Radius from center to corner
   private val margin = 60.0 // Extra space on sides.
-  private val bounds: Bounds = gameModel.tileMap.bounds()
+  val bounds: Bounds = gameModel.tileMap.bounds()
   private val playerRenderer: PlayerRenderer
 
   init {
@@ -42,5 +45,33 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
       }
     }
     playerRenderer.render(gameModel)
+  }
+
+  fun hexFromPixel(x: Double, y: Double): HexPoint {
+    val q = ((x - margin) / hexSize + bounds.minX) / 1.5
+    val r = ((y - margin) / hexSize + bounds.minY) / 1.732 - q / 2
+    return hexRound(q, r)
+  }
+
+  private fun hexRound(q: Double, r: Double): HexPoint {
+    val s = -q - r
+    var rq = round(q)
+    var rr = round(r)
+    val rs = round(s)
+
+    val qDiff = (rq - q).let { it * it }
+    val rDiff = (rr - r).let { it * it }
+    val sDiff = (rs - s).let { it * it }
+
+    if (qDiff > rDiff && qDiff > sDiff) {
+      rq = -rr - rs
+    } else if (rDiff > sDiff) {
+      rr = -rq - rs
+    }
+
+    return hexPoint {
+      this.q = rq.toInt()
+      this.r = rr.toInt()
+    }
   }
 }
