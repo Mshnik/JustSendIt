@@ -42,7 +42,7 @@ object HexExtensions {
     }
 
   /** Constructs a [HexPoint] with the given args. */
-  fun HexPoint(q: Int, r: Int) = hexPoint {
+  fun createHexPoint(q: Int, r: Int) = hexPoint {
     this.q = q
     this.r = r
   }

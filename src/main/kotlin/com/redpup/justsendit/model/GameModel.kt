@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model
 
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
+import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
@@ -82,8 +82,9 @@ class MutableGameModel(
   init {
     for (player in players) {
       player.buyStartingDeck(skillDecks)
-      player.location = HexPoint(0, 0)
+      player.location = createHexPoint(0, 0)
     }
+    apresDeck.reset()
     populateApresSlots()
   }
 
@@ -115,7 +116,7 @@ class MutableGameModel(
    * Sorts players in ascending order of points.
    * Returns true if the game is over, false otherwise.
    */
-  fun cleanup(): Boolean {
+  fun advanceDay(): Boolean {
     playerOrder.sortBy { players[it].points }
     if (clock.day < Clock.Params.MAX_DAY) {
       clock.nextDay()

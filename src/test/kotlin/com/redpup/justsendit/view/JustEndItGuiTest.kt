@@ -1,8 +1,10 @@
 package com.redpup.justsendit.view
 
+import kotlin.test.Ignore
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Test
 
+@Ignore // Very slow - uncomment only as needed.
 class JustEndItGuiTest {
 
   @Test

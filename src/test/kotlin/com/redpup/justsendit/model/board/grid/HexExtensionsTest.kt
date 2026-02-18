@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.board.grid
 
 import com.google.common.truth.Truth.assertThat
-import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
+import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.distanceTo
 import com.redpup.justsendit.model.board.grid.HexExtensions.dq
 import com.redpup.justsendit.model.board.grid.HexExtensions.dr
@@ -31,7 +31,7 @@ class HexExtensionsTest {
 
   @Test
   fun `test hex adjacency operator`() {
-    val start = HexPoint(0, 0)
+    val start = createHexPoint(0, 0)
     val north = start + HexDirection.HEX_DIRECTION_NORTH
     assertThat(north.q).isEqualTo(0)
     assertThat(north.r).isEqualTo(-1)
@@ -43,15 +43,15 @@ class HexExtensionsTest {
 
   @Test
   fun `test distance calculation`() {
-    val a = HexPoint(0, 0)
-    val b = HexPoint(2, 3) // Manhattan distance in hex grid
+    val a = createHexPoint(0, 0)
+    val b = createHexPoint(2, 3) // Manhattan distance in hex grid
     // q:2, r:3, s:-5. Dist = (abs(2)+abs(5)+abs(3))/2 = 5
     assertThat(a.distanceTo(b)).isEqualTo(5)
   }
 
   @Test
   fun `test pixel conversions`() {
-    val p = HexPoint(2, 0)
+    val p = createHexPoint(2, 0)
     assertThat(p.toX()).isEqualTo(3.0) // 2 * 1.5
     assertThat(p.toY()) // (0 + 2/2) * sqrt(3).isEqualTo(Math.sqrt(3.0))
   }

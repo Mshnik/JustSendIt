@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.supply
 
 import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
 
@@ -38,6 +39,9 @@ class ApresDeckImpl(path: String) : ApresDeck {
     shuffle = true
   )
   private val cards = reader().toMutableList()
+
+  /** Returns the list of cards for testing. */
+  internal fun getCards(): List<ApresCard> = cards.toList()
 
   /** Draws the top card from the Apres deck. */
   override fun draw() = Apres(cards.removeFirst())

@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.board.tile
 
 import com.google.common.truth.Truth.assertThat
-import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
+import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.util.TextProtoReader
@@ -25,10 +25,10 @@ class TileMapTest {
       override fun invoke(): List<MountainTile> = mockTiles
     }
 
-    val greenLocation = mountainTileLocation { point = HexPoint(0, 1); grade = Grade.GRADE_GREEN }
-    val blueLocation = mountainTileLocation { point = HexPoint(1, 0); grade = Grade.GRADE_BLUE }
+    val greenLocation = mountainTileLocation { point = createHexPoint(0, 1); grade = Grade.GRADE_GREEN }
+    val blueLocation = mountainTileLocation { point = createHexPoint(1, 0); grade = Grade.GRADE_BLUE }
     val liftLocation = mountainTileLocation {
-      point = HexPoint(0, 0)
+      point = createHexPoint(0, 0)
       lift = liftTile {
         color = LiftColor.LIFT_COLOR_CYAN; direction = LiftDirection.LIFT_DIRECTION_BOTTOM
       }
@@ -42,9 +42,9 @@ class TileMapTest {
     val grid = TileMap.constructMap(mockTilesReader, mockLocationsReader)
 
     assertThat(grid.size()).isEqualTo(3)
-    assertThat(grid[HexPoint(0, 1)]).isEqualTo(greenSlope)
-    assertThat(grid[HexPoint(1, 0)]).isEqualTo(blueSlope)
-    assertThat(grid[HexPoint(0, 0)]).isEqualTo(liftTile)
+    assertThat(grid[createHexPoint(0, 1)]).isEqualTo(greenSlope)
+    assertThat(grid[createHexPoint(1, 0)]).isEqualTo(blueSlope)
+    assertThat(grid[createHexPoint(0, 0)]).isEqualTo(liftTile)
   }
 
   @Test
@@ -53,7 +53,7 @@ class TileMapTest {
       override fun invoke(): List<MountainTile> = emptyList()
     }
 
-    val greenLocation = mountainTileLocation { point = HexPoint(0, 1); grade = Grade.GRADE_GREEN }
+    val greenLocation = mountainTileLocation { point = createHexPoint(0, 1); grade = Grade.GRADE_GREEN }
     val mockLocationsReader = object : TextProtoReader<MountainTileLocation> {
       override fun invoke(): List<MountainTileLocation> = listOf(greenLocation)
     }
@@ -70,7 +70,7 @@ class TileMapTest {
     }
 
     val liftLocation = mountainTileLocation {
-      point = HexPoint(0, 0)
+      point = createHexPoint(0, 0)
       lift = liftTile {
         color = LiftColor.LIFT_COLOR_CYAN; direction = LiftDirection.LIFT_DIRECTION_BOTTOM
       }
