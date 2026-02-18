@@ -58,7 +58,7 @@ class MutableGameModel(
     tileMap.entries().filter { it.value.hasLift() }
       .groupBy { it.value.lift.color }
 
-  override val players: MutableList<MutablePlayer> =
+  override val players: List<MutablePlayer> =
     TextProtoReaderImpl(
       playersPath, PlayerCardList::newBuilder,
       PlayerCardList.Builder::getPlayerList, shuffle = true
@@ -67,6 +67,7 @@ class MutableGameModel(
       .subList(0, playerHandlers.size)
       .mapIndexed { index, card -> MutablePlayer(card, playerHandlers[index]) }
       .toMutableList()
+  private val playerOrder = MutableList(players.size) { it }
   override val clock = MutableClock()
 
   init {
@@ -76,9 +77,12 @@ class MutableGameModel(
     }
   }
 
+  /** Returns the players in turn order. */
+  private fun playersInTurnOrder() = playerOrder.map { players[it] }
+
   /** Executes one turn for all players. Returns true if the day is now over, false otherwise. */
   fun turn(): Boolean {
-    for (player in players) {
+    for (player in playersInTurnOrder()) {
       if (player.isOnMountain) {
         var subTurn = 0
         do {
@@ -102,10 +106,10 @@ class MutableGameModel(
    * Returns true if the game is over, false otherwise.
    */
   fun cleanup(): Boolean {
-    players.sortBy { it.points }
+    playerOrder.sortBy { players[it].points }
     if (clock.day < Clock.Params.MAX_DAY) {
       clock.nextDay()
-      for (player in players) {
+      for (player in playersInTurnOrder()) {
         player.location = player.handler.getStartingLocation(player, this)
       }
       return false
