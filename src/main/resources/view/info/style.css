@@ -1,0 +1,12 @@
+.info-panel {
+    -fx-padding: 10;
+    -fx-background-color: #f4f4f4;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1px;
+}
+
+.section-title {
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 5 0 5 0;
+}

@@ -4,65 +4,89 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.util.toTitleCase
+import javafx.geometry.Insets
 import javafx.scene.control.Label
+import javafx.scene.control.Separator
 import javafx.scene.layout.VBox
 
 class InfoPanel(private val gameModel: GameModel) : VBox() {
 
-  private val hexInfoLabel = Label()
-  private val playersInfoVBox = VBox() // Changed to VBox to hold multiple player labels
+  private val hexInfoVBox = VBox()
+  private val playersInfoVBox = VBox()
 
   init {
-    this.prefWidth = 200.0 // Set preferred width for constant size
-    children.addAll(hexInfoLabel, playersInfoVBox)
+    this.prefWidth = 250.0
+    this.styleClass.add("info-panel")
+    this.spacing = 10.0
+    hexInfoVBox.spacing = 5.0
+    playersInfoVBox.spacing = 10.0
+    stylesheets.add(javaClass.getResource("/view/info/style.css")!!.toExternalForm())
+    children.addAll(hexInfoVBox, Separator(), playersInfoVBox)
   }
 
   fun updateHexInfo(tile: MountainTile) {
-    val info = StringBuilder("Hex Info:\n")
+    hexInfoVBox.children.clear()
+    val title = Label("Hex Info")
+    title.styleClass.add("section-title")
+    hexInfoVBox.children.add(title)
+
     if (tile.hasSlope()) {
-      info.append("  Slope:\n")
-      info.append("    Grade: ${tile.slope.grade.name.removePrefix("GRADE_").toTitleCase()}\n")
+      val info = StringBuilder()
+      info.append("Grade: ${tile.slope.grade.name.removePrefix("GRADE_").toTitleCase()}\n")
       info.append(
-        "    Condition: ${
+        "Condition: ${
           tile.slope.condition.name.removePrefix("CONDITION_").toTitleCase()
         }\n"
       )
-      info.append(
-        "    Hazards: ${
-          tile.slope.hazardsList.map {
-            it.name.removePrefix("HAZARD_").toTitleCase()
-          }
-        }\n"
-      )
+      if (tile.slope.hazardsList.isNotEmpty()) {
+        info.append(
+          "Hazards: ${
+            tile.slope.hazardsList.joinToString(", ") {
+              it.name.removePrefix("HAZARD_").toTitleCase()
+            }
+          }\n"
+        )
+      }
+      addInfoLabel(info.toString(), hexInfoVBox)
     }
     if (tile.hasLift()) {
-      info.append("  Lift:\n")
-      info.append("    Color: ${tile.lift.color.name.removePrefix("LIFT_COLOR_").toTitleCase()}\n")
+      val info = StringBuilder()
+      info.append("Lift Color: ${tile.lift.color.name.removePrefix("LIFT_COLOR_").toTitleCase()}\n")
       info.append(
-        "    Direction: ${
+        "Lift Direction: ${
           tile.lift.direction.name.removePrefix("LIFT_DIRECTION_").toTitleCase()
         }\n"
       )
+      addInfoLabel(info.toString(), hexInfoVBox)
     }
-    hexInfoLabel.text = info.toString()
   }
 
   fun updatePlayersInfo(players: List<Player>) {
-    playersInfoVBox.children.clear() // Clear previous player info
+    playersInfoVBox.children.clear()
     if (players.isNotEmpty()) {
-      playersInfoVBox.children.add(Label("Players on Hex:"))
+      val title = Label("Players on Hex")
+      title.styleClass.add("section-title")
+      playersInfoVBox.children.add(title)
       players.forEach { player ->
         val info = StringBuilder()
-        info.append("  Name: ${player.playerCard.name}\n")
-        info.append("  Points: ${player.points}\n")
-        info.append("  Experience: ${player.experience}\n")
-        playersInfoVBox.children.add(Label(info.toString()))
+        info.append("Name: ${player.playerCard.name}\n")
+        info.append("Points: ${player.points}\n")
+        info.append("Experience: ${player.experience}\n")
+        val playerBox = VBox()
+        playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
+        addInfoLabel(info.toString(), playerBox)
+        playersInfoVBox.children.add(playerBox)
       }
     }
   }
 
   fun clear() {
-    hexInfoLabel.text = ""
-    playersInfoVBox.children.clear() // Clear all player info
+    hexInfoVBox.children.clear()
+    playersInfoVBox.children.clear()
+  }
+
+  private fun addInfoLabel(text: String, parent: VBox) {
+    val label = Label(text)
+    parent.children.add(label)
   }
 }
