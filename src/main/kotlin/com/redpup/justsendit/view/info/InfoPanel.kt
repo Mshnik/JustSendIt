@@ -20,7 +20,9 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
     this.spacing = 10.0
     hexInfoVBox.spacing = 5.0
     playersInfoVBox.spacing = 10.0
-    stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/info/style.css")!!.toExternalForm())
+    stylesheets.add(
+      javaClass.getResource("/com/redpup/justsendit/view/info/style.css")!!.toExternalForm()
+    )
     children.addAll(hexInfoVBox, Separator(), playersInfoVBox)
   }
 
@@ -32,6 +34,7 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
 
     if (tile.hasSlope()) {
       val info = StringBuilder()
+      info.append("Difficulty: ${tile.slope.difficulty}\n")
       info.append("Grade: ${tile.slope.grade.name.removePrefix("GRADE_").toTitleCase()}\n")
       info.append(
         "Condition: ${
@@ -72,6 +75,8 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
         info.append("Name: ${player.playerCard.name}\n")
         info.append("Points: ${player.points}\n")
         info.append("Experience: ${player.experience}\n")
+        info.append("Training: ${player.training}\n")
+        info.append("Abilities: ${player.abilities}\n")
         val playerBox = VBox()
         playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
         addInfoLabel(info.toString(), playerBox)
