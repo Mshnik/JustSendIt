@@ -1,4 +1,4 @@
-# proto-file: model/board/tile/tile.proto
+# proto-file: com/redpup/justsendit/model/board/tile/tile.proto
 # proto-message: MountainTileList
 
 tiles {

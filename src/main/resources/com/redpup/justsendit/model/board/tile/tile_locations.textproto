@@ -1,4 +1,4 @@
-# proto-file: model/board/tile/tile_location.proto
+# proto-file: com/redpup/justsendit/model/board/tile/tile_location.proto
 # proto-message: MountainTileLocationList
 
 # Middle Column

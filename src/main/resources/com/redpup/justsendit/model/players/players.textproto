@@ -1,4 +1,4 @@
-# proto-file: model/player/player.proto
+# proto-file: com/redpup/justsendit/model/player/player.proto
 # proto-message: PlayerCardList
 
 player {

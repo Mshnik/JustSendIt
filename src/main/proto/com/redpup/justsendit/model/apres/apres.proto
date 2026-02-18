@@ -1,0 +1,23 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.apres;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.apres.proto";
+
+/** An apres card that can be claimed when a player exits the mountain. */
+message ApresCard {
+  // The name of this apres card.
+  string name = 1;
+  // Which days this apres card is available. Will be some subset of [1,2,3].
+  repeated int32 available_days = 2;
+  // Text for the major apres reward, claimed by the first player to arrive.
+  string major_reward_text = 3;
+  // Text for the minor apres reward, claimed by the second player to arrive.
+  string minor_reward_text = 4;
+}
+
+/** A list of apres cards. */
+message ApresCardList {
+  repeated ApresCard apres = 1;
+}
