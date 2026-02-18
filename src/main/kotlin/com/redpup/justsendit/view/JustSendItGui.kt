@@ -32,10 +32,8 @@ class JustSendItGui : Application() {
         infoPanel.clear()
       }
 
-      val player = gameModel.players.find { it.location == hex }
-      if (player != null) {
-        infoPanel.updatePlayerInfo(player)
-      }
+      val playersOnHex = gameModel.players.filter { it.location == hex }
+      infoPanel.updatePlayersInfo(playersOnHex)
     }
 
     val root = BorderPane()

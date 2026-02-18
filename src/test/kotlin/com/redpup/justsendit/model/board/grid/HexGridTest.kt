@@ -2,6 +2,8 @@ package com.redpup.justsendit.model.board.grid
 
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
+import com.redpup.justsendit.model.board.grid.HexExtensions.toX
+import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import org.junit.jupiter.api.Test
 
 class HexGridTest {

@@ -9,10 +9,11 @@ import javafx.scene.layout.VBox
 class InfoPanel(private val gameModel: GameModel) : VBox() {
 
     private val hexInfoLabel = Label()
-    private val playerInfoLabel = Label()
+    private val playersInfoVBox = VBox() // Changed to VBox to hold multiple player labels
 
     init {
-        children.addAll(hexInfoLabel, playerInfoLabel)
+        this.prefWidth = 200.0 // Set preferred width for constant size
+        children.addAll(hexInfoLabel, playersInfoVBox)
     }
 
     fun updateHexInfo(tile: MountainTile) {
@@ -31,17 +32,22 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
         hexInfoLabel.text = info.toString()
     }
 
-    fun updatePlayerInfo(player: Player) {
-        val info = StringBuilder("Player Info:\n")
-        info.append("  Name: ${player.playerCard.name}\n")
-        info.append("  Points: ${player.points}\n")
-        info.append("  Experience: ${player.experience}\n")
-        info.append("  Location: ${player.location}\n")
-        playerInfoLabel.text = info.toString()
+    fun updatePlayersInfo(players: List<Player>) {
+        playersInfoVBox.children.clear() // Clear previous player info
+        if (players.isNotEmpty()) {
+            playersInfoVBox.children.add(Label("Players on Hex:"))
+            players.forEach { player ->
+                val info = StringBuilder()
+                info.append("  Name: ${player.playerCard.name}\n")
+                info.append("  Points: ${player.points}\n")
+                info.append("  Experience: ${player.experience}\n")
+                playersInfoVBox.children.add(Label(info.toString()))
+            }
+        }
     }
 
     fun clear() {
         hexInfoLabel.text = ""
-        playerInfoLabel.text = ""
+        playersInfoVBox.children.clear() // Clear all player info
     }
 }

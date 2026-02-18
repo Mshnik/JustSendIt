@@ -1,15 +1,12 @@
 package com.redpup.justsendit.model
 
+import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
-import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMap.constructMap
-import com.redpup.justsendit.model.board.tile.proto.LiftColor
-import com.redpup.justsendit.model.board.tile.proto.MountainTile
-import com.redpup.justsendit.model.board.tile.proto.MountainTileList
-import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
+import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.BasicPlayerHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
@@ -17,6 +14,7 @@ import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.player.proto.PlayerCardList
+import com.redpup.justsendit.model.proto.*
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.util.TextProtoReaderImpl
 
