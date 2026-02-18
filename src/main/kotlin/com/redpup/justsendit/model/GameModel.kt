@@ -93,7 +93,7 @@ class MutableGameModel(
         player.ingestTurn()
       }
     }
-    if (clock.turn < Clock.Params.MAX_TURN) {
+    if (clock.turn < clock.maxTurn) {
       clock.next()
       return false
     } else {
@@ -242,16 +242,27 @@ interface Clock {
   /** What turn of day it is. */
   val turn: Int
 
+  /** The max turn of this day. */
+  val maxTurn: Int
+
   /** What game of day it is. */
   val day: Int
 
   object Params {
-    const val MAX_TURN = 8
     const val MAX_DAY = 3
   }
 }
 
 class MutableClock(override var turn: Int = 1, override var day: Int = 1) : Clock {
+  /** Returns the max turn of the day. */
+  override val maxTurn: Int
+    get() = when (day) {
+      1 -> 9
+      2 -> 8
+      3 -> 7
+      else -> 0
+    }
+
   /** Advances to the next turn. */
   fun next() {
     turn++
