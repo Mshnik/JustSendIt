@@ -190,6 +190,7 @@ class GameModelTest {
     game.turn()
 
     assertThat(player.location).isEqualTo(hexPoint { q = 0; r = -1 })
+    assertThat(player.apresLink).isNull()
     assertThat(game.clock.turn).isEqualTo(2)
   }
 
@@ -206,6 +207,7 @@ class GameModelTest {
     game.turn()
 
     assertThat(player.location).isNull()
+    assertThat(player.apresLink).isEqualTo(1)
     assertThat(player.isOnMountain).isFalse()
     assertThat(game.clock.turn).isEqualTo(2)
   }
@@ -234,6 +236,8 @@ class GameModelTest {
     assertThat(player.points).isEqualTo(5)
     // turn.speed is reset after turn, so we can't check it here.
     assertThat(player.experience).isEqualTo(0)
+
+    assertThat(player.apresLink).isNull()
   }
 
   @Test

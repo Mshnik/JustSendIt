@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.proto.PlayerTrainingKt.training
 import com.redpup.justsendit.model.player.proto.ability
@@ -35,6 +36,15 @@ class PlayerTest {
       abilities += ability { name = "Test Ability"; cost = 2 }
     }
     player = MutablePlayer(playerCard, mock<PlayerHandler>())
+  }
+
+  @Test
+  fun `isOnMountain checks player location`() {
+    player.location = hexPoint { q = 0; r = 1 }
+    assertThat(player.isOnMountain).isTrue()
+
+    player.location = null
+    assertThat(player.isOnMountain).isFalse()
   }
 
   @Test

@@ -245,10 +245,12 @@ class MutableGameModel(
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
-    check(tile.apresLink > 0) { "Location $location does not have an exit" }
+    val link = tile.apresLink
+    check(link > 0) { "Location $location does not have an exit" }
 
     player.location = null
-    // TODO: Claim apres reward.
+    player.apresLink = link
+    apres[link].apply(player, players.count { it.apresLink == link } == 1)
   }
 
   companion object {

@@ -39,6 +39,9 @@ interface Player {
   /** Returns true iff the player is on the mountain. */
   val isOnMountain: Boolean get() = location != null
 
+  /** The apres link the player took this day. Null if still on mountain today. */
+  val apresLink: Int?
+
   /** A single turn for the player. */
   interface Turn {
     /** How many points (fun) this player has gained in this turn. */
@@ -65,6 +68,7 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   override val training = mutableListOf(0, 0, 0)
   override val abilities = mutableListOf(false, false)
   override var location: HexPoint? = null
+  override var apresLink: Int? = null
   override var turn = MutableTurn()
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
