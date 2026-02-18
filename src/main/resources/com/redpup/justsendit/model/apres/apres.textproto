@@ -1,3 +1,76 @@
 # proto-file: com/redpup/justsendit/model/apres/apres.proto
 # proto-message: ApresCardList
 
+apres {
+  name: "Buy Gear"
+  available_days: 1
+  available_days: 2
+  major_reward_text: "Gain 2 blue, 4 black skill cards"
+  minor_reward_text: "Gain 4 blue, 1 black skill cards"
+}
+apres {
+  name: "Tune-Up"
+  available_days: 1
+  available_days: 2
+  major_reward_text: "Look at your deck and remove up to 3 cards"
+  minor_reward_text: "Look at your deck and remove up to 2 cards"
+}
+apres {
+  name: "Study"
+  available_days: 1
+  available_days: 2
+  major_reward_text: "Gain 2 experience"
+  minor_reward_text: "Gain 1 experience"
+}
+apres {
+  name: "First Chair"
+  available_days: 1
+  available_days: 2
+  major_reward_text: "Take two bonus turns tomorrow"
+  minor_reward_text: "Take a bonus turn tomorrow"
+}
+apres {
+  name: "Sauna"
+  available_days: 1
+  available_days: 2
+  major_reward_text: "Tomorrow, gain 4 fun when you succeed by 5 or more"
+  minor_reward_text: "Tomorrow, gain 2 fun when you succeed by 5 or more"
+}
+apres {
+  name: "Bar"
+  available_days: 1
+  available_days: 2
+  available_days: 3
+  major_reward_text: "Shuffle your deck and reveal 5 cards, gain fun equal to the sum"
+  minor_reward_text: "Shuffle your deck and reveal 3 cards, gain fun equal to the sum"
+}
+apres {
+  name: "Dining"
+  available_days: 1
+  available_days: 2
+  available_days: 3
+  major_reward_text: "Gain 1 fun for each card in your discard at end of day"
+  minor_reward_text: "Gain 1 fun for every 2 cards in your discard at end of day, rounded down"
+}
+apres {
+  name: "Village"
+  available_days: 1
+  available_days: 2
+  available_days: 3
+  major_reward_text: "Gain 1 fun for each card left in your deck at end of day"
+  minor_reward_text: "Gain 1 fun for every 2 cards left in your deck at end of day, rounded down"
+}
+apres {
+  name: "Massage"
+  available_days: 2
+  available_days: 3
+  major_reward_text: "Gain 5 fun for each experience in training"
+  minor_reward_text: "Gain 2 fun for each experience in training"
+}
+apres {
+  name: "Journal"
+  available_days: 2
+  available_days: 3
+  major_reward_text: "Gain 10 fun for each unlocked ability"
+  minor_reward_text: "Gain 5 fun for each unlocked ability"
+}
