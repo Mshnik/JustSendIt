@@ -20,7 +20,7 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
     this.spacing = 10.0
     hexInfoVBox.spacing = 5.0
     playersInfoVBox.spacing = 10.0
-    stylesheets.add(javaClass.getResource("/view/info/style.css")!!.toExternalForm())
+    stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/info/style.css")!!.toExternalForm())
     children.addAll(hexInfoVBox, Separator(), playersInfoVBox)
   }
 
