@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model
 
+import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.grid.HexExtensions.HexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
@@ -17,6 +18,7 @@ import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.player.proto.PlayerCardList
+import com.redpup.justsendit.model.supply.ApresDeckImpl
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.util.TextProtoReaderImpl
 
@@ -28,6 +30,9 @@ interface GameModel {
   /** Immutable access to all players. */
   val players: List<Player>
 
+  /** The apres cards that are available at each location. Changes each day. */
+  val apres: List<Apres>
+
   /**Immutable access to the clock. */
   val clock: Clock
 }
@@ -37,6 +42,7 @@ class MutableGameModel(
   tilesPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tiles.textproto",
   locationsPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tile_locations.textproto",
   playersPath: String = "src/main/resources/com/redpup/justsendit/model/players/players.textproto",
+  apresPath: String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto",
   playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
   val skillDecks: SkillDecks,
 ) : GameModel {
@@ -58,6 +64,9 @@ class MutableGameModel(
     tileMap.entries().filter { it.value.hasLift() }
       .groupBy { it.value.lift.color }
 
+  private val apresDeck = ApresDeckImpl(apresPath)
+  override val apres: MutableList<Apres> = mutableListOf()
+
   override val players: List<MutablePlayer> =
     TextProtoReaderImpl(
       playersPath, PlayerCardList::newBuilder,
@@ -75,6 +84,7 @@ class MutableGameModel(
       player.buyStartingDeck(skillDecks)
       player.location = HexPoint(0, 0)
     }
+    populateApresSlots()
   }
 
   /** Returns the players in turn order. */
@@ -109,12 +119,21 @@ class MutableGameModel(
     playerOrder.sortBy { players[it].points }
     if (clock.day < Clock.Params.MAX_DAY) {
       clock.nextDay()
+      populateApresSlots()
       for (player in playersInTurnOrder()) {
         player.location = player.handler.getStartingLocation(player, this)
       }
       return false
     } else {
       return true
+    }
+  }
+
+  /** Populates the apres slots for the current day. */
+  private fun populateApresSlots() {
+    apres.clear()
+    for (i in 1..APRES_SLOTS) {
+      apres.add(apresDeck.drawForDay(clock.day))
     }
   }
 
@@ -234,6 +253,9 @@ class MutableGameModel(
   companion object {
     /** Multiplier of speed to difficulty. */
     const val SPEED_DIFFICULTY_MODIFIER = 2
+
+    /** Number of apres slots. */
+    const val APRES_SLOTS = 3
   }
 }
 
