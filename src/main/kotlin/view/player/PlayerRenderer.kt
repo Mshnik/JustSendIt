@@ -3,6 +3,7 @@ package com.redpup.justsendit.view.player
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
+import com.redpup.justsendit.model.player.Player
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
@@ -36,27 +37,43 @@ class PlayerRenderer(
       val totalHeight = totalPlayersOnHex * playerOnHexVerticalSpacing
 
       players.forEachIndexed { i, (player, playerIndex) ->
-        val name = player.playerCard.name
-        val nameWidth = name.length * 6.5
-        val ovalWidth = nameWidth + playerOvalWidthPadding
-        val color = playerColors[playerIndex % playerColors.size]
-
-        val playerX = x - ovalWidth / 2
-        val playerY = y - totalHeight / 2 + i * playerOnHexVerticalSpacing
-
-        // Draw white filled oval
-        gc.fill = Color.WHITE
-        gc.fillOval(playerX, playerY, ovalWidth, playerOvalHeight)
-
-        // Draw colored oval border
-        gc.stroke = color
-        gc.strokeOval(playerX, playerY, ovalWidth, playerOvalHeight)
-
-        // Draw player name
-        gc.fill = color
-        gc.font = Font.font("Verdana", FontWeight.BOLD, 12.0)
-        gc.fillText(name, playerX + playerOvalWidthPadding / 2, playerY + playerOvalHeight - 2)
+        renderPlayer(
+          player,
+          playerIndex,
+          x,
+          y,
+          totalHeight,
+          i
+        )
       }
     }
+  }
+
+  /** Renders [player] at [x], [y]. */
+  private fun renderPlayer(
+    player: Player, playerIndex: Int, x: Double, y: Double,
+    totalHeight: Double,
+    i: Int,
+  ) {
+    val name = player.playerCard.name
+    val nameWidth = name.length * 6.5
+    val ovalWidth = nameWidth + playerOvalWidthPadding
+    val color = playerColors[playerIndex % playerColors.size]
+
+    val playerX = x - ovalWidth / 2
+    val playerY = y - totalHeight / 2 + i * playerOnHexVerticalSpacing
+
+    // Draw white filled oval
+    gc.fill = Color.WHITE
+    gc.fillOval(playerX, playerY, ovalWidth, playerOvalHeight)
+
+    // Draw colored oval border
+    gc.stroke = color
+    gc.strokeOval(playerX, playerY, ovalWidth, playerOvalHeight)
+
+    // Draw player name
+    gc.fill = color
+    gc.font = Font.font("Verdana", FontWeight.BOLD, 12.0)
+    gc.fillText(name, playerX + playerOvalWidthPadding / 2, playerY + playerOvalHeight - 2)
   }
 }
