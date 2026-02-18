@@ -1,9 +1,9 @@
-package com.redpup.justsendit.view.board
+package com.redpup.justsendit.view
 
 import org.junit.jupiter.api.Assertions.assertDoesNotThrow
 import org.junit.jupiter.api.Test
 
-class HexGridViewerTest {
+class JustEndItGuiTest {
 
   @Test
   fun `init method initializes GameModel without error`() {
@@ -23,7 +23,7 @@ class HexGridViewerTest {
       // Platform may already be running, which is fine.
     }
 
-    val viewer = HexGridViewer()
+    val viewer = JustSendItGui()
 
     assertDoesNotThrow {
       viewer.init()
