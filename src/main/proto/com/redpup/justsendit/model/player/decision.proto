@@ -5,7 +5,7 @@ package com.redpup.justsendit.model.player;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
-import "model/board/hex/hex_point.proto";
+import "com/redpup/justsendit/model/board/hex/hex_point.proto";
 import "google/protobuf/empty.proto";
 
 /** Different decisions a player can make while on the mountain. */

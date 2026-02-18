@@ -5,8 +5,8 @@ package com.redpup.justsendit.model.player;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
-import "model/grade.proto";
-import "model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/grade.proto";
+import "com/redpup/justsendit/model/board/tile/slope.proto";
 
 /** The immutable params associated with a player. */
 message PlayerCard {

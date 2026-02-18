@@ -5,7 +5,7 @@ package com.redpup.justsendit.model.board.tile;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.board.tile.proto";
 
-import "model/grade.proto";
+import "com/redpup/justsendit/model/grade.proto";
 
 /** Snow conditions of a ski trail. */
 enum Condition {
