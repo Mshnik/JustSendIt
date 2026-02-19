@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
@@ -93,15 +94,23 @@ class ApresTest {
   }
 
   @Test
-  @Ignore // TODO later.
   fun `Sauna applies correct major reward`() {
     val sauna = Sauna(apresCard { name = "Sauna" })
+    player.mutate {
+      sauna.apply(this, true, gameModel)
+      ingestDayAndCopyNextDay()
+    }
+    assertThat(player.day.overkillBonusPoints).isEqualTo(OverkillBonus(5, 4))
   }
 
   @Test
-  @Ignore // TODO later.
   fun `Sauna applies correct minor reward`() {
     val sauna = Sauna(apresCard { name = "Sauna" })
+    player.mutate {
+      sauna.apply(this, false, gameModel)
+      ingestDayAndCopyNextDay()
+    }
+    assertThat(player.day.overkillBonusPoints).isEqualTo(OverkillBonus(5, 2))
   }
 
   @Test

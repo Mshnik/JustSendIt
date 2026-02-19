@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
@@ -215,20 +216,19 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn`() {
+  fun `successful SKI_RIDE turn with success`() {
     val game = createGameModel()
-    game.mutate { advanceDay() }
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
       skillDeck.clear()
-      skillDeck.addAll(listOf(5, 5)) // Guaranteed success (5+5 > 5)
+      skillDeck.addAll(listOf(6)) // Guaranteed success (6 > 5)
     }
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       skiRide = skiRideDecision {
         direction = HexDirection.HEX_DIRECTION_SOUTH
-        numCards = 2
+        numCards = 1
       }
     })
     testDecisionHandler.decisionQueue.add(mountainDecision {
@@ -237,10 +237,111 @@ class GameModelTest {
 
     game.mutate { turn() }
 
+    assertThat(player.day.experience).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(5)
-    // turn.speed is reset after turn, so we can't check it here.
-    assertThat(player.experience).isEqualTo(0)
+    assertThat(player.apresLink).isNull()
+  }
 
+  @Test
+  fun `successful SKI_RIDE turn with exact success`() {
+    val game = createGameModel()
+    val player = game.players[0]
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(5)) // Guaranteed exact success (5 == 5)
+    }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    })
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      pass = empty {}
+    }) // End turn
+
+    game.mutate { turn() }
+
+    assertThat(player.day.experience).isEqualTo(1)
+    assertThat(player.day.mountainPoints).isEqualTo(5)
+    assertThat(player.apresLink).isNull()
+  }
+
+  @Test
+  fun `successful SKI_RIDE turn with partial failure`() {
+    val game = createGameModel()
+    val player = game.players[0]
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(3)) // Guaranteed partial success (2.5 <= 3 < 5)
+    }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    }) // Ends turn
+
+    game.mutate { turn() }
+
+    assertThat(player.day.experience).isEqualTo(1)
+    assertThat(player.day.mountainPoints).isEqualTo(0)
+    assertThat(player.apresLink).isNull()
+  }
+
+  @Test
+  fun `successful SKI_RIDE turn with full failure`() {
+    val game = createGameModel()
+    val player = game.players[0]
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(2)) // Guaranteed full success (2 <= 2.5)
+    }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    }) // Ends turn
+
+    game.mutate { turn() }
+
+    assertThat(player.day.experience).isEqualTo(0)
+    assertThat(player.day.mountainPoints).isEqualTo(0)
+    assertThat(player.apresLink).isNull()
+  }
+
+  @Test
+  fun `successful SKI_RIDE turn with success with overkill`() {
+    val game = createGameModel()
+    val player = game.players[0]
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(10)) // Guaranteed success (10 > 5)
+      day.overkillBonusPoints = OverkillBonus(5, 4)
+    }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    })
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      pass = empty {}
+    }) // End turn
+
+    game.mutate { turn() }
+
+    assertThat(player.day.experience).isEqualTo(0)
+    assertThat(player.day.mountainPoints).isEqualTo(9) // 5 + 4
     assertThat(player.apresLink).isNull()
   }
 

@@ -130,7 +130,7 @@ class MutableGameModel(
   fun advanceDay(): Boolean {
     // Ingest points and award the best day on mountain.
     players.maxBy { it.day.mountainPoints }.day.bestDayPoints += BEST_DAY_AWARD[clock.day]!!
-    players.forEach { it.ingestDay() }
+    players.forEach { it.ingestDayAndCopyNextDay() }
     playerOrder.sortBy { players[it].points }
 
     // Update clock, advance to next day if there is one.
@@ -227,6 +227,9 @@ class MutableGameModel(
     val success = skill >= difficulty
     if (success) {
       player.turn.points += difficulty
+      player.day.overkillBonusPoints
+        ?.takeIf { skill - difficulty >= it.threshold }
+        ?.let { player.turn.points += it.bonus }
       player.turn.speed++
     }
     if (skill <= difficulty && skill >= difficulty.toDouble() / 2.0) {

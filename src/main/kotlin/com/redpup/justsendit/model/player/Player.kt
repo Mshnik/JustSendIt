@@ -50,6 +50,12 @@ interface Player {
     /** How much experience this player has gained in the day. */
     val experience: Int
 
+    /** A bonus for winning by a large amount. */
+    data class OverkillBonus(val threshold: Int, val bonus: Int)
+
+    /** The overkill bonus applied to this day, if any. */
+    val overkillBonusPoints: OverkillBonus?
+
     /** How many points (fun) this player has gained in this day on the mountain. */
     val mountainPoints: Int
 
@@ -84,14 +90,19 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   Player {
   override var points = 0; private set
   override var experience = 0; private set
-  override val skillDeck = mutableListOf<Int>()
-  override val skillDiscard = mutableListOf<Int>()
-  override val training = mutableListOf(0, 0, 0)
-  override val abilities = mutableListOf(false, false)
   override var location: HexPoint? = null
   override var apresLink: Int? = null
+
   override val turn = MutableTurn()
   override val day = MutableDay()
+
+  val nextDay = MutableDay()
+
+  override val skillDeck = mutableListOf<Int>()
+  override val skillDiscard = mutableListOf<Int>()
+
+  override val training = mutableListOf(0, 0, 0)
+  override val abilities = mutableListOf(false, false)
 
   /** Applies [fn] to this player. */
   override fun mutate(fn: MutablePlayer.() -> Unit) {
@@ -108,7 +119,7 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   }
 
   /** Shuffles all cards from discard back into skill deck. */
-  fun refreshSkillDeck(): Unit {
+  fun refreshSkillDeck() {
     skillDeck.addAll(skillDiscard)
     skillDeck.shuffle()
     skillDiscard.clear()
@@ -122,12 +133,14 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   }
 
   /** Ingests the contents of [day] into this player. */
-  fun ingestDay() {
+  fun ingestDayAndCopyNextDay() {
     experience += day.experience
     points += day.mountainPoints
     points += day.bestDayPoints
     points += day.apresPoints
     day.clear()
+    day.copyFrom(nextDay)
+    nextDay.clear()
   }
 
   /** Buys the starting deck of cards. */
@@ -213,6 +226,7 @@ class MutableTurn : Player.Turn {
 
 /** A mutable instance of a player's turn. */
 class MutableDay : Player.Day {
+  override var overkillBonusPoints : Player.Day.OverkillBonus? = null
   override var experience = 0
   override var mountainPoints = 0
   override var bestDayPoints = 0
@@ -220,9 +234,19 @@ class MutableDay : Player.Day {
 
   /** Clears this mutable experience. */
   fun clear() {
+    overkillBonusPoints = null
     experience = 0
     mountainPoints = 0
     bestDayPoints = 0
     apresPoints = 0
+  }
+
+  /** Copies the contents of [other] into this. */
+  fun copyFrom(other: MutableDay) {
+    overkillBonusPoints = other.overkillBonusPoints
+    experience = other.experience
+    mountainPoints = other.mountainPoints
+    bestDayPoints = other.bestDayPoints
+    apresPoints = other.apresPoints
   }
 }

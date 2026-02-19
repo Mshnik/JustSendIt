@@ -4,6 +4,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 
 class Sauna(override val apresCard: ApresCard) : Apres {
   override fun apply(
@@ -12,9 +13,9 @@ class Sauna(override val apresCard: ApresCard) : Apres {
     gameModel: GameModel,
   ) {
     if (isFirstPlayerToArrive) {
-      // TODO: next day bonus of 4.
+      player.nextDay.overkillBonusPoints = OverkillBonus(5, 4)
     } else {
-      // TODO: next day bonus of 2.
+      player.nextDay.overkillBonusPoints = OverkillBonus(5, 2)
     }
   }
 }

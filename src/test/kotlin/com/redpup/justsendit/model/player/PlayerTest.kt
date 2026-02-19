@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.player
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
+import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 import com.redpup.justsendit.model.player.proto.PlayerTrainingKt.training
 import com.redpup.justsendit.model.player.proto.ability
 import com.redpup.justsendit.model.player.proto.playerCard
@@ -96,12 +97,27 @@ class PlayerTest {
     player.day.mountainPoints = 5
     player.day.bestDayPoints = 10
     player.day.apresPoints = 20
-    player.ingestDay()
+    player.ingestDayAndCopyNextDay()
 
     assertThat(player.points).isEqualTo(35)
     assertThat(player.day.mountainPoints).isEqualTo(0)
     assertThat(player.day.bestDayPoints).isEqualTo(0)
     assertThat(player.day.apresPoints).isEqualTo(0)
+  }
+
+  @Test
+  fun `ingestDay copies next day`() {
+    player.nextDay.overkillBonusPoints = OverkillBonus(5, 4)
+    player.nextDay.mountainPoints = 5
+    player.nextDay.bestDayPoints = 10
+    player.nextDay.apresPoints = 20
+    player.ingestDayAndCopyNextDay()
+
+    assertThat(player.points).isEqualTo(0)
+    assertThat(player.day.overkillBonusPoints).isEqualTo(OverkillBonus(5, 4))
+    assertThat(player.day.mountainPoints).isEqualTo(5)
+    assertThat(player.day.bestDayPoints).isEqualTo(10)
+    assertThat(player.day.apresPoints).isEqualTo(20)
   }
 
   @Test
@@ -119,7 +135,7 @@ class PlayerTest {
       player.buySmallUpgrade(skillDecks)
     }
     player.day.experience = 1
-    player.ingestDay()
+    player.ingestDayAndCopyNextDay()
     skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
     player.buySmallUpgrade(skillDecks)
     assertThat(player.experience).isEqualTo(0)
@@ -135,7 +151,7 @@ class PlayerTest {
       player.buyLargeUpgrade(skillDecks)
     }
     player.day.experience = 1
-    player.ingestDay()
+    player.ingestDayAndCopyNextDay()
     skillDecks.setBlueDeck(listOf(4)) // Card to be drawn
     player.buyLargeUpgrade(skillDecks)
     assertThat(player.experience).isEqualTo(0)
@@ -151,7 +167,7 @@ class PlayerTest {
       player.buyTraining(0)
     }
     player.day.experience = 1
-    player.ingestDay()
+    player.ingestDayAndCopyNextDay()
     player.buyTraining(0)
     assertThat(player.experience).isEqualTo(0)
     assertThat(player.training[0]).isEqualTo(1)
@@ -163,7 +179,7 @@ class PlayerTest {
       player.buyAbility(0)
     }
     player.day.experience = 2
-    player.ingestDay()
+    player.ingestDayAndCopyNextDay()
     player.buyAbility(0)
     assertThat(player.experience).isEqualTo(0)
     assertThat(player.abilities[0]).isTrue()
