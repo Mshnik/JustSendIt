@@ -22,13 +22,14 @@ apres {
   major_reward_text: "Gain 2 experience"
   minor_reward_text: "Gain 1 experience"
 }
-apres {
-  name: "First Chair"
-  available_days: 1
-  available_days: 2
-  major_reward_text: "Take two bonus turns tomorrow"
-  minor_reward_text: "Take a bonus turn tomorrow"
-}
+# TODO: Uncomment once supported.
+#apres {
+#  name: "First Chair"
+#  available_days: 1
+#  available_days: 2
+#  major_reward_text: "Take two bonus turns tomorrow"
+#  minor_reward_text: "Take a bonus turn tomorrow"
+#}
 apres {
   name: "Sauna"
   available_days: 1
