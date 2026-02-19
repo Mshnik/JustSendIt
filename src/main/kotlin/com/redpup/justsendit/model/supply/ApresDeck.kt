@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.supply
 
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.apres.ApresFactory
+import com.redpup.justsendit.model.apres.ApresFactoryImpl
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
@@ -32,20 +32,20 @@ interface ApresDeck {
 }
 
 /** Implementation of [ApresDeck]. */
-class ApresDeckImpl(path: String) : ApresDeck {
+open class ApresDeckImpl(path: String) : ApresDeck {
   private val reader = TextProtoReaderImpl(
     path,
     ApresCardList::newBuilder,
     ApresCardList.Builder::getApresList,
     shuffle = true
   )
-  private val cards = reader().toMutableList()
+  protected val cards = reader().toMutableList()
 
   /** Returns the list of cards for testing. */
   internal fun getCards(): List<ApresCard> = cards.toList()
 
   /** Draws the top card from the Apres deck. */
-  override fun draw() = ApresFactory.create(cards.removeFirst())
+  override fun draw() = ApresFactoryImpl.create(cards.removeFirst())
 
   /** Tucks the given card under the apres deck. */
   override fun tuck(apres: Apres) {

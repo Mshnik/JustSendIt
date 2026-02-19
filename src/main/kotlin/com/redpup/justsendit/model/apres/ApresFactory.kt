@@ -1,33 +1,28 @@
 package com.redpup.justsendit.model.apres
 
-import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.ApresCard
-import com.redpup.justsendit.model.player.MutablePlayer
+
+interface ApresFactory {
+  /** Factories registered by name. */
+  val factories: Map<String, (ApresCard) -> Apres>
+
+  /** Creates an [Apres] from an [ApresCard] using this factory. */
+  fun create(apresCard: ApresCard): Apres = factories[apresCard.name]!!(apresCard)
+}
 
 /** Factory for creating [Apres] objects from [ApresCard]s. */
-object ApresFactory {
-  fun create(apresCard: ApresCard): Apres {
-    return when (apresCard.name) {
-      "Buy Gear" -> BuyGear(apresCard)
-      "Tune-Up" -> TuneUp(apresCard)
-      "Study" -> Study(apresCard)
-      "First Chair" -> FirstChair(apresCard)
-      "Sauna" -> Sauna(apresCard)
-      "Bar" -> Bar(apresCard)
-      "Dining" -> Dining(apresCard)
-      "Village" -> Village(apresCard)
-      "Massage" -> Massage(apresCard)
-      "Journal" -> Journal(apresCard)
-      else -> object : Apres {
-        override val apresCard: ApresCard = apresCard
-        override fun apply(
-          player: MutablePlayer,
-          isFirstPlayerToArrive: Boolean,
-          gameModel: GameModel,
-        ) {
-        }
-      }
-    }
-  }
+object ApresFactoryImpl : ApresFactory {
+  override val factories: Map<String, (ApresCard) -> Apres> = mapOf(
+    "Buy Gear" to { apresCard -> BuyGear(apresCard) },
+    "Tune-Up" to { apresCard -> TuneUp(apresCard) },
+    "Study" to { apresCard -> Study(apresCard) },
+    "First Chair" to { apresCard -> FirstChair(apresCard) },
+    "Sauna" to { apresCard -> Sauna(apresCard) },
+    "Bar" to { apresCard -> Bar(apresCard) },
+    "Dining" to { apresCard -> Dining(apresCard) },
+    "Village" to { apresCard -> Village(apresCard) },
+    "Massage" to { apresCard -> Massage(apresCard) },
+    "Journal" to { apresCard -> Journal(apresCard) },
+  )
 }

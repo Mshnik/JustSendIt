@@ -2,6 +2,7 @@ package com.redpup.justsendit.model
 
 import com.google.common.truth.Truth.assertThat
 import com.google.protobuf.empty
+import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -13,11 +14,17 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.testing.FakeApresDeck
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 import java.io.File
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.kotlin.any
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.whenever
 
 class GameModelTest {
 
@@ -32,6 +39,7 @@ class GameModelTest {
   private val testDecisionHandler = TestDecisionHandler()
 
   private lateinit var skillDecks: FakeSkillDecks
+  private lateinit var fakeApresDeck: FakeApresDeck
 
   @BeforeEach
   fun setup() {
@@ -131,6 +139,12 @@ class GameModelTest {
         }
     """.trimIndent()
     )
+    fakeApresDeck = FakeApresDeck(apresFile.absolutePath)
+    for (card in fakeApresDeck.getCards()) {
+      val apres: Apres = mock()
+      whenever(apres.apresCard).thenReturn(card)
+      fakeApresDeck.register(card.name, apres)
+    }
   }
 
   private fun createGameModel(
@@ -141,9 +155,9 @@ class GameModelTest {
       tilesPath = tilesFile.absolutePath,
       locationsPath = locationsFile.absolutePath,
       playersPath = playersFile.absolutePath,
-      apresPath = apresFile.absolutePath,
       playerHandlers = List(playerCount) { testDecisionHandler },
-      skillDecks = skillDecks
+      skillDecks = skillDecks,
+      apresDeck = fakeApresDeck
     )
 
   @Test
@@ -213,6 +227,8 @@ class GameModelTest {
     assertThat(player.apresLink).isEqualTo(1)
     assertThat(player.isOnMountain).isFalse()
     assertThat(game.clock.turn).isEqualTo(2)
+
+    verify(game.apres[0]).apply(any(), eq(true), any())
   }
 
   @Test
