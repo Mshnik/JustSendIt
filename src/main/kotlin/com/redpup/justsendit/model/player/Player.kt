@@ -9,13 +9,8 @@ import com.redpup.justsendit.model.supply.SkillDecks
 
 /** Immutable access to a player object. */
 interface Player {
-  /** Returns a mutable view of this player. */
-  fun toMutable(): MutablePlayer
-
   /** Applies the given mutation function to this player. */
-  fun mutate(fn: MutablePlayer.() -> Unit) {
-    toMutable().fn()
-  }
+  fun mutate(fn: MutablePlayer.() -> Unit)
 
   /** The input parameters of the player from the player card. */
   val playerCard: PlayerCard
@@ -98,8 +93,10 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   override val turn = MutableTurn()
   override val day = MutableDay()
 
-  /** Returns mutable access to this player. */
-  override fun toMutable() = this
+  /** Applies [fn] to this player. */
+  override fun mutate(fn: MutablePlayer.() -> Unit) {
+    this.fn()
+  }
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
   fun playSkillCard(): Int? {

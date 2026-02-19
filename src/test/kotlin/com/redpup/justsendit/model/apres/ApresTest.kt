@@ -40,11 +40,10 @@ class ApresTest {
 
   @Test
   fun `BuyGear applies correct major reward`() {
-    val apresCard = apresCard { name = "Buy Gear" }
-    val buyGear = BuyGear(apresCard)
+    val buyGear = BuyGear(apresCard { name = "Buy Gear" })
     val initialDeckSize = player.skillDeck.size
 
-    buyGear.apply(player.toMutable(), true, gameModel)
+    player.mutate { buyGear.apply(this, true, gameModel) }
 
     // 2 blue, 4 black. Total 6 cards.
     assertThat(player.skillDeck.size).isEqualTo(initialDeckSize + 6)
@@ -54,11 +53,10 @@ class ApresTest {
 
   @Test
   fun `BuyGear applies correct minor reward`() {
-    val apresCard = apresCard { name = "Buy Gear" }
-    val buyGear = BuyGear(apresCard)
+    val buyGear = BuyGear(apresCard { name = "Buy Gear" })
     val initialDeckSize = player.skillDeck.size
 
-    buyGear.apply(player.toMutable(), false, gameModel)
+    player.mutate { buyGear.apply(this, false, gameModel) }
 
     // 4 blue, 1 black. Total 5 cards.
     assertThat(player.skillDeck.size).isEqualTo(initialDeckSize + 5)
@@ -68,55 +66,47 @@ class ApresTest {
 
   @Test
   fun `Study applies correct major reward`() {
-    val apresCard = apresCard { name = "Study" }
-    val study = Study(apresCard)
+    val study = Study(apresCard { name = "Study" })
 
-    study.apply(player.toMutable(), true, gameModel)
+    player.mutate { study.apply(this, true, gameModel) }
     assertThat(player.day.experience).isEqualTo(2)
   }
 
   @Test
   fun `Study applies correct minor reward`() {
-    val apresCard = apresCard { name = "Study" }
-    val study = Study(apresCard)
+    val study = Study(apresCard { name = "Study" })
 
-    study.apply(player.toMutable(), false, gameModel)
+    player.mutate { study.apply(this, false, gameModel) }
     assertThat(player.day.experience).isEqualTo(1)
   }
 
   @Test
   @Ignore // TODO later.
   fun `FirstChair applies correct major reward`() {
-    val apresCard = apresCard { name = "First Chair" }
-    val firstChair = FirstChair(apresCard)
+    val firstChair = FirstChair(apresCard { name = "First Chair" })
   }
 
   @Test
   @Ignore // TODO later.
   fun `FirstChair applies correct minor reward`() {
-    val apresCard = apresCard { name = "First Chair" }
-    val firstChair = FirstChair(apresCard)
+    val firstChair = FirstChair(apresCard { name = "First Chair" })
   }
 
   @Test
   @Ignore // TODO later.
   fun `Sauna applies correct major reward`() {
-    val apresCard = apresCard { name = "Sauna" }
-    val sauna = Sauna(apresCard)
+    val sauna = Sauna(apresCard { name = "Sauna" })
   }
 
   @Test
   @Ignore // TODO later.
   fun `Sauna applies correct minor reward`() {
-    val apresCard = apresCard { name = "Sauna" }
-    val sauna = Sauna(apresCard)
+    val sauna = Sauna(apresCard { name = "Sauna" })
   }
 
   @Test
   fun `Bar applies correct major reward`() {
-    val apresCard = apresCard { name = "Bar" }
-    val bar = Bar(apresCard)
-
+    val bar = Bar(apresCard { name = "Bar" })
     // Ensure player's skillDeck is populated predictably
     player.mutate {
       skillDeck.clear()
@@ -125,7 +115,7 @@ class ApresTest {
     }
     val initialPoints = player.day.apresPoints
 
-    bar.apply(player.toMutable(), true, gameModel)
+    player.mutate { bar.apply(this, true, gameModel) }
 
     // Reveals 5 cards, adds their sum to points.
     // Assert value is in range of worst to best.
@@ -141,18 +131,16 @@ class ApresTest {
 
   @Test
   fun `Bar applies correct minor reward`() {
-    val apresCard = apresCard { name = "Bar" }
-    val bar = Bar(apresCard)
-
+    val bar = Bar(apresCard { name = "Bar" })
     // Ensure player's skillDeck is populated predictably
     player.mutate {
       skillDeck.clear()
       skillDeck.addAll(listOf(1, 2, 3, 4, 5, 6)) // Add 6 cards
-      player.toMutable().skillDiscard.clear()
+      skillDiscard.clear()
     }
     val initialPoints = player.day.apresPoints
 
-    bar.apply(player.toMutable(), false, gameModel)
+    player.mutate { bar.apply(this, false, gameModel) }
 
     // Reveals 3 cards, adds their sum to points.
     // Assert value is in range of worst to best.
@@ -168,104 +156,95 @@ class ApresTest {
 
   @Test
   fun `Dining applies correct major reward`() {
-    val apresCard = apresCard { name = "Dining" }
-    val dining = Dining(apresCard)
+    val dining = Dining(apresCard { name = "Dining" })
 
     player.mutate { skillDiscard.addAll(listOf(1, 2, 3, 4, 5)) }
     val initialPoints = player.day.apresPoints
 
-    dining.apply(player.toMutable(), true, gameModel)
+    player.mutate { dining.apply(this, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 5)
   }
 
   @Test
   fun `Dining applies correct minor reward`() {
-    val apresCard = apresCard { name = "Dining" }
-    val dining = Dining(apresCard)
+    val dining = Dining(apresCard { name = "Dining" })
 
     player.mutate { skillDiscard.addAll(listOf(1, 2, 3, 4, 5)) }
     val initialPoints = player.day.apresPoints
 
-    dining.apply(player.toMutable(), false, gameModel)
+    player.mutate { dining.apply(this, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 5 / 2) // Integer division
   }
 
   @Test
   fun `Village applies correct major reward`() {
-    val apresCard = apresCard { name = "Village" }
-    val village = Village(apresCard)
+    val village = Village(apresCard { name = "Village" })
 
     player.mutate { skillDeck.addAll(listOf(10, 20, 30)) }
     val initialPoints = player.day.apresPoints
 
-    village.apply(player.toMutable(), true, gameModel)
+    player.mutate { village.apply(this, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3)
   }
 
   @Test
   fun `Village applies correct minor reward`() {
-    val apresCard = apresCard { name = "Village" }
-    val village = Village(apresCard)
+    val village = Village(apresCard { name = "Village" })
 
     player.mutate { skillDeck.addAll(listOf(10, 20, 30)) }
     val initialPoints = player.day.apresPoints
 
-    village.apply(player.toMutable(), false, gameModel)
+    player.mutate { village.apply(this, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 / 2) // Integer division
   }
 
   @Test
   fun `Massage applies correct major reward`() {
-    val apresCard = apresCard { name = "Massage" }
-    val massage = Massage(apresCard)
+    val massage = Massage(apresCard { name = "Massage" })
 
     player.mutate { training[0] = 3 } // Simulate 3 experience in training
     val initialPoints = player.day.apresPoints
 
-    massage.apply(player.toMutable(), true, gameModel)
+    player.mutate { massage.apply(this, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 * 5)
   }
 
   @Test
   fun `Massage applies correct minor reward`() {
-    val apresCard = apresCard { name = "Massage" }
-    val massage = Massage(apresCard)
+    val massage = Massage(apresCard { name = "Massage" })
 
     player.mutate { training[0] = 3 } // Simulate 3 experience in training
     val initialPoints = player.day.apresPoints
 
-    massage.apply(player.toMutable(), false, gameModel)
+    player.mutate { massage.apply(this, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 * 2)
   }
 
   @Test
   fun `Journal applies correct major reward`() {
-    val apresCard = apresCard { name = "Journal" }
-    val journal = Journal(apresCard)
+    val journal = Journal(apresCard { name = "Journal" })
 
     player.mutate { abilities[0] = true } // Simulate one unlocked ability
     val initialPoints = player.day.apresPoints
 
-    journal.apply(player.toMutable(), true, gameModel)
+    player.mutate { journal.apply(this, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 1 * 10)
   }
 
   @Test
   fun `Journal applies correct minor reward`() {
-    val apresCard = apresCard { name = "Journal" }
-    val journal = Journal(apresCard)
+    val journal = Journal(apresCard { name = "Journal" })
 
     player.mutate { abilities[0] = true } // Simulate one unlocked ability
     val initialPoints = player.day.apresPoints
 
-    journal.apply(player.toMutable(), false, gameModel)
+    player.mutate { journal.apply(this, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(initialPoints + 1 * 5)
   }
 
   @Test
   fun `TuneUp applies correct major reward`() {
-    val apresCard = apresCard { name = "Tune-Up" }
-    val tuneUp = TuneUp(apresCard)
+    val tuneUp = TuneUp(apresCard { name = "Tune-Up" })
 
     player.mutate { skillDeck.addAll(listOf(1, 2, 3, 4, 5)) }
     assertThat(player.skillDeck).hasSize(5)
@@ -274,15 +253,14 @@ class ApresTest {
     whenever(playerHandler.chooseCardsToRemove(player, player.skillDeck, 3))
       .thenReturn(listOf(1, 3))
 
-    tuneUp.apply(player.toMutable(), true, gameModel)
+    player.mutate { tuneUp.apply(this, true, gameModel) }
     assertThat(player.skillDeck).hasSize(3) // 5 - 2 removed
     assertThat(player.skillDeck).containsExactly(2, 4, 5)
   }
 
   @Test
   fun `TuneUp applies correct minor reward`() {
-    val apresCard = apresCard { name = "Tune-Up" }
-    val tuneUp = TuneUp(apresCard)
+    val tuneUp = TuneUp(apresCard { name = "Tune-Up" })
 
     player.mutate { skillDeck.addAll(listOf(1, 2, 3, 4, 5)) }
     assertThat(player.skillDeck).hasSize(5)
@@ -291,7 +269,7 @@ class ApresTest {
     whenever(playerHandler.chooseCardsToRemove(player, player.skillDeck, 2))
       .thenReturn(listOf(2))
 
-    tuneUp.apply(player.toMutable(), false, gameModel)
+    player.mutate { tuneUp.apply(this, false, gameModel) }
     assertThat(player.skillDeck).hasSize(4) // 5 - 1 removed
     assertThat(player.skillDeck).containsExactly(1, 3, 4, 5)
   }
