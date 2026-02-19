@@ -1,6 +1,8 @@
 package com.redpup.justsendit.model
 
 import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.ApresFactory
+import com.redpup.justsendit.model.apres.ApresFactoryImpl
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
@@ -49,8 +51,9 @@ class MutableGameModel(
   tilesPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tiles.textproto",
   locationsPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tile_locations.textproto",
   playersPath: String = "src/main/resources/com/redpup/justsendit/model/players/players.textproto",
+  apresPath: String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto",
   playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
-  private val apresDeck: ApresDeck = ApresDeckImpl("src/main/resources/com/redpup/justsendit/model/apres/apres.textproto"),
+  apresFactory: ApresFactory = ApresFactoryImpl,
   override val skillDecks: SkillDecks,
 ) : GameModel {
   /** Applies fn to this. */
@@ -76,6 +79,7 @@ class MutableGameModel(
     tileMap.entries().filter { it.value.hasLift() }
       .groupBy { it.value.lift.color }
 
+  private val apresDeck: ApresDeck = ApresDeckImpl(apresPath, apresFactory)
   override val apres: MutableList<Apres> = mutableListOf()
 
   override val players: List<MutablePlayer> =

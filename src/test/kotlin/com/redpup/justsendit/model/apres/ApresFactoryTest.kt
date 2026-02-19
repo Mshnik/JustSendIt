@@ -76,22 +76,4 @@ class ApresFactoryTest {
     val apres = ApresFactoryImpl.create(apresCard)
     assertThat(apres).isInstanceOf(Journal::class.java)
   }
-
-  @Test
-  fun `create returns default Apres for unknown card`() {
-    val apresCard = apresCard { name = "Unknown Card" }
-    val apres = ApresFactoryImpl.create(apresCard)
-    assertThat(apres).isInstanceOf(Apres::class.java)
-    // Verify it's not any of the specific implementations
-    assertThat(apres).isNotInstanceOf(BuyGear::class.java)
-    assertThat(apres).isNotInstanceOf(TuneUp::class.java)
-    assertThat(apres).isNotInstanceOf(Study::class.java)
-    assertThat(apres).isNotInstanceOf(FirstChair::class.java)
-    assertThat(apres).isNotInstanceOf(Sauna::class.java)
-    assertThat(apres).isNotInstanceOf(Bar::class.java)
-    assertThat(apres).isNotInstanceOf(Dining::class.java)
-    assertThat(apres).isNotInstanceOf(Village::class.java)
-    assertThat(apres).isNotInstanceOf(Massage::class.java)
-    assertThat(apres).isNotInstanceOf(Journal::class.java)
-  }
 }

@@ -11,29 +11,28 @@ import "com/redpup/justsendit/model/board/tile/slope.proto";
 /** The immutable params associated with a player. */
 message PlayerCard {
   string name = 1;
-  repeated Grade small_upgrade = 2;
-  repeated Grade large_upgrade = 3;
-  PlayerTraining training = 4;
-  repeated Ability abilities = 5;
+  repeated PlayerUpgrade upgrades = 2;
+  repeated PlayerTraining training = 3;
+  repeated PlayerAbility abilities = 4;
+}
+
+/** A set of cards a player can add to their deck.*/
+message PlayerUpgrade {
+  repeated Grade cards = 1;
 }
 
 /** Training this player can invest in. */
 message PlayerTraining {
-  /** A single type of training this player can do. */
-  message Training {
-    oneof type {
-      Grade grade = 1;
-      model.board.tile.Condition condition = 2;
-      model.board.tile.Hazard hazard = 3;
-    }
-    int32 value = 4;
+  oneof type {
+    Grade grade = 1;
+    model.board.tile.Condition condition = 2;
+    model.board.tile.Hazard hazard = 3;
   }
-
-  repeated Training training = 1;
+  int32 value = 4;
 }
 
 /** A player's unique ability. */
-message Ability {
+message PlayerAbility {
   string name = 1;
   int32 cost = 2;
   string text = 3;

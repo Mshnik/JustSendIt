@@ -4,13 +4,13 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
-import com.redpup.justsendit.model.player.proto.PlayerTrainingKt.training
-import com.redpup.justsendit.model.player.proto.ability
+import com.redpup.justsendit.model.player.proto.playerAbility
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.playerTraining
+import com.redpup.justsendit.model.player.proto.playerUpgrade
 import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.supply.SkillDecksInstance.getSkillGrade
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,15 +26,17 @@ class PlayerTest {
     skillDecks = FakeSkillDecks()
     val playerCard = playerCard {
       name = "Test Player"
-      smallUpgrade.add(Grade.GRADE_GREEN)
-      largeUpgrade.add(Grade.GRADE_BLUE)
-      training = playerTraining {
-        training += training {
-          grade = Grade.GRADE_BLUE
-          value = 2
-        }
+      upgrades += playerUpgrade {
+        cards += Grade.GRADE_GREEN
       }
-      abilities += ability { name = "Test Ability"; cost = 2 }
+      upgrades += playerUpgrade {
+        cards += Grade.GRADE_BLUE
+      }
+      training += playerTraining {
+        grade = Grade.GRADE_BLUE
+        value = 2
+      }
+      abilities += playerAbility { name = "Test Ability"; cost = 2 }
     }
     player = MutablePlayer(playerCard, mock<PlayerHandler>())
   }
@@ -130,35 +132,17 @@ class PlayerTest {
   }
 
   @Test
-  fun `buySmallUpgrade requires experience and adds card`() {
+  fun `buyUpgrade requires experience and adds card`() {
     assertThrows(IllegalStateException::class.java) {
-      player.buySmallUpgrade(skillDecks)
+      player.buyUpgrade(0, skillDecks)
     }
     player.day.experience = 1
     player.ingestDayAndCopyNextDay()
     skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
-    player.buySmallUpgrade(skillDecks)
+    player.buyUpgrade(0, skillDecks)
     assertThat(player.experience).isEqualTo(0)
     assertThat(player.skillDeck.size).isEqualTo(1)
-    assertEquals(
-      Grade.GRADE_GREEN,
-      with(skillDecks) { player.skillDeck.first().getSkillGrade() })
-  }
-
-  @Test
-  fun `buyLargeUpgrade requires experience and adds card`() {
-    assertThrows(IllegalStateException::class.java) {
-      player.buyLargeUpgrade(skillDecks)
-    }
-    player.day.experience = 1
-    player.ingestDayAndCopyNextDay()
-    skillDecks.setBlueDeck(listOf(4)) // Card to be drawn
-    player.buyLargeUpgrade(skillDecks)
-    assertThat(player.experience).isEqualTo(0)
-    assertThat(player.skillDeck.size).isEqualTo(1)
-    assertEquals(
-      Grade.GRADE_BLUE,
-      with(skillDecks) { player.skillDeck.first().getSkillGrade() })
+    assertThat(player.skillDeck.first().getSkillGrade()).isEqualTo(Grade.GRADE_GREEN)
   }
 
   @Test

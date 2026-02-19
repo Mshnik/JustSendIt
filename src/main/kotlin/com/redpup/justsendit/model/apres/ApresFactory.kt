@@ -8,7 +8,9 @@ interface ApresFactory {
   val factories: Map<String, (ApresCard) -> Apres>
 
   /** Creates an [Apres] from an [ApresCard] using this factory. */
-  fun create(apresCard: ApresCard): Apres = factories[apresCard.name]!!(apresCard)
+  fun create(apresCard: ApresCard): Apres = factories[apresCard.name]
+    ?.let { it(apresCard) }
+    ?: throw IllegalArgumentException("No card found for ${apresCard.name} in $factories")
 }
 
 /** Factory for creating [Apres] objects from [ApresCard]s. */

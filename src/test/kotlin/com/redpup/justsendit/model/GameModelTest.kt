@@ -1,22 +1,28 @@
 package com.redpup.justsendit.model
 
 import com.google.common.truth.Truth.assertThat
+import com.google.protobuf.TextFormat
 import com.google.protobuf.empty
-import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.proto.ApresCard
+import com.redpup.justsendit.model.apres.proto.apresCard
+import com.redpup.justsendit.model.apres.proto.apresCardList
+import com.redpup.justsendit.model.apres.testing.FakeApres
+import com.redpup.justsendit.model.apres.testing.FakeApresFactory
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
+import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.supply.SkillDecks
-import com.redpup.justsendit.model.supply.testing.FakeApresDeck
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
@@ -24,7 +30,6 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
-import org.mockito.kotlin.whenever
 
 class GameModelTest {
 
@@ -39,7 +44,8 @@ class GameModelTest {
   private val testDecisionHandler = TestDecisionHandler()
 
   private lateinit var skillDecks: FakeSkillDecks
-  private lateinit var fakeApresDeck: FakeApresDeck
+  private lateinit var apresFactory: FakeApresFactory
+  private val apresApply = mock<(ApresCard, MutablePlayer, Boolean, GameModel) -> Unit>()
 
   @BeforeEach
   fun setup() {
@@ -99,65 +105,66 @@ class GameModelTest {
             player { name: "Player 2" }
         """.trimIndent()
     )
-    apresFile.writeText(
-      """
-        apres {
-          name: "Day 1 Only A"
-          available_days: 1
-        }
-        apres {
-          name: "Day 1 Only B"
-          available_days: 1
-        }
-        apres {
-          name: "Day 1 Only C"
-          available_days: 1
-        }
-        apres {
-          name: "Day 2 Only A"
-          available_days: 2
-        }
-        apres {
-          name: "Day 2 Only B"
-          available_days: 2
-        }
-        apres {
-          name: "Day 2 Only C"
-          available_days: 2
-        }
-         apres {
-          name: "Day 3 Only A"
-          available_days: 3
-        }
-         apres {
-          name: "Day 3 Only B"
-          available_days: 3
-        }
-         apres {
-          name: "Day 3 Only C"
-          available_days: 3
-        }
-    """.trimIndent()
+    val apresCards = listOf(
+      apresCard {
+        name = "Day 1 Only A"
+        availableDays += 1
+      },
+      apresCard {
+        name = "Day 1 Only B"
+        availableDays += 1
+      },
+      apresCard {
+        name = "Day 1 Only C"
+        availableDays += 1
+      },
+      apresCard {
+        name = "Day 2 Only A"
+        availableDays += 2
+      },
+      apresCard {
+        name = "Day 2 Only B"
+        availableDays += 2
+      },
+      apresCard {
+        name = "Day 2 Only C"
+        availableDays += 2
+      },
+      apresCard {
+        name = "Day 3 Only A"
+        availableDays += 3
+      },
+      apresCard {
+        name = "Day 3 Only B"
+        availableDays += 3
+      },
+      apresCard {
+        name = "Day 3 Only C"
+        availableDays += 3
+      },
     )
-    fakeApresDeck = FakeApresDeck(apresFile.absolutePath)
-    for (card in fakeApresDeck.getCards()) {
-      val apres: Apres = mock()
-      whenever(apres.apresCard).thenReturn(card)
-      fakeApresDeck.register(card.name, apres)
+
+    apresFactory = FakeApresFactory()
+    for (card in apresCards) {
+      apresFactory.register(card.name) { FakeApres(it).onApply(apresApply) }
+    }
+
+    BufferedWriter(FileWriter(apresFile)).use { writer ->
+      TextFormat.printer().print(apresCardList {
+        apres += apresCards
+      }, writer)
     }
   }
 
-  private fun createGameModel(
-    playerCount: Int = 1,
-    skillDecks: SkillDecks = this.skillDecks,
-  ): GameModel =
+  private fun createGameModel(playerCount: Int = 1): GameModel =
     MutableGameModel(
       tilesPath = tilesFile.absolutePath,
       locationsPath = locationsFile.absolutePath,
       playersPath = playersFile.absolutePath,
+      apresPath = apresFile.absolutePath,
       playerHandlers = List(playerCount) { testDecisionHandler },
+      apresFactory = apresFactory,
       skillDecks = skillDecks,
-      apresDeck = fakeApresDeck
     )
 
   @Test
@@ -228,7 +235,7 @@ class GameModelTest {
     assertThat(player.isOnMountain).isFalse()
     assertThat(game.clock.turn).isEqualTo(2)
 
-    verify(game.apres[0]).apply(any(), eq(true), any())
+    verify(apresApply).invoke(eq(game.apres[0].apresCard), any(), eq(true), any())
   }
 
   @Test

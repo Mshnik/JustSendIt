@@ -3,29 +3,32 @@
 
 player {
   name: "Test-1"
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_BLACK
+  upgrades: {
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+  }
+  upgrades {
+    cards: GRADE_GREEN
+    cards: GRADE_GREEN
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+    cards: GRADE_BLACK
+  }
+
   training {
-    training {
-      grade: GRADE_BLUE
-      value: 1
-    }
-    training {
-      condition: CONDITION_POWDER
-      value: 1
-    }
-    training {
-      condition: CONDITION_ICY
-      value: 1
-    }
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    condition: CONDITION_ICY
+    value: 1
   }
   abilities {
     name: "All Rounder"
@@ -41,29 +44,32 @@ player {
 
 player {
   name: "Test-2"
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_BLACK
+  upgrades: {
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+  }
+  upgrades {
+    cards: GRADE_GREEN
+    cards: GRADE_GREEN
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+    cards: GRADE_BLACK
+  }
+
   training {
-    training {
-      grade: GRADE_BLUE
-      value: 1
-    }
-    training {
-      condition: CONDITION_POWDER
-      value: 1
-    }
-    training {
-      condition: CONDITION_ICY
-      value: 1
-    }
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    condition: CONDITION_ICY
+    value: 1
   }
   abilities {
     name: "All Rounder"
@@ -80,29 +86,32 @@ player {
 
 player {
   name: "Test-3"
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_BLACK
+  upgrades: {
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+  }
+  upgrades {
+    cards: GRADE_GREEN
+    cards: GRADE_GREEN
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+    cards: GRADE_BLACK
+  }
+
   training {
-    training {
-      grade: GRADE_BLUE
-      value: 1
-    }
-    training {
-      condition: CONDITION_POWDER
-      value: 1
-    }
-    training {
-      condition: CONDITION_ICY
-      value: 1
-    }
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    condition: CONDITION_ICY
+    value: 1
   }
   abilities {
     name: "All Rounder"
@@ -119,29 +128,32 @@ player {
 
 player {
   name: "Test-4"
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLUE
-  small_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_GREEN
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLUE
-  large_upgrade: GRADE_BLACK
-  large_upgrade: GRADE_BLACK
+  upgrades: {
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+  }
+  upgrades {
+    cards: GRADE_GREEN
+    cards: GRADE_GREEN
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLUE
+    cards: GRADE_BLACK
+    cards: GRADE_BLACK
+  }
+
   training {
-    training {
-      grade: GRADE_BLUE
-      value: 1
-    }
-    training {
-      condition: CONDITION_POWDER
-      value: 1
-    }
-    training {
-      condition: CONDITION_ICY
-      value: 1
-    }
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    condition: CONDITION_ICY
+    value: 1
   }
   abilities {
     name: "All Rounder"

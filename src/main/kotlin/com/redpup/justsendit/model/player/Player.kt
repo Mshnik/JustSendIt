@@ -154,17 +154,10 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   }
 
   /** Buys the small upgrade from the player card. */
-  fun buySmallUpgrade(skillDecks: SkillDecks) {
+  fun buyUpgrade(index: Int, skillDecks: SkillDecks) {
     check(experience > 0) { "Need 1 experience, found $experience" }
     experience--
-    gainSkillCards(playerCard.smallUpgradeList, skillDecks)
-  }
-
-  /** Buys the large upgrade from the player card. */
-  fun buyLargeUpgrade(skillDecks: SkillDecks) {
-    check(experience > 0) { "Need 1 experience, found $experience" }
-    experience--
-    gainSkillCards(playerCard.largeUpgradeList, skillDecks)
+    gainSkillCards(playerCard.upgradesList[index].cardsList, skillDecks)
   }
 
   /** Gains [count] skill cards from the [skillDecks], then shuffles this player's [skillDeck]. */
@@ -191,14 +184,14 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
 
   /** Computes the bonus this player gets against the given [tile]. */
   fun computeBonus(tile: SlopeTile): Int {
-    return (0 until playerCard.training.trainingCount).sumOf { i ->
-      val cardTraining = playerCard.training.trainingList[i]
+    return (0 until playerCard.trainingCount).sumOf { i ->
+      val cardTraining = playerCard.trainingList[i]
 
       val applies = when (cardTraining.typeCase) {
-        PlayerTraining.Training.TypeCase.GRADE -> tile.grade == cardTraining.grade
-        PlayerTraining.Training.TypeCase.CONDITION -> tile.condition == cardTraining.condition
-        PlayerTraining.Training.TypeCase.HAZARD -> tile.hazardsList.contains(cardTraining.hazard)
-        PlayerTraining.Training.TypeCase.TYPE_NOT_SET, null -> throw IllegalArgumentException("Invalid training type")
+        PlayerTraining.TypeCase.GRADE -> tile.grade == cardTraining.grade
+        PlayerTraining.TypeCase.CONDITION -> tile.condition == cardTraining.condition
+        PlayerTraining.TypeCase.HAZARD -> tile.hazardsList.contains(cardTraining.hazard)
+        PlayerTraining.TypeCase.TYPE_NOT_SET, null -> throw IllegalArgumentException("Invalid training type")
       }
 
       if (applies) {
@@ -226,7 +219,7 @@ class MutableTurn : Player.Turn {
 
 /** A mutable instance of a player's turn. */
 class MutableDay : Player.Day {
-  override var overkillBonusPoints : Player.Day.OverkillBonus? = null
+  override var overkillBonusPoints: Player.Day.OverkillBonus? = null
   override var experience = 0
   override var mountainPoints = 0
   override var bestDayPoints = 0
