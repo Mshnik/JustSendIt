@@ -181,7 +181,7 @@ class GameModelTest {
   fun `turn with LIFT decision works`() {
     val game = createGameModel()
     val player = game.players[0]
-    player.location = hexPoint { q = 0; r = 0 }
+    player.location = createHexPoint(0, 0)
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       lift = empty {}
@@ -198,7 +198,7 @@ class GameModelTest {
   fun `turn with EXIT decision works`() {
     val game = createGameModel()
     val player = game.players[0]
-    player.location = hexPoint { q = 0; r = 0 } // Location with apres_link
+    player.location = createHexPoint(0, 0) // Location with apres_link
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       exit = empty {}
@@ -217,7 +217,7 @@ class GameModelTest {
     val game = createGameModel()
     game.advanceDay()
     val player = game.players[0]
-    player.location = hexPoint { q = 0; r = 0 }
+    player.location = createHexPoint(0, 0)
     player.skillDeck.clear()
     player.skillDeck.addAll(listOf(5, 5)) // Guaranteed success (5+5 > 5)
 

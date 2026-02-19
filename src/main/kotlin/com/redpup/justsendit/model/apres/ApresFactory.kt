@@ -5,6 +5,7 @@ import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 
+/** Factory for creating [Apres] objects from [ApresCard]s. */
 object ApresFactory {
   fun create(apresCard: ApresCard): Apres {
     return when (apresCard.name) {

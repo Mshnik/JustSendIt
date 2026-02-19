@@ -42,10 +42,13 @@ object HexExtensions {
     }
 
   /** Constructs a [HexPoint] with the given args. */
-  fun createHexPoint(q: Int, r: Int) = hexPoint {
-    this.q = q
-    this.r = r
+  fun Pair<Int, Int>.toHexPoint() = hexPoint {
+    this.q = first
+    this.r = second
   }
+
+  /** Constructs a [HexPoint] with the given args. */
+  fun createHexPoint(q: Int, r: Int) = Pair(q, r).toHexPoint()
 
   /**
    * Returns a new HexPoint adjacent to this one in the specified direction.
