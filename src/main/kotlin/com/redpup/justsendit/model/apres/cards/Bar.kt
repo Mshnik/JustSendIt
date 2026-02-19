@@ -13,9 +13,9 @@ class Bar(override val apresCard: ApresCard) : Apres {
   ) {
     player.refreshSkillDeck()
     if (isFirstPlayerToArrive) {
-      player.points += player.revealCards(5)
+      player.day.apresPoints += player.revealCards(5)
     } else {
-      player.points += player.revealCards(3)
+      player.day.apresPoints += player.revealCards(3)
     }
   }
 

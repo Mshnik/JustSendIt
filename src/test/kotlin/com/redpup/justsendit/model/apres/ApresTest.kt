@@ -121,13 +121,13 @@ class ApresTest {
     player.skillDeck.clear()
     player.skillDeck.addAll(listOf(1, 2, 3, 4, 5, 6)) // Add 6 cards
     player.skillDiscard.clear()
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     bar.apply(player, true, gameModel)
 
     // Reveals 5 cards, adds their sum to points.
     // Assert value is in range of worst to best.
-    assertThat(player.points).isIn(
+    assertThat(player.day.apresPoints).isIn(
       Range.closed(
         initialPoints + (1 + 2 + 3 + 4 + 5),
         initialPoints + (2 + 3 + 4 + 5 + 6)
@@ -146,13 +146,13 @@ class ApresTest {
     player.skillDeck.clear()
     player.skillDeck.addAll(listOf(1, 2, 3, 4, 5, 6)) // Add 6 cards
     player.skillDiscard.clear()
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     bar.apply(player, false, gameModel)
 
     // Reveals 3 cards, adds their sum to points.
     // Assert value is in range of worst to best.
-    assertThat(player.points).isIn(
+    assertThat(player.day.apresPoints).isIn(
       Range.closed(
         initialPoints + (1 + 2 + 3),
         initialPoints + (4 + 5 + 6)
@@ -168,10 +168,10 @@ class ApresTest {
     val dining = Dining(apresCard)
 
     player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5))
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     dining.apply(player, true, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 5)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 5)
   }
 
   @Test
@@ -180,10 +180,10 @@ class ApresTest {
     val dining = Dining(apresCard)
 
     player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5))
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     dining.apply(player, false, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 5 / 2) // Integer division
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 5 / 2) // Integer division
   }
 
   @Test
@@ -192,10 +192,10 @@ class ApresTest {
     val village = Village(apresCard)
 
     player.skillDeck.addAll(listOf(10, 20, 30))
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     village.apply(player, true, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 3)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3)
   }
 
   @Test
@@ -204,10 +204,10 @@ class ApresTest {
     val village = Village(apresCard)
 
     player.skillDeck.addAll(listOf(10, 20, 30))
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     village.apply(player, false, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 3 / 2) // Integer division
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 / 2) // Integer division
   }
 
   @Test
@@ -216,10 +216,10 @@ class ApresTest {
     val massage = Massage(apresCard)
 
     player.training[0] = 3 // Simulate 3 experience in training
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     massage.apply(player, true, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 3 * 5)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 * 5)
   }
 
   @Test
@@ -228,10 +228,10 @@ class ApresTest {
     val massage = Massage(apresCard)
 
     player.training[0] = 3 // Simulate 3 experience in training
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     massage.apply(player, false, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 3 * 2)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 3 * 2)
   }
 
   @Test
@@ -240,10 +240,10 @@ class ApresTest {
     val journal = Journal(apresCard)
 
     player.abilities[0] = true // Simulate one unlocked ability
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     journal.apply(player, true, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 1 * 10)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 1 * 10)
   }
 
   @Test
@@ -252,10 +252,10 @@ class ApresTest {
     val journal = Journal(apresCard)
 
     player.abilities[0] = true // Simulate one unlocked ability
-    val initialPoints = player.points
+    val initialPoints = player.day.apresPoints
 
     journal.apply(player, false, gameModel)
-    assertThat(player.points).isEqualTo(initialPoints + 1 * 5)
+    assertThat(player.day.apresPoints).isEqualTo(initialPoints + 1 * 5)
   }
 
   @Test

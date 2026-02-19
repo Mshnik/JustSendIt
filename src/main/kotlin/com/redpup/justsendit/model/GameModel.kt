@@ -108,7 +108,7 @@ class MutableGameModel(
       }
     }
     if (clock.turn < clock.maxTurn) {
-      clock.next()
+      clock.advanceTurn()
       return false
     } else {
       return true
@@ -116,21 +116,26 @@ class MutableGameModel(
   }
 
   /**
-   * Sorts players in ascending order of points.
+   * Concludes the day, ingesting points and updating state.
    * Returns true if the game is over, false otherwise.
    */
   fun advanceDay(): Boolean {
+    // Ingest points and award the best day on mountain.
+    players.maxBy { it.day.mountainPoints }.day.bestDayPoints += BEST_DAY_AWARD[clock.day]!!
+    players.forEach { it.ingestDay() }
     playerOrder.sortBy { players[it].points }
-    if (clock.day < Clock.Params.MAX_DAY) {
-      clock.nextDay()
-      populateApresSlots()
-      for (player in playersInTurnOrder()) {
-        player.location = player.handler.getStartingLocation(player, this)
-      }
+
+    // Update clock, advance to next day if there is one.
+    if (clock.day >= Clock.Params.MAX_DAY) {
       return false
-    } else {
-      return true
     }
+
+    clock.advanceDay()
+    populateApresSlots()
+    for (player in playersInTurnOrder()) {
+      player.location = player.handler.getStartingLocation(player, this)
+    }
+    return true
   }
 
   /** Populates the apres slots for the current day. */
@@ -262,6 +267,9 @@ class MutableGameModel(
 
     /** Number of apres slots. */
     const val APRES_SLOTS = 3
+
+    /** Value of the best day by day. */
+    val BEST_DAY_AWARD = mapOf(1 to 15, 2 to 10, 3 to 5)
   }
 }
 
@@ -292,12 +300,12 @@ class MutableClock(override var turn: Int = 1, override var day: Int = 1) : Cloc
     }
 
   /** Advances to the next turn. */
-  fun next() {
+  fun advanceTurn() {
     turn++
   }
 
   /** Advances to the next day. */
-  fun nextDay() {
+  fun advanceDay() {
     turn = 1
     day++
   }

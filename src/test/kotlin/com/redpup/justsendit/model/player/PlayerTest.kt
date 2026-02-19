@@ -84,10 +84,24 @@ class PlayerTest {
     player.turn.experience = 5
     player.ingestTurn()
 
-    assertThat(player.points).isEqualTo(10)
+    assertThat(player.points).isEqualTo(0)
+    assertThat(player.day.mountainPoints).isEqualTo(10)
     assertThat(player.experience).isEqualTo(5)
     assertThat(player.turn.points).isEqualTo(0)
     assertThat(player.turn.experience).isEqualTo(0)
+  }
+
+  @Test
+  fun `ingestDay updates player stats and clears day`() {
+    player.day.mountainPoints = 5
+    player.day.bestDayPoints = 10
+    player.day.apresPoints = 20
+    player.ingestDay()
+
+    assertThat(player.points).isEqualTo(35)
+    assertThat(player.day.mountainPoints).isEqualTo(0)
+    assertThat(player.day.bestDayPoints).isEqualTo(0)
+    assertThat(player.day.apresPoints).isEqualTo(0)
   }
 
   @Test

@@ -233,7 +233,7 @@ class GameModelTest {
 
     game.turn()
 
-    assertThat(player.points).isEqualTo(5)
+    assertThat(player.day.mountainPoints).isEqualTo(5)
     // turn.speed is reset after turn, so we can't check it here.
     assertThat(player.experience).isEqualTo(0)
 

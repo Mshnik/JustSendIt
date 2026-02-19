@@ -13,9 +13,9 @@ class Journal(override val apresCard: ApresCard) : Apres {
   ) {
     val unlockedAbilities = player.abilities.count { it }
     if (isFirstPlayerToArrive) {
-      player.points += unlockedAbilities * 10
+      player.day.apresPoints += unlockedAbilities * 10
     } else {
-      player.points += unlockedAbilities * 5
+      player.day.apresPoints += unlockedAbilities * 5
     }
   }
 }

@@ -42,6 +42,18 @@ interface Player {
   /** The apres link the player took this day. Null if still on mountain today. */
   val apresLink: Int?
 
+  /** A single day for the player. */
+  interface Day {
+    /** How many points (fun) this player has gained in this day on the mountain. */
+    val mountainPoints: Int
+
+    /** How many points (fun) this player has gained in this day by having the best day on the mountain. */
+    val bestDayPoints: Int
+
+    /** How many points (fun) this player has gained in this day off the mountain. */
+    val apresPoints: Int
+  }
+
   /** A single turn for the player. */
   interface Turn {
     /** How many points (fun) this player has gained in this turn. */
@@ -56,12 +68,15 @@ interface Player {
 
   /** The player's current turn, if any. */
   val turn: Turn
+
+  /** The player's current day, if any. */
+  val day: Day
 }
 
 /** Mutable access to a player object. */
 class MutablePlayer(override val playerCard: PlayerCard, override val handler: PlayerHandler) :
   Player {
-  override var points = 0
+  override var points = 0; private set
   override var experience = 0
   override val skillDeck = mutableListOf<Int>()
   override val skillDiscard = mutableListOf<Int>()
@@ -70,6 +85,7 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   override var location: HexPoint? = null
   override var apresLink: Int? = null
   override var turn = MutableTurn()
+  override var day = MutableDay()
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
   fun playSkillCard(): Int? {
@@ -89,9 +105,17 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
 
   /** Ingests the contents of [turn] into this player. */
   fun ingestTurn() {
-    points += turn.points
+    day.mountainPoints += turn.points
     experience += turn.experience
     turn.clear()
+  }
+
+  /** Ingests the contents of [day] into this player. */
+  fun ingestDay() {
+    points += day.mountainPoints
+    points += day. bestDayPoints
+    points += day.apresPoints
+    day.clear()
   }
 
   /** Buys the starting deck of cards. */
@@ -172,5 +196,19 @@ class MutableTurn : Player.Turn {
     points = 0
     experience = 0
     speed = 0
+  }
+}
+
+/** A mutable instance of a player's turn. */
+class MutableDay : Player.Day {
+  override var mountainPoints = 0
+  override var bestDayPoints = 0
+  override var apresPoints = 0
+
+  /** Clears this mutable turn. */
+  fun clear() {
+    mountainPoints = 0
+    bestDayPoints = 0
+    apresPoints = 0
   }
 }
