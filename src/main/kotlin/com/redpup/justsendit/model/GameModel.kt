@@ -166,6 +166,7 @@ class MutableGameModel(
     return when (decision.decisionCase) {
       MountainDecision.DecisionCase.SKI_RIDE -> executeSkiRide(player, decision.skiRide)
       MountainDecision.DecisionCase.REST -> {
+        check(subTurn == 0) { "Can only rest at start of turn." }
         executeRest(player)
         false
       }
@@ -185,7 +186,7 @@ class MutableGameModel(
         false
       }
 
-      MountainDecision.DecisionCase.DECISION_NOT_SET -> throw IllegalArgumentException()
+      MountainDecision.DecisionCase.DECISION_NOT_SET, null -> throw IllegalArgumentException()
     }
   }
 
