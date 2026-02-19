@@ -9,6 +9,14 @@ import com.redpup.justsendit.model.supply.SkillDecks
 
 /** Immutable access to a player object. */
 interface Player {
+  /** Returns a mutable view of this player. */
+  fun toMutable(): MutablePlayer
+
+  /** Applies the given mutation function to this player. */
+  fun mutate(fn: MutablePlayer.() -> Unit) {
+    toMutable().fn()
+  }
+
   /** The input parameters of the player from the player card. */
   val playerCard: PlayerCard
 
@@ -44,6 +52,9 @@ interface Player {
 
   /** A single day for the player. */
   interface Day {
+    /** How much experience this player has gained in the day. */
+    val experience: Int
+
     /** How many points (fun) this player has gained in this day on the mountain. */
     val mountainPoints: Int
 
@@ -77,15 +88,18 @@ interface Player {
 class MutablePlayer(override val playerCard: PlayerCard, override val handler: PlayerHandler) :
   Player {
   override var points = 0; private set
-  override var experience = 0
+  override var experience = 0; private set
   override val skillDeck = mutableListOf<Int>()
   override val skillDiscard = mutableListOf<Int>()
   override val training = mutableListOf(0, 0, 0)
   override val abilities = mutableListOf(false, false)
   override var location: HexPoint? = null
   override var apresLink: Int? = null
-  override var turn = MutableTurn()
-  override var day = MutableDay()
+  override val turn = MutableTurn()
+  override val day = MutableDay()
+
+  /** Returns mutable access to this player. */
+  override fun toMutable() = this
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
   fun playSkillCard(): Int? {
@@ -106,14 +120,15 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   /** Ingests the contents of [turn] into this player. */
   fun ingestTurn() {
     day.mountainPoints += turn.points
-    experience += turn.experience
+    day.experience += turn.experience
     turn.clear()
   }
 
   /** Ingests the contents of [day] into this player. */
   fun ingestDay() {
+    experience += day.experience
     points += day.mountainPoints
-    points += day. bestDayPoints
+    points += day.bestDayPoints
     points += day.apresPoints
     day.clear()
   }
@@ -201,12 +216,14 @@ class MutableTurn : Player.Turn {
 
 /** A mutable instance of a player's turn. */
 class MutableDay : Player.Day {
+  override var experience = 0
   override var mountainPoints = 0
   override var bestDayPoints = 0
   override var apresPoints = 0
 
-  /** Clears this mutable turn. */
+  /** Clears this mutable experience. */
   fun clear() {
+    experience = 0
     mountainPoints = 0
     bestDayPoints = 0
     apresPoints = 0

@@ -135,7 +135,7 @@ class GameModelTest {
   private fun createGameModel(
     playerCount: Int = 1,
     skillDecks: SkillDecks = this.skillDecks,
-  ) =
+  ): GameModel =
     MutableGameModel(
       tilesPath = tilesFile.absolutePath,
       locationsPath = locationsFile.absolutePath,
@@ -161,16 +161,18 @@ class GameModelTest {
   fun `turn with REST decision works`() {
     val game = createGameModel()
     val player = game.players[0]
-    player.skillDeck.clear() // Clear existing cards from buyStartingDeck
-    player.skillDeck.addAll(listOf(1, 2, 3))
-    player.playSkillCard() // card -> discard
+    player.mutate {
+      skillDeck.clear() // Clear existing cards from buyStartingDeck
+      skillDeck.addAll(listOf(1, 2, 3))
+      playSkillCard() // card -> discard
+    }
     assertThat(player.skillDiscard.size).isEqualTo(1)
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       rest = empty {}
     })
 
-    game.turn()
+    game.mutate { turn() }
 
     assertThat(player.skillDiscard.size).isEqualTo(0)
     assertThat(player.skillDeck.size).isEqualTo(3)
@@ -181,13 +183,13 @@ class GameModelTest {
   fun `turn with LIFT decision works`() {
     val game = createGameModel()
     val player = game.players[0]
-    player.location = createHexPoint(0, 0)
+    player.mutate { location = createHexPoint(0, 0) }
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       lift = empty {}
     })
 
-    game.turn()
+    game.mutate { turn() }
 
     assertThat(player.location).isEqualTo(hexPoint { q = 0; r = -1 })
     assertThat(player.apresLink).isNull()
@@ -198,13 +200,13 @@ class GameModelTest {
   fun `turn with EXIT decision works`() {
     val game = createGameModel()
     val player = game.players[0]
-    player.location = createHexPoint(0, 0) // Location with apres_link
+    player.mutate { location = createHexPoint(0, 0) } // Location with apres_link
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       exit = empty {}
     })
 
-    game.turn()
+    game.mutate { turn() }
 
     assertThat(player.location).isNull()
     assertThat(player.apresLink).isEqualTo(1)
@@ -215,11 +217,13 @@ class GameModelTest {
   @Test
   fun `successful SKI_RIDE turn`() {
     val game = createGameModel()
-    game.advanceDay()
+    game.mutate { advanceDay() }
     val player = game.players[0]
-    player.location = createHexPoint(0, 0)
-    player.skillDeck.clear()
-    player.skillDeck.addAll(listOf(5, 5)) // Guaranteed success (5+5 > 5)
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(5, 5)) // Guaranteed success (5+5 > 5)
+    }
 
     testDecisionHandler.decisionQueue.add(mountainDecision {
       skiRide = skiRideDecision {
@@ -231,7 +235,7 @@ class GameModelTest {
       pass = empty {}
     }) // End turn
 
-    game.turn()
+    game.mutate { turn() }
 
     assertThat(player.day.mountainPoints).isEqualTo(5)
     // turn.speed is reset after turn, so we can't check it here.
@@ -244,7 +248,7 @@ class GameModelTest {
   fun `advance day updates day and repopulates apres`() {
     val game = createGameModel()
     testDecisionHandler.startLocation = hexPoint { q = -1; r = -1 }
-    game.advanceDay()
+    game.mutate { advanceDay() }
 
     assertThat(game.clock.day).isEqualTo(2)
     assertThat(game.clock.turn).isEqualTo(1)

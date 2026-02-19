@@ -86,7 +86,7 @@ class PlayerTest {
 
     assertThat(player.points).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(10)
-    assertThat(player.experience).isEqualTo(5)
+    assertThat(player.day.experience).isEqualTo(5)
     assertThat(player.turn.points).isEqualTo(0)
     assertThat(player.turn.experience).isEqualTo(0)
   }
@@ -118,7 +118,8 @@ class PlayerTest {
     assertThrows(IllegalStateException::class.java) {
       player.buySmallUpgrade(skillDecks)
     }
-    player.experience = 1
+    player.day.experience = 1
+    player.ingestDay()
     skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
     player.buySmallUpgrade(skillDecks)
     assertThat(player.experience).isEqualTo(0)
@@ -133,7 +134,8 @@ class PlayerTest {
     assertThrows(IllegalStateException::class.java) {
       player.buyLargeUpgrade(skillDecks)
     }
-    player.experience = 1
+    player.day.experience = 1
+    player.ingestDay()
     skillDecks.setBlueDeck(listOf(4)) // Card to be drawn
     player.buyLargeUpgrade(skillDecks)
     assertThat(player.experience).isEqualTo(0)
@@ -148,7 +150,8 @@ class PlayerTest {
     assertThrows(IllegalStateException::class.java) {
       player.buyTraining(0)
     }
-    player.experience = 1
+    player.day.experience = 1
+    player.ingestDay()
     player.buyTraining(0)
     assertThat(player.experience).isEqualTo(0)
     assertThat(player.training[0]).isEqualTo(1)
@@ -159,7 +162,8 @@ class PlayerTest {
     assertThrows(IllegalStateException::class.java) {
       player.buyAbility(0)
     }
-    player.experience = 2
+    player.day.experience = 2
+    player.ingestDay()
     player.buyAbility(0)
     assertThat(player.experience).isEqualTo(0)
     assertThat(player.abilities[0]).isTrue()

@@ -24,6 +24,14 @@ import com.redpup.justsendit.util.TextProtoReaderImpl
 
 /** Immutable access to game model. */
 interface GameModel {
+  /** Returns a mutable view of this game model. */
+  fun toMutable(): MutableGameModel
+
+  /** Mutates this game model with the given fn. */
+  fun mutate(fn: MutableGameModel.() -> Unit) {
+    toMutable().fn()
+  }
+
   /** The mountain map. */
   val tileMap: HexGrid<MountainTile>
 
@@ -49,6 +57,9 @@ class MutableGameModel(
   playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
   override val skillDecks: SkillDecks,
 ) : GameModel {
+  /** Returns mutable access to this game model. */
+  override fun toMutable() = this
+
   override val tileMap: HexGrid<MountainTile> =
     constructMap(
       TextProtoReaderImpl(
