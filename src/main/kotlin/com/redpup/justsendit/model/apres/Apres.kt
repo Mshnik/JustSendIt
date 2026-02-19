@@ -12,6 +12,6 @@ interface Apres {
   fun apply(
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
-    gameModel: GameModel
+    gameModel: GameModel,
   )
 }
