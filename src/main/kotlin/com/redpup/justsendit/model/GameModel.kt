@@ -207,6 +207,11 @@ class MutableGameModel(
       return true
     }
 
+    // Check slow condition.
+    check(!(destinationTile.slope.slow && player.turn.speed > MAX_SPEED_ON_SLOW)) {
+      "Cannot travel to SLOW tile with speed ${player.turn.speed}"
+    }
+
     // Check number of cards played.
     check(skiRideDecision.numCards >= 1 && skiRideDecision.numCards <= clock.day) {
       "Must play between [1,${clock.day}] cards, got ${skiRideDecision.numCards}"
@@ -273,6 +278,9 @@ class MutableGameModel(
   }
 
   companion object {
+    /** Maximum speed a player can have and still ski/ride a slow tile. */
+    const val MAX_SPEED_ON_SLOW = 1
+
     /** Multiplier of speed to difficulty. */
     const val SPEED_DIFFICULTY_MODIFIER = 2
 
