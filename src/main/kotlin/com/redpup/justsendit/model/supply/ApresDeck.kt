@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.supply
 
 import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.ApresFactory
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
@@ -44,7 +45,7 @@ class ApresDeckImpl(path: String) : ApresDeck {
   internal fun getCards(): List<ApresCard> = cards.toList()
 
   /** Draws the top card from the Apres deck. */
-  override fun draw() = Apres(cards.removeFirst())
+  override fun draw() = ApresFactory.create(cards.removeFirst())
 
   /** Tucks the given card under the apres deck. */
   override fun tuck(apres: Apres) {

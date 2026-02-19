@@ -267,5 +267,13 @@ class GameModelTest {
     override fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
       return startLocation
     }
+
+    override fun chooseCardsToRemove(
+      player: Player,
+      cards: List<Int>,
+      maxToRemove: Int,
+    ): List<Int> {
+      TODO("Not yet implemented")
+    }
   }
 }

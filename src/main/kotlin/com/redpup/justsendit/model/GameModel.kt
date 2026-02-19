@@ -35,6 +35,9 @@ interface GameModel {
 
   /**Immutable access to the clock. */
   val clock: Clock
+
+  /** The skill decks in the game. */
+  val skillDecks: SkillDecks
 }
 
 /** Top level joined game model state. */
@@ -44,7 +47,7 @@ class MutableGameModel(
   playersPath: String = "src/main/resources/com/redpup/justsendit/model/players/players.textproto",
   apresPath: String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto",
   playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
-  val skillDecks: SkillDecks,
+  override val skillDecks: SkillDecks,
 ) : GameModel {
   override val tileMap: HexGrid<MountainTile> =
     constructMap(
@@ -250,7 +253,7 @@ class MutableGameModel(
 
     player.location = null
     player.apresLink = link
-    apres[link].apply(player, players.count { it.apresLink == link } == 1)
+    apres[link - 1].apply(player, players.count { it.apresLink == link } == 1, this)
   }
 
   companion object {

@@ -11,6 +11,9 @@ interface PlayerHandler {
 
   /** Returns the starting location for a player at the start of a day. */
   fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint
+
+  /** Asks the player to choose cards to remove from their deck. */
+  fun chooseCardsToRemove(player: Player, cards: List<Int>, maxToRemove: Int): List<Int>
 }
 
 class BasicPlayerHandler : PlayerHandler {
@@ -20,5 +23,11 @@ class BasicPlayerHandler : PlayerHandler {
 
   override fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
     TODO("Not yet implemented")
+  }
+
+  override fun chooseCardsToRemove(player: Player, cards: List<Int>, maxToRemove: Int): List<Int> {
+    // For BasicPlayerHandler, we'll just return an empty list for now.
+    // Real implementations would have decision logic.
+    return emptyList()
   }
 }

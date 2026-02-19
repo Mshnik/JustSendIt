@@ -119,7 +119,7 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   }
 
   /** Gains [count] skill cards from the [skillDecks], then shuffles this player's [skillDeck]. */
-  private fun gainSkillCards(cards: List<Grade>, skillDecks: SkillDecks) {
+  fun gainSkillCards(cards: List<Grade>, skillDecks: SkillDecks) {
     cards.forEach { skillDeck.add(skillDecks.draw(it)) }
     skillDeck.shuffle()
   }

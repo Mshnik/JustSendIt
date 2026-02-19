@@ -1,14 +1,17 @@
 package com.redpup.justsendit.model.apres
 
+import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 
 /** In memory implementation of apres card. */
-class Apres(val apresCard: ApresCard) {
-  // TODO: Add implementation here.
+interface Apres {
+  val apresCard: ApresCard
 
   /** Applies this Apres benefit to [player]. */
-  fun apply(player: MutablePlayer, isFirstPlayerToArrive: Boolean) {
-
-  }
+  fun apply(
+    player: MutablePlayer,
+    isFirstPlayerToArrive: Boolean,
+    gameModel: GameModel
+  )
 }
