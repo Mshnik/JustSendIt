@@ -23,6 +23,48 @@ enum Hazard {
   HAZARD_CLIFFS = 3;
 }
 
+/** A terrain park that is present on a Slope. */
+message TerrainPark {
+  /** Sizes of terrain parks. */
+  enum Size {
+    SIZE_UNSET = 0;
+    SIZE_XS = 1;
+    SIZE_S = 2;
+    SIZE_M = 3;
+    SIZE_L = 4;
+  }
+  Size size = 1;
+
+  /** A jump type terrain park feature. */
+  message Jump {
+    /** The total number of cards a player can play on this jump. */
+    int32 total_cards = 1;
+    /** The target sum for the air column. */
+    int32 air = 2;
+    /** The target sum for the spin column. */
+    int32 spin = 3;
+    /** The target sum for the jump column. */
+    int32 jump = 4;
+  }
+
+  /** A rail type terrain park feature. */
+  message Rail {
+    /** A single segment of the rail. */
+    message Segment {
+      /** The number of cards to be played in the left column. */
+      int32 left = 1;
+      /** The number of cards to be played in the right column. */
+      int32 right = 2;
+    }
+    repeated Segment segment = 1;
+  }
+
+  oneof feature {
+    Jump jump = 2;
+    Rail rail = 3;
+  }
+}
+
 /** Parameters for a slope tile on the board. */
 message SlopeTile {
   // Difficulty of the slope - must be positive.
@@ -30,5 +72,6 @@ message SlopeTile {
   model.Grade grade = 2;
   Condition condition = 3;
   repeated Hazard hazards = 4;
-  bool slow = 5;
+  TerrainPark terrain_park = 5;
+  bool slow = 6;
 }
