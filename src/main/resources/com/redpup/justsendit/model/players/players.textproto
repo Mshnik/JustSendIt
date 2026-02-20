@@ -2,63 +2,32 @@
 # proto-message: PlayerCardList
 
 player {
-  name: "Test-1"
-  upgrades: {
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-  }
-  upgrades {
-    cards: GRADE_GREEN
-    cards: GRADE_GREEN
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-    cards: GRADE_BLACK
-  }
-
+  name: "Amy"
   training {
-    grade: GRADE_BLUE
+    grade: GRADE_GREEN
+    value: 1
+  }
+  training {
+    condition: CONDITION_GROOMED
     value: 1
   }
   training {
     condition: CONDITION_POWDER
     value: 1
   }
-  training {
-    condition: CONDITION_ICY
-    value: 1
+  abilities {
+    name: "Be Careful!"
+    cost: 1
+    text: "Once each turn you can choose to not gain speed"
   }
   abilities {
-    name: "All Rounder"
-    cost: 2
-    text: "You get 1 +skill"
-  }
-  abilities {
-    name: "Down for anything"
-    cost: 2
-    text: "When you gain 5 or more fun, gain 1 fun"
+    name: "Bop around town"
+    cost: 3
+    text: "Gain double points from Apres effects"
   }
 }
-
 player {
-  name: "Test-2"
-  upgrades: {
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-  }
-  upgrades {
-    cards: GRADE_GREEN
-    cards: GRADE_GREEN
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-    cards: GRADE_BLACK
-  }
-
+  name: "Andy"
   training {
     grade: GRADE_BLUE
     value: 1
@@ -72,77 +41,43 @@ player {
     value: 1
   }
   abilities {
-    name: "All Rounder"
+    name: "Can't stop wont stop"
     cost: 2
-    text: "You get 1 +skill"
+    text: "When you crash by 2 or less, you gain speed and continue your turn"
   }
   abilities {
-    name: "Down for anything"
+    name: "I can't slow down"
     cost: 2
-    text: "When you gain 5 or more fun, gain 1 fun"
+    text: "Gain 5 points when you gain your 3rd speed each turn"
   }
 }
-
-
 player {
-  name: "Test-3"
-  upgrades: {
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-  }
-  upgrades {
-    cards: GRADE_GREEN
-    cards: GRADE_GREEN
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-    cards: GRADE_BLACK
-  }
-
+  name: "Courtney"
   training {
     grade: GRADE_BLUE
     value: 1
   }
   training {
-    condition: CONDITION_POWDER
+    condition: CONDITION_GROOMED
     value: 1
   }
   training {
-    condition: CONDITION_ICY
+    hazard: HAZARD_MOGULS
     value: 1
   }
   abilities {
-    name: "All Rounder"
-    cost: 2
-    text: "You get 1 +skill"
+    name: "catch me if you can"
+    cost: 1
+    text: "ignore slow zones"
   }
   abilities {
-    name: "Down for anything"
+    name: "Bag of tricks"
     cost: 2
-    text: "When you gain 5 or more fun, gain 1 fun"
+    text: "gain 4 points when you ride a terrain park"
   }
 }
-
-
 player {
-  name: "Test-4"
-  upgrades: {
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-  }
-  upgrades {
-    cards: GRADE_GREEN
-    cards: GRADE_GREEN
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLUE
-    cards: GRADE_BLACK
-    cards: GRADE_BLACK
-  }
-
+  name: "Dannver"
   training {
     grade: GRADE_BLUE
     value: 1
@@ -152,19 +87,253 @@ player {
     value: 1
   }
   training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+  abilities {
+    name: "I get knocked down"
+    cost: 1
+    text: "gain 1 experience when you wipe out "
+  }
+  abilities {
+    name: "down for anything "
+    cost: 2
+    text: "gain 2 points when you gain 5+ points"
+  }
+}
+player {
+  name: "David"
+  training {
+    grade: GRADE_BLACK
+    value: 1
+  }
+  training {
+    condition: CONDITION_GROOMED
+    value: 1
+  }
+  training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+  abilities {
+    name: "Double dip"
+    cost: 2
+    text: "When you rest, you may move one tile"
+  }
+}
+player {
+  name: "George"
+  training {
+    grade: GRADE_DOUBLE_BLACK
+    value: 2
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    hazard: HAZARD_CLIFFS
+    value: 2
+  }
+  abilities {
+    name: "all day warrior "
+    cost: 2
+    text: "gain +2 skill on all runs on first and last turn "
+  }
+  abilities {
+    name: "Gnarly"
+    cost: 2
+    text: "Gain 5 points when you ride a M or L terrain park or double black"
+  }
+}
+player {
+  name: "James"
+  training {
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_GROOMED
+    value: 1
+  }
+  training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+  abilities {
+    name: "iron skis"
+    cost: 2
+    text: "when you beat difficulty by 7 or more, may gain 1 more speed"
+  }
+  abilities {
+    name: "groomer cruiser"
+    cost: 2
+    text: "gain 2 points on groomers"
+  }
+}
+player {
+  name: "Jenny"
+  training {
+    grade: GRADE_BLACK
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    hazard: HAZARD_TREES
+    value: 1
+  }
+  abilities {
+    name: "endurance "
+    cost: 2
+    text: "once each day when you crash you may discard hand and redo (same card count)"
+  }
+  abilities {
+    name: "powder princess"
+    cost: 2
+    text: "gain 2 points on powder "
+  }
+}
+player {
+  name: "Mia"
+  training {
+    grade: GRADE_GREEN
+    value: 1
+  }
+  training {
+    condition: CONDITION_GROOMED
+    value: 1
+  }
+  training {
     condition: CONDITION_ICY
     value: 1
   }
   abilities {
-    name: "All Rounder"
+    name: "fast leaner"
     cost: 2
-    text: "You get 1 +skill"
+    text: "green training applies to blue and black"
   }
   abilities {
-    name: "Down for anything"
+    name: "Speed Demon"
     cost: 2
-    text: "When you gain 5 or more fun, gain 1 fun"
+    text: "Gain 1 points per speed"
   }
 }
-
-
+player {
+  name: "Michael"
+  training {
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    hazard: HAZARD_TREES
+    value: 1
+  }
+  abilities {
+    name: "know before you go"
+    cost: 2
+    text: "At start of turn, look at your top skill card"
+  }
+  abilities {
+    name: "all rounder "
+    cost: 2
+    text: "gain 2 points if the grade is different from all other grades this turn "
+  }
+}
+player {
+  name: "Yifei"
+  training {
+    grade: GRADE_BLACK
+    value: 1
+  }
+  training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+  training {
+    hazard: HAZARD_TREES
+    value: 1
+  }
+  abilities {
+    name: "practice makes perfect "
+    cost: 2
+    text: "your hazard training counts double"
+  }
+  abilities {
+    name: "Hazard enjoyer "
+    cost: 2
+    text: "1 points if the tile has any hazards"
+  }
+}
+player {
+  name: "Melissa"
+}
+player {
+  name: "Wendy"
+}
+player {
+  name: "Test 1"
+  training {
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+  training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+}
+player {
+  name: "Test 2"
+  training {
+    grade: GRADE_GREEN
+    value: 1
+  }
+  training {
+    condition: CONDITION_GROOMED
+    value: 1
+  }
+  training {
+    hazard: HAZARD_TREES
+    value: 1
+  }
+}
+player {
+  name: "Test 3"
+  training {
+    grade: GRADE_BLUE
+    value: 1
+  }
+  training {
+    condition: CONDITION_ICY
+    value: 1
+  }
+  training {
+    condition: CONDITION_POWDER
+    value: 1
+  }
+}
+player {
+  name: "Test 4"
+  training {
+    grade: GRADE_BLACK
+    value: 1
+  }
+  training {
+    hazard: HAZARD_MOGULS
+    value: 1
+  }
+  training {
+    hazard: HAZARD_TREES
+    value: 1
+  }
+}
