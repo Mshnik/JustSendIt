@@ -12,6 +12,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
+import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
@@ -19,6 +20,9 @@ import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
+import com.redpup.justsendit.model.player.proto.playerCard
+import com.redpup.justsendit.model.player.proto.playerCardList
+import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 import java.io.BufferedWriter
 import java.io.File
@@ -46,6 +50,8 @@ class GameModelTest {
   private lateinit var skillDecks: FakeSkillDecks
   private lateinit var apresFactory: FakeApresFactory
   private val apresApply = mock<(ApresCard, MutablePlayer, Boolean, GameModel) -> Unit>()
+  private lateinit var playerFactory: FakePlayerFactory
+  private val abilityHandler = mock<AbilityHandler>()
 
   @BeforeEach
   fun setup() {
@@ -99,12 +105,15 @@ class GameModelTest {
         """.trimIndent()
     )
 
-    playersFile.writeText(
-      """
-            player { name: "Player 1" }
-            player { name: "Player 2" }
-        """.trimIndent()
+    val playerCards = listOf(
+      playerCard {
+        name = "Amy"
+      },
+      playerCard {
+        name = "Andy"
+      }
     )
+
     val apresCards = listOf(
       apresCard {
         name = "Day 1 Only A"
@@ -154,6 +163,17 @@ class GameModelTest {
         apres += apresCards
       }, writer)
     }
+
+    playerFactory = FakePlayerFactory()
+    for (card in playerCards) {
+      playerFactory.register(card.name, abilityHandler)
+    }
+
+    BufferedWriter(FileWriter(playersFile)).use { writer ->
+      TextFormat.printer().print(playerCardList {
+        player += playerCards
+      }, writer)
+    }
   }
 
   private fun createGameModel(playerCount: Int = 1): GameModel =
@@ -165,6 +185,7 @@ class GameModelTest {
       playerHandlers = List(playerCount) { testDecisionHandler },
       apresFactory = apresFactory,
       skillDecks = skillDecks,
+      playerFactory = playerFactory,
     )
 
   @Test
@@ -402,6 +423,14 @@ class GameModelTest {
       maxToRemove: Int,
     ): List<Int> {
       TODO("Not yet implemented")
+    }
+
+    override fun shouldGainSpeed(player: Player): Boolean {
+      TODO("Not yet implemented")
+    }
+
+    override fun chooseMoveOnRest(player: Player): HexDirection? {
+      return null
     }
   }
 }

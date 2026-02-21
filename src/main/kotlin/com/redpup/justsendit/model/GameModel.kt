@@ -13,10 +13,7 @@ import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileList
 import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
-import com.redpup.justsendit.model.player.BasicPlayerHandler
-import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.Player
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.model.player.*
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.player.proto.PlayerCardList
@@ -54,6 +51,7 @@ class MutableGameModel(
   apresPath: String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto",
   playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
   apresFactory: ApresFactory = ApresFactoryImpl,
+  playerFactory: PlayerFactory = PlayerFactoryImpl,
   override val skillDecks: SkillDecks,
 ) : GameModel {
   /** Applies fn to this. */
@@ -89,8 +87,8 @@ class MutableGameModel(
     ).invoke()
       .shuffled()
       .subList(0, playerHandlers.size)
-      .mapIndexed { index, card -> MutablePlayer(card, playerHandlers[index]) }
-      .toMutableList()
+      .mapIndexed { index, card -> playerFactory.create(card, playerHandlers[index]) }
+
   private val playerOrder = MutableList(players.size) { it }
   override val clock = MutableClock()
 

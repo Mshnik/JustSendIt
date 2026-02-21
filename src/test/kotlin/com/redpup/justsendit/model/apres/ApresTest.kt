@@ -5,6 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.apresCard
+import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
@@ -21,6 +22,7 @@ class ApresTest {
   private lateinit var player: Player
   private lateinit var skillDecks: FakeSkillDecks
   private lateinit var playerHandler: PlayerHandler
+  private val abilityHandler = mock<AbilityHandler>()
 
   private lateinit var gameModel: GameModel
 
@@ -36,7 +38,8 @@ class ApresTest {
     whenever(gameModel.skillDecks).thenReturn(skillDecks)
 
     playerHandler = mock()
-    player = MutablePlayer(playerCard { name = "Test Player" }, playerHandler)
+    player =
+      MutablePlayer(playerCard { name = "Test Player" }, playerHandler) { _ -> abilityHandler }
   }
 
   @Test

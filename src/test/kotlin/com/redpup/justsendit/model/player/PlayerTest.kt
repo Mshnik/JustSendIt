@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
@@ -20,6 +21,8 @@ class PlayerTest {
 
   private lateinit var player: MutablePlayer
   private lateinit var skillDecks: FakeSkillDecks
+  private val abilityHandler = mock<AbilityHandler>()
+  private val gameModel = mock<GameModel>()
 
   @BeforeEach
   fun setUp() {
@@ -38,7 +41,7 @@ class PlayerTest {
       }
       abilities += playerAbility { name = "Test Ability"; cost = 2 }
     }
-    player = MutablePlayer(playerCard, mock<PlayerHandler>())
+    player = MutablePlayer(playerCard, mock<PlayerHandler>()) { _ -> abilityHandler }
   }
 
   @Test

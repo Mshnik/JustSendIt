@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.player
 
+import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.proto.PlayerCard
@@ -14,6 +15,9 @@ interface Player {
 
   /** The input parameters of the player from the player card. */
   val playerCard: PlayerCard
+
+  /** Hooks for this player's abilities. */
+  val abilityHandler: AbilityHandler
 
   /** The handler for making decisions. */
   val handler: PlayerHandler
@@ -85,8 +89,28 @@ interface Player {
   val day: Day
 }
 
+/** Hooks for player abilities. */
+open class AbilityHandler(open val player: Player) {
+  open fun computeBonus(tile: SlopeTile): Int = 0
+  open fun onGainSpeed(currentSpeed: Int): Boolean = true
+  open fun onCrash(gameModel: GameModel, diff: Int) {}
+  open fun onGainPoints(points: Int, gameModel: GameModel) {}
+  open fun onRest(gameModel: GameModel) {}
+  open fun onBeforeTurn(gameModel: GameModel) {}
+  open fun onAfterTurn(gameModel: GameModel) {}
+  open fun getApresPointsMultiplier(): Int = 1
+  open fun getHazardTrainingMultiplier(): Int = 1
+  open fun getGreenTrainingBonusGrades(): List<Grade> = emptyList()
+  open fun onRevealTopCard(card: Int) {}
+  open fun ignoresSlowZones(): Boolean = false
+}
+
 /** Mutable access to a player object. */
-class MutablePlayer(override val playerCard: PlayerCard, override val handler: PlayerHandler) :
+class MutablePlayer(
+  override val playerCard: PlayerCard,
+  override val handler: PlayerHandler,
+  abilityHandlerConstructor: (Player) -> AbilityHandler,
+) :
   Player {
   override var points = 0; private set
   override var experience = 0; private set
@@ -103,6 +127,8 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
 
   override val training = mutableListOf(0, 0, 0)
   override val abilities = mutableListOf(false, false)
+
+  override val abilityHandler = abilityHandlerConstructor(this)
 
   /** Applies [fn] to this player. */
   override fun mutate(fn: MutablePlayer.() -> Unit) {
@@ -146,9 +172,10 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
   /** Buys the starting deck of cards. */
   fun buyStartingDeck(skillDecks: SkillDecks) {
     gainSkillCards(
-      listOf(List(5) { Grade.GRADE_GREEN },
-             List(3) { Grade.GRADE_BLUE },
-             List(2) { Grade.GRADE_BLACK }).flatten(),
+      listOf(
+        List(5) { Grade.GRADE_GREEN },
+        List(3) { Grade.GRADE_BLUE },
+        List(2) { Grade.GRADE_BLACK }).flatten(),
       skillDecks
     )
   }
@@ -189,17 +216,20 @@ class MutablePlayer(override val playerCard: PlayerCard, override val handler: P
 
       val applies = when (cardTraining.typeCase) {
         PlayerTraining.TypeCase.GRADE -> tile.grade == cardTraining.grade
+          || (cardTraining.grade == Grade.GRADE_GREEN
+          && tile.grade in abilityHandler.getGreenTrainingBonusGrades())
+
         PlayerTraining.TypeCase.CONDITION -> tile.condition == cardTraining.condition
         PlayerTraining.TypeCase.HAZARD -> tile.hazardsList.contains(cardTraining.hazard)
         PlayerTraining.TypeCase.TYPE_NOT_SET, null -> throw IllegalArgumentException("Invalid training type")
       }
 
       if (applies) {
-        training[i] * cardTraining.value
+        training[i] * cardTraining.value * (if (cardTraining.typeCase == PlayerTraining.TypeCase.HAZARD) abilityHandler.getHazardTrainingMultiplier() else 1)
       } else {
         0
       }
-    }
+    } + abilityHandler.computeBonus(tile)
   }
 }
 
