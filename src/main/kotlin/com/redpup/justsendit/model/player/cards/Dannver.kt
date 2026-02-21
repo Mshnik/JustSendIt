@@ -6,13 +6,13 @@ import com.redpup.justsendit.model.player.Player
 
 class Dannver(override val player: Player) : AbilityHandler(player) {
 
-  override fun onCrash(gameModel: GameModel, diff: Int) {
-    if (player.abilities[0]) {
+  override fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
+    if (player.abilities[0] && isWipeout) {
       player.mutate {
         turn.experience += 1
       }
     }
-    super.onCrash(gameModel, diff)
+    return super.onCrash(gameModel, diff, isWipeout)
   }
 
   override fun onGainPoints(points: Int, gameModel: GameModel) {

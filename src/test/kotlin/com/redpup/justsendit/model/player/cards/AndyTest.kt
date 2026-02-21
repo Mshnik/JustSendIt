@@ -24,26 +24,20 @@ class AndyTest {
   }
 
   @Test
-  fun `onCrash does nothing if ability is not unlocked`() {
-    val initialSpeed = andy.turn.speed
-    andy.abilityHandler.onCrash(gameModel, -2)
-    assertThat(andy.turn.speed).isEqualTo(initialSpeed)
+  fun `onCrash returns false if ability is not unlocked`() {
+    assertThat(andy.abilityHandler.onCrash(gameModel, -2, false)).isFalse()
   }
 
   @Test
-  fun `onCrash gains speed if ability is unlocked and diff is -2`() {
+  fun `onCrash returns true if ability is unlocked and diff is -2`() {
     andy.mutate { abilities[0] = true }
-    val initialSpeed = andy.turn.speed
-    andy.abilityHandler.onCrash(gameModel, -2)
-    assertThat(andy.turn.speed).isEqualTo(initialSpeed + 1)
+    assertThat(andy.abilityHandler.onCrash(gameModel, -2, false)).isTrue()
   }
 
   @Test
-  fun `onCrash does not gain speed if ability is unlocked and diff is less than -2`() {
+  fun `onCrash returns false if ability is unlocked and diff is less than -2`() {
     andy.mutate { abilities[0] = true }
-    val initialSpeed = andy.turn.speed
-    andy.abilityHandler.onCrash(gameModel, -3)
-    assertThat(andy.turn.speed).isEqualTo(initialSpeed)
+    assertThat(andy.abilityHandler.onCrash(gameModel, -3, false)).isFalse()
   }
 
   @Test

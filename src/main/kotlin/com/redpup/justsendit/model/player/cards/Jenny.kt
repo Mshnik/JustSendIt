@@ -6,12 +6,12 @@ import com.redpup.justsendit.model.player.Player
 
 class Jenny(override val player: Player) : AbilityHandler(player) {
 
-  override fun onCrash(gameModel: GameModel, diff: Int) {
+  override fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
     if (player.abilities[0]) {
       // "once each day when you crash you may discard hand and redo (same card count)"
       // Needs handler decision and game logic support.
     }
-    super.onCrash(gameModel, diff)
+    return super.onCrash(gameModel, diff, isWipeout)
   }
 
   // "powder princess": "gain 2 points on powder "

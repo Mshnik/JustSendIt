@@ -6,13 +6,8 @@ import com.redpup.justsendit.model.player.Player
 
 class Andy(override val player: Player) : AbilityHandler(player) {
 
-  override fun onCrash(gameModel: GameModel, diff: Int) {
-    if (player.abilities[0] && diff >= -2) {
-      player.mutate {
-        turn.speed++
-      }
-    }
-    super.onCrash(gameModel, diff)
+  override fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
+    return super.onCrash(gameModel, diff, isWipeout) || player.abilities[0] && diff >= -2
   }
 
   override fun onGainSpeed(currentSpeed: Int): Boolean {

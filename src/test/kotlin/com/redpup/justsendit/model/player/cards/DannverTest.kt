@@ -26,15 +26,23 @@ class DannverTest {
   @Test
   fun `onCrash does nothing if ability not unlocked`() {
     val initialExperience = dannver.turn.experience
-    dannver.abilityHandler.onCrash(gameModel, -1)
+    dannver.abilityHandler.onCrash(gameModel, -1, true)
     assertThat(dannver.turn.experience).isEqualTo(initialExperience)
   }
 
   @Test
-  fun `onCrash gains experience if ability is unlocked`() {
+  fun `onCrash does nothing if ability is unlocked and is not wipeout`() {
     dannver.mutate { abilities[0] = true }
     val initialExperience = dannver.turn.experience
-    dannver.abilityHandler.onCrash(gameModel, -1)
+    dannver.abilityHandler.onCrash(gameModel, -1, false)
+    assertThat(dannver.turn.experience).isEqualTo(initialExperience)
+  }
+
+  @Test
+  fun `onCrash gains experience if ability is unlocked and is wipeout`() {
+    dannver.mutate { abilities[0] = true }
+    val initialExperience = dannver.turn.experience
+    dannver.abilityHandler.onCrash(gameModel, -1, true)
     assertThat(dannver.turn.experience).isEqualTo(initialExperience + 1)
   }
 

@@ -230,6 +230,7 @@ class MutableGameModel(
       )
     val difficulty =
       destinationTile.slope.difficulty + player.turn.speed * SPEED_DIFFICULTY_MODIFIER
+    val halfDifficulty = difficulty.toDouble() / 2.0
 
     // Compute and apply result to turn.
     val success = skill >= difficulty
@@ -240,12 +241,16 @@ class MutableGameModel(
         ?.let { player.turn.points += it.bonus }
       player.turn.speed++
     }
-    if (skill <= difficulty && skill >= difficulty.toDouble() / 2.0) {
+    if (skill <= difficulty && skill >= halfDifficulty) {
       player.turn.experience++
     }
 
-    // Turn continues if successful.
-    return success
+    // Turn continues if successful or if ability allows.
+    return success || player.abilityHandler.onCrash(
+      this,
+      skill - difficulty,
+      skill < halfDifficulty
+    )
   }
 
   /** Executes the player taking a rest. */

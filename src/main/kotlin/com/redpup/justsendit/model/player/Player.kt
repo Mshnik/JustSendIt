@@ -91,17 +91,39 @@ interface Player {
 
 /** Hooks for player abilities. */
 open class AbilityHandler(open val player: Player) {
+  /** Computes the added bonus for the given [tile]. */
   open fun computeBonus(tile: SlopeTile): Int = 0
+
+  /** Called when the player should gain speed. Returns whether the player should gain speed. */
   open fun onGainSpeed(currentSpeed: Int): Boolean = true
-  open fun onCrash(gameModel: GameModel, diff: Int) {}
+
+  /** Called when the player crashes by [diff]. Returns whether the player should continue their turn. */
+  open fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean) = false
+
+  /** Called when the player gains points. */
   open fun onGainPoints(points: Int, gameModel: GameModel) {}
+
+  /** Called when the player rests. */
   open fun onRest(gameModel: GameModel) {}
+
+  /** Called at the start of a player's turn. */
   open fun onBeforeTurn(gameModel: GameModel) {}
+
+  /** Called at the end of a player's turn. */
   open fun onAfterTurn(gameModel: GameModel) {}
+
+  /** Returns the point multiplier to apply to apres points. */
   open fun getApresPointsMultiplier(): Int = 1
+
+  /** Returns the multiplier for hazard training. */
   open fun getHazardTrainingMultiplier(): Int = 1
+
+  /** Returns the additional grades that green training should apply to. */
   open fun getGreenTrainingBonusGrades(): List<Grade> = emptyList()
+
   open fun onRevealTopCard(card: Int) {}
+
+  /** Returns whether the player ignores slow zones. */
   open fun ignoresSlowZones(): Boolean = false
 }
 
