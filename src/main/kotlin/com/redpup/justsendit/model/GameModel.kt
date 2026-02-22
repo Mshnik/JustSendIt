@@ -13,7 +13,7 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.supply.ApresDeck
@@ -44,7 +44,7 @@ interface GameModel {
 /** Top level joined game model state. */
 class MutableGameModel @Inject constructor(
   tileMapBuilder: TileMapBuilder,
-  playerHandlers: @JvmSuppressWildcards List<PlayerHandler>,
+  playerControllers: @JvmSuppressWildcards List<PlayerController>,
   playerDeck: PlayerDeck,
   playerFactory: PlayerFactory,
   private val apresDeck: ApresDeck,
@@ -63,7 +63,7 @@ class MutableGameModel @Inject constructor(
   override val apres: MutableList<Apres> = mutableListOf()
 
   override val players: List<MutablePlayer> =
-    playerHandlers
+    playerControllers
       .map { handler -> playerFactory.create(playerDeck.draw(), handler) }
 
   private val playerOrder = MutableList(players.size) { it }

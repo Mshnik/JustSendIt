@@ -7,7 +7,7 @@ import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.proto.Grade
 import org.junit.jupiter.api.BeforeEach
@@ -18,15 +18,15 @@ import org.mockito.kotlin.whenever
 class GeorgeTest {
 
   private lateinit var george: MutablePlayer
-  private lateinit var playerHandler: PlayerHandler
+  private lateinit var playerController: PlayerController
   private lateinit var gameModel: GameModel
   private lateinit var clock: Clock
 
   @BeforeEach
   fun setup() {
-    playerHandler = mock()
+    playerController = mock()
     val playerCard = playerCard { name = "George" }
-    george = MutablePlayer(playerCard, playerHandler, ::George)
+    george = MutablePlayer(playerCard, playerController, ::George)
     gameModel = mock()
     clock = mock()
     whenever(gameModel.clock).thenReturn(clock)

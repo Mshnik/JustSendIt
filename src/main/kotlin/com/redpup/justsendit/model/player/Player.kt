@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.player
 
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
@@ -20,7 +21,7 @@ interface Player {
   val abilityHandler: AbilityHandler
 
   /** The handler for making decisions. */
-  val handler: PlayerHandler
+  val handler: PlayerController
 
   /** How many points (fun) this player has. */
   val points: Int
@@ -130,7 +131,7 @@ open class AbilityHandler(open val player: Player) {
 /** Mutable access to a player object. */
 class MutablePlayer(
   override val playerCard: PlayerCard,
-  override val handler: PlayerHandler,
+  override val handler: PlayerController,
   abilityHandlerConstructor: (Player) -> AbilityHandler,
 ) :
   Player {

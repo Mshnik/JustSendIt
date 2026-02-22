@@ -3,7 +3,7 @@ package com.redpup.justsendit.model.player.cards
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,14 +12,14 @@ import org.mockito.kotlin.mock
 class AndyTest {
 
   private lateinit var andy: MutablePlayer
-  private lateinit var playerHandler: PlayerHandler
+  private lateinit var playerController: PlayerController
   private lateinit var gameModel: GameModel
 
   @BeforeEach
   fun setup() {
-    playerHandler = mock()
+    playerController = mock()
     val playerCard = playerCard { name = "Andy" }
-    andy = MutablePlayer(playerCard, playerHandler, ::Andy)
+    andy = MutablePlayer(playerCard, playerController, ::Andy)
     gameModel = mock()
   }
 

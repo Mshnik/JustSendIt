@@ -1,12 +1,13 @@
-package com.redpup.justsendit.model.player
+package com.redpup.justsendit.control.player
 
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 
 /** Handler for players making decisions. */
-interface PlayerHandler {
+interface PlayerController {
   /** Queues the player to make a mountain decision. */
   fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
 
@@ -20,7 +21,7 @@ interface PlayerHandler {
   fun chooseMoveOnRest(player: Player): HexDirection?
 }
 
-class BasicPlayerHandler : PlayerHandler {
+class BasicPlayerController : PlayerController {
   override fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {
     TODO("Not yet implemented")
   }

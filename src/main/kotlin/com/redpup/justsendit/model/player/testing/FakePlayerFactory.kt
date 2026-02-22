@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.player.testing
 
 import com.google.common.annotations.VisibleForTesting
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.*
 import com.redpup.justsendit.model.player.proto.PlayerCard
 import javax.inject.Singleton
@@ -17,7 +18,7 @@ class FakePlayerFactory : PlayerFactory {
   }
 
   /** Creates a [Player] from a [PlayerCard] using this factory. */
-  override fun create(playerCard: PlayerCard, handler: PlayerHandler): MutablePlayer =
+  override fun create(playerCard: PlayerCard, handler: PlayerController): MutablePlayer =
     MutablePlayer(playerCard, handler) { _ ->
       abilityHandlers[playerCard.name]
         ?: throw IllegalArgumentException("No player found for ${playerCard.name} in $abilityHandlers")

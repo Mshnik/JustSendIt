@@ -10,7 +10,7 @@ import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 import javax.inject.Inject
@@ -22,7 +22,7 @@ import org.mockito.kotlin.whenever
 
 class ApresTest {
   @Inject private lateinit var skillDecks: FakeSkillDecks
-  private val playerHandler = mock<PlayerHandler>()
+  private val playerController = mock<PlayerController>()
   private val abilityHandler = mock<AbilityHandler>()
   private val gameModel = mock<GameModel>()
   private lateinit var player: Player
@@ -37,7 +37,7 @@ class ApresTest {
     whenever(gameModel.skillDecks).thenReturn(skillDecks)
 
     player =
-      MutablePlayer(playerCard { name = "Test Player" }, playerHandler) { _ -> abilityHandler }
+      MutablePlayer(playerCard { name = "Test Player" }, playerController) { _ -> abilityHandler }
   }
 
   @Test
@@ -260,7 +260,7 @@ class ApresTest {
     assertThat(player.skillDeck).hasSize(5)
 
     // Mock playerHandler to return specific cards to remove
-    whenever(playerHandler.chooseCardsToRemove(player, player.skillDeck, 3))
+    whenever(playerController.chooseCardsToRemove(player, player.skillDeck, 3))
       .thenReturn(listOf(1, 3))
 
     player.mutate { tuneUp.apply(this, true, gameModel) }
@@ -276,7 +276,7 @@ class ApresTest {
     assertThat(player.skillDeck).hasSize(5)
 
     // Mock playerHandler to return specific cards to remove
-    whenever(playerHandler.chooseCardsToRemove(player, player.skillDeck, 2))
+    whenever(playerController.chooseCardsToRemove(player, player.skillDeck, 2))
       .thenReturn(listOf(2))
 
     player.mutate { tuneUp.apply(this, false, gameModel) }

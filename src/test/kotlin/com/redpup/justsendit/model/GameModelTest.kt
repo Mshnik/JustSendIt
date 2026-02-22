@@ -5,6 +5,8 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import com.google.inject.Provider
 import com.google.protobuf.empty
+import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.testing.FakePlayerControllerModule
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.apres.testing.FakeApres
@@ -19,7 +21,6 @@ import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
-import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
@@ -36,7 +37,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 
 class GameModelTest {
-  private val testDecisionHandler = TestDecisionHandler()
+  private val testDecisionHandler = TestDecisionController()
 
   private val apresApply = mock<(ApresCard, MutablePlayer, Boolean, GameModel) -> Unit>()
 
@@ -55,7 +56,8 @@ class GameModelTest {
   @BeforeEach
   fun setup() {
     Guice.createInjector(
-      FakePlayerModule(List(1) { _ -> testDecisionHandler }),
+      FakePlayerModule(),
+      FakePlayerControllerModule(List(1) { _ -> testDecisionHandler }),
       FakeApresModule(),
       FakeSupplyModule()
     ).injectMembers(this)
@@ -372,8 +374,8 @@ class GameModelTest {
     assertThat(game.apres.all { 2 in it.apresCard.availableDaysList }).isTrue()
   }
 
-  /** A test implementation of [PlayerHandler] that returns decisions from a queue. */
-  class TestDecisionHandler : PlayerHandler {
+  /** A test implementation of [PlayerController] that returns decisions from a queue. */
+  class TestDecisionController : PlayerController {
     val decisionQueue = mutableListOf<MountainDecision>()
     var startLocation = createHexPoint(0, 0)
 

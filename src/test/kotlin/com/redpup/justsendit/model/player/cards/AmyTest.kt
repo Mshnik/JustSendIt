@@ -2,7 +2,7 @@ package com.redpup.justsendit.model.player.cards
 
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -12,13 +12,13 @@ import org.mockito.kotlin.whenever
 class AmyTest {
 
   private lateinit var amy: MutablePlayer
-  private lateinit var playerHandler: PlayerHandler
+  private lateinit var playerController: PlayerController
 
   @BeforeEach
   fun setup() {
-    playerHandler = mock()
+    playerController = mock()
     val playerCard = playerCard { name = "Amy" }
-    amy = MutablePlayer(playerCard, playerHandler, ::Amy)
+    amy = MutablePlayer(playerCard, playerController, ::Amy)
   }
 
   @Test
@@ -29,7 +29,7 @@ class AmyTest {
   @Test
   fun `onGainSpeed calls handler if Be Careful is unlocked`() {
     amy.mutate { abilities[0] = true }
-    whenever(playerHandler.shouldGainSpeed(amy)).thenReturn(false)
+    whenever(playerController.shouldGainSpeed(amy)).thenReturn(false)
     assertThat(amy.abilityHandler.onGainSpeed(0)).isFalse()
   }
 

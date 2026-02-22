@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
@@ -41,7 +42,7 @@ class PlayerTest {
       }
       abilities += playerAbility { name = "Test Ability"; cost = 2 }
     }
-    player = MutablePlayer(playerCard, mock<PlayerHandler>()) { _ -> abilityHandler }
+    player = MutablePlayer(playerCard, mock<PlayerController>()) { _ -> abilityHandler }
   }
 
   @Test

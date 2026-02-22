@@ -9,7 +9,7 @@ import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.board.tile.proto.terrainPark
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,14 +19,14 @@ import org.mockito.kotlin.whenever
 class CourtneyTest {
 
   private lateinit var courtney: MutablePlayer
-  private lateinit var playerHandler: PlayerHandler
+  private lateinit var playerController: PlayerController
   private lateinit var gameModel: GameModel
 
   @BeforeEach
   fun setup() {
-    playerHandler = mock()
+    playerController = mock()
     val playerCard = playerCard { name = "Courtney" }
-    courtney = MutablePlayer(playerCard, playerHandler, ::Courtney)
+    courtney = MutablePlayer(playerCard, playerController, ::Courtney)
     gameModel = mock()
   }
 

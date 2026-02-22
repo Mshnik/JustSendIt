@@ -3,9 +3,6 @@ package com.redpup.justsendit.model.player.cards
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
-import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
-import com.redpup.justsendit.model.player.proto.PlayerCard
 
 class James(override val player: Player) : AbilityHandler(player) {
 

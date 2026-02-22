@@ -1,6 +1,7 @@
 package com.redpup.justsendit.view
 
 import com.google.inject.Guice
+import com.redpup.justsendit.control.ControllerModule
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.view.board.HexGridViewer
@@ -15,7 +16,10 @@ class JustSendItGui : Application() {
   private lateinit var gameModel: GameModel
 
   override fun init() {
-    gameModel = Guice.createInjector(GameModelModule()).getInstance(GameModel::class.java)
+    gameModel = Guice.createInjector(
+      GameModelModule(),
+      ControllerModule()
+    ).getInstance(GameModel::class.java)
   }
 
   override fun start(stage: Stage) {

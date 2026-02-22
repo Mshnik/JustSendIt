@@ -5,7 +5,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.PlayerHandler
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -15,14 +15,14 @@ import org.mockito.kotlin.whenever
 class DavidTest {
 
   private lateinit var david: MutablePlayer
-  private lateinit var playerHandler: PlayerHandler
+  private lateinit var playerController: PlayerController
   private lateinit var gameModel: GameModel
 
   @BeforeEach
   fun setup() {
-    playerHandler = mock()
+    playerController = mock()
     val playerCard = playerCard { name = "David" }
-    david = MutablePlayer(playerCard, playerHandler, ::David)
+    david = MutablePlayer(playerCard, playerController, ::David)
     gameModel = mock()
   }
 
@@ -39,7 +39,7 @@ class DavidTest {
     david.mutate { abilities[0] = true }
     val initialLocation = hexPoint { q = 0; r = 0 }
     david.mutate { location = initialLocation }
-    whenever(playerHandler.chooseMoveOnRest(david)).thenReturn(HexDirection.HEX_DIRECTION_NORTH)
+    whenever(playerController.chooseMoveOnRest(david)).thenReturn(HexDirection.HEX_DIRECTION_NORTH)
 
     david.abilityHandler.onRest(gameModel)
 
@@ -52,7 +52,7 @@ class DavidTest {
     david.mutate { abilities[0] = true }
     val initialLocation = hexPoint { q = 0; r = 0 }
     david.mutate { location = initialLocation }
-    whenever(playerHandler.chooseMoveOnRest(david)).thenReturn(null)
+    whenever(playerController.chooseMoveOnRest(david)).thenReturn(null)
 
     david.abilityHandler.onRest(gameModel)
 
