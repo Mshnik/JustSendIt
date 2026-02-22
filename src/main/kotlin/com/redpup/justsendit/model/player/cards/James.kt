@@ -1,19 +1,27 @@
 package com.redpup.justsendit.model.player.cards
 
 import com.redpup.justsendit.model.GameModel
+import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
 class James(override val player: Player) : AbilityHandler(player) {
 
-  // "iron skis": "when you beat difficulty by 7 or more, may gain 1 more speed"
-  // This would be checked where overkill is calculated.
-  // The player can have a hook for when an overkill bonus is applied.
+    override fun onGainPoints(points: Int, gameModel: GameModel) {
+        // groomer cruiser
+        if (player.abilities[1]) {
+            val tile = gameModel.tileMap[player.location!!]
+            if (tile != null && tile.hasSlope() && tile.slope.condition == Condition.CONDITION_GROOMED) {
+                player.mutate { turn.points += 2 }
+            }
+        }
+    }
 
-  override fun onAfterTurn(gameModel: GameModel) {
-    // "groomer cruiser": "gain 2 points on groomers"
-    // This should be based on tiles traversed during the turn.
-    // GameModel would need to track this.
-    super.onAfterTurn(gameModel)
-  }
+    override fun onSuccessfulRun(gameModel: GameModel, diff: Int) {
+        if (player.abilities[0] && diff >= 7) {
+            if (player.handler.shouldGainSpeed(player)) {
+                player.mutate { turn.speed++ }
+            }
+        }
+    }
 }

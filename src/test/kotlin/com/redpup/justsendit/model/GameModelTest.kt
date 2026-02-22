@@ -404,5 +404,11 @@ class GameModelTest {
     override fun chooseMoveOnRest(player: Player): HexDirection? {
       return null
     }
+
+    override fun decideToUseEndurance(): Boolean {
+      return false
+    }
+
+    override fun onRevealTopCard(card: Int) {}
   }
 }

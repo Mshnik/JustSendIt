@@ -90,6 +90,7 @@ class MutableGameModel @Inject constructor(
           val continueTurn = executeDecision(player, decision, subTurn)
           subTurn++
         } while (continueTurn)
+        player.abilityHandler.onAfterTurn(this)
         player.ingestTurn()
       }
     }
@@ -216,6 +217,7 @@ class MutableGameModel @Inject constructor(
         ?.takeIf { skill - difficulty >= it.threshold }
         ?.let { player.turn.points += it.bonus }
       player.turn.speed++
+      player.abilityHandler.onSuccessfulRun(this, skill - difficulty)
     }
     if (skill <= difficulty && skill >= halfDifficulty) {
       player.turn.experience++

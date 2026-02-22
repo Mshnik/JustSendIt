@@ -101,6 +101,9 @@ open class AbilityHandler(open val player: Player) {
   /** Called when the player crashes by [diff]. Returns whether the player should continue their turn. */
   open fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean) = false
 
+  /** Called after a successful run. */
+  open fun onSuccessfulRun(gameModel: GameModel, diff: Int) {}
+
   /** Called when the player gains points. */
   open fun onGainPoints(points: Int, gameModel: GameModel) {}
 

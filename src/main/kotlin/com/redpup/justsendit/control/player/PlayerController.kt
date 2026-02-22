@@ -19,6 +19,8 @@ interface PlayerController {
   /** Asks the player if they want to gain speed. */
   fun shouldGainSpeed(player: Player): Boolean
   fun chooseMoveOnRest(player: Player): HexDirection?
+  fun decideToUseEndurance(): Boolean
+  fun onRevealTopCard(card: Int)
 }
 
 class BasicPlayerController : PlayerController {
@@ -44,5 +46,14 @@ class BasicPlayerController : PlayerController {
   override fun chooseMoveOnRest(player: Player): HexDirection? {
     // By default, don't move on rest.
     return null
+  }
+
+  override fun decideToUseEndurance(): Boolean {
+    // By default, don't use endurance.
+    return false
+  }
+
+  override fun onRevealTopCard(card: Int) {
+    // By default, do nothing.
   }
 }
