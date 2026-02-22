@@ -1,8 +1,8 @@
 package com.redpup.justsendit.view
 
+import com.google.inject.Guice
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.MutableGameModel
-import com.redpup.justsendit.model.supply.SkillDecksInstance
+import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.view.board.HexGridViewer
 import com.redpup.justsendit.view.info.InfoPanel
 import javafx.application.Application
@@ -15,8 +15,7 @@ class JustSendItGui : Application() {
   private lateinit var gameModel: GameModel
 
   override fun init() {
-    SkillDecksInstance.reset()
-    gameModel = MutableGameModel(skillDecks = SkillDecksInstance)
+    gameModel = Guice.createInjector(GameModelModule()).getInstance(GameModel::class.java)
   }
 
   override fun start(stage: Stage) {

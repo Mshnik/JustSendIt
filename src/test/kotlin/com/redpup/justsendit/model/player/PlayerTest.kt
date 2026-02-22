@@ -10,7 +10,7 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.playerTraining
 import com.redpup.justsendit.model.player.proto.playerUpgrade
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecksInstance.getSkillGrade
+import com.redpup.justsendit.model.supply.SkillDecks.Companion.getSkillGrade
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach

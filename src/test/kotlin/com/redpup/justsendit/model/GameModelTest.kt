@@ -1,17 +1,20 @@
 package com.redpup.justsendit.model
 
 import com.google.common.truth.Truth.assertThat
-import com.google.protobuf.TextFormat
+import com.google.inject.Guice
+import com.google.inject.Inject
+import com.google.inject.Provider
 import com.google.protobuf.empty
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.apresCard
-import com.redpup.justsendit.model.apres.proto.apresCardList
 import com.redpup.justsendit.model.apres.testing.FakeApres
 import com.redpup.justsendit.model.apres.testing.FakeApresFactory
+import com.redpup.justsendit.model.apres.testing.FakeApresModule
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
+import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
@@ -21,178 +24,154 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.model.player.proto.playerCard
-import com.redpup.justsendit.model.player.proto.playerCardList
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
-import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileWriter
+import com.redpup.justsendit.model.player.testing.FakePlayerModule
+import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.supply.testing.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.io.TempDir
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
 
 class GameModelTest {
-
-  @TempDir
-  lateinit var tempDir: File
-
-  private lateinit var tilesFile: File
-  private lateinit var locationsFile: File
-  private lateinit var playersFile: File
-  private lateinit var apresFile: File
-
   private val testDecisionHandler = TestDecisionHandler()
 
-  private lateinit var skillDecks: FakeSkillDecks
-  private lateinit var apresFactory: FakeApresFactory
   private val apresApply = mock<(ApresCard, MutablePlayer, Boolean, GameModel) -> Unit>()
-  private lateinit var playerFactory: FakePlayerFactory
+
   private val abilityHandler = mock<AbilityHandler>()
+
+  @Inject private lateinit var skillDecks: FakeSkillDecks
+  @Inject private lateinit var apresDeck: FakeApresDeck
+  @Inject private lateinit var playerDeck: FakePlayerDeck
+  @Inject private lateinit var apresFactory: FakeApresFactory
+  @Inject private lateinit var playerFactory: FakePlayerFactory
+  @Inject private lateinit var tileSupply: FakeTileSupply
+  @Inject private lateinit var gameProvider: Provider<MutableGameModel>
+
+  private lateinit var game: GameModel
 
   @BeforeEach
   fun setup() {
-    tilesFile = File(tempDir, "tiles.textproto")
-    locationsFile = File(tempDir, "locations.textproto")
-    playersFile = File(tempDir, "players.textproto")
-    apresFile = File(tempDir, "apres.textproto")
-    skillDecks = FakeSkillDecks()
+    Guice.createInjector(
+      FakePlayerModule(List(1) { _ -> testDecisionHandler }),
+      FakeApresModule(),
+      FakeSupplyModule()
+    ).injectMembers(this)
+
     skillDecks.setGreenDeck(List(100) { 1 })
     skillDecks.setBlueDeck(List(100) { 4 })
     skillDecks.setBlackDeck(List(100) { 7 })
 
-    tilesFile.writeText(
-      """
-            tiles {
-              slope {
-                difficulty: 5
-                grade: GRADE_GREEN
-              }
-            }
-            tiles {
-              lift {
-                color: LIFT_COLOR_RED
-                direction: LIFT_DIRECTION_BOTTOM
-              }
-              apres_link: 1
-            }
-            tiles {
-              lift {
-                color: LIFT_COLOR_RED
-                direction: LIFT_DIRECTION_TOP
-              }
-            }
-        """.trimIndent()
+    tileSupply.tiles = listOf(
+      mountainTile {
+        slope = slopeTile {
+          difficulty = 5
+          grade = Grade.GRADE_GREEN
+        }
+      },
+      mountainTile {
+        lift = liftTile {
+          color = LiftColor.LIFT_COLOR_RED
+          direction = LiftDirection.LIFT_DIRECTION_BOTTOM
+        }
+        apresLink = 1
+      },
+      mountainTile {
+        lift = liftTile {
+          color = LiftColor.LIFT_COLOR_RED
+          direction = LiftDirection.LIFT_DIRECTION_TOP
+        }
+      }
     )
 
-    locationsFile.writeText(
-      """
-            location {
-              point { q: 0 r: 1 }
-              grade: GRADE_GREEN
-            }
-            location {
-              point { q: 0 r: 0 }
-              lift { color: LIFT_COLOR_RED direction: LIFT_DIRECTION_BOTTOM }
-            }
-            location {
-              point { q: 0 r: -1 }
-              lift { color: LIFT_COLOR_RED direction: LIFT_DIRECTION_TOP }
-            }
-        """.trimIndent()
+    tileSupply.locations = listOf(
+      mountainTileLocation {
+        point = createHexPoint(0, 1)
+        grade = Grade.GRADE_GREEN
+      },
+      mountainTileLocation {
+        point = createHexPoint(0, 0)
+        lift = liftTile {
+          color = LiftColor.LIFT_COLOR_RED
+          direction = LiftDirection.LIFT_DIRECTION_BOTTOM
+        }
+      },
+      mountainTileLocation {
+        point = createHexPoint(0, -1)
+        lift = liftTile {
+          color = LiftColor.LIFT_COLOR_RED
+          direction = LiftDirection.LIFT_DIRECTION_TOP
+        }
+      }
     )
 
-    val playerCards = listOf(
+    playerDeck.cards.addAll(listOf(
       playerCard {
         name = "Amy"
       },
       playerCard {
         name = "Andy"
       }
+    ))
+
+    apresDeck.apresCards.addAll(
+      listOf(
+        apresCard {
+          name = "Day 1 Only A"
+          availableDays += 1
+        },
+        apresCard {
+          name = "Day 1 Only B"
+          availableDays += 1
+        },
+        apresCard {
+          name = "Day 1 Only C"
+          availableDays += 1
+        },
+        apresCard {
+          name = "Day 2 Only A"
+          availableDays += 2
+        },
+        apresCard {
+          name = "Day 2 Only B"
+          availableDays += 2
+        },
+        apresCard {
+          name = "Day 2 Only C"
+          availableDays += 2
+        },
+        apresCard {
+          name = "Day 3 Only A"
+          availableDays += 3
+        },
+        apresCard {
+          name = "Day 3 Only B"
+          availableDays += 3
+        },
+        apresCard {
+          name = "Day 3 Only C"
+          availableDays += 3
+        },
+      )
     )
 
-    val apresCards = listOf(
-      apresCard {
-        name = "Day 1 Only A"
-        availableDays += 1
-      },
-      apresCard {
-        name = "Day 1 Only B"
-        availableDays += 1
-      },
-      apresCard {
-        name = "Day 1 Only C"
-        availableDays += 1
-      },
-      apresCard {
-        name = "Day 2 Only A"
-        availableDays += 2
-      },
-      apresCard {
-        name = "Day 2 Only B"
-        availableDays += 2
-      },
-      apresCard {
-        name = "Day 2 Only C"
-        availableDays += 2
-      },
-      apresCard {
-        name = "Day 3 Only A"
-        availableDays += 3
-      },
-      apresCard {
-        name = "Day 3 Only B"
-        availableDays += 3
-      },
-      apresCard {
-        name = "Day 3 Only C"
-        availableDays += 3
-      },
-    )
-
-    apresFactory = FakeApresFactory()
-    for (card in apresCards) {
+    for (card in apresDeck.apresCards) {
       apresFactory.register(card.name) { FakeApres(it).onApply(apresApply) }
     }
 
-    BufferedWriter(FileWriter(apresFile)).use { writer ->
-      TextFormat.printer().print(apresCardList {
-        apres += apresCards
-      }, writer)
-    }
-
-    playerFactory = FakePlayerFactory()
-    for (card in playerCards) {
+    for (card in playerDeck.cards) {
       playerFactory.register(card.name, abilityHandler)
     }
 
-    BufferedWriter(FileWriter(playersFile)).use { writer ->
-      TextFormat.printer().print(playerCardList {
-        player += playerCards
-      }, writer)
-    }
+    game = gameProvider.get()
   }
-
-  private fun createGameModel(playerCount: Int = 1): GameModel =
-    MutableGameModel(
-      tilesPath = tilesFile.absolutePath,
-      locationsPath = locationsFile.absolutePath,
-      playersPath = playersFile.absolutePath,
-      apresPath = apresFile.absolutePath,
-      playerHandlers = List(playerCount) { testDecisionHandler },
-      apresFactory = apresFactory,
-      skillDecks = skillDecks,
-      playerFactory = playerFactory,
-    )
 
   @Test
   fun `game model initializes correctly`() {
     skillDecks.setGreenDeck(List(10) { 1 }) // Set up for starting deck
-    val game = createGameModel(2)
-    assertThat(game.players.size).isEqualTo(2)
+    assertThat(game.players.size).isEqualTo(1)
     assertThat(game.tileMap.size()).isEqualTo(3)
     assertThat(game.players[0].skillDeck.size).isEqualTo(10) // Starting deck
     assertThat(game.players[0].location).isEqualTo(createHexPoint(0, 0))
@@ -202,7 +181,6 @@ class GameModelTest {
 
   @Test
   fun `turn with REST decision works`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       skillDeck.clear() // Clear existing cards from buyStartingDeck
@@ -224,7 +202,6 @@ class GameModelTest {
 
   @Test
   fun `turn with LIFT decision works`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate { location = createHexPoint(0, 0) }
 
@@ -241,7 +218,6 @@ class GameModelTest {
 
   @Test
   fun `turn with EXIT decision works`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate { location = createHexPoint(0, 0) } // Location with apres_link
 
@@ -261,7 +237,6 @@ class GameModelTest {
 
   @Test
   fun `successful SKI_RIDE turn with success`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -288,7 +263,6 @@ class GameModelTest {
 
   @Test
   fun `successful SKI_RIDE turn with exact success`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -315,7 +289,6 @@ class GameModelTest {
 
   @Test
   fun `successful SKI_RIDE turn with partial failure`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -339,7 +312,6 @@ class GameModelTest {
 
   @Test
   fun `successful SKI_RIDE turn with full failure`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -363,7 +335,6 @@ class GameModelTest {
 
   @Test
   fun `successful SKI_RIDE turn with success with overkill`() {
-    val game = createGameModel()
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -391,7 +362,6 @@ class GameModelTest {
 
   @Test
   fun `advance day updates day and repopulates apres`() {
-    val game = createGameModel()
     testDecisionHandler.startLocation = hexPoint { q = -1; r = -1 }
     game.mutate { advanceDay() }
 

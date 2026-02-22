@@ -4,9 +4,11 @@ import com.google.common.annotations.VisibleForTesting
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.ApresFactory
 import com.redpup.justsendit.model.apres.proto.ApresCard
+import javax.inject.Singleton
 
 /** A testing implementation of [ApresFactory] */
 @VisibleForTesting
+@Singleton
 class FakeApresFactory : ApresFactory {
   override val factories: MutableMap<String, (ApresCard) -> Apres> = mutableMapOf()
 

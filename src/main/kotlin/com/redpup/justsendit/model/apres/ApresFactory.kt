@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.apres
 
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.ApresCard
+import javax.inject.Inject
 
 interface ApresFactory {
   /** Factories registered by name. */
@@ -14,7 +15,7 @@ interface ApresFactory {
 }
 
 /** Factory for creating [Apres] objects from [ApresCard]s. */
-object ApresFactoryImpl : ApresFactory {
+class ApresFactoryImpl @Inject constructor() : ApresFactory {
   override val factories: Map<String, (ApresCard) -> Apres> = mapOf(
     "Buy Gear" to { apresCard -> BuyGear(apresCard) },
     "Tune-Up" to { apresCard -> TuneUp(apresCard) },

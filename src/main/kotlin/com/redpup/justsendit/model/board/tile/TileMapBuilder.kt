@@ -1,23 +1,21 @@
 package com.redpup.justsendit.model.board.tile
 
+import com.google.inject.Inject
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileLocation
-import com.redpup.justsendit.util.TextProtoReader
+import com.redpup.justsendit.model.supply.TileSupply
 
-/** Functions to build the tile map. */
-object TileMap {
-
+/** Utility to build the tile map from the [TileSupply]. */
+class TileMapBuilder @Inject constructor(private val tileSupply: TileSupply) {
   /** Builds a hex grid map from a TileReader. */
-  fun constructMap(
-    tiles: TextProtoReader<MountainTile>,
-    locations: TextProtoReader<MountainTileLocation>,
-  ): HexGrid<MountainTile> {
+  fun build(): HexGrid<MountainTile> {
     val grid = HexGrid<MountainTile>()
-    val slopesByGrade = tiles().filter { it.hasSlope() }.groupBy { it.slope.grade }
+    val slopesByGrade = tileSupply.tiles.filter { it.hasSlope() }.groupBy { it.slope.grade }
       .mapValues { it.value.shuffled().toMutableList() }
     val liftsByColorAndDirection =
-      tiles().filter { it.hasLift() }.groupBy { Pair(it.lift.color, it.lift.direction) }.mapValues {
+      tileSupply.tiles.filter { it.hasLift() }.groupBy { Pair(it.lift.color, it.lift.direction) }
+        .mapValues {
           check(it.value.size == 1)
           it.value.first()
         }.toMutableMap()
@@ -37,7 +35,7 @@ object TileMap {
       MountainTileLocation.ContentCase.CONTENT_NOT_SET -> throw IllegalArgumentException()
     }
 
-    for (location in locations()) {
+    for (location in tileSupply.locations) {
       grid[location.point] = pickTile(location)
     }
     return grid

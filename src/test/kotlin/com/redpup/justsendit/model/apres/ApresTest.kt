@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.apres
 
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
+import com.google.inject.Guice
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.apresCard
@@ -12,6 +13,7 @@ import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
+import javax.inject.Inject
 import kotlin.test.Ignore
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -19,25 +21,21 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 class ApresTest {
-  private lateinit var player: Player
-  private lateinit var skillDecks: FakeSkillDecks
-  private lateinit var playerHandler: PlayerHandler
+  @Inject private lateinit var skillDecks: FakeSkillDecks
+  private val playerHandler = mock<PlayerHandler>()
   private val abilityHandler = mock<AbilityHandler>()
-
-  private lateinit var gameModel: GameModel
+  private val gameModel = mock<GameModel>()
+  private lateinit var player: Player
 
   @BeforeEach
   fun setup() {
-    skillDecks = FakeSkillDecks()
+    Guice.createInjector().injectMembers(this)
     // Pre-populate with enough cards for BuyGear tests
     skillDecks.setGreenDeck(List(100) { 1 })
     skillDecks.setBlueDeck(List(100) { 2 })
     skillDecks.setBlackDeck(List(100) { 3 })
-
-    gameModel = mock()
     whenever(gameModel.skillDecks).thenReturn(skillDecks)
 
-    playerHandler = mock()
     player =
       MutablePlayer(playerCard { name = "Test Player" }, playerHandler) { _ -> abilityHandler }
   }

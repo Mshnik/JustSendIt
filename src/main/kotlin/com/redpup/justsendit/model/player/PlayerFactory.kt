@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.player
 
 import com.redpup.justsendit.model.player.cards.*
 import com.redpup.justsendit.model.player.proto.PlayerCard
+import javax.inject.Inject
 
 interface PlayerFactory {
   /** Creates a [Player] from a [PlayerCard] using this factory. */
@@ -9,7 +10,7 @@ interface PlayerFactory {
 }
 
 /** Factory for creating [Player] objects from [PlayerCard]s. */
-object PlayerFactoryImpl : PlayerFactory {
+class PlayerFactoryImpl @Inject constructor() : PlayerFactory {
   private val factories: Map<String, (PlayerCard, PlayerHandler) -> MutablePlayer> = mapOf(
     "Amy" to ::Amy.createPlayerFunctor(),
     "Andy" to ::Andy.createPlayerFunctor(),

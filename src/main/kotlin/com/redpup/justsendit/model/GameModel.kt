@@ -1,26 +1,24 @@
 package com.redpup.justsendit.model
 
+import com.google.inject.Inject
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.apres.ApresFactory
-import com.redpup.justsendit.model.apres.ApresFactoryImpl
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.TileMap.constructMap
+import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
-import com.redpup.justsendit.model.board.tile.proto.MountainTileList
-import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
-import com.redpup.justsendit.model.player.*
+import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.PlayerFactory
+import com.redpup.justsendit.model.player.PlayerHandler
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
-import com.redpup.justsendit.model.player.proto.PlayerCardList
 import com.redpup.justsendit.model.supply.ApresDeck
-import com.redpup.justsendit.model.supply.ApresDeckImpl
+import com.redpup.justsendit.model.supply.PlayerDeck
 import com.redpup.justsendit.model.supply.SkillDecks
-import com.redpup.justsendit.util.TextProtoReaderImpl
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -44,14 +42,12 @@ interface GameModel {
 }
 
 /** Top level joined game model state. */
-class MutableGameModel(
-  tilesPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tiles.textproto",
-  locationsPath: String = "src/main/resources/com/redpup/justsendit/model/board/tile/tile_locations.textproto",
-  playersPath: String = "src/main/resources/com/redpup/justsendit/model/players/players.textproto",
-  apresPath: String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto",
-  playerHandlers: List<PlayerHandler> = List(4) { BasicPlayerHandler() },
-  apresFactory: ApresFactory = ApresFactoryImpl,
-  playerFactory: PlayerFactory = PlayerFactoryImpl,
+class MutableGameModel @Inject constructor(
+  tileMapBuilder: TileMapBuilder,
+  playerHandlers: @JvmSuppressWildcards List<PlayerHandler>,
+  playerDeck: PlayerDeck,
+  playerFactory: PlayerFactory,
+  private val apresDeck: ApresDeck,
   override val skillDecks: SkillDecks,
 ) : GameModel {
   /** Applies fn to this. */
@@ -59,35 +55,16 @@ class MutableGameModel(
     this.fn()
   }
 
-  override val tileMap: HexGrid<MountainTile> =
-    constructMap(
-      TextProtoReaderImpl(
-        tilesPath,
-        MountainTileList::newBuilder,
-        MountainTileList.Builder::getTilesList,
-        shuffle = true
-      ),
-      TextProtoReaderImpl(
-        locationsPath,
-        MountainTileLocationList::newBuilder,
-        MountainTileLocationList.Builder::getLocationList
-      ),
-    )
+  override val tileMap: HexGrid<MountainTile> = tileMapBuilder.build()
   private val lifts =
     tileMap.entries().filter { it.value.hasLift() }
       .groupBy { it.value.lift.color }
 
-  private val apresDeck: ApresDeck = ApresDeckImpl(apresPath, apresFactory)
   override val apres: MutableList<Apres> = mutableListOf()
 
   override val players: List<MutablePlayer> =
-    TextProtoReaderImpl(
-      playersPath, PlayerCardList::newBuilder,
-      PlayerCardList.Builder::getPlayerList, shuffle = true
-    ).invoke()
-      .shuffled()
-      .subList(0, playerHandlers.size)
-      .mapIndexed { index, card -> playerFactory.create(card, playerHandlers[index]) }
+    playerHandlers
+      .map { handler -> playerFactory.create(playerDeck.draw(), handler) }
 
   private val playerOrder = MutableList(players.size) { it }
   override val clock = MutableClock()
@@ -97,7 +74,6 @@ class MutableGameModel(
       player.buyStartingDeck(skillDecks)
       player.location = createHexPoint(0, 0)
     }
-    apresDeck.reset()
     populateApresSlots()
   }
 

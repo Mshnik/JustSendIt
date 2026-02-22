@@ -2,10 +2,13 @@ package com.redpup.justsendit.model.supply
 
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.ApresFactory
-import com.redpup.justsendit.model.apres.ApresFactoryImpl
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
+import com.google.inject.Inject
+import com.redpup.justsendit.util.pop
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
 /** Access to the apres card deck. */
 interface ApresDeck {
@@ -32,8 +35,16 @@ interface ApresDeck {
   }
 }
 
+/** [Qualifier] for the path of the apres deck. */
+@Qualifier
+annotation class ApresPath
+
 /** Implementation of [ApresDeck]. */
-class ApresDeckImpl(path: String, val factory: ApresFactory = ApresFactoryImpl) :
+@Singleton
+class ApresDeckImpl @Inject constructor(
+  @ApresPath path: String,
+  private val factory: ApresFactory,
+) :
   ApresDeck {
   private val reader = TextProtoReaderImpl(
     path,
@@ -47,7 +58,7 @@ class ApresDeckImpl(path: String, val factory: ApresFactory = ApresFactoryImpl) 
   internal fun getCards(): List<ApresCard> = cards.toList()
 
   /** Draws the top card from the Apres deck. */
-  override fun draw() = factory.create(cards.removeFirst())
+  override fun draw() = factory.create(cards.pop("Apres deck"))
 
   /** Tucks the given card under the apres deck. */
   override fun tuck(apres: Apres) {
