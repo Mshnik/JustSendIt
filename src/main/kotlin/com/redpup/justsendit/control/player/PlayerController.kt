@@ -16,10 +16,17 @@ interface PlayerController {
 
   /** Asks the player to choose cards to remove from their deck. */
   fun chooseCardsToRemove(player: Player, cards: List<Int>, maxToRemove: Int): List<Int>
+
   /** Asks the player if they want to gain speed. */
   fun shouldGainSpeed(player: Player): Boolean
+
+  /** Ask the player if they want to move when they rest. */
   fun chooseMoveOnRest(player: Player): HexDirection?
+
+  /** Ask the player if they want to use their endurance ability. */
   fun decideToUseEndurance(): Boolean
+
+  /** Show the player the top card of the deck. */
   fun onRevealTopCard(card: Int)
 }
 
