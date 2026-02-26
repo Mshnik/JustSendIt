@@ -29,6 +29,10 @@ import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.testing.*
+import com.redpup.justsendit.util.testing.FakeTimeSource
+import com.redpup.justsendit.util.testing.FakeTimeSourceModule
+import java.time.Duration
+import java.time.Instant
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
@@ -49,6 +53,7 @@ class GameModelTest {
   @Inject private lateinit var apresFactory: FakeApresFactory
   @Inject private lateinit var playerFactory: FakePlayerFactory
   @Inject private lateinit var tileSupply: FakeTileSupply
+  @Inject private lateinit var fakeTimeSource: FakeTimeSource
   @Inject private lateinit var gameProvider: Provider<MutableGameModel>
 
   private lateinit var game: GameModel
@@ -59,8 +64,12 @@ class GameModelTest {
       FakePlayerModule(),
       FakePlayerControllerModule(List(1) { _ -> testDecisionHandler }),
       FakeApresModule(),
-      FakeSupplyModule()
+      FakeSupplyModule(),
+      FakeTimeSourceModule()
     ).injectMembers(this)
+
+    fakeTimeSource.now = Instant.ofEpochMilli(12345)
+    fakeTimeSource.autoAdvance = Duration.ofSeconds(1)
 
     skillDecks.setGreenDeck(List(100) { 1 })
     skillDecks.setBlueDeck(List(100) { 4 })
@@ -373,6 +382,69 @@ class GameModelTest {
     assertThat(game.apres).hasSize(3)
     assertThat(game.apres.all { 2 in it.apresCard.availableDaysList }).isTrue()
   }
+
+  @Test
+  fun `turn with REST decision adds PlayerChoice log`() {
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      rest = empty {}
+    })
+
+    game.mutate { turn() }
+
+    assertThat(game.logs).hasSize(1)
+    val log = game.logs[0]
+    assertThat(log.hasPlayerChoice()).isTrue()
+    assertThat(log.playerChoice.playerName).isEqualTo("Amy")
+    assertThat(log.playerChoice.decision.hasRest()).isTrue()
+  }
+
+  @Test
+  fun `turn with LIFT decision adds PlayerMove log`() {
+    val player = game.players[0]
+    player.mutate { location = createHexPoint(0, 0) }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      lift = empty {}
+    })
+
+    game.mutate { turn() }
+
+    assertThat(game.logs).hasSize(2) // 1 for choice, 1 for move
+    val log = game.logs[1]
+    assertThat(log.hasPlayerMove()).isTrue()
+    assertThat(log.playerMove.playerName).isEqualTo("Amy")
+    assertThat(log.playerMove.from).isEqualTo(createHexPoint(0, 0))
+    assertThat(log.playerMove.to).isEqualTo(hexPoint { q = 0; r = -1 })
+  }
+
+  @Test
+  fun `successful SKI_RIDE turn with success adds SkillCardDraw logs`() {
+    val player = game.players[0]
+    player.mutate {
+      location = createHexPoint(0, 0)
+      skillDeck.clear()
+      skillDeck.addAll(listOf(6))
+    }
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    })
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      pass = empty {}
+    }) // End turn
+
+    game.mutate { turn() }
+
+    assertThat(game.logs).hasSize(4) // choice, ski/ride move, card draw, choice
+    val log = game.logs[2]
+    assertThat(log.hasSkillCardDraw()).isTrue()
+    assertThat(log.skillCardDraw.playerName).isEqualTo("Amy")
+    assertThat(log.skillCardDraw.cardValue).isEqualTo(6)
+  }
+
 
   /** A test implementation of [PlayerController] that returns decisions from a queue. */
   class TestDecisionController : PlayerController {

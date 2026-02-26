@@ -1,6 +1,9 @@
 package com.redpup.justsendit.model
 
 import com.google.inject.Inject
+import com.google.protobuf.util.Timestamps
+import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
@@ -13,12 +16,12 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
-import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.supply.ApresDeck
 import com.redpup.justsendit.model.supply.PlayerDeck
 import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.util.TimeSource
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -39,6 +42,12 @@ interface GameModel {
 
   /** The skill decks in the game. */
   val skillDecks: SkillDecks
+
+  /** The current player whose turn it is. */
+  val currentPlayer: Player
+
+  /** A list of all game events that have occurred. */
+  val logs: List<Log>
 }
 
 /** Top level joined game model state. */
@@ -49,6 +58,7 @@ class MutableGameModel @Inject constructor(
   playerFactory: PlayerFactory,
   private val apresDeck: ApresDeck,
   override val skillDecks: SkillDecks,
+  private val timeSource: TimeSource,
 ) : GameModel {
   /** Applies fn to this. */
   override fun mutate(fn: MutableGameModel.() -> Unit) {
@@ -66,6 +76,9 @@ class MutableGameModel @Inject constructor(
     playerControllers
       .map { handler -> playerFactory.create(playerDeck.draw(), handler) }
 
+  override lateinit var currentPlayer: Player
+  override val logs: MutableList<Log> = mutableListOf()
+
   private val playerOrder = MutableList(players.size) { it }
   override val clock = MutableClock()
 
@@ -74,7 +87,21 @@ class MutableGameModel @Inject constructor(
       player.buyStartingDeck(skillDecks)
       player.location = createHexPoint(0, 0)
     }
+    currentPlayer = players[0]
     populateApresSlots()
+  }
+
+  /** Adds this message as a log to this game model. */
+  private fun com.google.protobuf.Message.log() {
+    val message = this
+    log {
+      timestamp = Timestamps.fromMillis(timeSource.now().toEpochMilli())
+      when (message) {
+        is PlayerChoice -> playerChoice = message
+        is PlayerMove -> playerMove = message
+        is SkillCardDraw -> skillCardDraw = message
+      }
+    }.let { logs.add(it) }
   }
 
   /** Returns the players in turn order. */
@@ -83,10 +110,15 @@ class MutableGameModel @Inject constructor(
   /** Executes one turn for all players. Returns true if the day is now over, false otherwise. */
   fun turn(): Boolean {
     for (player in playersInTurnOrder()) {
+      currentPlayer = player
       if (player.isOnMountain) {
         var subTurn = 0
         do {
           val decision = player.handler.makeMountainDecision(player, this)
+          playerChoice {
+            playerName = player.playerCard.name
+            this.decision = decision
+          }.log()
           val continueTurn = executeDecision(player, decision, subTurn)
           subTurn++
         } while (continueTurn)
@@ -175,6 +207,11 @@ class MutableGameModel @Inject constructor(
     check(location != null) { "Player is off-map." }
     check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
     val destination = location + skiRideDecision.direction
+    playerMove {
+      playerName = player.playerCard.name
+      from = location
+      to = destination
+    }.log()
     val destinationTile = tileMap[destination]
     check(destinationTile != null) { "Destination is invalid: $destination" }
 
@@ -201,8 +238,15 @@ class MutableGameModel @Inject constructor(
     }
 
     // Actually play cards and compare to difficulty.
+    val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
+    cards.forEach { card ->
+      skillCardDraw {
+        playerName = player.playerCard.name
+        cardValue = card
+      }.log()
+    }
     val skill =
-      (1..skiRideDecision.numCards).sumOf { player.playSkillCard()!! } + player.computeBonus(
+      cards.sum() + player.computeBonus(
         destinationTile.slope
       )
     val difficulty =
@@ -242,7 +286,13 @@ class MutableGameModel @Inject constructor(
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
-    player.location = getOtherLiftLocation(tile.lift.color, location)
+    val destination = getOtherLiftLocation(tile.lift.color, location)
+    playerMove {
+      playerName = player.playerCard.name
+      from = location
+      to = destination
+    }.log()
+    player.location = destination
     player.refreshSkillDeck()
   }
 
@@ -257,7 +307,10 @@ class MutableGameModel @Inject constructor(
     val tile = tileMap[location]!!
     val link = tile.apresLink
     check(link > 0) { "Location $location does not have an exit" }
-
+    playerMove {
+      playerName = player.playerCard.name
+      from = location
+    }.log()
     player.location = null
     player.apresLink = link
     apres[link - 1].apply(player, players.count { it.apresLink == link } == 1, this)
