@@ -8,6 +8,8 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 
 /** Handler for players making decisions. */
 interface PlayerController {
+  val name: String
+
   /** Queues the player to make a mountain decision. */
   fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
 
@@ -31,6 +33,8 @@ interface PlayerController {
 }
 
 class BasicPlayerController : PlayerController {
+  override val name = "BasicPlayerController-${System.identityHashCode(this)}"
+
   override fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {
     TODO("Not yet implemented")
   }

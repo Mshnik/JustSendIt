@@ -11,32 +11,33 @@ option java_multiple_files = true;
 
 // A log message caused by any game action.
 message Log {
-  // When the log occurred.
+  // When the log occurred in real time.
   google.protobuf.Timestamp timestamp = 1;
+
+  // When the log occurred in the game.
+  int32 day = 2;
+  int32 turn = 3;
+  int32 subturn = 4;
+
+  // Who triggered the log
+  string player_name = 5;
+  string controller_name = 6;
 
   // The log that occurred.
   oneof event {
-    PlayerChoice player_choice = 2;
-    PlayerMove player_move = 3;
-    SkillCardDraw skill_card_draw = 4;
+    model.player.MountainDecision mountain_decision = 7;
+    PlayerMove player_move = 8;
+    SkillCardDraw skill_card_draw = 9;
   }
-}
-
-// A log of a player making a choice.
-message PlayerChoice {
-  string player_name = 1;
-  model.player.MountainDecision decision = 2;
 }
 
 // A log of a player moving around the mountain.
 message PlayerMove {
-  string player_name = 1;
-  model.board.hex.HexPoint from = 2;
-  model.board.hex.HexPoint to = 3;
+  model.board.hex.HexPoint from = 1;
+  model.board.hex.HexPoint to = 2;
 }
 
 // A log of a player drawing a card.
 message SkillCardDraw {
-  string player_name = 1;
-  int32 card_value = 2;
+  repeated int32 card_value = 1;
 }

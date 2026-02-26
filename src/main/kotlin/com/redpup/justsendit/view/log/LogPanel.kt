@@ -7,36 +7,27 @@ import javafx.scene.control.ScrollPane
 import javafx.scene.layout.VBox
 
 class LogPanel(private val gameModel: GameModel) : ScrollPane() {
-    private val logContainer = VBox()
+  private val logContainer = VBox()
 
-    init {
-        content = logContainer
-        isFitToWidth = true
-    }
+  init {
+    content = logContainer
+    isFitToWidth = true
+  }
 
-    fun update() {
-        logContainer.children.clear()
-        gameModel.logs.forEach { log ->
-            logContainer.children.add(Label(formatLog(log)))
-        }
+  fun update() {
+    logContainer.children.clear()
+    gameModel.logs.forEach { log ->
+      logContainer.children.add(Label(formatLog(log)))
     }
+  }
 
-    private fun formatLog(log: Log): String {
-        val event = when (log.eventCase) {
-            Log.EventCase.PLAYER_CHOICE -> {
-                val choice = log.playerChoice
-                "${choice.playerName} chose ${choice.decision}"
-            }
-            Log.EventCase.PLAYER_MOVE -> {
-                val move = log.playerMove
-                "${move.playerName} moved from ${move.from} to ${move.to}"
-            }
-            Log.EventCase.SKILL_CARD_DRAW -> {
-                val draw = log.skillCardDraw
-                "${draw.playerName} drew a skill card with value ${draw.cardValue}"
-            }
-            else -> "Unknown event"
-        }
-        return "[${log.timestamp}] $event"
+  private fun formatLog(log: Log): String {
+    val event = when (log.eventCase) {
+      Log.EventCase.MOUNTAIN_DECISION -> "${log.playerName} chose ${log.mountainDecision}"
+      Log.EventCase.PLAYER_MOVE -> "${log.playerName} moved from ${log.playerMove.from} to ${log.playerMove.to}"
+      Log.EventCase.SKILL_CARD_DRAW -> "${log.playerName} drew skill card(s) with values ${log.skillCardDraw.cardValueList}"
+      else -> "Unknown event"
     }
+    return "[${log.timestamp}] $event"
+  }
 }

@@ -92,14 +92,20 @@ class MutableGameModel @Inject constructor(
   }
 
   /** Adds this message as a log to this game model. */
-  private fun com.google.protobuf.Message.log() {
-    val message = this
+  private fun Any.log() {
+    val value = this
     log {
       timestamp = Timestamps.fromMillis(timeSource.now().toEpochMilli())
-      when (message) {
-        is PlayerChoice -> playerChoice = message
-        is PlayerMove -> playerMove = message
-        is SkillCardDraw -> skillCardDraw = message
+      day = clock.day
+      turn = clock.turn
+      subturn = clock.subTurn
+      playerName = currentPlayer.name
+      controllerName = currentPlayer.handler.name
+      when (value) {
+        is MountainDecision -> mountainDecision = value
+        is PlayerMove -> playerMove = value
+        is SkillCardDraw -> skillCardDraw = value
+        else -> throw IllegalArgumentException("Unsupported log $value")
       }
     }.let { logs.add(it) }
   }
@@ -110,15 +116,12 @@ class MutableGameModel @Inject constructor(
   /** Executes one turn for the current player. */
   fun turn() {
     if (currentPlayer.isOnMountain) {
-      var subTurn = 0
       do {
-        val decision = currentPlayer.handler.makeMountainDecision(currentPlayer, this)
-        playerChoice {
-          playerName = currentPlayer.name
-          this.decision = decision
-        }.log()
-        val continueTurn = executeDecision(currentPlayer, decision, subTurn)
-        subTurn++
+        val decision = currentPlayer.handler
+          .makeMountainDecision(currentPlayer, this)
+          .also { it.log() }
+        val continueTurn = executeDecision(currentPlayer, decision)
+        clock.advanceSubTurn()
       } while (continueTurn)
       currentPlayer.abilityHandler.onAfterTurn(this)
       currentPlayer.ingestTurn()
@@ -174,12 +177,11 @@ class MutableGameModel @Inject constructor(
   private fun executeDecision(
     player: MutablePlayer,
     decision: MountainDecision,
-    subTurn: Int,
   ): Boolean {
     return when (decision.decisionCase) {
       MountainDecision.DecisionCase.SKI_RIDE -> executeSkiRide(player, decision.skiRide)
       MountainDecision.DecisionCase.REST -> {
-        check(subTurn == 0) { "Can only rest at start of turn." }
+        check(clock.isFirstSubTurn) { "Can only rest at start of turn." }
         executeRest(player)
         false
       }
@@ -190,7 +192,7 @@ class MutableGameModel @Inject constructor(
       }
 
       MountainDecision.DecisionCase.PASS -> {
-        check(subTurn > 0) { "Can't pass without taking at least one action" }
+        check(!clock.isFirstSubTurn) { "Can't pass without taking at least one action" }
         false
       }
 
@@ -203,14 +205,16 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  private fun executeSkiRide(player: MutablePlayer, skiRideDecision: SkiRideDecision): Boolean {
+  private fun executeSkiRide(
+    player: MutablePlayer,
+    skiRideDecision: SkiRideDecision,
+  ): Boolean {
     // Check directions of ski/ride, make sure we don't go off mountain.
     val location = player.location
     check(location != null) { "Player is off-map." }
     check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
     val destination = location + skiRideDecision.direction
     playerMove {
-      playerName = player.name
       from = location
       to = destination
     }.log()
@@ -241,12 +245,7 @@ class MutableGameModel @Inject constructor(
 
     // Actually play cards and compare to difficulty.
     val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
-    cards.forEach { card ->
-      skillCardDraw {
-        playerName = player.name
-        cardValue = card
-      }.log()
-    }
+    skillCardDraw { cardValue += cards }.log()
     val skill =
       cards.sum() + player.computeBonus(
         destinationTile.slope
@@ -290,7 +289,6 @@ class MutableGameModel @Inject constructor(
     check(tile.hasLift()) { "Location $location does not have a lift" }
     val destination = getOtherLiftLocation(tile.lift.color, location)
     playerMove {
-      playerName = player.name
       from = location
       to = destination
     }.log()
@@ -310,7 +308,6 @@ class MutableGameModel @Inject constructor(
     val link = tile.apresLink
     check(link > 0) { "Location $location does not have an exit" }
     playerMove {
-      playerName = player.name
       from = location
     }.log()
     player.location = null
@@ -338,6 +335,12 @@ interface Clock {
   /** What turn of day it is. */
   val turn: Int
 
+  /** What sub-turn of the day it is. */
+  val subTurn: Int
+
+  /** Returns whether it is the first subTurn of the turn. */
+  val isFirstSubTurn: Boolean get() = subTurn == 1
+
   /** The max turn of this day. */
   val maxTurn: Int
 
@@ -359,14 +362,23 @@ class MutableClock(override var turn: Int = 1, override var day: Int = 1) : Cloc
       else -> 0
     }
 
+  override var subTurn: Int = 1; private set
+
+  /** Advances to the next subturn. */
+  fun advanceSubTurn() {
+    subTurn++
+  }
+
   /** Advances to the next turn. */
   fun advanceTurn() {
     turn++
+    subTurn = 1
   }
 
   /** Advances to the next day. */
   fun advanceDay() {
     turn = 1
+    subTurn = 1
     day++
   }
 }

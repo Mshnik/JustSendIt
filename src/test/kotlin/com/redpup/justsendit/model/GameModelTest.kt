@@ -384,7 +384,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with REST decision adds PlayerChoice log`() {
+  fun `turn with REST decision adds log with basic params`() {
     testDecisionHandler.decisionQueue.add(mountainDecision {
       rest = empty {}
     })
@@ -393,9 +393,26 @@ class GameModelTest {
 
     assertThat(game.logs).hasSize(1)
     val log = game.logs[0]
-    assertThat(log.hasPlayerChoice()).isTrue()
-    assertThat(log.playerChoice.playerName).isEqualTo("Amy")
-    assertThat(log.playerChoice.decision.hasRest()).isTrue()
+    assertThat(log.timestamp.seconds).isGreaterThan(0)
+    assertThat(log.day).isEqualTo(1)
+    assertThat(log.turn).isEqualTo(1)
+    assertThat(log.subturn).isEqualTo(1)
+    assertThat(log.playerName).isEqualTo("Amy")
+    assertThat(log.controllerName).isEqualTo("TestDecisionController")
+  }
+
+  @Test
+  fun `turn with REST decision adds MountainDecision log`() {
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      rest = empty {}
+    })
+
+    game.mutate { turn() }
+
+    assertThat(game.logs).hasSize(1)
+    val log = game.logs[0]
+    assertThat(log.hasMountainDecision()).isTrue()
+    assertThat(log.mountainDecision.hasRest()).isTrue()
   }
 
   @Test
@@ -412,7 +429,6 @@ class GameModelTest {
     assertThat(game.logs).hasSize(2) // 1 for choice, 1 for move
     val log = game.logs[1]
     assertThat(log.hasPlayerMove()).isTrue()
-    assertThat(log.playerMove.playerName).isEqualTo("Amy")
     assertThat(log.playerMove.from).isEqualTo(createHexPoint(0, 0))
     assertThat(log.playerMove.to).isEqualTo(hexPoint { q = 0; r = -1 })
   }
@@ -441,8 +457,7 @@ class GameModelTest {
     assertThat(game.logs).hasSize(4) // choice, ski/ride move, card draw, choice
     val log = game.logs[2]
     assertThat(log.hasSkillCardDraw()).isTrue()
-    assertThat(log.skillCardDraw.playerName).isEqualTo("Amy")
-    assertThat(log.skillCardDraw.cardValue).isEqualTo(6)
+    assertThat(log.skillCardDraw.cardValueList).containsExactly(6)
   }
 
 
@@ -479,6 +494,7 @@ class GameModelTest {
 
   /** A test implementation of [PlayerController] that returns decisions from a queue. */
   class TestDecisionController : PlayerController {
+    override val name = "TestDecisionController"
     val decisionQueue = mutableListOf<MountainDecision>()
     var startLocation = createHexPoint(0, 0)
 
