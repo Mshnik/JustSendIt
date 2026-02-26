@@ -14,6 +14,9 @@ interface Player {
   /** Applies the given mutation function to this player. */
   fun mutate(fn: MutablePlayer.() -> Unit)
 
+  /** The name of the player. */
+  val name: String
+
   /** The input parameters of the player from the player card. */
   val playerCard: PlayerCard
 
@@ -136,8 +139,8 @@ class MutablePlayer(
   override val playerCard: PlayerCard,
   override val handler: PlayerController,
   abilityHandlerConstructor: (Player) -> AbilityHandler,
-) :
-  Player {
+) : Player {
+  override val name: String get() = playerCard.name
   override var points = 0; private set
   override var experience = 0; private set
   override var location: HexPoint? = null
@@ -198,11 +201,9 @@ class MutablePlayer(
   /** Buys the starting deck of cards. */
   fun buyStartingDeck(skillDecks: SkillDecks) {
     gainSkillCards(
-      listOf(
-        List(5) { Grade.GRADE_GREEN },
-        List(3) { Grade.GRADE_BLUE },
-        List(2) { Grade.GRADE_BLACK }).flatten(),
-      skillDecks
+      listOf(List(5) { Grade.GRADE_GREEN },
+             List(3) { Grade.GRADE_BLUE },
+             List(2) { Grade.GRADE_BLACK }).flatten(), skillDecks
     )
   }
 
@@ -241,9 +242,7 @@ class MutablePlayer(
       val cardTraining = playerCard.trainingList[i]
 
       val applies = when (cardTraining.typeCase) {
-        PlayerTraining.TypeCase.GRADE -> tile.grade == cardTraining.grade
-          || (cardTraining.grade == Grade.GRADE_GREEN
-          && tile.grade in abilityHandler.getGreenTrainingBonusGrades())
+        PlayerTraining.TypeCase.GRADE -> tile.grade == cardTraining.grade || (cardTraining.grade == Grade.GRADE_GREEN && tile.grade in abilityHandler.getGreenTrainingBonusGrades())
 
         PlayerTraining.TypeCase.CONDITION -> tile.condition == cardTraining.condition
         PlayerTraining.TypeCase.HAZARD -> tile.hazardsList.contains(cardTraining.hazard)

@@ -62,7 +62,7 @@ class GameModelTest {
   fun setup() {
     Guice.createInjector(
       FakePlayerModule(),
-      FakePlayerControllerModule(List(1) { _ -> testDecisionHandler }),
+      FakePlayerControllerModule(List(2) { _ -> testDecisionHandler }),
       FakeApresModule(),
       FakeSupplyModule(),
       FakeTimeSourceModule()
@@ -182,7 +182,7 @@ class GameModelTest {
   @Test
   fun `game model initializes correctly`() {
     skillDecks.setGreenDeck(List(10) { 1 }) // Set up for starting deck
-    assertThat(game.players.size).isEqualTo(1)
+    assertThat(game.players.size).isEqualTo(2)
     assertThat(game.tileMap.size()).isEqualTo(3)
     assertThat(game.players[0].skillDeck.size).isEqualTo(10) // Starting deck
     assertThat(game.players[0].location).isEqualTo(createHexPoint(0, 0))
@@ -208,7 +208,7 @@ class GameModelTest {
 
     assertThat(player.skillDiscard.size).isEqualTo(0)
     assertThat(player.skillDeck.size).isEqualTo(3)
-    assertThat(game.clock.turn).isEqualTo(2)
+    assertThat(game.clock.turn).isEqualTo(1)
   }
 
   @Test
@@ -224,7 +224,7 @@ class GameModelTest {
 
     assertThat(player.location).isEqualTo(hexPoint { q = 0; r = -1 })
     assertThat(player.apresLink).isNull()
-    assertThat(game.clock.turn).isEqualTo(2)
+    assertThat(game.clock.turn).isEqualTo(1)
   }
 
   @Test
@@ -241,7 +241,7 @@ class GameModelTest {
     assertThat(player.location).isNull()
     assertThat(player.apresLink).isEqualTo(1)
     assertThat(player.isOnMountain).isFalse()
-    assertThat(game.clock.turn).isEqualTo(2)
+    assertThat(game.clock.turn).isEqualTo(1)
 
     verify(apresApply).invoke(eq(game.apres[0].apresCard), any(), eq(true), any())
   }
@@ -445,6 +445,37 @@ class GameModelTest {
     assertThat(log.skillCardDraw.cardValue).isEqualTo(6)
   }
 
+
+  @Test
+  fun `turn advances players and clock correctly`() {
+    assertThat(game.players).hasSize(2)
+    assertThat(game.currentPlayer.playerCard.name).isEqualTo("Amy")
+    assertThat(game.clock.turn).isEqualTo(1)
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    })
+
+    // Player 1's turn
+    game.mutate { turn() }
+    assertThat(game.currentPlayer.playerCard.name).isEqualTo("Andy")
+    assertThat(game.clock.turn).isEqualTo(1)
+
+    testDecisionHandler.decisionQueue.add(mountainDecision {
+      skiRide = skiRideDecision {
+        direction = HexDirection.HEX_DIRECTION_SOUTH
+        numCards = 1
+      }
+    })
+
+    // Player 2's turn, wraps around
+    game.mutate { turn() }
+    assertThat(game.currentPlayer.playerCard.name).isEqualTo("Amy")
+    assertThat(game.clock.turn).isEqualTo(2)
+  }
 
   /** A test implementation of [PlayerController] that returns decisions from a queue. */
   class TestDecisionController : PlayerController {

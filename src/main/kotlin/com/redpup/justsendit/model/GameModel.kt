@@ -76,18 +76,18 @@ class MutableGameModel @Inject constructor(
     playerControllers
       .map { handler -> playerFactory.create(playerDeck.draw(), handler) }
 
-  override lateinit var currentPlayer: Player
-  override val logs: MutableList<Log> = mutableListOf()
-
+  private var currentPlayerIndex = 0
   private val playerOrder = MutableList(players.size) { it }
+  override var currentPlayer = players[playerOrder[currentPlayerIndex]]
+
   override val clock = MutableClock()
+  override val logs: MutableList<Log> = mutableListOf()
 
   init {
     for (player in players) {
       player.buyStartingDeck(skillDecks)
       player.location = createHexPoint(0, 0)
     }
-    currentPlayer = players[0]
     populateApresSlots()
   }
 
@@ -107,31 +107,33 @@ class MutableGameModel @Inject constructor(
   /** Returns the players in turn order. */
   private fun playersInTurnOrder() = playerOrder.map { players[it] }
 
-  /** Executes one turn for all players. Returns true if the day is now over, false otherwise. */
-  fun turn(): Boolean {
-    for (player in playersInTurnOrder()) {
-      currentPlayer = player
-      if (player.isOnMountain) {
-        var subTurn = 0
-        do {
-          val decision = player.handler.makeMountainDecision(player, this)
-          playerChoice {
-            playerName = player.playerCard.name
-            this.decision = decision
-          }.log()
-          val continueTurn = executeDecision(player, decision, subTurn)
-          subTurn++
-        } while (continueTurn)
-        player.abilityHandler.onAfterTurn(this)
-        player.ingestTurn()
+  /** Executes one turn for the current player. */
+  fun turn() {
+    if (currentPlayer.isOnMountain) {
+      var subTurn = 0
+      do {
+        val decision = currentPlayer.handler.makeMountainDecision(currentPlayer, this)
+        playerChoice {
+          playerName = currentPlayer.name
+          this.decision = decision
+        }.log()
+        val continueTurn = executeDecision(currentPlayer, decision, subTurn)
+        subTurn++
+      } while (continueTurn)
+      currentPlayer.abilityHandler.onAfterTurn(this)
+      currentPlayer.ingestTurn()
+    }
+
+    currentPlayerIndex = (currentPlayerIndex + 1) % players.size
+    if (currentPlayerIndex == 0) { // Wrapped around
+      if (clock.turn < clock.maxTurn) {
+        clock.advanceTurn()
+      } else {
+        advanceDay()
       }
     }
-    if (clock.turn < clock.maxTurn) {
-      clock.advanceTurn()
-      return false
-    } else {
-      return true
-    }
+    // Reset current player.
+    currentPlayer = players[playerOrder[currentPlayerIndex]]
   }
 
   /**
@@ -208,7 +210,7 @@ class MutableGameModel @Inject constructor(
     check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
     val destination = location + skiRideDecision.direction
     playerMove {
-      playerName = player.playerCard.name
+      playerName = player.name
       from = location
       to = destination
     }.log()
@@ -241,7 +243,7 @@ class MutableGameModel @Inject constructor(
     val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
     cards.forEach { card ->
       skillCardDraw {
-        playerName = player.playerCard.name
+        playerName = player.name
         cardValue = card
       }.log()
     }
@@ -288,7 +290,7 @@ class MutableGameModel @Inject constructor(
     check(tile.hasLift()) { "Location $location does not have a lift" }
     val destination = getOtherLiftLocation(tile.lift.color, location)
     playerMove {
-      playerName = player.playerCard.name
+      playerName = player.name
       from = location
       to = destination
     }.log()
@@ -308,7 +310,7 @@ class MutableGameModel @Inject constructor(
     val link = tile.apresLink
     check(link > 0) { "Location $location does not have an exit" }
     playerMove {
-      playerName = player.playerCard.name
+      playerName = player.name
       from = location
     }.log()
     player.location = null
