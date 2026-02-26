@@ -17,17 +17,17 @@ class LogPanel(private val gameModel: GameModel) : ScrollPane() {
   fun update() {
     logContainer.children.clear()
     gameModel.logs.forEach { log ->
-      logContainer.children.add(Label(formatLog(log)))
+      logContainer.children.add(Label(log.format()))
     }
   }
 
-  private fun formatLog(log: Log): String {
-    val event = when (log.eventCase) {
-      Log.EventCase.MOUNTAIN_DECISION -> "${log.playerName} chose ${log.mountainDecision}"
-      Log.EventCase.PLAYER_MOVE -> "${log.playerName} moved from ${log.playerMove.from} to ${log.playerMove.to}"
-      Log.EventCase.SKILL_CARD_DRAW -> "${log.playerName} drew skill card(s) with values ${log.skillCardDraw.cardValueList}"
+  private fun Log.format(): String {
+    val event = when (eventCase) {
+      Log.EventCase.MOUNTAIN_DECISION -> "$playerName chose $mountainDecision"
+      Log.EventCase.PLAYER_MOVE -> "$playerName moved from ${playerMove.from} to ${playerMove.to}"
+      Log.EventCase.SKILL_CARD_DRAW -> "$playerName drew skill card(s) with values ${skillCardDraw.cardValueList}"
       else -> "Unknown event"
     }
-    return "[${log.timestamp}] $event"
+    return "[$day/$turn/$subturn] $event"
   }
 }
