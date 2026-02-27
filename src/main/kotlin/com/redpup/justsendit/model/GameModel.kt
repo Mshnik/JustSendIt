@@ -36,6 +36,12 @@ interface GameModel {
   /** Immutable access to all players. */
   val players: List<Player>
 
+  /**
+   * Returns the places the given player could move to from their current
+   * location when they ski/ride.
+   */
+  fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection>
+
   /** The apres cards that are available at each location. Changes each day. */
   val apres: List<Apres>
 
@@ -113,7 +119,7 @@ class MutableGameModel @Inject constructor(
    * Returns the places the given player could move to from their current
    * location when they ski/ride.
    */
-  fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection> {
+  override fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection> {
     val location = player.location ?: return emptyMap()
     return HexDirection.entries
       .filter { it != HexDirection.HEX_DIRECTION_UNSET && it != HexDirection.UNRECOGNIZED }
