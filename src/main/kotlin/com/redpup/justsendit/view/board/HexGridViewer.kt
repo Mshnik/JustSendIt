@@ -18,6 +18,8 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   private val margin = 60.0 // Extra space on sides.
   val bounds: Bounds = gameModel.tileMap.bounds()
   private val playerRenderer: PlayerRenderer
+  private var highlightedHexes = setOf<HexPoint>()
+  var onHexClicked: ((HexPoint) -> Unit)? = null
 
   init {
     width = bounds.width * hexSize + margin
@@ -30,6 +32,15 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
       }
     }
     timer.start()
+
+    setOnMouseClicked { event ->
+        val hex = hexFromPixel(event.x, event.y)
+        onHexClicked?.invoke(hex)
+    }
+  }
+
+  fun highlightHexes(hexes: Set<HexPoint>) {
+    this.highlightedHexes = hexes
   }
 
   private fun drawGrid(gc: GraphicsContext) {
@@ -41,7 +52,7 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
       val y = hexSize * (pt.toY() - bounds.minY) + margin
 
       gameModel.tileMap[pt]?.let { tile ->
-        hexRenderer.draw(tile, x, y)
+        hexRenderer.draw(tile, x, y, pt in highlightedHexes)
       }
     }
     playerRenderer.render(gameModel)

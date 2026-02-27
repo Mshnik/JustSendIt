@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
+import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
@@ -106,6 +107,18 @@ class MutableGameModel @Inject constructor(
         else -> throw IllegalArgumentException("Unsupported log $value")
       }
     }.let { log -> loggers.forEach { it.log(log) } }
+  }
+
+  /**
+   * Returns the places the given player could move to from their current
+   * location when they ski/ride.
+   */
+  fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection> {
+    val location = player.location ?: return emptyMap()
+    return HexDirection.entries
+      .filter { it.isDownMountain }
+      .associateBy({ location + it }, { it })
+      .filter { tileMap.contains(it.key) }
   }
 
   /** Returns the players in turn order. */

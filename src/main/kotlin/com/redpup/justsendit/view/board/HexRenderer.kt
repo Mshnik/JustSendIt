@@ -12,10 +12,17 @@ import kotlin.math.sin
 class HexRenderer(private val gc: GraphicsContext, private val hexSize: Double) {
 
   /** Draws this hex using [gc]. */
-  fun draw(tile: MountainTile, cx: Double, cy: Double) {
+  fun draw(tile: MountainTile, cx: Double, cy: Double, isHighlighted: Boolean) {
     // 1. Draw Hexagon Border
     val xPoints = DoubleArray(6) { i -> cx + hexSize * cos(i * PI / 3) }
     val yPoints = DoubleArray(6) { i -> cy + hexSize * sin(i * PI / 3) }
+
+    if (isHighlighted) {
+        gc.fill = Color.YELLOW
+        gc.globalAlpha = 0.5
+        gc.fillPolygon(xPoints, yPoints, 6)
+        gc.globalAlpha = 1.0
+    }
 
     gc.stroke = Color.LIGHTGREY
     gc.strokePolygon(xPoints, yPoints, 6)

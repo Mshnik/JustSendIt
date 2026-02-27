@@ -28,6 +28,7 @@ import kotlinx.coroutines.launch
 internal class GuiState @Inject constructor(
   val gameModel: MutableGameModel,
   val coroutineScope: CoroutineScope,
+  val guiController: GuiController,
 )
 
 /** A top level JavaFX application for JustSendIt. */
@@ -59,7 +60,9 @@ class JustSendItGui : Application() {
 
   override fun start(stage: Stage) {
     val gameModel = guiState.gameModel
+    val guiController = guiState.guiController
     val hexGridViewer = HexGridViewer(gameModel)
+    guiController.hexGridViewer = hexGridViewer
     val infoPanel = InfoPanel(gameModel)
     val gameInfoPanel = GameInfoPanel(gameModel)
     logPanel = LogPanel(gameModel)
