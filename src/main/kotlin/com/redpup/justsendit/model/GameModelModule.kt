@@ -1,5 +1,7 @@
 package com.redpup.justsendit.model
 
+import com.redpup.justsendit.log.LoggerModule
+import com.redpup.justsendit.log.PrintlineLogger
 import com.redpup.justsendit.model.apres.ApresModule
 import com.redpup.justsendit.model.player.PlayerModule
 import com.redpup.justsendit.model.supply.SupplyModule
@@ -11,6 +13,7 @@ class GameModelModule : KtAbstractModule() {
     install(ApresModule())
     install(PlayerModule())
     install(SupplyModule())
+    install(LoggerModule(PrintlineLogger::class))
 
     bind<GameModel>().to<MutableGameModel>()
   }

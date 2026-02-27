@@ -7,6 +7,8 @@ import com.google.inject.Provider
 import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.control.player.testing.FakePlayerControllerModule
+import com.redpup.justsendit.log.testing.TestLogger
+import com.redpup.justsendit.log.testing.TestLoggerModule
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.apres.testing.FakeApres
@@ -54,6 +56,7 @@ class GameModelTest {
   @Inject private lateinit var playerFactory: FakePlayerFactory
   @Inject private lateinit var tileSupply: FakeTileSupply
   @Inject private lateinit var fakeTimeSource: FakeTimeSource
+  @Inject private lateinit var testLogger: TestLogger
   @Inject private lateinit var gameProvider: Provider<MutableGameModel>
 
   private lateinit var game: GameModel
@@ -65,7 +68,8 @@ class GameModelTest {
       FakePlayerControllerModule(List(2) { _ -> testDecisionHandler }),
       FakeApresModule(),
       FakeSupplyModule(),
-      FakeTimeSourceModule()
+      FakeTimeSourceModule(),
+      TestLoggerModule(),
     ).injectMembers(this)
 
     fakeTimeSource.now = Instant.ofEpochMilli(12345)
@@ -391,8 +395,8 @@ class GameModelTest {
 
     game.mutate { turn() }
 
-    assertThat(game.logs).hasSize(1)
-    val log = game.logs[0]
+    assertThat(testLogger.logs).hasSize(1)
+    val log = testLogger.logs[0]
     assertThat(log.timestamp.seconds).isGreaterThan(0)
     assertThat(log.day).isEqualTo(1)
     assertThat(log.turn).isEqualTo(1)
@@ -409,8 +413,8 @@ class GameModelTest {
 
     game.mutate { turn() }
 
-    assertThat(game.logs).hasSize(1)
-    val log = game.logs[0]
+    assertThat(testLogger.logs).hasSize(1)
+    val log = testLogger.logs[0]
     assertThat(log.hasMountainDecision()).isTrue()
     assertThat(log.mountainDecision.hasRest()).isTrue()
   }
@@ -426,8 +430,8 @@ class GameModelTest {
 
     game.mutate { turn() }
 
-    assertThat(game.logs).hasSize(2) // 1 for choice, 1 for move
-    val log = game.logs[1]
+    assertThat(testLogger.logs).hasSize(2) // 1 for choice, 1 for move
+    val log = testLogger.logs[1]
     assertThat(log.hasPlayerMove()).isTrue()
     assertThat(log.playerMove.from).isEqualTo(createHexPoint(0, 0))
     assertThat(log.playerMove.to).isEqualTo(hexPoint { q = 0; r = -1 })
@@ -454,8 +458,8 @@ class GameModelTest {
 
     game.mutate { turn() }
 
-    assertThat(game.logs).hasSize(4) // choice, ski/ride move, card draw, choice
-    val log = game.logs[2]
+    assertThat(testLogger.logs).hasSize(4) // choice, ski/ride move, card draw, choice
+    val log = testLogger.logs[2]
     assertThat(log.hasSkillCardDraw()).isTrue()
     assertThat(log.skillCardDraw.cardValueList).containsExactly(6)
   }

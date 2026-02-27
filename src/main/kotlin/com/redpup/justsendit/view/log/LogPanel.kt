@@ -14,11 +14,8 @@ class LogPanel(private val gameModel: GameModel) : ScrollPane() {
     isFitToWidth = true
   }
 
-  fun update() {
-    logContainer.children.clear()
-    gameModel.logs.forEach { log ->
-      logContainer.children.add(Label(log.format()))
-    }
+  fun log(log: Log) {
+    logContainer.children.add(Label(log.format()))
   }
 
   private fun Log.format(): String {

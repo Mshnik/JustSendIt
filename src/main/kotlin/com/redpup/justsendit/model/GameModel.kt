@@ -3,6 +3,7 @@ package com.redpup.justsendit.model
 import com.google.inject.Inject
 import com.google.protobuf.util.Timestamps
 import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
@@ -45,9 +46,6 @@ interface GameModel {
 
   /** The current player whose turn it is. */
   val currentPlayer: Player
-
-  /** A list of all game events that have occurred. */
-  val logs: List<Log>
 }
 
 /** Top level joined game model state. */
@@ -59,6 +57,7 @@ class MutableGameModel @Inject constructor(
   private val apresDeck: ApresDeck,
   override val skillDecks: SkillDecks,
   private val timeSource: TimeSource,
+  private val loggers: Set<Logger>,
 ) : GameModel {
   /** Applies fn to this. */
   override fun mutate(fn: MutableGameModel.() -> Unit) {
@@ -81,7 +80,6 @@ class MutableGameModel @Inject constructor(
   override var currentPlayer = players[playerOrder[currentPlayerIndex]]
 
   override val clock = MutableClock()
-  override val logs: MutableList<Log> = mutableListOf()
 
   init {
     for (player in players) {
@@ -107,7 +105,7 @@ class MutableGameModel @Inject constructor(
         is SkillCardDraw -> skillCardDraw = value
         else -> throw IllegalArgumentException("Unsupported log $value")
       }
-    }.let { logs.add(it) }
+    }.let { log -> loggers.forEach { it.log(log) } }
   }
 
   /** Returns the players in turn order. */
