@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.player
 
 import com.redpup.justsendit.control.player.BasicPlayerController
 import com.redpup.justsendit.model.GameModel
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.mockito.kotlin.mock
@@ -15,7 +16,9 @@ class PlayerControllerTest {
     val gameModel = mock<GameModel>()
 
     assertThrows<NotImplementedError> {
-      handler.makeMountainDecision(player, gameModel)
+      runBlocking {
+        handler.makeMountainDecision(player, gameModel)
+      }
     }
   }
 
@@ -26,7 +29,9 @@ class PlayerControllerTest {
     val gameModel = mock<GameModel>()
 
     assertThrows<NotImplementedError> {
-      handler.getStartingLocation(player, gameModel)
+      runBlocking {
+        handler.getStartingLocation(player, gameModel)
+      }
     }
   }
 }

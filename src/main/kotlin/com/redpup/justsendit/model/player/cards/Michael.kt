@@ -5,11 +5,11 @@ import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.proto.Grade
 
-class Michael(override val player: Player) : AbilityHandler(player) {
+class Michael(val player: Player) : AbilityHandler {
 
     private val gradesThisTurn = mutableListOf<Grade>()
 
-    override fun onBeforeTurn(gameModel: GameModel) {
+    override suspend fun onBeforeTurn(gameModel: GameModel) {
         gradesThisTurn.clear()
         // know before you go
         if (player.abilities[0]) {

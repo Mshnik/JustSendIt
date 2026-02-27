@@ -94,44 +94,44 @@ interface Player {
 }
 
 /** Hooks for player abilities. */
-open class AbilityHandler(open val player: Player) {
+interface AbilityHandler {
   /** Computes the added bonus for the given [tile]. */
-  open fun computeBonus(tile: SlopeTile): Int = 0
+  fun computeBonus(tile: SlopeTile): Int = 0
 
   /** Called when the player should gain speed. Returns whether the player should gain speed. */
-  open fun onGainSpeed(currentSpeed: Int): Boolean = true
+  suspend fun onGainSpeed(currentSpeed: Int): Boolean = true
 
   /** Called when the player crashes by [diff]. Returns whether the player should continue their turn. */
-  open fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean) = false
+  suspend fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean) = false
 
   /** Called after a successful run. */
-  open fun onSuccessfulRun(gameModel: GameModel, diff: Int) {}
+  suspend fun onSuccessfulRun(gameModel: GameModel, diff: Int) {}
 
   /** Called when the player gains points. */
-  open fun onGainPoints(points: Int, gameModel: GameModel) {}
+  fun onGainPoints(points: Int, gameModel: GameModel) {}
 
   /** Called when the player rests. */
-  open fun onRest(gameModel: GameModel) {}
+  suspend fun onRest(gameModel: GameModel) {}
 
   /** Called at the start of a player's turn. */
-  open fun onBeforeTurn(gameModel: GameModel) {}
+  suspend fun onBeforeTurn(gameModel: GameModel) {}
 
   /** Called at the end of a player's turn. */
-  open fun onAfterTurn(gameModel: GameModel) {}
+  fun onAfterTurn(gameModel: GameModel) {}
 
   /** Returns the point multiplier to apply to apres points. */
-  open fun getApresPointsMultiplier(): Int = 1
+  fun getApresPointsMultiplier(): Int = 1
 
   /** Returns the multiplier for hazard training. */
-  open fun getHazardTrainingMultiplier(): Int = 1
+  fun getHazardTrainingMultiplier(): Int = 1
 
   /** Returns the additional grades that green training should apply to. */
-  open fun getGreenTrainingBonusGrades(): List<Grade> = emptyList()
+  fun getGreenTrainingBonusGrades(): List<Grade> = emptyList()
 
-  open fun onRevealTopCard(card: Int) {}
+  suspend fun onRevealTopCard(card: Int) {}
 
   /** Returns whether the player ignores slow zones. */
-  open fun ignoresSlowZones(): Boolean = false
+  fun ignoresSlowZones(): Boolean = false
 }
 
 /** Mutable access to a player object. */

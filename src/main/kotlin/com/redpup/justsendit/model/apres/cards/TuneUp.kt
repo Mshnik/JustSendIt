@@ -6,7 +6,7 @@ import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 
 class TuneUp(override val apresCard: ApresCard) : Apres {
-  override fun apply(
+  override suspend fun apply(
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,

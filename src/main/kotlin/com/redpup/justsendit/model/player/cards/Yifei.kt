@@ -4,7 +4,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
-class Yifei(override val player: Player) : AbilityHandler(player) {
+class Yifei(val player: Player) : AbilityHandler {
 
     override fun getHazardTrainingMultiplier(): Int {
         return if (player.abilities[0]) 2 else super.getHazardTrainingMultiplier()

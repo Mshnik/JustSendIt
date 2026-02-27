@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.board.hex.proto.hexPoint
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -27,7 +28,7 @@ class DavidTest {
   }
 
   @Test
-  fun `onRest does nothing if ability not unlocked`() {
+  fun `onRest does nothing if ability not unlocked`()= runBlocking  {
     val initialLocation = hexPoint { q = 0; r = 0 }
     david.mutate { location = initialLocation }
     david.abilityHandler.onRest(gameModel)
@@ -35,7 +36,7 @@ class DavidTest {
   }
 
   @Test
-  fun `onRest moves player if ability is unlocked and handler returns direction`() {
+  fun `onRest moves player if ability is unlocked and handler returns direction`() = runBlocking {
     david.mutate { abilities[0] = true }
     val initialLocation = hexPoint { q = 0; r = 0 }
     david.mutate { location = initialLocation }
@@ -48,7 +49,7 @@ class DavidTest {
   }
 
   @Test
-  fun `onRest does not move player if ability is unlocked and handler returns null`() {
+  fun `onRest does not move player if ability is unlocked and handler returns null`()= runBlocking  {
     david.mutate { abilities[0] = true }
     val initialLocation = hexPoint { q = 0; r = 0 }
     david.mutate { location = initialLocation }

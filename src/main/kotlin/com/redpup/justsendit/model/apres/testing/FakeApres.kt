@@ -18,7 +18,7 @@ class FakeApres(override val apresCard: ApresCard) : Apres {
     return this
   }
 
-  override fun apply(player: MutablePlayer, isFirstPlayerToArrive: Boolean, gameModel: GameModel) {
+  override suspend fun apply(player: MutablePlayer, isFirstPlayerToArrive: Boolean, gameModel: GameModel) {
     applyFn?.let { it(apresCard, player, isFirstPlayerToArrive, gameModel) }
   }
 }

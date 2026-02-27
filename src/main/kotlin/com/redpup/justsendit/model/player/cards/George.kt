@@ -7,11 +7,11 @@ import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.proto.Grade
 
-class George(override val player: Player) : AbilityHandler(player) {
+class George(val player: Player) : AbilityHandler {
 
   private var skillBonus = 0
 
-  override fun onBeforeTurn(gameModel: GameModel) {
+  override suspend fun onBeforeTurn(gameModel: GameModel) {
     if (player.abilities[0] && (gameModel.clock.turn == 1 || gameModel.clock.turn == gameModel.clock.maxTurn)) {
       skillBonus = 2
     } else {

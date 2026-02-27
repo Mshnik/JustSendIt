@@ -5,7 +5,7 @@ import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
-class James(override val player: Player) : AbilityHandler(player) {
+class James(val player: Player) : AbilityHandler {
 
     override fun onGainPoints(points: Int, gameModel: GameModel) {
         // groomer cruiser
@@ -17,7 +17,7 @@ class James(override val player: Player) : AbilityHandler(player) {
         }
     }
 
-    override fun onSuccessfulRun(gameModel: GameModel, diff: Int) {
+    override suspend fun onSuccessfulRun(gameModel: GameModel, diff: Int) {
         if (player.abilities[0] && diff >= 7) {
             if (player.handler.shouldGainSpeed(player)) {
                 player.mutate { turn.speed++ }

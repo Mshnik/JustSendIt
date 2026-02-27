@@ -5,10 +5,9 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
-class David(override val player: Player) :
-  AbilityHandler(player) {
+class David(val player: Player) : AbilityHandler {
 
-  override fun onRest(gameModel: GameModel) {
+  override suspend fun onRest(gameModel: GameModel) {
     if (player.abilities[0]) {
       val direction = player.handler.chooseMoveOnRest(player)
       if (direction != null) {

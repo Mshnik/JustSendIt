@@ -35,19 +35,20 @@ import com.redpup.justsendit.util.testing.FakeTimeSource
 import com.redpup.justsendit.util.testing.FakeTimeSourceModule
 import java.time.Duration
 import java.time.Instant
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
 import org.mockito.kotlin.any
 import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class GameModelTest {
   private val testDecisionHandler = TestDecisionController()
 
   private val apresApply = mock<(ApresCard, MutablePlayer, Boolean, GameModel) -> Unit>()
 
-  private val abilityHandler = mock<AbilityHandler>()
+  private val abilityHandler = TestAbilityHandler()
 
   @Inject private lateinit var skillDecks: FakeSkillDecks
   @Inject private lateinit var apresDeck: FakeApresDeck
@@ -59,7 +60,7 @@ class GameModelTest {
   @Inject private lateinit var testLogger: TestLogger
   @Inject private lateinit var gameProvider: Provider<MutableGameModel>
 
-  private lateinit var game: GameModel
+  private lateinit var game: MutableGameModel
 
   @BeforeEach
   fun setup() {
@@ -184,7 +185,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `game model initializes correctly`() {
+  fun `game model initializes correctly`() = runBlocking {
     skillDecks.setGreenDeck(List(10) { 1 }) // Set up for starting deck
     assertThat(game.players.size).isEqualTo(2)
     assertThat(game.tileMap.size()).isEqualTo(3)
@@ -195,7 +196,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with REST decision works`() {
+  fun `turn with REST decision works`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       skillDeck.clear() // Clear existing cards from buyStartingDeck
@@ -208,7 +209,7 @@ class GameModelTest {
       rest = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.skillDiscard.size).isEqualTo(0)
     assertThat(player.skillDeck.size).isEqualTo(3)
@@ -216,7 +217,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with LIFT decision works`() {
+  fun `turn with LIFT decision works`() = runBlocking {
     val player = game.players[0]
     player.mutate { location = createHexPoint(0, 0) }
 
@@ -224,7 +225,7 @@ class GameModelTest {
       lift = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.location).isEqualTo(hexPoint { q = 0; r = -1 })
     assertThat(player.apresLink).isNull()
@@ -232,7 +233,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with EXIT decision works`() {
+  fun `turn with EXIT decision works`() = runBlocking {
     val player = game.players[0]
     player.mutate { location = createHexPoint(0, 0) } // Location with apres_link
 
@@ -240,7 +241,7 @@ class GameModelTest {
       exit = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.location).isNull()
     assertThat(player.apresLink).isEqualTo(1)
@@ -251,7 +252,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with success`() {
+  fun `successful SKI_RIDE turn with success`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -269,7 +270,7 @@ class GameModelTest {
       pass = empty {}
     }) // End turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.day.experience).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(5)
@@ -277,7 +278,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with exact success`() {
+  fun `successful SKI_RIDE turn with exact success`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -295,7 +296,7 @@ class GameModelTest {
       pass = empty {}
     }) // End turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.day.experience).isEqualTo(1)
     assertThat(player.day.mountainPoints).isEqualTo(5)
@@ -303,7 +304,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with partial failure`() {
+  fun `successful SKI_RIDE turn with partial failure`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -318,7 +319,7 @@ class GameModelTest {
       }
     }) // Ends turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.day.experience).isEqualTo(1)
     assertThat(player.day.mountainPoints).isEqualTo(0)
@@ -326,7 +327,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with full failure`() {
+  fun `successful SKI_RIDE turn with full failure`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -341,7 +342,7 @@ class GameModelTest {
       }
     }) // Ends turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.day.experience).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(0)
@@ -349,7 +350,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with success with overkill`() {
+  fun `successful SKI_RIDE turn with success with overkill`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -368,7 +369,7 @@ class GameModelTest {
       pass = empty {}
     }) // End turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(player.day.experience).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(9) // 5 + 4
@@ -376,9 +377,9 @@ class GameModelTest {
   }
 
   @Test
-  fun `advance day updates day and repopulates apres`() {
+  fun `advance day updates day and repopulates apres`() = runBlocking {
     testDecisionHandler.startLocation = hexPoint { q = -1; r = -1 }
-    game.mutate { advanceDay() }
+    game.advanceDay()
 
     assertThat(game.clock.day).isEqualTo(2)
     assertThat(game.clock.turn).isEqualTo(1)
@@ -388,12 +389,12 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with REST decision adds log with basic params`() {
+  fun `turn with REST decision adds log with basic params`() = runBlocking {
     testDecisionHandler.decisionQueue.add(mountainDecision {
       rest = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(testLogger.logs).hasSize(1)
     val log = testLogger.logs[0]
@@ -406,12 +407,12 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with REST decision adds MountainDecision log`() {
+  fun `turn with REST decision adds MountainDecision log`() = runBlocking {
     testDecisionHandler.decisionQueue.add(mountainDecision {
       rest = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(testLogger.logs).hasSize(1)
     val log = testLogger.logs[0]
@@ -420,7 +421,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn with LIFT decision adds PlayerMove log`() {
+  fun `turn with LIFT decision adds PlayerMove log`() = runBlocking {
     val player = game.players[0]
     player.mutate { location = createHexPoint(0, 0) }
 
@@ -428,7 +429,7 @@ class GameModelTest {
       lift = empty {}
     })
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(testLogger.logs).hasSize(2) // 1 for choice, 1 for move
     val log = testLogger.logs[1]
@@ -438,7 +439,7 @@ class GameModelTest {
   }
 
   @Test
-  fun `successful SKI_RIDE turn with success adds SkillCardDraw logs`() {
+  fun `successful SKI_RIDE turn with success adds SkillCardDraw logs`() = runBlocking {
     val player = game.players[0]
     player.mutate {
       location = createHexPoint(0, 0)
@@ -456,17 +457,18 @@ class GameModelTest {
       pass = empty {}
     }) // End turn
 
-    game.mutate { turn() }
+    game.turn()
 
     assertThat(testLogger.logs).hasSize(4) // choice, ski/ride move, card draw, choice
     val log = testLogger.logs[2]
     assertThat(log.hasSkillCardDraw()).isTrue()
     assertThat(log.skillCardDraw.cardValueList).containsExactly(6)
+    Unit
   }
 
 
   @Test
-  fun `turn advances players and clock correctly`() {
+  fun `turn advances players and clock correctly`() = runBlocking {
     assertThat(game.players).hasSize(2)
     assertThat(game.currentPlayer.playerCard.name).isEqualTo("Amy")
     assertThat(game.clock.turn).isEqualTo(1)
@@ -479,7 +481,7 @@ class GameModelTest {
     })
 
     // Player 1's turn
-    game.mutate { turn() }
+    game.turn()
     assertThat(game.currentPlayer.playerCard.name).isEqualTo("Andy")
     assertThat(game.clock.turn).isEqualTo(1)
 
@@ -491,7 +493,7 @@ class GameModelTest {
     })
 
     // Player 2's turn, wraps around
-    game.mutate { turn() }
+    game.turn()
     assertThat(game.currentPlayer.playerCard.name).isEqualTo("Amy")
     assertThat(game.clock.turn).isEqualTo(2)
   }
@@ -502,17 +504,20 @@ class GameModelTest {
     val decisionQueue = mutableListOf<MountainDecision>()
     var startLocation = createHexPoint(0, 0)
 
-    override fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {
+    override suspend fun makeMountainDecision(
+      player: Player,
+      gameModel: GameModel,
+    ): MountainDecision {
       return decisionQueue.removeFirstOrNull() ?: mountainDecision {
         pass = empty {}
       }
     }
 
-    override fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
+    override suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
       return startLocation
     }
 
-    override fun chooseCardsToRemove(
+    override suspend fun chooseCardsToRemove(
       player: Player,
       cards: List<Int>,
       maxToRemove: Int,
@@ -520,18 +525,20 @@ class GameModelTest {
       TODO("Not yet implemented")
     }
 
-    override fun shouldGainSpeed(player: Player): Boolean {
+    override suspend fun shouldGainSpeed(player: Player): Boolean {
       TODO("Not yet implemented")
     }
 
-    override fun chooseMoveOnRest(player: Player): HexDirection? {
+    override suspend fun chooseMoveOnRest(player: Player): HexDirection? {
       return null
     }
 
-    override fun decideToUseEndurance(): Boolean {
+    override suspend fun decideToUseEndurance(): Boolean {
       return false
     }
 
-    override fun onRevealTopCard(card: Int) {}
+    override suspend fun onRevealTopCard(card: Int) {}
   }
+
+  class TestAbilityHandler : AbilityHandler {}
 }

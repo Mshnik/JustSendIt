@@ -1,10 +1,11 @@
 package com.redpup.justsendit.model.player.cards
 
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -24,31 +25,31 @@ class AndyTest {
   }
 
   @Test
-  fun `onCrash returns false if ability is not unlocked`() {
+  fun `onCrash returns false if ability is not unlocked`() = runBlocking {
     assertThat(andy.abilityHandler.onCrash(gameModel, -2, false)).isFalse()
   }
 
   @Test
-  fun `onCrash returns true if ability is unlocked and diff is -2`() {
+  fun `onCrash returns true if ability is unlocked and diff is -2`() = runBlocking {
     andy.mutate { abilities[0] = true }
     assertThat(andy.abilityHandler.onCrash(gameModel, -2, false)).isTrue()
   }
 
   @Test
-  fun `onCrash returns false if ability is unlocked and diff is less than -2`() {
+  fun `onCrash returns false if ability is unlocked and diff is less than -2`() = runBlocking {
     andy.mutate { abilities[0] = true }
     assertThat(andy.abilityHandler.onCrash(gameModel, -3, false)).isFalse()
   }
 
   @Test
-  fun `onGainSpeed does nothing if ability is not unlocked`() {
+  fun `onGainSpeed does nothing if ability is not unlocked`() = runBlocking {
     val initialPoints = andy.turn.points
     andy.abilityHandler.onGainSpeed(2)
     assertThat(andy.turn.points).isEqualTo(initialPoints)
   }
 
   @Test
-  fun `onGainSpeed adds points if ability is unlocked and speed is 2`() {
+  fun `onGainSpeed adds points if ability is unlocked and speed is 2`() = runBlocking {
     andy.mutate { abilities[1] = true }
     val initialPoints = andy.turn.points
     andy.abilityHandler.onGainSpeed(2)
@@ -56,7 +57,7 @@ class AndyTest {
   }
 
   @Test
-  fun `onGainSpeed does nothing if ability is unlocked and speed is not 2`() {
+  fun `onGainSpeed does nothing if ability is unlocked and speed is not 2`() = runBlocking {
     andy.mutate { abilities[1] = true }
     val initialPoints = andy.turn.points
     andy.abilityHandler.onGainSpeed(1)

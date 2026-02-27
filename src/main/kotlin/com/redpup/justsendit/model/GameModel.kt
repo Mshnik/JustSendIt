@@ -112,7 +112,7 @@ class MutableGameModel @Inject constructor(
   private fun playersInTurnOrder() = playerOrder.map { players[it] }
 
   /** Executes one turn for the current player. */
-  fun turn() {
+  suspend fun turn() {
     if (currentPlayer.isOnMountain) {
       do {
         val decision = currentPlayer.handler
@@ -141,7 +141,7 @@ class MutableGameModel @Inject constructor(
    * Concludes the day, ingesting points and updating state.
    * Returns true if the game is over, false otherwise.
    */
-  fun advanceDay(): Boolean {
+  suspend fun advanceDay(): Boolean {
     // Ingest points and award the best day on mountain.
     players.maxBy { it.day.mountainPoints }.day.bestDayPoints += BEST_DAY_AWARD[clock.day]!!
     players.forEach { it.ingestDayAndCopyNextDay() }
@@ -172,7 +172,7 @@ class MutableGameModel @Inject constructor(
    * Executes the given [decision] for the given [player]. Returns true if the
    * player's turn continues, false if their turn is now over.
    */
-  private fun executeDecision(
+  private suspend fun executeDecision(
     player: MutablePlayer,
     decision: MountainDecision,
   ): Boolean {
@@ -203,7 +203,7 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  private fun executeSkiRide(
+  private suspend fun executeSkiRide(
     player: MutablePlayer,
     skiRideDecision: SkiRideDecision,
   ): Boolean {
@@ -299,7 +299,7 @@ class MutableGameModel @Inject constructor(
     lifts[color]!!.find { it.key != location }!!.key
 
   /** Executes the player leaving the mountain. */
-  private fun executeExit(player: MutablePlayer) {
+  private suspend fun executeExit(player: MutablePlayer) {
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!

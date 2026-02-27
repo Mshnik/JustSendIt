@@ -9,7 +9,7 @@ interface Apres {
   val apresCard: ApresCard
 
   /** Applies this Apres benefit to [player]. */
-  fun apply(
+  suspend fun apply(
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,

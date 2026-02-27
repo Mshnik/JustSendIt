@@ -5,17 +5,17 @@ import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
-class Jenny(override val player: Player) : AbilityHandler(player) {
+class Jenny(val player: Player) : AbilityHandler {
 
     private var enduranceUsedThisDay = false
 
-    override fun onBeforeTurn(gameModel: GameModel) {
+    override suspend fun onBeforeTurn(gameModel: GameModel) {
         if (gameModel.clock.turn == 1) {
             enduranceUsedThisDay = false
         }
     }
 
-    override fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
+    override suspend fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
         if (player.abilities[0] && !enduranceUsedThisDay && isWipeout) {
             if (player.handler.decideToUseEndurance()) {
                 enduranceUsedThisDay = true

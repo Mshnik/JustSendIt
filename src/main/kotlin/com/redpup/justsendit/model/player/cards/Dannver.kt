@@ -4,9 +4,9 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 
-class Dannver(override val player: Player) : AbilityHandler(player) {
+class Dannver(val player: Player) : AbilityHandler {
 
-  override fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
+  override suspend fun onCrash(gameModel: GameModel, diff: Int, isWipeout: Boolean): Boolean {
     if (player.abilities[0] && isWipeout) {
       player.mutate {
         turn.experience += 1

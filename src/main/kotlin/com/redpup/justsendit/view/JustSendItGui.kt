@@ -6,7 +6,6 @@ import com.redpup.justsendit.control.ControllerModule
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.LoggerModule
 import com.redpup.justsendit.log.proto.Log
-import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.model.MutableGameModel
 import com.redpup.justsendit.util.KtAbstractModule
@@ -22,11 +21,19 @@ import javafx.scene.layout.BorderPane
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 import javax.inject.Inject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+
+/** Injectable state for the Gui. */
+internal class GuiState @Inject constructor(
+  val gameModel: MutableGameModel,
+  val coroutineScope: CoroutineScope,
+)
 
 /** A top level JavaFX application for JustSendIt. */
 class JustSendItGui : Application() {
-  private lateinit var gameModel: GameModel
   private lateinit var logPanel: LogPanel
+  private lateinit var guiState: GuiState
 
   class GuiLogger @Inject constructor(private val gui: JustSendItGui) : Logger {
     override fun log(log: Log) {
@@ -35,7 +42,7 @@ class JustSendItGui : Application() {
   }
 
   override fun init() {
-    gameModel = Guice.createInjector(
+    guiState = Guice.createInjector(
       object : KtAbstractModule() {
         @Provides
         fun provideGui(): JustSendItGui {
@@ -43,13 +50,15 @@ class JustSendItGui : Application() {
         }
       },
       GameModelModule(),
+      GuiCoroutineModule(),
       ControllerModule(),
       SystemTimeSourceModule(),
       LoggerModule(GuiLogger::class)
-    ).getInstance(GameModel::class.java)
+    ).getInstance(GuiState::class.java)
   }
 
   override fun start(stage: Stage) {
+    val gameModel = guiState.gameModel
     val hexGridViewer = HexGridViewer(gameModel)
     val infoPanel = InfoPanel(gameModel)
     val gameInfoPanel = GameInfoPanel(gameModel)
@@ -70,8 +79,10 @@ class JustSendItGui : Application() {
 
     val nextTurnButton = Button("Next Turn")
     nextTurnButton.setOnAction {
-      (gameModel as MutableGameModel).turn()
-      gameInfoPanel.update()
+      guiState.coroutineScope.launch {
+        gameModel.turn()
+        gameInfoPanel.update()
+      }
     }
 
     val topPanel = VBox(gameInfoPanel, nextTurnButton)

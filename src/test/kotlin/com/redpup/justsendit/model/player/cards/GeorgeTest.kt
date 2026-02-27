@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.proto.Grade
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -33,7 +34,7 @@ class GeorgeTest {
   }
 
   @Test
-  fun `computeBonus adds bonus on first turn if ability is unlocked`() {
+  fun `computeBonus adds bonus on first turn if ability is unlocked`()= runBlocking  {
     george.mutate { abilities[0] = true }
     whenever(clock.turn).thenReturn(1)
     george.abilityHandler.onBeforeTurn(gameModel)
@@ -42,7 +43,7 @@ class GeorgeTest {
   }
 
   @Test
-  fun `computeBonus adds bonus on last turn if ability is unlocked`() {
+  fun `computeBonus adds bonus on last turn if ability is unlocked`() = runBlocking {
     george.mutate { abilities[0] = true }
     whenever(clock.turn).thenReturn(7)
     whenever(clock.maxTurn).thenReturn(7)
@@ -52,7 +53,7 @@ class GeorgeTest {
   }
 
   @Test
-  fun `computeBonus does not add bonus if ability is not unlocked`() {
+  fun `computeBonus does not add bonus if ability is not unlocked`() = runBlocking {
     whenever(clock.turn).thenReturn(1)
     george.abilityHandler.onBeforeTurn(gameModel)
     val bonus = george.computeBonus(slopeTile {})

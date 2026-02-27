@@ -5,6 +5,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -24,14 +25,14 @@ class DannverTest {
   }
 
   @Test
-  fun `onCrash does nothing if ability not unlocked`() {
+  fun `onCrash does nothing if ability not unlocked`()= runBlocking  {
     val initialExperience = dannver.turn.experience
     dannver.abilityHandler.onCrash(gameModel, -1, true)
     assertThat(dannver.turn.experience).isEqualTo(initialExperience)
   }
 
   @Test
-  fun `onCrash does nothing if ability is unlocked and is not wipeout`() {
+  fun `onCrash does nothing if ability is unlocked and is not wipeout`()= runBlocking  {
     dannver.mutate { abilities[0] = true }
     val initialExperience = dannver.turn.experience
     dannver.abilityHandler.onCrash(gameModel, -1, false)
@@ -39,7 +40,7 @@ class DannverTest {
   }
 
   @Test
-  fun `onCrash gains experience if ability is unlocked and is wipeout`() {
+  fun `onCrash gains experience if ability is unlocked and is wipeout`()= runBlocking  {
     dannver.mutate { abilities[0] = true }
     val initialExperience = dannver.turn.experience
     dannver.abilityHandler.onCrash(gameModel, -1, true)

@@ -7,7 +7,7 @@ import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
 
 class Sauna(override val apresCard: ApresCard) : Apres {
-  override fun apply(
+  override suspend fun apply(
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,

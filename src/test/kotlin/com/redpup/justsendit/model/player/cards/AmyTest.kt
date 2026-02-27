@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.player.proto.playerCard
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -22,12 +23,12 @@ class AmyTest {
   }
 
   @Test
-  fun `onGainSpeed returns true if Be Careful is not unlocked`() {
+  fun `onGainSpeed returns true if Be Careful is not unlocked`() = runBlocking {
     assertThat(amy.abilityHandler.onGainSpeed(0)).isTrue()
   }
 
   @Test
-  fun `onGainSpeed calls handler if Be Careful is unlocked`() {
+  fun `onGainSpeed calls handler if Be Careful is unlocked`() = runBlocking {
     amy.mutate { abilities[0] = true }
     whenever(playerController.shouldGainSpeed(amy)).thenReturn(false)
     assertThat(amy.abilityHandler.onGainSpeed(0)).isFalse()

@@ -5,7 +5,7 @@ import com.redpup.justsendit.model.player.AbilityHandler
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.proto.Grade
 
-class Mia(override val player: Player) : AbilityHandler(player) {
+class Mia(val player: Player) : AbilityHandler {
 
     override fun getGreenTrainingBonusGrades(): List<Grade> {
         return if (player.abilities[0]) {

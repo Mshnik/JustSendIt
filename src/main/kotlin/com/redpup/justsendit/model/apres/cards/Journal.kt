@@ -6,7 +6,7 @@ import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.GameModel
 
 class Journal(override val apresCard: ApresCard) : Apres {
-  override fun apply(
+  override suspend fun apply(
       player: MutablePlayer,
       isFirstPlayerToArrive: Boolean,
       gameModel: GameModel,
