@@ -1,13 +1,17 @@
 package com.redpup.justsendit.view
 
+import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.MutableGameModel
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
+import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.view.board.HexGridViewer
 import javafx.application.Platform
 import javafx.scene.control.Alert
@@ -17,6 +21,7 @@ import javafx.scene.control.TextInputDialog
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
+import kotlinx.coroutines.CancellableContinuation
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Singleton
@@ -44,77 +49,67 @@ class GuiController @Inject constructor() : PlayerController {
         dialog.title = "Choose Action"
         dialog.headerText = "What do you want to do?"
         val result = dialog.showAndWait()
+        check(result.isPresent)
 
-        if (result.isPresent) {
-          val choice = result.get()
-          when (choice) {
-            "Ski/Ride" -> {
-              val availableMoves = (gameModel as MutableGameModel).getAvailableMoves(player)
-              hexGridViewer.highlightHexes(availableMoves.keys)
+        val choice = result.get()
+        when (choice) {
+          "Ski/Ride" -> {
+            val availableMoves = (gameModel as MutableGameModel).getAvailableMoves(player)
+            hexGridViewer.highlightHexes(availableMoves.keys)
 
-              hexGridViewer.onHexClicked = { clickedHex ->
-                val direction = availableMoves[clickedHex]
-                if (direction != null) {
-                  hexGridViewer.highlightHexes(emptySet())
-                  hexGridViewer.onHexClicked = null
+            hexGridViewer.onHexClicked = { clickedHex ->
+              val direction = availableMoves[clickedHex]
+              val tile = gameModel.tileMap[clickedHex]
+              if (direction != null && tile != null) {
+                hexGridViewer.highlightHexes(emptySet())
+                hexGridViewer.onHexClicked = null
 
-                  val numCardsDialog = TextInputDialog("1")
-                  numCardsDialog.title = "Number of Cards"
-                  numCardsDialog.headerText = "Enter the number of cards to play."
-                  val numCardsResult = numCardsDialog.showAndWait()
+                when (tile.tileCase) {
+                  TileCase.SLOPE -> handleSkiRide(
+                    direction,
+                    continuation
+                  )
 
-                  if (numCardsResult.isPresent) {
-                    val numCards = numCardsResult.get().toIntOrNull() ?: 1
-                    continuation.resume(
-                      MountainDecision.newBuilder().setSkiRide(
-                        MountainDecision.SkiRideDecision.newBuilder()
-                          .setDirection(direction)
-                          .setNumCards(numCards)
-                      ).build()
-                    )
-                  } else {
-                    continuation.resume(
-                      MountainDecision.newBuilder()
-                        .setPass(com.google.protobuf.Empty.getDefaultInstance()).build()
-                    )
-                  }
+                  TileCase.LIFT -> continuation.resume(
+                    mountainDecision {
+                      skiRide = skiRideDecision {
+                        this.direction = direction
+                      }
+                    })
+
+                  TileCase.TILE_NOT_SET, null -> {}
                 }
               }
             }
-
-            "Rest" -> continuation.resume(
-              MountainDecision.newBuilder().setRest(com.google.protobuf.Empty.getDefaultInstance())
-                .build()
-            )
-
-            "Lift" -> continuation.resume(
-              MountainDecision.newBuilder().setLift(com.google.protobuf.Empty.getDefaultInstance())
-                .build()
-            )
-
-            "Exit" -> continuation.resume(
-              MountainDecision.newBuilder().setExit(com.google.protobuf.Empty.getDefaultInstance())
-                .build()
-            )
-
-            "Pass" -> continuation.resume(
-              MountainDecision.newBuilder().setPass(com.google.protobuf.Empty.getDefaultInstance())
-                .build()
-            )
-
-            else -> continuation.resume(
-              MountainDecision.newBuilder().setPass(com.google.protobuf.Empty.getDefaultInstance())
-                .build()
-            )
           }
-        } else {
-          continuation.resume(
-            MountainDecision.newBuilder().setPass(com.google.protobuf.Empty.getDefaultInstance())
-              .build()
-          )
+
+          "Rest" -> continuation.resume(mountainDecision { rest = empty { } })
+          "Lift" -> continuation.resume(mountainDecision { lift = empty { } })
+          "Exit" -> continuation.resume(mountainDecision { exit = empty { } })
+          "Pass" -> continuation.resume(mountainDecision { pass = empty { } })
+          else -> throw IllegalArgumentException()
         }
       }
     }
+  }
+
+  private fun handleSkiRide(
+    direction: HexDirection,
+    continuation: CancellableContinuation<MountainDecision>,
+  ) {
+    val numCardsDialog = TextInputDialog("1")
+    numCardsDialog.title = "Number of Cards"
+    numCardsDialog.headerText = "Enter the number of cards to play."
+    val numCardsResult = numCardsDialog.showAndWait()
+    check(numCardsResult.isPresent)
+
+    val numCards = numCardsResult.get().toIntOrNull() ?: 1
+    continuation.resume(mountainDecision {
+      skiRide = skiRideDecision {
+        this.direction = direction
+        this.numCards = numCards
+      }
+    })
   }
 
   override suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
