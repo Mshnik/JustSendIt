@@ -7,6 +7,7 @@ import com.google.inject.Provider
 import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.control.player.testing.FakePlayerControllerModule
+import com.redpup.justsendit.log.proto.skiRideAttempt
 import com.redpup.justsendit.log.testing.TestLogger
 import com.redpup.justsendit.log.testing.TestLoggerModule
 import com.redpup.justsendit.model.apres.proto.ApresCard
@@ -461,9 +462,14 @@ class GameModelTest {
 
     assertThat(testLogger.logs).hasSize(4) // choice, ski/ride move, card draw, choice
     val log = testLogger.logs[2]
-    assertThat(log.hasSkillCardDraw()).isTrue()
-    assertThat(log.skillCardDraw.cardValueList).containsExactly(6)
-    Unit
+    assertThat(log.hasSkiRideAttempt()).isTrue()
+    assertThat(log.skiRideAttempt).isEqualTo(skiRideAttempt {
+      baseDifficulty = 5
+      speedDifficulty = 0
+      cardValue += 6
+      bonusValue = 0
+      success = true
+    })
   }
 
 

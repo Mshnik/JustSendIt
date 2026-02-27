@@ -27,7 +27,7 @@ message Log {
   oneof event {
     model.player.MountainDecision mountain_decision = 7;
     PlayerMove player_move = 8;
-    SkillCardDraw skill_card_draw = 9;
+    SkiRideAttempt ski_ride_attempt = 9;
   }
 }
 
@@ -37,7 +37,11 @@ message PlayerMove {
   model.board.hex.HexPoint to = 2;
 }
 
-// A log of a player drawing a card.
-message SkillCardDraw {
-  repeated int32 card_value = 1;
+// A log of a player attempting to ski/ride a tile.
+message SkiRideAttempt {
+  int32 base_difficulty = 1;
+  int32 speed_difficulty = 2;
+  repeated int32 card_value = 3;
+  int32 bonus_value = 4;
+  bool success = 5;
 }

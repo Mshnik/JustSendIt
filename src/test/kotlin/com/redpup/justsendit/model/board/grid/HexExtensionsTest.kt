@@ -26,7 +26,10 @@ class HexExtensionsTest {
   fun `test down-mountain logic`() {
     assertThat(HexDirection.HEX_DIRECTION_SOUTH.isDownMountain).isTrue()
     assertThat(HexDirection.HEX_DIRECTION_SOUTH_WEST.isDownMountain).isTrue()
+    assertThat(HexDirection.HEX_DIRECTION_SOUTH_EAST.isDownMountain).isTrue()
     assertThat(HexDirection.HEX_DIRECTION_NORTH.isDownMountain).isFalse()
+    assertThat(HexDirection.HEX_DIRECTION_NORTH_EAST.isDownMountain).isFalse()
+    assertThat(HexDirection.HEX_DIRECTION_NORTH_WEST.isDownMountain).isFalse()
   }
 
   @Test

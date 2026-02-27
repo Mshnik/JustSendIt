@@ -36,8 +36,8 @@ object HexExtensions {
   /** Returns true iff the given direction is down-mountain. */
   val HexDirection.isDownMountain
     get() = when (this) {
-      HexDirection.HEX_DIRECTION_NORTH, HexDirection.HEX_DIRECTION_NORTH_EAST, HexDirection.HEX_DIRECTION_SOUTH_EAST -> false
-      HexDirection.HEX_DIRECTION_SOUTH, HexDirection.HEX_DIRECTION_SOUTH_WEST, HexDirection.HEX_DIRECTION_NORTH_WEST -> true
+      HexDirection.HEX_DIRECTION_SOUTH, HexDirection.HEX_DIRECTION_SOUTH_EAST, HexDirection.HEX_DIRECTION_SOUTH_WEST -> true
+      HexDirection.HEX_DIRECTION_NORTH, HexDirection.HEX_DIRECTION_NORTH_EAST, HexDirection.HEX_DIRECTION_NORTH_WEST -> false
       HexDirection.HEX_DIRECTION_UNSET, HexDirection.UNRECOGNIZED -> throw IllegalArgumentException()
     }
 

@@ -103,7 +103,7 @@ class MutableGameModel @Inject constructor(
       when (value) {
         is MountainDecision -> mountainDecision = value
         is PlayerMove -> playerMove = value
-        is SkillCardDraw -> skillCardDraw = value
+        is SkiRideAttempt -> skiRideAttempt = value
         else -> throw IllegalArgumentException("Unsupported log $value")
       }
     }.let { log -> loggers.forEach { it.log(log) } }
@@ -116,6 +116,7 @@ class MutableGameModel @Inject constructor(
   fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection> {
     val location = player.location ?: return emptyMap()
     return HexDirection.entries
+      .filter { it != HexDirection.HEX_DIRECTION_UNSET && it != HexDirection.UNRECOGNIZED }
       .filter { it.isDownMountain }
       .associateBy({ location + it }, { it })
       .filter { tileMap.contains(it.key) }
@@ -254,16 +255,26 @@ class MutableGameModel @Inject constructor(
       "Only ${player.skillDeck.size} cards remaining, cannot play ${skiRideDecision.numCards} cards"
     }
 
+    // Player moves to tile.
+    player.location = destination
+
     // Actually play cards and compare to difficulty.
     val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
-    skillCardDraw { cardValue += cards }.log()
-    val skill =
-      cards.sum() + player.computeBonus(
-        destinationTile.slope
-      )
-    val difficulty =
-      destinationTile.slope.difficulty + player.turn.speed * SPEED_DIFFICULTY_MODIFIER
+    val bonus = player.computeBonus(destinationTile.slope)
+    val baseDifficulty = destinationTile.slope.difficulty
+    val speedDifficulty = player.turn.speed * SPEED_DIFFICULTY_MODIFIER
+    val skill = cards.sum() + bonus
+    val difficulty = baseDifficulty + speedDifficulty
     val halfDifficulty = difficulty.toDouble() / 2.0
+
+
+    skiRideAttempt {
+      this.baseDifficulty = baseDifficulty
+      this.speedDifficulty = speedDifficulty
+      cardValue += cards
+      this.bonusValue = bonus
+      success = skill >= difficulty
+    }.log()
 
     // Compute and apply result to turn.
     val success = skill >= difficulty

@@ -22,7 +22,7 @@ class LogPanel(private val gameModel: GameModel) : ScrollPane() {
     val event = when (eventCase) {
       Log.EventCase.MOUNTAIN_DECISION -> "$playerName chose $mountainDecision"
       Log.EventCase.PLAYER_MOVE -> "$playerName moved from ${playerMove.from} to ${playerMove.to}"
-      Log.EventCase.SKILL_CARD_DRAW -> "$playerName drew skill card(s) with values ${skillCardDraw.cardValueList}"
+      Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName attempted to ski ride: ${toString()}"
       else -> "Unknown event"
     }
     return "[$day/$turn/$subturn] $event"
