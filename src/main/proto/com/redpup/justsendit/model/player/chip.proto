@@ -1,0 +1,20 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.player;
+
+import "com/redpup/justsendit/model/board/tile/slope.proto";
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.player.proto";
+
+import "google/protobuf/empty.proto";
+
+/** A chip a player can use to improve their ski/ride result. */
+message TrainingChip {
+  /** The type of tile this chip applies to. */
+  oneof type {
+    model.board.tile.Condition condition = 1;
+    model.board.tile.Hazard hazard = 2;
+    google.protobuf.Empty wild = 3;
+  }
+}

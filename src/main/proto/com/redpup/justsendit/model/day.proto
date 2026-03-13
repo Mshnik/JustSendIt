@@ -1,0 +1,14 @@
+edition = "2023";
+
+package com.redpup.justsendit.model;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.proto";
+
+/** Days of the game. */
+enum Day {
+  DAY_UNSET = 0;
+  DAY_FRIDAY = 1;
+  DAY_SATURDAY = 2;
+  DAY_SUNDAY = 3;
+}

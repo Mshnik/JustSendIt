@@ -1,5 +1,7 @@
 package com.redpup.justsendit.model
 
+import com.redpup.justsendit.model.proto.Day
+
 /** Recording of time in game. */
 interface Clock {
   /** What turn of day it is. */
@@ -15,22 +17,21 @@ interface Clock {
   val maxTurn: Int
 
   /** What game of day it is. */
-  val day: Int
+  val day: Day
 
-  object Params {
-    const val MAX_DAY = 3
-  }
+  /** Returns the maximum number of cards that can be played on a day. */
+  val maxCards: Int get() = day.number
 }
 
 /** Mutable instance of [Clock]. */
-class MutableClock(override var turn: Int = 1, override var day: Int = 1) : Clock {
+class MutableClock(override var turn: Int = 1, override var day: Day = Day.DAY_FRIDAY) : Clock {
   /** Returns the max turn of the day. */
   override val maxTurn: Int
     get() = when (day) {
-      1 -> 9
-      2 -> 8
-      3 -> 7
-      else -> 0
+      Day.DAY_FRIDAY -> 9
+      Day.DAY_SATURDAY -> 8
+      Day.DAY_SUNDAY -> 7
+      Day.DAY_UNSET, Day.UNRECOGNIZED -> throw IllegalArgumentException()
     }
 
   override var subTurn: Int = 1; private set
@@ -50,6 +51,11 @@ class MutableClock(override var turn: Int = 1, override var day: Int = 1) : Cloc
   fun advanceDay() {
     turn = 1
     subTurn = 1
-    day++
+    day = when (day) {
+      Day.DAY_FRIDAY -> Day.DAY_SATURDAY
+      Day.DAY_SATURDAY -> Day.DAY_SUNDAY
+      Day.DAY_SUNDAY -> throw IllegalStateException("No day after sunday")
+      Day.DAY_UNSET, Day.UNRECOGNIZED -> throw IllegalStateException()
+    }
   }
 }

@@ -11,7 +11,7 @@ class Bar(override val apresCard: ApresCard) : Apres {
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,
   ) {
-    player.refreshSkillDeck()
+    player.refreshDecksAndChips()
     if (isFirstPlayerToArrive) {
       player.day.apresPoints += player.revealCards(5)
     } else {

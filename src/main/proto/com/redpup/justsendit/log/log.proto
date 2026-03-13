@@ -3,6 +3,7 @@ edition = "2023";
 package com.redpup.justsendit.log;
 
 import "google/protobuf/timestamp.proto";
+import "com/redpup/justsendit/model/day.proto";
 import "com/redpup/justsendit/model/player/decision.proto";
 import "com/redpup/justsendit/model/board/hex/hex_point.proto";
 
@@ -15,7 +16,7 @@ message Log {
   google.protobuf.Timestamp timestamp = 1;
 
   // When the log occurred in the game.
-  int32 day = 2;
+  model.Day day = 2;
   int32 turn = 3;
   int32 subturn = 4;
 

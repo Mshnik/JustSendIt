@@ -21,7 +21,6 @@ class ApresFactoryImpl @Inject constructor() : ApresFactory {
     "Tune-Up" to { apresCard -> TuneUp(apresCard) },
     "Study" to { apresCard -> Study(apresCard) },
     "First Chair" to { apresCard -> FirstChair(apresCard) },
-    "Sauna" to { apresCard -> Sauna(apresCard) },
     "Bar" to { apresCard -> Bar(apresCard) },
     "Dining" to { apresCard -> Dining(apresCard) },
     "Village" to { apresCard -> Village(apresCard) },

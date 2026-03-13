@@ -12,9 +12,9 @@ class Study(override val apresCard: ApresCard) : Apres {
     gameModel: GameModel,
   ) {
     if (isFirstPlayerToArrive) {
-      player.day.experience += 2
+      player.day.apresPoints += 10
     } else {
-      player.day.experience += 1
+      player.day.apresPoints += 5
     }
   }
 }

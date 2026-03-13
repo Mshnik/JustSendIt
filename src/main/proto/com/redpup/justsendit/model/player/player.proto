@@ -5,37 +5,18 @@ package com.redpup.justsendit.model.player;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
+import "com/redpup/justsendit/model/day.proto";
 import "com/redpup/justsendit/model/grade.proto";
-import "com/redpup/justsendit/model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/player/chip.proto";
 
-/** The immutable params associated with a player. */
+/** The immutable params associated with a player or upgrade. */
 message PlayerCard {
   string name = 1;
-  repeated PlayerUpgrade upgrades = 2;
-  repeated PlayerTraining training = 3;
-  repeated PlayerAbility abilities = 4;
-}
-
-/** A set of cards a player can add to their deck.*/
-message PlayerUpgrade {
-  repeated Grade cards = 1;
-}
-
-/** Training this player can invest in. */
-message PlayerTraining {
-  oneof type {
-    Grade grade = 1;
-    model.board.tile.Condition condition = 2;
-    model.board.tile.Hazard hazard = 3;
-  }
-  int32 value = 4;
-}
-
-/** A player's unique ability. */
-message PlayerAbility {
-  string name = 1;
-  int32 cost = 2;
-  string text = 3;
+  Day day = 2;
+  repeated Grade skill_cards = 3;
+  repeated TrainingChip chips = 4;
+  string ability_name = 5;
+  string ability_text = 6;
 }
 
 /** A list of player cards. */

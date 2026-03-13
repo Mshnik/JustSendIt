@@ -10,6 +10,8 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
+import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.proto.TrainingChip
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.util.FunctionExtensions.orElse
 import com.redpup.justsendit.util.FunctionExtensions.thenNonNull
@@ -190,6 +192,34 @@ class GuiController @Inject constructor() : PlayerController {
         alert.headerText = "The top card of your skill deck is: $card"
         alert.showAndWait()
         continuation.resume(Unit)
+      }
+    }
+  }
+
+  override suspend fun chooseChipsToUse(
+    player: Player,
+    tile: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+    currentSkill: Int,
+    difficulty: Int
+  ): List<TrainingChip> {
+    return emptyList()
+  }
+
+  override suspend fun choosePlayerCard(
+    player: Player,
+    cards: List<PlayerCard>
+  ): PlayerCard {
+    return suspendCancellableCoroutine { continuation ->
+      Platform.runLater {
+        val dialog = ChoiceDialog(cards[0], cards)
+        dialog.title = "Choose Upgrade"
+        dialog.headerText = "Choose an upgrade card."
+        val result = dialog.showAndWait()
+        if (result.isPresent) {
+          continuation.resume(result.get())
+        } else {
+          continuation.resume(cards[0])
+        }
       }
     }
   }

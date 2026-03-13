@@ -18,9 +18,5 @@ class FakePlayerFactory : PlayerFactory {
   }
 
   /** Creates a [Player] from a [PlayerCard] using this factory. */
-  override fun create(playerCard: PlayerCard, handler: PlayerController): MutablePlayer =
-    MutablePlayer(playerCard, handler) { _ ->
-      abilityHandlers[playerCard.name]
-        ?: throw IllegalArgumentException("No player found for ${playerCard.name} in $abilityHandlers")
-    }
+  override fun create(handler: PlayerController): MutablePlayer = MutablePlayer(handler)
 }

@@ -55,7 +55,7 @@ class PlayerRenderer(
     totalHeight: Double,
     i: Int,
   ) {
-    val name = player.playerCard.name
+    val name = player.name
     val nameWidth = name.length * 6.5
     val ovalWidth = nameWidth + playerOvalWidthPadding
     val color = playerColors[playerIndex % playerColors.size]

@@ -11,11 +11,10 @@ class Massage(override val apresCard: ApresCard) : Apres {
       isFirstPlayerToArrive: Boolean,
       gameModel: GameModel,
   ) {
-    val trainingExperience = player.training.sum()
     if (isFirstPlayerToArrive) {
-      player.day.apresPoints += trainingExperience * 5
+      player.day.apresPoints += 10
     } else {
-      player.day.apresPoints += trainingExperience * 2
+      player.day.apresPoints += 5
     }
   }
 }

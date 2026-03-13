@@ -72,17 +72,9 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
       playersInfoVBox.children.add(title)
       players.forEach { player ->
         val info = StringBuilder()
-        info.append("Name: ${player.playerCard.name}\n")
+        info.append("Name: ${player.name}\n")
         info.append("Points: ${player.points}\n")
-        info.append("Experience: ${player.experience}\n")
-        info.append("Training: ${player.training}\n")
-        info.append(
-          "Abilities: ${
-            player.abilities.flatMapIndexed { index, unlocked ->
-              if (unlocked) listOf(player.playerCard.abilitiesList[index].name) else listOf<String>()
-            }.takeIf { it.isNotEmpty() } ?: "None"
-          }\n"
-        )
+        info.append("Chips: ${player.trainingChips}\n")
         val playerBox = VBox()
         playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
         addInfoLabel(info.toString(), playerBox)

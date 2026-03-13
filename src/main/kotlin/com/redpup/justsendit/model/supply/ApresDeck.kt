@@ -6,6 +6,7 @@ import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
 import com.google.inject.Inject
+import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.util.pop
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -22,7 +23,7 @@ interface ApresDeck {
   fun tuck(apres: Apres)
 
   /** Draws a card for the given day. Draws until a card for the given day is found. */
-  fun drawForDay(day: Int): Apres {
+  fun drawForDay(day: Day): Apres {
     // for instead of while is safety for infinite looping.
     for (i in 0..100) {
       val apres = draw()

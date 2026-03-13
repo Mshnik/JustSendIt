@@ -6,7 +6,6 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
@@ -15,15 +14,15 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
-import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.Player
-import com.redpup.justsendit.model.player.PlayerFactory
+import com.redpup.justsendit.model.player.*
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
+import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.supply.ApresDeck
 import com.redpup.justsendit.model.supply.PlayerDeck
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.util.TimeSource
+import com.redpup.justsendit.util.peek
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -59,8 +58,8 @@ interface GameModel {
 class MutableGameModel @Inject constructor(
   tileMapBuilder: TileMapBuilder,
   playerControllers: @JvmSuppressWildcards List<PlayerController>,
-  playerDeck: PlayerDeck,
   playerFactory: PlayerFactory,
+  private val playerDeck: PlayerDeck,
   private val apresDeck: ApresDeck,
   override val skillDecks: SkillDecks,
   private val timeSource: TimeSource,
@@ -73,28 +72,17 @@ class MutableGameModel @Inject constructor(
 
   override val tileMap: HexGrid<MountainTile> = tileMapBuilder.build()
   private val lifts =
-    tileMap.entries().filter { it.value.hasLift() }
-      .groupBy { it.value.lift.color }
+    tileMap.entries().filter { it.value.hasLift() }.groupBy { it.value.lift.color }
 
   override val apres: MutableList<Apres> = mutableListOf()
 
-  override val players: List<MutablePlayer> =
-    playerControllers
-      .map { handler -> playerFactory.create(playerDeck.draw(), handler) }
+  override val players: List<MutablePlayer> = playerControllers.map { playerFactory.create(it) }
 
   private var currentPlayerIndex = 0
   private val playerOrder = MutableList(players.size) { it }
   override var currentPlayer = players[playerOrder[currentPlayerIndex]]
 
   override val clock = MutableClock()
-
-  init {
-    for (player in players) {
-      player.buyStartingDeck(skillDecks)
-      player.location = createHexPoint(0, 0)
-    }
-    populateApresSlots()
-  }
 
   /** Adds this message as a log to this game model. */
   private fun Any.log() {
@@ -115,33 +103,54 @@ class MutableGameModel @Inject constructor(
     }.let { log -> loggers.forEach { it.log(log) } }
   }
 
-  /**
-   * Returns the places the given player could move to from their current
-   * location when they ski/ride.
-   */
   override fun getAvailableMoves(player: Player): Map<HexPoint, HexDirection> {
     val location = player.location ?: return emptyMap()
-    return HexDirection.entries
-      .filter { it != HexDirection.HEX_DIRECTION_UNSET && it != HexDirection.UNRECOGNIZED }
-      .filter { it.isDownMountain }
-      .associateBy({ location + it }, { it })
+    return HexDirection.entries.filter { it != HexDirection.HEX_DIRECTION_UNSET && it != HexDirection.UNRECOGNIZED }
+      .filter { it.isDownMountain }.associateBy({ location + it }, { it })
       .filter { tileMap.contains(it.key) }
   }
 
   /** Returns the players in turn order. */
   private fun playersInTurnOrder() = playerOrder.map { players[it] }
 
+  /** Has each player play the top card of their skill deck, then orders from highest to lowest. */
+  private fun setStartingPlayerOrder() {
+    val topCards = players.map { it.playSkillCard()!! }
+    playerOrder.sortByDescending { topCards[it] }
+  }
+
+  /** Gives each player a pick of the player cards, in order player. */
+  private suspend fun pickPlayerCards() {
+    val cards = playerDeck.draw(clock.day, players.size + 2)
+    for (player in players) {
+      val card = player.handler.choosePlayerCard(player, cards)
+      player.gainPlayerCard(card, skillDecks)
+    }
+  }
+
+  /** Starts a new day. May be the first day of the game or a later day in the game. */
+  suspend fun startDay() {
+    pickPlayerCards()
+    populateApresSlots()
+
+    if (clock.day == Day.DAY_FRIDAY) {
+      setStartingPlayerOrder()
+    }
+
+    for (player in playersInTurnOrder()) {
+      player.location = player.handler.getStartingLocation(player, this)
+    }
+  }
+
   /** Executes one turn for the current player. */
   suspend fun turn() {
     if (currentPlayer.isOnMountain) {
       do {
-        val decision = currentPlayer.handler
-          .makeMountainDecision(currentPlayer, this)
-          .also { it.log() }
+        val decision =
+          currentPlayer.handler.makeMountainDecision(currentPlayer, this).also { it.log() }
         val continueTurn = executeDecision(currentPlayer, decision)
         clock.advanceSubTurn()
       } while (continueTurn)
-      currentPlayer.abilityHandler.onAfterTurn(this)
       currentPlayer.ingestTurn()
     }
 
@@ -163,24 +172,19 @@ class MutableGameModel @Inject constructor(
    */
   suspend fun advanceDay(): Boolean {
     // Ingest points and award the best day on mountain.
-    players.maxBy { it.day.mountainPoints }.day.bestDayPoints += BEST_DAY_AWARD[clock.day]!!
     players.forEach { it.ingestDayAndCopyNextDay() }
     playerOrder.sortBy { players[it].points }
 
     // Update clock, advance to next day if there is one.
-    if (clock.day >= Clock.Params.MAX_DAY) {
+    if (clock.day == Day.DAY_SUNDAY) {
       return false
     }
 
     clock.advanceDay()
-    populateApresSlots()
-    for (player in playersInTurnOrder()) {
-      player.location = player.handler.getStartingLocation(player, this)
-    }
+    startDay()
     return true
   }
 
-  /** Populates the apres slots for the current day. */
   private fun populateApresSlots() {
     apres.clear()
     for (i in 1..APRES_SLOTS) {
@@ -188,10 +192,6 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  /**
-   * Executes the given [decision] for the given [player]. Returns true if the
-   * player's turn continues, false if their turn is now over.
-   */
   private suspend fun executeDecision(
     player: MutablePlayer,
     decision: MountainDecision,
@@ -227,7 +227,6 @@ class MutableGameModel @Inject constructor(
     player: MutablePlayer,
     skiRideDecision: SkiRideDecision,
   ): Boolean {
-    // Check directions of ski/ride, make sure we don't go off mountain.
     val location = player.location
     check(location != null) { "Player is off-map." }
     check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
@@ -239,77 +238,63 @@ class MutableGameModel @Inject constructor(
     val destinationTile = tileMap[destination]
     check(destinationTile != null) { "Destination is invalid: $destination" }
 
-    // If destination has lift, player just goes there.
     if (destinationTile.hasLift()) {
       player.location = destination
-      check(skiRideDecision.numCards == 0) {
-        "Must play 0 cards to ski/ride onto lift, got ${skiRideDecision.numCards}"
-      }
+      check(skiRideDecision.numCards == 0) { "Must play 0 cards to ski/ride onto lift, got ${skiRideDecision.numCards}" }
       return true
     }
 
-    // Check slow condition.
     check(!(destinationTile.slope.slow && player.turn.speed > MAX_SPEED_ON_SLOW)) {
       "Cannot travel to SLOW tile with speed ${player.turn.speed}"
     }
-
-    // Check number of cards played.
-    check(skiRideDecision.numCards >= 1 && skiRideDecision.numCards <= clock.day) {
+    check(skiRideDecision.numCards >= 1 && skiRideDecision.numCards <= clock.maxCards) {
       "Must play between [1,${clock.day}] cards, got ${skiRideDecision.numCards}"
     }
     check(skiRideDecision.numCards <= player.skillDeck.size) {
       "Only ${player.skillDeck.size} cards remaining, cannot play ${skiRideDecision.numCards} cards"
     }
 
-    // Player moves to tile.
     player.location = destination
 
-    // Actually play cards and compare to difficulty.
     val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
-    val bonus = player.computeBonus(destinationTile.slope)
     val baseDifficulty = destinationTile.slope.difficulty
     val speedDifficulty = player.turn.speed * SPEED_DIFFICULTY_MODIFIER
-    val skill = cards.sum() + bonus
+    var skill = cards.sum()
     val difficulty = baseDifficulty + speedDifficulty
-    val halfDifficulty = difficulty.toDouble() / 2.0
 
+    var success = skill >= difficulty
+    var bonus = 0
+    if (!success) {
+      bonus = player.handler.chooseChipsToUse(player, destinationTile.slope, skill, difficulty)
+        .peek { player.playTrainingChip(it) }
+        .sumOf { if (it.appliesTo(destinationTile.slope)) it.value() else 1 }
+
+      skill += bonus
+      success = skill >= difficulty
+    }
 
     skiRideAttempt {
       this.baseDifficulty = baseDifficulty
       this.speedDifficulty = speedDifficulty
       cardValue += cards
       this.bonusValue = bonus
-      success = skill >= difficulty
+      this.success = success
     }.log()
 
-    // Compute and apply result to turn.
-    val success = skill >= difficulty
     if (success) {
       player.turn.points += difficulty
-      player.day.overkillBonusPoints
-        ?.takeIf { skill - difficulty >= it.threshold }
-        ?.let { player.turn.points += it.bonus }
       player.turn.speed++
-      player.abilityHandler.onSuccessfulRun(this, skill - difficulty)
-    }
-    if (skill <= difficulty && skill >= halfDifficulty) {
-      player.turn.experience++
+    } else {
+      player.turn.points = 0
     }
 
-    // Turn continues if successful or if ability allows.
-    return success || player.abilityHandler.onCrash(
-      this,
-      skill - difficulty,
-      skill < halfDifficulty
-    )
+    return success
   }
 
-  /** Executes the player taking a rest. */
   private fun executeRest(player: MutablePlayer) {
-    player.refreshSkillDeck()
+    player.refreshDecksAndChips()
   }
 
-  /** Executes the player taking a lift. */
   private fun executeLift(player: MutablePlayer) {
     val location = player.location
     check(location != null) { "Player is off-map." }
@@ -321,14 +306,12 @@ class MutableGameModel @Inject constructor(
       to = destination
     }.log()
     player.location = destination
-    player.refreshSkillDeck()
+    player.refreshDecksAndChips()
   }
 
-  /** Returns the matching lift location for [color] that is not [location]. */
   private fun getOtherLiftLocation(color: LiftColor, location: HexPoint): HexPoint =
     lifts[color]!!.find { it.key != location }!!.key
 
-  /** Executes the player leaving the mountain. */
   private suspend fun executeExit(player: MutablePlayer) {
     val location = player.location
     check(location != null) { "Player is off-map." }
@@ -344,16 +327,8 @@ class MutableGameModel @Inject constructor(
   }
 
   companion object {
-    /** Maximum speed a player can have and still ski/ride a slow tile. */
     const val MAX_SPEED_ON_SLOW = 1
-
-    /** Multiplier of speed to difficulty. */
     const val SPEED_DIFFICULTY_MODIFIER = 2
-
-    /** Number of apres slots. */
     const val APRES_SLOTS = 3
-
-    /** Value of the best day by day. */
-    val BEST_DAY_AWARD = mapOf(1 to 15, 2 to 10, 3 to 5)
   }
 }

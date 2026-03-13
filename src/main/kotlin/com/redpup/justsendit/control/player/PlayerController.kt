@@ -6,9 +6,16 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 
+import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.proto.TrainingChip
+
 /** Handler for players making decisions. */
 interface PlayerController {
   val name: String
+
+  /** Asks the player to choose a player or upgrade card. */
+  suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard
 
   /** Queues the player to make a mountain decision. */
   suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
@@ -30,10 +37,17 @@ interface PlayerController {
 
   /** Show the player the top card of the deck. */
   suspend fun onRevealTopCard(card: Int)
+
+  /** Asks the player which chips to use to avoid a crash. */
+  suspend fun chooseChipsToUse(player: Player, tile: SlopeTile, currentSkill: Int, difficulty: Int): List<TrainingChip>
 }
 
 class BasicPlayerController : PlayerController {
   override val name = "BasicPlayerController-${System.identityHashCode(this)}"
+
+  override suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard {
+    return cards.first()
+  }
 
   override suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {
     TODO("Not yet implemented")
@@ -66,5 +80,9 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun onRevealTopCard(card: Int) {
     // By default, do nothing.
+  }
+
+  override suspend fun chooseChipsToUse(player: Player, tile: SlopeTile, currentSkill: Int, difficulty: Int): List<TrainingChip> {
+    return emptyList()
   }
 }
