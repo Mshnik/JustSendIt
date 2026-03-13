@@ -17,7 +17,6 @@ interface ApresFactory {
 /** Factory for creating [Apres] objects from [ApresCard]s. */
 class ApresFactoryImpl @Inject constructor() : ApresFactory {
   override val factories: Map<String, (ApresCard) -> Apres> = mapOf(
-    "Buy Gear" to { apresCard -> BuyGear(apresCard) },
     "Tune-Up" to { apresCard -> TuneUp(apresCard) },
     "Study" to { apresCard -> Study(apresCard) },
     "First Chair" to { apresCard -> FirstChair(apresCard) },

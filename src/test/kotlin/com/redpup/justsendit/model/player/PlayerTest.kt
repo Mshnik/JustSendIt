@@ -2,52 +2,45 @@ package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
-import com.redpup.justsendit.model.board.tile.proto.slopeTile
-import com.redpup.justsendit.model.player.Player.Day.OverkillBonus
-import com.redpup.justsendit.model.player.proto.playerAbility
+import com.redpup.justsendit.model.board.grid.HexExtensions
+import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.player.proto.playerCard
-import com.redpup.justsendit.model.player.proto.playerTraining
-import com.redpup.justsendit.model.player.proto.playerUpgrade
+import com.redpup.justsendit.model.player.proto.trainingChip
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecks.Companion.getSkillGrade
-import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
-import org.junit.jupiter.api.Assertions.assertThrows
+import com.redpup.justsendit.model.supply.SkillDecks
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class PlayerTest {
 
   private lateinit var player: MutablePlayer
-  private lateinit var skillDecks: FakeSkillDecks
-  private val abilityHandler = mock<AbilityHandler>()
-  private val gameModel = mock<GameModel>()
+  private val handler = mock<PlayerController>()
+  private val skillDecks = mock<SkillDecks>()
 
   @BeforeEach
   fun setUp() {
-    skillDecks = FakeSkillDecks()
-    val playerCard = playerCard {
-      name = "Test Player"
-      upgrades += playerUpgrade {
-        cards += Grade.GRADE_GREEN
-      }
-      upgrades += playerUpgrade {
-        cards += Grade.GRADE_BLUE
-      }
-      training += playerTraining {
-        grade = Grade.GRADE_BLUE
-        value = 2
-      }
-      abilities += playerAbility { name = "Test Ability"; cost = 2 }
-    }
-    player = MutablePlayer(playerCard, mock<PlayerController>()) { _ -> abilityHandler }
+    player = MutablePlayer(handler)
+  }
+
+  @Test
+  fun `mutate applies function to player`() {
+    val newLocation = HexExtensions.createHexPoint(1, 2)
+    player.mutate { location = newLocation }
+    assertThat(player.location).isEqualTo(newLocation)
+  }
+
+  @Test
+  fun `name is taken from first player card`() {
+    assertThat(player.name).isEqualTo("No Name")
+    player.playerCards.add(playerCard { name = "Test Player" })
+    assertThat(player.name).isEqualTo("Test Player")
   }
 
   @Test
   fun `isOnMountain checks player location`() {
-    player.location = createHexPoint(0, 1)
+    player.location = HexExtensions.createHexPoint(0, 1)
     assertThat(player.isOnMountain).isTrue()
 
     player.location = null
@@ -76,113 +69,129 @@ class PlayerTest {
   }
 
   @Test
-  fun `refreshSkillDeck moves discard to deck and shuffles`() {
-    player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5))
-    player.refreshSkillDeck()
-    assertThat(player.skillDeck.size).isEqualTo(5)
-    assertThat(player.skillDiscard.isEmpty()).isTrue()
-    // The deck is shuffled, so we can't assert order, but it should contain the elements.
-    assertThat(player.skillDeck.containsAll(listOf(1, 2, 3, 4, 5))).isTrue()
+  fun `playTrainingChip moves chip from available to used`() {
+    val chip = trainingChip { condition = Condition.CONDITION_POWDER }
+    player.trainingChips.add(chip)
+    assertThat(player.trainingChips).contains(chip)
+    assertThat(player.usedTrainingChips).doesNotContain(chip)
+
+    player.playTrainingChip(chip)
+
+    assertThat(player.trainingChips).doesNotContain(chip)
+    assertThat(player.usedTrainingChips).contains(chip)
   }
 
   @Test
-  fun `ingestTurn updates player stats and clears turn`() {
+  fun `refreshDecksAndChips moves discard and used to available`() {
+    player.skillDiscard.addAll(listOf(1, 2, 3))
+    val chip = trainingChip { condition = Condition.CONDITION_POWDER }
+    player.usedTrainingChips.add(chip)
+
+    player.refreshDecksAndChips()
+
+    assertThat(player.skillDeck.size).isEqualTo(3)
+    assertThat(player.skillDiscard).isEmpty()
+    assertThat(player.trainingChips).contains(chip)
+    assertThat(player.usedTrainingChips).isEmpty()
+  }
+
+  @Test
+  fun `ingestTurn updates day points from turn points`() {
     player.turn.points = 10
-    player.turn.experience = 5
     player.ingestTurn()
 
-    assertThat(player.points).isEqualTo(0)
     assertThat(player.day.mountainPoints).isEqualTo(10)
-    assertThat(player.day.experience).isEqualTo(5)
     assertThat(player.turn.points).isEqualTo(0)
-    assertThat(player.turn.experience).isEqualTo(0)
   }
 
   @Test
-  fun `ingestDay updates player stats and clears day`() {
+  fun `ingestDayAndCopyNextDay updates player points and resets day`() {
     player.day.mountainPoints = 5
     player.day.bestDayPoints = 10
     player.day.apresPoints = 20
+
+    player.nextDay.mountainPoints = 1
+    player.nextDay.bestDayPoints = 2
+    player.nextDay.apresPoints = 3
+
     player.ingestDayAndCopyNextDay()
 
     assertThat(player.points).isEqualTo(35)
-    assertThat(player.day.mountainPoints).isEqualTo(0)
-    assertThat(player.day.bestDayPoints).isEqualTo(0)
-    assertThat(player.day.apresPoints).isEqualTo(0)
+    assertThat(player.day.mountainPoints).isEqualTo(1)
+    assertThat(player.day.bestDayPoints).isEqualTo(2)
+    assertThat(player.day.apresPoints).isEqualTo(3)
+    assertThat(player.nextDay.mountainPoints).isEqualTo(0)
   }
 
   @Test
-  fun `ingestDay copies next day`() {
-    player.nextDay.overkillBonusPoints = OverkillBonus(5, 4)
-    player.nextDay.mountainPoints = 5
-    player.nextDay.bestDayPoints = 10
-    player.nextDay.apresPoints = 20
-    player.ingestDayAndCopyNextDay()
+  fun `gainSkillCards adds cards to deck`() {
+    whenever(skillDecks.draw(Grade.GRADE_GREEN)).thenReturn(1)
+    whenever(skillDecks.draw(Grade.GRADE_BLUE)).thenReturn(2)
 
-    assertThat(player.points).isEqualTo(0)
-    assertThat(player.day.overkillBonusPoints).isEqualTo(OverkillBonus(5, 4))
-    assertThat(player.day.mountainPoints).isEqualTo(5)
-    assertThat(player.day.bestDayPoints).isEqualTo(10)
-    assertThat(player.day.apresPoints).isEqualTo(20)
+    player.gainSkillCards(listOf(Grade.GRADE_GREEN, Grade.GRADE_BLUE), skillDecks)
+
+    assertThat(player.skillDeck).containsExactly(1, 2)
   }
 
   @Test
-  fun `buyStartingDeck adds correct number of cards`() {
-    skillDecks.setGreenDeck(List(5) { 1 })
-    skillDecks.setBlueDeck(List(3) { 4 })
-    skillDecks.setBlackDeck(List(2) { 7 })
-    player.buyStartingDeck(skillDecks)
-    assertThat(player.skillDeck.size).isEqualTo(10) // 5 green, 3 blue, 2 black
+  fun `gainTrainingChips adds chips`() {
+    val chip = trainingChip { condition = Condition.CONDITION_POWDER }
+    player.gainTrainingChips(listOf(chip))
+    assertThat(player.trainingChips).contains(chip)
   }
 
   @Test
-  fun `buyUpgrade requires experience and adds card`() {
-    assertThrows(IllegalStateException::class.java) {
-      player.buyUpgrade(0, skillDecks)
+  fun `gainPlayerCard adds card and its benefits`() {
+    val card = playerCard {
+      name = "Test Card"
+      skillCards += Grade.GRADE_GREEN
+      chips += trainingChip { condition = Condition.CONDITION_POWDER }
     }
-    player.day.experience = 1
-    player.ingestDayAndCopyNextDay()
-    skillDecks.setGreenDeck(listOf(1)) // Card to be drawn
-    player.buyUpgrade(0, skillDecks)
-    assertThat(player.experience).isEqualTo(0)
-    assertThat(player.skillDeck.size).isEqualTo(1)
-    assertThat(player.skillDeck.first().getSkillGrade()).isEqualTo(Grade.GRADE_GREEN)
+    whenever(skillDecks.draw(Grade.GRADE_GREEN)).thenReturn(1)
+
+    player.gainPlayerCard(card, skillDecks)
+
+    assertThat(player.playerCards).contains(card)
+    assertThat(player.skillDeck).contains(1)
+    assertThat(player.trainingChips).contains(trainingChip {
+      condition = Condition.CONDITION_POWDER
+    })
   }
 
   @Test
-  fun `buyTraining requires experience and increases training level`() {
-    assertThrows(IllegalStateException::class.java) {
-      player.buyTraining(0)
-    }
-    player.day.experience = 1
-    player.ingestDayAndCopyNextDay()
-    player.buyTraining(0)
-    assertThat(player.experience).isEqualTo(0)
-    assertThat(player.training[0]).isEqualTo(1)
+  fun `MutableTurn clear resets points and speed`() {
+    val turn = MutableTurn()
+    turn.points = 10
+    turn.speed = 5
+    turn.clear()
+    assertThat(turn.points).isEqualTo(0)
+    assertThat(turn.speed).isEqualTo(0)
   }
 
   @Test
-  fun `buyAbility requires experience and unlocks ability`() {
-    assertThrows(IllegalStateException::class.java) {
-      player.buyAbility(0)
-    }
-    player.day.experience = 2
-    player.ingestDayAndCopyNextDay()
-    player.buyAbility(0)
-    assertThat(player.experience).isEqualTo(0)
-    assertThat(player.abilities[0]).isTrue()
+  fun `MutableDay clear resets points`() {
+    val day = MutableDay()
+    day.mountainPoints = 10
+    day.bestDayPoints = 5
+    day.apresPoints = 2
+    day.clear()
+    assertThat(day.mountainPoints).isEqualTo(0)
+    assertThat(day.bestDayPoints).isEqualTo(0)
+    assertThat(day.apresPoints).isEqualTo(0)
   }
 
   @Test
-  fun `computeBonus calculates bonus correctly`() {
-    val blueSlope = slopeTile { grade = Grade.GRADE_BLUE }
-    val greenSlope = slopeTile { grade = Grade.GRADE_GREEN }
+  fun `MutableDay copyFrom copies points`() {
+    val day1 = MutableDay()
+    day1.mountainPoints = 10
+    day1.bestDayPoints = 5
+    day1.apresPoints = 2
 
-    // No training level yet
-    assertThat(player.computeBonus(blueSlope)).isEqualTo(0)
+    val day2 = MutableDay()
+    day2.copyFrom(day1)
 
-    player.training[0] = 2 // Training for blue grade has value 2 from playerCard
-    assertThat(player.computeBonus(blueSlope)).isEqualTo(4) // 2 * 2
-    assertThat(player.computeBonus(greenSlope)).isEqualTo(0)
+    assertThat(day2.mountainPoints).isEqualTo(10)
+    assertThat(day2.bestDayPoints).isEqualTo(5)
+    assertThat(day2.apresPoints).isEqualTo(2)
   }
 }

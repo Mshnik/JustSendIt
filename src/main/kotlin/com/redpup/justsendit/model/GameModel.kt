@@ -152,6 +152,7 @@ class MutableGameModel @Inject constructor(
         clock.advanceSubTurn()
       } while (continueTurn)
       currentPlayer.ingestTurn()
+      clock.resetSubTurn()
     }
 
     currentPlayerIndex = (currentPlayerIndex + 1) % players.size

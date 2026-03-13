@@ -41,16 +41,21 @@ class MutableClock(override var turn: Int = 1, override var day: Day = Day.DAY_F
     subTurn++
   }
 
+  /** Resets the subturn. */
+  fun resetSubTurn() {
+    subTurn = 1
+  }
+
   /** Advances to the next turn. */
   fun advanceTurn() {
     turn++
-    subTurn = 1
+    resetSubTurn()
   }
 
   /** Advances to the next day. */
   fun advanceDay() {
     turn = 1
-    subTurn = 1
+    resetSubTurn()
     day = when (day) {
       Day.DAY_FRIDAY -> Day.DAY_SATURDAY
       Day.DAY_SATURDAY -> Day.DAY_SUNDAY

@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.apres.testing.FakeApres
 import com.redpup.justsendit.model.apres.testing.FakeApresFactory
+import com.redpup.justsendit.model.proto.Day
 import java.io.File
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
@@ -57,16 +58,16 @@ class ApresDeckTest {
     assertThat(deck.getCards()).containsExactly(
       apresCard {
         name = "Day 1 Only"
-        availableDays += 1
+        availableDays += Day.DAY_FRIDAY
       },
       apresCard {
         name = "Day 2 Only"
-        availableDays += 2
+        availableDays += Day.DAY_SATURDAY
       },
       apresCard {
         name = "Day 1 and 2"
-        availableDays += 1
-        availableDays += 2
+        availableDays += Day.DAY_FRIDAY
+        availableDays += Day.DAY_SATURDAY
       }
     )
   }
@@ -103,10 +104,10 @@ class ApresDeckTest {
     val deck = ApresDeckImpl(apresFile.absolutePath, factory)
     deck.reset()
 
-    val day1Card = deck.drawForDay(1)
+    val day1Card = deck.drawForDay(Day.DAY_FRIDAY)
     assertThat(day1Card.apresCard.name).contains("1")
 
-    val day2Card = deck.drawForDay(2)
+    val day2Card = deck.drawForDay(Day.DAY_SATURDAY)
     assertThat(day2Card.apresCard.name).contains("2")
 
     assertThat(deck.getCards()).hasSize(1)
@@ -116,7 +117,7 @@ class ApresDeckTest {
   fun `drawForDay throws exception if no card is found`() {
     val deck = ApresDeckImpl(apresFile.absolutePath, factory)
     assertThrows(IllegalArgumentException::class.java) {
-      deck.drawForDay(3)
+      deck.drawForDay(Day.DAY_SUNDAY)
     }
   }
 }
