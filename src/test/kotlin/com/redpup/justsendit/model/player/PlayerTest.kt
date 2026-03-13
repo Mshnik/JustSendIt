@@ -8,6 +8,7 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.trainingChip
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDecks
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
@@ -141,7 +142,7 @@ class PlayerTest {
   }
 
   @Test
-  fun `gainPlayerCard adds card and its benefits`() {
+  fun `gainPlayerCard adds card and its benefits`() = runBlocking {
     val card = playerCard {
       name = "Test Card"
       skillCards += Grade.GRADE_GREEN

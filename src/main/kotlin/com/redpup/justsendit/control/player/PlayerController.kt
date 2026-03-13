@@ -17,6 +17,9 @@ interface PlayerController {
   /** Asks the player to choose a player or upgrade card. */
   suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard
 
+  /** Asks the player to choose chips to gain from the supply. */
+  suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip>
+
   /** Queues the player to make a mountain decision. */
   suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
 
@@ -47,6 +50,10 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard {
     return cards.first()
+  }
+
+  override suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip> {
+    TODO("Not yet implemented")
   }
 
   override suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision {

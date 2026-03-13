@@ -155,10 +155,13 @@ class MutablePlayer(override val handler: PlayerController) : Player {
   }
 
   /** Gains [playerCard] and all of its associated benefits. */
-  fun gainPlayerCard(playerCard: PlayerCard, skillDecks: SkillDecks) {
+  suspend fun gainPlayerCard(playerCard: PlayerCard, skillDecks: SkillDecks) {
     gainSkillCards(playerCard.skillCardsList, skillDecks)
     gainTrainingChips(playerCard.chipsList)
     playerCards.add(playerCard)
+    if (playerCard.chooseChips > 0) {
+      gainTrainingChips(handler.chooseChipsToGain(this, playerCard.chooseChips))
+    }
   }
 }
 

@@ -11,12 +11,22 @@ import "com/redpup/justsendit/model/player/chip.proto";
 
 /** The immutable params associated with a player or upgrade. */
 message PlayerCard {
+  // The name of this card.
   string name = 1;
+  // What day this card is available on.
   Day day = 2;
+  // Skill cards you gain when choosing this card.
   repeated Grade skill_cards = 3;
+  // Training chips you gain when choosing this card.
   repeated TrainingChip chips = 4;
-  string ability_name = 5;
-  string ability_text = 6;
+  // Additional training chips you gain when choosing this card.
+  // You get to pick this many chips from the supply in any combination
+  // of types.
+  int32 choose_chips = 5;
+  // The name of the ability of this card.
+  string ability_name = 6;
+  // The text of the ability of this card.
+  string ability_text = 7;
 }
 
 /** A list of player cards. */

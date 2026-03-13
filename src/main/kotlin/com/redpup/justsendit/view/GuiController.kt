@@ -200,14 +200,14 @@ class GuiController @Inject constructor() : PlayerController {
     player: Player,
     tile: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
     currentSkill: Int,
-    difficulty: Int
+    difficulty: Int,
   ): List<TrainingChip> {
     return emptyList()
   }
 
   override suspend fun choosePlayerCard(
     player: Player,
-    cards: List<PlayerCard>
+    cards: List<PlayerCard>,
   ): PlayerCard {
     return suspendCancellableCoroutine { continuation ->
       Platform.runLater {
@@ -222,5 +222,9 @@ class GuiController @Inject constructor() : PlayerController {
         }
       }
     }
+  }
+
+  override suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip> {
+    TODO("Not yet implemented")
   }
 }
