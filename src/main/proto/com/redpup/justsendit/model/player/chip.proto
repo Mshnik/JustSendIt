@@ -15,6 +15,7 @@ message TrainingChip {
   oneof type {
     model.board.tile.Condition condition = 1;
     model.board.tile.Hazard hazard = 2;
-    google.protobuf.Empty wild = 3;
+    google.protobuf.Empty terrain_park = 3;
+    google.protobuf.Empty wild = 4;
   }
 }

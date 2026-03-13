@@ -14,6 +14,460 @@ player {
   skill_cards: GRADE_BLUE
   skill_cards: GRADE_BLACK
   skill_cards: GRADE_BLACK
-  ability_name: "First Chair or Bust"
-  ability_text: "Gain 1 [Fun] when you ski a fresh slope."
+  ability_name: "First Chair"
+  ability_text: "Gain 1 [fun] when you ski a fresh slope."
+}
+player {
+  name: "Jenny"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_POWDER
+  }
+  ability_name: "Powder Princess"
+  ability_text: "Gain 1 [fun] when you ski [powder terrain]."
+}
+player {
+  name: "Michael"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    wild: {}
+  }
+  ability_name: "Like a Glove"
+  ability_text: "Gain 3 [fun] when your skill exactly matches the difficulty."
+}
+player {
+  name: "Andy"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_ICY
+  }
+  ability_name: "I Can't Slow Down"
+  ability_text: "When you gain [speed], gain 1 [fun] for each [speed] you have."
+}
+player {
+  name: "James"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_GROOMED
+  }
+  ability_name: "Simple and Clean"
+  ability_text: "Gain 1 [fun] when you ski a slope without [moguls], [trees], or [cliffs]"
+}
+player {
+  name: "David"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    hazard: HAZARD_TREES
+  }
+  ability_name: "Glades Ranger"
+  ability_text: "Gain 2 [fun] when you ski a slope with [trees]"
+}
+player {
+  name: "Dannver"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    wild: {}
+  }
+  ability_name: "Down for Anything"
+  ability_text: "Gain 1 [fun] when you ride a grade ([green], [blue], [black], [double black]) that you haven't ridden yet this turn."
+}
+player {
+  name: "Yifei"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    hazard: HAZARD_MOGULS
+  }
+  ability_name: "Tough Cookie"
+  ability_text: "Gain 1 [fun] when you ski [moguls]."
+}
+player {
+  name: "Reckless"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  ability_name: "Risk it for the Biscuit"
+  ability_text: "_Flip:_ Reveal one additional [card]. If you crash, lose 5 [fun]."
+}
+player {
+  name: "Methodical"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  choose_chips: 2
+  ability_name: "Know Before You Go"
+  ability_text: "_Flip:_ Look at your top three [card] and put them back in any order."
+}
+player {
+  name: "Swift"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_GROOMED
+  }
+  chips {
+    condition: CONDITION_POWDER
+  }
+  chips {
+    condition: CONDITION_ICY
+  }
+  ability_name: "Straight Line"
+  ability_text: "_Flip:_ At the start of your turn, gain 2 [speed] and 8 [fun]."
+}
+player {
+  name: "Calm"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    hazard: HAZARD_MOGULS
+  }
+  chips {
+    hazard: HAZARD_TREES
+  }
+  chips {
+    hazard: HAZARD_CLIFFS
+  }
+  ability_name: "Inner Peace"
+  ability_text: "_Flip:_ When you rest, gain 10 [fun]"
+}
+player {
+  name: "Precise"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_GROOMED
+  }
+  chips {
+    hazard: HAZARD_TREES
+  }
+  ability_name: "Under Control"
+  ability_text: "_Flip:_ Remove up to 2 [speed]"
+}
+player {
+  name: "Relentless"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_ICY
+  }
+  chips {
+    hazard: HAZARD_MOGULS
+  }
+  ability_name: "I Get Knocked Down"
+  ability_text: "_Flip:_ After you crash, take another turn."
+}
+player {
+  name: "Bold"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_POWDER
+  }
+  chips {
+    hazard: HAZARD_CLIFFS
+  }
+  ability_name: "Just Send It"
+  ability_text: "_Flip:_ After you crash, keep half your [fun], rounded up."
+}
+player {
+  name: "Rowdy"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    wild: {}
+  }
+  chips {
+    wild: {}
+  }
+  chips {
+    wild: {}
+  }
+  ability_name: "Sunny Side Up"
+  ability_text: "_Flip:_ All of your [training] are [wild training +3] this turn."
+}
+player {
+  name: "Wild"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  choose_chips: 1
+  ability_name: "Jackpot"
+  ability_text: "When you reveal only [black skill card], you get +3 skill."
+}
+player {
+  name: "Tough"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    hazard: HAZARD_MOGULS
+  }
+  choose_chips: 1
+  ability_name: "Second Wind"
+  ability_text: "_Flip:_ Discard your revealed [card] and redraw the same number."
+}
+player {
+  name: "Steadfast"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_POWDER
+  }
+  choose_chips: 1
+  ability_name: "can't stop won't stop"
+  ability_text: "_Flip:_ this turn you may continue until you crash twice in a row"
+}
+player {
+  name: "Nimble"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    hazard: HAZARD_TREES
+  }
+  choose_chips: 1
+  ability_name: "Double Dip"
+  ability_text: "_Flip:_ When you rest, move up to three tiels in any direction."
+}
+player {
+  name: "Fluid"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    wild: {}
+  }
+  choose_chips: 1
+  ability_name: "Catch me if you can"
+  ability_text: "_Flip:_ This turn, you get +1 skill for each [speed] you have."
+}
+player {
+  name: "Rigorous"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_ICY
+  }
+  chips {
+    hazard: HAZARD_CLIFFS
+  }
+  choose_chips: 1
+  ability_name: "Like we Practiced"
+  ability_text: "_Flip:_ All of your [training] give an additional +1 this turn."
+}
+player {
+  name: "Classic"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_POWDER
+  }
+  chips {
+    hazard: HAZARD_TREES
+  }
+  choose_chips: 1
+  ability_name: "Practice Makes Perfect"
+  ability_text: "_Flip_: this turn, your blue cards are worth +2"
+}
+player {
+  name: "Rugged"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    condition: CONDITION_GROOMED
+  }
+  chips {
+    hazard: HAZARD_MOGULS
+  }
+  choose_chips: 1
+  ability_name: "Power Through"
+  ability_text: "_Flip_: Shuffle up to 6 [card] into your deck"
+}
+player {
+  name: "Courtney"
+  day: DAY_FRIDAY
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_GREEN
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    terrain_park: {}
+  }
+  ability_name: "Bag of Tricks"
+  ability_text: "Gain 2 [fun] when you ski [terrain park]"
+}
+player {
+  name: "Determined"
+  day: DAY_SATURDAY
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLUE
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    terrain_park: {}
+  }
+  chips {
+    terrain_park: {}
+  }
+  ability_name: "Run it Back"
+  ability_text: "_Flip:_ Shuffle your [cards]. (Don't refresh your [training].)"
+}
+player {
+  name: "Dazzling"
+  day: DAY_SUNDAY
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  skill_cards: GRADE_BLACK
+  chips {
+    terrain_park: {}
+  }
+  chips {
+    terrain_park: {}
+  }
+  choose_chips: 1
+  ability_name: "Gold Medal Run"
+  ability_text: "At the start of [Sun], set aside 3 [card] face up. when you draw [card], you can play a face up"
 }
