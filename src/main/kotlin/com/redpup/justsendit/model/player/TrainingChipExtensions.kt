@@ -12,6 +12,7 @@ import com.redpup.justsendit.model.player.proto.TrainingChip.TypeCase.*
 fun TrainingChip.appliesTo(tile: SlopeTile) = when (typeCase) {
   CONDITION -> condition == tile.condition
   HAZARD -> hazard in tile.hazardsList
+  TERRAIN_PARK -> tile.hasTerrainPark()
   WILD -> true
   TYPE_NOT_SET, null -> throw IllegalArgumentException()
 }
@@ -32,6 +33,6 @@ fun TrainingChip.value() = when (typeCase) {
     HAZARD_UNSET, Hazard.UNRECOGNIZED, null -> throw IllegalArgumentException()
   }
 
-  WILD -> 2
+  WILD, TERRAIN_PARK -> 2
   TYPE_NOT_SET, null -> throw IllegalArgumentException()
 }

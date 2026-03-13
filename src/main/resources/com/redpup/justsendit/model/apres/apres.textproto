@@ -2,76 +2,113 @@
 # proto-message: ApresCardList
 
 apres {
-  name: "Buy Gear"
-  available_days: 1
-  available_days: 2
-  major_reward_text: "Gain 2 blue, 4 black skill cards"
-  minor_reward_text: "Gain 4 blue, 1 black skill cards"
+  name: "Bar"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Shuffle your deck and reveal 6 [card]. Gain [fun] equal to the total value."
+  minor_reward_text: "Shuffle your deck and reveal 3 [card]. Gain [fun] equal to the total value."
 }
+
 apres {
-  name: "Tune-Up"
-  available_days: 1
-  available_days: 2
-  major_reward_text: "Look at your deck and remove up to 3 cards"
-  minor_reward_text: "Look at your deck and remove up to 2 cards"
+  name: "Photo-Op"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 6 [fun] for each [speed] you have."
+  minor_reward_text: "Gain 3 [fun] for each [speed] you have."
 }
-apres {
-  name: "Study"
-  available_days: 1
-  available_days: 2
-  major_reward_text: "Gain 2 experience"
-  minor_reward_text: "Gain 1 experience"
-}
-# TODO: Uncomment once supported.
-#apres {
-#  name: "First Chair"
-#  available_days: 1
-#  available_days: 2
-#  major_reward_text: "Take two bonus turns tomorrow"
-#  minor_reward_text: "Take a bonus turn tomorrow"
-#}
+
 apres {
   name: "Sauna"
-  available_days: 1
-  available_days: 2
-  major_reward_text: "Tomorrow, gain 4 fun when you succeed by 5 or more"
-  minor_reward_text: "Tomorrow, gain 2 fun when you succeed by 5 or more"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 6 [fun] for each unique [training chip] you have."
+  minor_reward_text: "Gain 3 [fun] for each unique [training chip] you have."
 }
+
 apres {
-  name: "Bar"
-  available_days: 1
-  available_days: 2
-  available_days: 3
-  major_reward_text: "Shuffle your deck and reveal 5 cards, gain fun equal to the sum"
-  minor_reward_text: "Shuffle your deck and reveal 3 cards, gain fun equal to the sum"
+  name: "Concert"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 1 [fun] for each slope tile without any [fun]."
+  minor_reward_text: "Gain 1 [fun] for every 2 slope tiles without any [fun], rounded down."
 }
+
+apres {
+  name: "Fire Pit"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 4 [fun] for every unique [card] in your discard."
+  minor_reward_text: "Gain 2 [fun] for every unique [card] in your discard."
+}
+
 apres {
   name: "Dining"
-  available_days: 1
-  available_days: 2
-  available_days: 3
-  major_reward_text: "Gain 1 fun for each card in your discard at end of day"
-  minor_reward_text: "Gain 1 fun for every 2 cards in your discard at end of day, rounded down"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 7 [fun] for every pair of matching [card] in your discard."
+  minor_reward_text: "Gain 4 [fun] for every pair of matching [card] in your discard."
 }
+
 apres {
-  name: "Village"
-  available_days: 1
-  available_days: 2
-  available_days: 3
-  major_reward_text: "Gain 1 fun for each card left in your deck at end of day"
-  minor_reward_text: "Gain 1 fun for every 2 cards left in your deck at end of day, rounded down"
+  name: "Ice Skating"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Gain 5 [fun] for each [blue] in your discard."
+  minor_reward_text: "Gain 3 [fun] for each [blue] in your discard."
 }
+
+apres {
+  name: "Lodge"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Use the Small reward effects of both other Apres cards in either order."
+  minor_reward_text: "Use the Small reward effects either other Apres card."
+}
+
 apres {
   name: "Massage"
-  available_days: 2
-  available_days: 3
-  major_reward_text: "Gain 5 fun for each experience in training"
-  minor_reward_text: "Gain 2 fun for each experience in training"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Take the [fun] here."
+  minor_reward_text: "Gain 10 [fun]."
+  stockpile_text: "When a player crashes, add 4 [fun] here."
 }
+
 apres {
-  name: "Journal"
-  available_days: 2
-  available_days: 3
-  major_reward_text: "Gain 10 fun for each unlocked ability"
-  minor_reward_text: "Gain 5 fun for each unlocked ability"
+  name: "Karaoke"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Take the [fun] here."
+  minor_reward_text: "Gain 10 [fun]."
+  stockpile_text: "When a player uses a lift, add 5 [fun] here."
+}
+
+apres {
+  name: "Fireworks"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Take the [fun] here."
+  minor_reward_text: "Gain 10 [fun]."
+  stockpile_text: "When a player plays a 9 [card], add 2 [fun] here."
+}
+
+apres {
+  name: "Dog Sledding"
+  available_days: DAY_FRIDAY
+  available_days: DAY_SATURDAY
+  available_days: DAY_SUNDAY
+  major_reward_text: "Take the [fun] here."
+  minor_reward_text: "Gain 10 [fun]."
+  stockpile_text: "When a player successfully skis or rides on their first turn, add 4 [fun] here."
 }
