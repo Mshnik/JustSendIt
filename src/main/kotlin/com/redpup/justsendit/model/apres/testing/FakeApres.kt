@@ -2,14 +2,14 @@ package com.redpup.justsendit.model.apres.testing
 
 import com.google.common.annotations.VisibleForTesting
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.BaseApres
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 
 
 /** A testing implementation of an Apres card. */
 @VisibleForTesting
-class FakeApres(override val apresCard: ApresCard) : Apres {
+class FakeApres(override val apresCard: ApresCard) : BaseApres(apresCard) {
   private var applyFn: ((ApresCard, MutablePlayer, Boolean, GameModel) -> Unit)? = null;
 
   /** Sets [applyFn] to [fn]. Returns this for chaining. */

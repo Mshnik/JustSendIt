@@ -3,6 +3,7 @@ package com.redpup.justsendit.view
 import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
+import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -203,6 +204,14 @@ class GuiController @Inject constructor() : PlayerController {
     difficulty: Int,
   ): List<TrainingChip> {
     return emptyList()
+  }
+
+  override suspend fun chooseOtherApres(
+    player: Player,
+    otherApres: List<Apres>,
+    count: Int,
+  ): List<Apres> {
+    TODO("Not yet implemented")
   }
 
   override suspend fun choosePlayerCard(

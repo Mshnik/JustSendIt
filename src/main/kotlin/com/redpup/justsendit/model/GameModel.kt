@@ -6,6 +6,7 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
@@ -31,6 +32,9 @@ interface GameModel {
 
   /** The mountain map. */
   val tileMap: HexGrid<MountainTile>
+
+  /** Points per mountain tile. */
+  val tileMapPoints: HexGrid<Int>
 
   /** Immutable access to all players. */
   val players: List<Player>
@@ -71,6 +75,7 @@ class MutableGameModel @Inject constructor(
   }
 
   override val tileMap: HexGrid<MountainTile> = tileMapBuilder.build()
+  override val tileMapPoints: HexGrid<Int> = tileMap.map { _, _ -> 0 }
   private val lifts =
     tileMap.entries().filter { it.value.hasLift() }.groupBy { it.value.lift.color }
 
@@ -128,10 +133,28 @@ class MutableGameModel @Inject constructor(
     }
   }
 
+  /** Adds apres cards to each of the apres slots. */
+  private fun populateApresSlots() {
+    apres.clear()
+    for (i in 1..APRES_SLOTS) {
+      apres.add(apresDeck.drawForDay(clock.day))
+    }
+  }
+
+  /** Adds fun to mountain tiles. */
+  private fun populateMountainPoints() {
+    for (point in tileMap.keys()) {
+      if (tileMap[point]!!.hasSlope()) {
+        tileMapPoints[point] = tileMapPoints[point]!! + MOUNTAIN_POINTS
+      }
+    }
+  }
+
   /** Starts a new day. May be the first day of the game or a later day in the game. */
   suspend fun startDay() {
     pickPlayerCards()
     populateApresSlots()
+    populateMountainPoints()
 
     if (clock.day == Day.DAY_FRIDAY) {
       setStartingPlayerOrder()
@@ -186,11 +209,8 @@ class MutableGameModel @Inject constructor(
     return true
   }
 
-  private fun populateApresSlots() {
-    apres.clear()
-    for (i in 1..APRES_SLOTS) {
-      apres.add(apresDeck.drawForDay(clock.day))
-    }
+  private fun ApresGameEvent.broadcast() {
+    apres.forEach { it.handleGameEvent(this@broadcast, this@MutableGameModel) }
   }
 
   private suspend fun executeDecision(
@@ -256,6 +276,8 @@ class MutableGameModel @Inject constructor(
     }
 
     player.location = destination
+    player.turn.points += tileMapPoints[destination]!!
+    tileMapPoints[destination] = 0
 
     val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
     val baseDifficulty = destinationTile.slope.difficulty
@@ -289,6 +311,9 @@ class MutableGameModel @Inject constructor(
       player.turn.points = 0
     }
 
+    ApresGameEvent.PlayerSkiRide(clock.turn, success).broadcast()
+    cards.forEach { ApresGameEvent.PlayerPlayedCard(it).broadcast() }
+
     return success
   }
 
@@ -301,6 +326,7 @@ class MutableGameModel @Inject constructor(
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
+    ApresGameEvent.PlayerUsedLift.broadcast()
     val destination = getOtherLiftLocation(tile.lift.color, location)
     playerMove {
       from = location
@@ -331,5 +357,6 @@ class MutableGameModel @Inject constructor(
     const val MAX_SPEED_ON_SLOW = 1
     const val SPEED_DIFFICULTY_MODIFIER = 2
     const val APRES_SLOTS = 3
+    const val MOUNTAIN_POINTS = 5
   }
 }

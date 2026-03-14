@@ -5,10 +5,10 @@ import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres
 import com.redpup.justsendit.model.apres.proto.ApresCard
 
-class Massage(override val apresCard: ApresCard) : StockpilingBaseApres(apresCard) {
+class DogSledding(override val apresCard: ApresCard) : StockpilingBaseApres(apresCard) {
   override fun handleGameEvent(event: ApresGameEvent, gameModel: GameModel) {
     if (event is ApresGameEvent.PlayerSkiRide) {
-      if (!event.success) {
+      if (event.turn == 1 && event.success) {
         stockpile += 4
       }
     }

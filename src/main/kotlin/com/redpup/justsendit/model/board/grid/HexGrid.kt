@@ -22,6 +22,18 @@ class HexGrid<T> : Iterable<Pair<HexPoint, T>> {
     cells[point] = value
   }
 
+  /** Maps this to a new [HexGrid] using [fn]. */
+  fun <R> map(fn: (HexPoint, T) -> R): HexGrid<R> {
+    val result = HexGrid<R>()
+    result.cells.putAll(cells.mapValues { entry -> fn(entry.key, entry.value) })
+    return result
+  }
+
+  /** Applies [fn] to each value in this grid, in place. */
+  fun apply(fn: (HexPoint, T) -> T) {
+    cells.forEach { (key, value) -> cells[key] = fn(key, value) }
+  }
+
   /** Clears cells. */
   fun clear() = cells.clear()
 

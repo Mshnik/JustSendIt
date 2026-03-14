@@ -17,13 +17,17 @@ interface ApresFactory {
 /** Factory for creating [Apres] objects from [ApresCard]s. */
 class ApresFactoryImpl @Inject constructor() : ApresFactory {
   override val factories: Map<String, (ApresCard) -> Apres> = mapOf(
-    "Tune-Up" to { apresCard -> TuneUp(apresCard) },
-    "Study" to { apresCard -> Study(apresCard) },
-    "First Chair" to { apresCard -> FirstChair(apresCard) },
-    "Bar" to { apresCard -> Bar(apresCard) },
-    "Dining" to { apresCard -> Dining(apresCard) },
-    "Village" to { apresCard -> Village(apresCard) },
-    "Massage" to { apresCard -> Massage(apresCard) },
-    "Journal" to { apresCard -> Journal(apresCard) },
+    "Bar" to { Bar(it) },
+    "Concert" to { Concert(it) },
+    "Dining" to { Dining(it) },
+    "Dog Sledding" to { DogSledding(it) },
+    "Fire Pit" to { FirePit(it) },
+    "Fireworks" to { Fireworks(it) },
+    "Ice Skating" to { IceSkating(it) },
+    "Karaoke" to { Karaoke(it) },
+    "Lodge" to { Lodge(it) },
+    "Massage" to { Massage(it) },
+    "Photo-Op" to { PhotoOp(it) },
+    "Sauna" to { Sauna(it) },
   )
 }
