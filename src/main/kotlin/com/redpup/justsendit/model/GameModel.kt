@@ -98,7 +98,7 @@ class MutableGameModel @Inject constructor(
       turn = clock.turn
       subturn = clock.subTurn
       playerName = currentPlayer.name
-      controllerName = currentPlayer.handler.name
+      controllerName = currentPlayer.controller.name
       when (value) {
         is MountainDecision -> mountainDecision = value
         is PlayerMove -> playerMove = value
@@ -128,7 +128,7 @@ class MutableGameModel @Inject constructor(
   private suspend fun pickPlayerCards() {
     val cards = playerDeck.draw(clock.day, players.size + 2)
     for (player in players) {
-      val card = player.handler.choosePlayerCard(player, cards)
+      val card = player.controller.choosePlayerCard(player, cards)
       player.gainPlayerCard(card, skillDecks)
     }
   }
@@ -161,7 +161,7 @@ class MutableGameModel @Inject constructor(
     }
 
     for (player in playersInTurnOrder()) {
-      player.location = player.handler.getStartingLocation(player, this)
+      player.location = player.controller.getStartingLocation(player, this)
     }
   }
 
@@ -170,7 +170,7 @@ class MutableGameModel @Inject constructor(
     if (currentPlayer.isOnMountain) {
       do {
         val decision =
-          currentPlayer.handler.makeMountainDecision(currentPlayer, this).also { it.log() }
+          currentPlayer.controller.makeMountainDecision(currentPlayer, this).also { it.log() }
         val continueTurn = executeDecision(currentPlayer, decision)
         clock.advanceSubTurn()
       } while (continueTurn)
@@ -288,7 +288,7 @@ class MutableGameModel @Inject constructor(
     var success = skill >= difficulty
     var bonus = 0
     if (!success) {
-      bonus = player.handler.chooseChipsToUse(player, destinationTile.slope, skill, difficulty)
+      bonus = player.controller.chooseChipsToUse(player, destinationTile.slope, skill, difficulty)
         .peek { player.playTrainingChip(it) }
         .sumOf { if (it.appliesTo(destinationTile.slope)) it.value() else 1 }
 

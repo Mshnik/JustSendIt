@@ -22,7 +22,7 @@ interface Player {
   val abilityHandler: AbilityHandler
 
   /** The handler for making decisions. */
-  val handler: PlayerController
+  val controller: PlayerController
 
   /** How many points (fun) this player has. */
   val points: Int
@@ -80,7 +80,7 @@ interface Player {
 interface AbilityHandler {}
 
 /** Mutable access to a player object. */
-class MutablePlayer(override val handler: PlayerController) : Player {
+class MutablePlayer(override val controller: PlayerController) : Player {
   override val playerCards = mutableListOf<PlayerCard>()
   override val name: String get() = playerCards.firstOrNull()?.name ?: "No Name"
   override var points = 0; private set
@@ -160,7 +160,7 @@ class MutablePlayer(override val handler: PlayerController) : Player {
     gainTrainingChips(playerCard.chipsList)
     playerCards.add(playerCard)
     if (playerCard.chooseChips > 0) {
-      gainTrainingChips(handler.chooseChipsToGain(this, playerCard.chooseChips))
+      gainTrainingChips(controller.chooseChipsToGain(this, playerCard.chooseChips))
     }
   }
 }
