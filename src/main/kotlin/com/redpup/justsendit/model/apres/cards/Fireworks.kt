@@ -7,10 +7,8 @@ import com.redpup.justsendit.model.apres.proto.ApresCard
 
 class Fireworks(override val apresCard: ApresCard) : StockpilingBaseApres(apresCard) {
   override fun handleGameEvent(event: ApresGameEvent, gameModel: GameModel) {
-    if (event is ApresGameEvent.PlayerPlayedCard) {
-      if (event.cardValue == 9) {
-        stockpile += 2
-      }
+    if (event is ApresGameEvent.PlayerPlayedCard && event.cardValue == 9) {
+      stockpile += 2
     }
   }
 }

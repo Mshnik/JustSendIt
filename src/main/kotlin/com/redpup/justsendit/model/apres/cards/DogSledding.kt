@@ -7,10 +7,8 @@ import com.redpup.justsendit.model.apres.proto.ApresCard
 
 class DogSledding(override val apresCard: ApresCard) : StockpilingBaseApres(apresCard) {
   override fun handleGameEvent(event: ApresGameEvent, gameModel: GameModel) {
-    if (event is ApresGameEvent.PlayerSkiRide) {
-      if (event.turn == 1 && event.success) {
-        stockpile += 4
-      }
+    if (event is ApresGameEvent.PlayerSkiRide && event.turn == 1 && event.success) {
+      stockpile += 4
     }
   }
 }

@@ -13,8 +13,7 @@ class Sauna(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val pointsPerUniqueChip = if (isFirstPlayerToArrive) 6 else 3
     player.day.apresPoints +=
-      listOf(player.trainingChips, player.usedTrainingChips)
-        .flatten()
+      (player.trainingChips + player.usedTrainingChips)
         .distinct()
         .count() * pointsPerUniqueChip
   }

@@ -121,6 +121,6 @@ class BasicPlayerController : PlayerController {
     otherApres: List<Apres>,
     count: Int,
   ): List<Apres> {
-    TODO()
+    return otherApres.take(count)
   }
 }

@@ -42,12 +42,16 @@ abstract class StockpilingBaseApres(override val apresCard: ApresCard) : BaseApr
       player.day.apresPoints += stockpile
       stockpile = 0
     } else {
-      player.day.apresPoints += 10
+      player.day.apresPoints += NON_STOCKPILE_POINTS
     }
   }
 
   /** Handles the given game event. */
   abstract override fun handleGameEvent(event: ApresGameEvent, gameModel: GameModel)
+
+  companion object {
+    const val NON_STOCKPILE_POINTS = 10
+  }
 }
 
 /** Represents events that can trigger stockpile increases. */
