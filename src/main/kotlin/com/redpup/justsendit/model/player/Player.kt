@@ -2,7 +2,7 @@ package com.redpup.justsendit.model.player
 
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.TrainingChip
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDecks
@@ -98,6 +98,8 @@ class MutablePlayer(override val controller: PlayerController) : Player {
 
   override val abilityHandler = object : AbilityHandler {}
 
+  override fun toString() = name
+
   /** Applies [fn] to this player. */
   override fun mutate(fn: MutablePlayer.() -> Unit) {
     this.fn()
@@ -156,11 +158,11 @@ class MutablePlayer(override val controller: PlayerController) : Player {
 
   /** Gains [playerCard] and all of its associated benefits. */
   suspend fun gainPlayerCard(playerCard: PlayerCard, skillDecks: SkillDecks) {
-    gainSkillCards(playerCard.skillCardsList, skillDecks)
-    gainTrainingChips(playerCard.chipsList)
+    gainSkillCards(playerCard.proto.skillCardsList, skillDecks)
+    gainTrainingChips(playerCard.proto.chipsList)
     playerCards.add(playerCard)
-    if (playerCard.chooseChips > 0) {
-      gainTrainingChips(controller.chooseChipsToGain(this, playerCard.chooseChips))
+    if (playerCard.proto.chooseChips > 0) {
+      gainTrainingChips(controller.chooseChipsToGain(this, playerCard.proto.chooseChips))
     }
   }
 }

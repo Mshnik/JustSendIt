@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.board.tile.proto.Condition
+import com.redpup.justsendit.model.player.cards.friday.George
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.proto.trainingChip
 import com.redpup.justsendit.model.proto.Grade
@@ -35,7 +36,7 @@ class PlayerTest {
   @Test
   fun `name is taken from first player card`() {
     assertThat(player.name).isEqualTo("No Name")
-    player.playerCards.add(playerCard { name = "Test Player" })
+    player.playerCards.add(George(playerCard { name = "Test Player" }))
     assertThat(player.name).isEqualTo("Test Player")
   }
 
@@ -143,11 +144,11 @@ class PlayerTest {
 
   @Test
   fun `gainPlayerCard adds card and its benefits`() = runBlocking {
-    val card = playerCard {
+    val card = George(playerCard {
       name = "Test Card"
       skillCards += Grade.GRADE_GREEN
       chips += trainingChip { condition = Condition.CONDITION_POWDER }
-    }
+    })
     whenever(skillDecks.draw(Grade.GRADE_GREEN)).thenReturn(1)
 
     player.gainPlayerCard(card, skillDecks)

@@ -16,6 +16,7 @@ import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.*
+import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
@@ -81,11 +82,11 @@ class MutableGameModel @Inject constructor(
 
   override val apres: MutableList<Apres> = mutableListOf()
 
-  override val players: List<MutablePlayer> = playerControllers.map { playerFactory.create(it) }
+  override val players: List<MutablePlayer> = playerControllers.map { MutablePlayer(it) }
 
   private var currentPlayerIndex = 0
   private val playerOrder = MutableList(players.size) { it }
-  override var currentPlayer = players[playerOrder[currentPlayerIndex]]
+  override val currentPlayer get() = players[playerOrder[currentPlayerIndex]]
 
   override val clock = MutableClock()
 
@@ -168,6 +169,7 @@ class MutableGameModel @Inject constructor(
   /** Executes one turn for the current player. */
   suspend fun turn() {
     if (currentPlayer.isOnMountain) {
+      currentPlayer.playerCards.forEach { it.startTurn() }
       do {
         val decision =
           currentPlayer.controller.makeMountainDecision(currentPlayer, this).also { it.log() }
@@ -186,8 +188,6 @@ class MutableGameModel @Inject constructor(
         advanceDay()
       }
     }
-    // Reset current player.
-    currentPlayer = players[playerOrder[currentPlayerIndex]]
   }
 
   /**
@@ -209,8 +209,14 @@ class MutableGameModel @Inject constructor(
     return true
   }
 
+  /** Broadcasts this [ApresGameEvent] to every [Apres] card. */
   private fun ApresGameEvent.broadcast() {
     apres.forEach { it.handleGameEvent(this@broadcast, this@MutableGameModel) }
+  }
+
+  /** Broadcasts this [PlayerGameEvent] to every [PlayerCard] in [player]. */
+  private fun PlayerGameEvent.broadcast(player: MutablePlayer) {
+    player.playerCards.forEach { it.handleGameEvent(this@broadcast) }
   }
 
   private suspend fun executeDecision(

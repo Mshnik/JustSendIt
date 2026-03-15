@@ -1,7 +1,9 @@
 package com.redpup.justsendit.model.supply
 
 import com.google.inject.Inject
-import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.PlayerFactory
+import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 import com.redpup.justsendit.model.player.proto.PlayerCardList
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.util.TextProtoReaderImpl
@@ -31,10 +33,11 @@ interface PlayerDeck {
 @Qualifier
 annotation class PlayerPath
 
-/** Implementation of [ApresDeck]. */
+/** Implementation of [PlayerDeck]. */
 @Singleton
 class PlayerDeckImpl @Inject constructor(
   @PlayerPath path: String,
+  private val playerFactory: PlayerFactory,
 ) :
   PlayerDeck {
   private val reader = TextProtoReaderImpl(
@@ -50,12 +53,12 @@ class PlayerDeckImpl @Inject constructor(
   var cards = readCards(); private set
 
   /** Returns the list of cards for testing. */
-  internal fun getCards(): Map<Day, List<PlayerCard>> = cards
+  internal fun getCards(): Map<Day, List<PlayerCardProto>> = cards
 
   /** Draws the top card from the Player deck. */
-  override fun draw(day: Day): PlayerCard = cards[day]!!.pop("Player deck")
+  override fun draw(day: Day): PlayerCard = playerFactory.create(cards[day]!!.pop("Player deck"))
 
-  /** Resets the Apres deck. */
+  /** Resets the Player deck. */
   override fun reset() {
     cards = readCards()
   }

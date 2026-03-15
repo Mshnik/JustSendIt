@@ -1,18 +1,26 @@
 package com.redpup.justsendit.model.player
 
-import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.apres.Apres
+import com.redpup.justsendit.model.apres.proto.ApresCard
+import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.player.cards.friday.George
+import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 import javax.inject.Inject
 
 interface PlayerFactory {
-  /** Creates a [Player] from a [PlayerCard] using this factory. */
-  fun create(handler: PlayerController): MutablePlayer
+  /** Factories registered by name. */
+  val factories: Map<String, (PlayerCardProto) -> PlayerCard>
+
+
+  /** Creates an [Apres] from an [ApresCard] using this factory. */
+  fun create(card: PlayerCardProto): PlayerCard = factories[card.name]
+    ?.let { it(card) }
+    ?: throw IllegalArgumentException("No card found for ${card.name} in $factories")
 }
 
 /** Factory for creating [Player] objects from [PlayerCard]s. */
 class PlayerFactoryImpl @Inject constructor() : PlayerFactory {
-  /** Creates a [Player] from a [PlayerCard] using this factory. */
-  override fun create(handler: PlayerController): MutablePlayer {
-    return MutablePlayer(handler)
-  }
+  override val factories: Map<String, (PlayerCardProto) -> PlayerCard> = mapOf(
+    "George" to { George(it) },
+  )
 }

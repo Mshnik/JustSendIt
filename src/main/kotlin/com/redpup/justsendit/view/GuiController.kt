@@ -4,22 +4,18 @@ import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
-import com.redpup.justsendit.model.player.proto.PlayerCard
 import com.redpup.justsendit.model.player.proto.TrainingChip
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.util.FunctionExtensions.orElse
 import com.redpup.justsendit.util.FunctionExtensions.thenNonNull
 import com.redpup.justsendit.view.board.HexGridViewer
 import javafx.application.Platform
-import javafx.scene.control.Alert
-import javafx.scene.control.ButtonType
 import javafx.scene.control.ChoiceDialog
 import javafx.scene.control.TextInputDialog
 import javax.inject.Inject
@@ -33,6 +29,12 @@ class GuiController @Inject constructor() : PlayerController {
 
   lateinit var hexGridViewer: HexGridViewer
   override val name = "GuiController"
+  override suspend fun choosePlayerCard(
+    player: Player,
+    cards: List<com.redpup.justsendit.model.player.cards.PlayerCard>,
+  ): com.redpup.justsendit.model.player.cards.PlayerCard {
+    TODO("Not yet implemented")
+  }
 
   override suspend fun makeMountainDecision(
     player: Player,
@@ -144,59 +146,6 @@ class GuiController @Inject constructor() : PlayerController {
     }
   }
 
-  override suspend fun shouldGainSpeed(player: Player): Boolean {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val alert = Alert(Alert.AlertType.CONFIRMATION)
-        alert.title = "Gain Speed?"
-        alert.headerText = "Do you want to gain speed?"
-        val result = alert.showAndWait()
-        continuation.resume(result.get() == ButtonType.OK)
-      }
-    }
-  }
-
-  override suspend fun chooseMoveOnRest(player: Player): HexDirection? {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val dialog =
-          ChoiceDialog<HexDirection>(null, HexDirection.entries.filter { it.isDownMountain })
-        dialog.title = "Move on Rest?"
-        dialog.headerText = "Choose a direction to move, or cancel."
-        val result = dialog.showAndWait()
-        if (result.isPresent) {
-          continuation.resume(result.get())
-        } else {
-          continuation.resume(null)
-        }
-      }
-    }
-  }
-
-  override suspend fun decideToUseEndurance(): Boolean {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val alert = Alert(Alert.AlertType.CONFIRMATION)
-        alert.title = "Use Endurance?"
-        alert.headerText = "Do you want to use your endurance ability?"
-        val result = alert.showAndWait()
-        continuation.resume(result.get() == ButtonType.OK)
-      }
-    }
-  }
-
-  override suspend fun onRevealTopCard(card: Int) {
-    suspendCancellableCoroutine<Unit> { continuation ->
-      Platform.runLater {
-        val alert = Alert(Alert.AlertType.INFORMATION)
-        alert.title = "Top Card"
-        alert.headerText = "The top card of your skill deck is: $card"
-        alert.showAndWait()
-        continuation.resume(Unit)
-      }
-    }
-  }
-
   override suspend fun chooseChipsToUse(
     player: Player,
     tile: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
@@ -212,25 +161,6 @@ class GuiController @Inject constructor() : PlayerController {
     count: Int,
   ): List<Apres> {
     TODO("Not yet implemented")
-  }
-
-  override suspend fun choosePlayerCard(
-    player: Player,
-    cards: List<PlayerCard>,
-  ): PlayerCard {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val dialog = ChoiceDialog(cards[0], cards)
-        dialog.title = "Choose Upgrade"
-        dialog.headerText = "Choose an upgrade card."
-        val result = dialog.showAndWait()
-        if (result.isPresent) {
-          continuation.resume(result.get())
-        } else {
-          continuation.resume(cards[0])
-        }
-      }
-    }
   }
 
   override suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip> {

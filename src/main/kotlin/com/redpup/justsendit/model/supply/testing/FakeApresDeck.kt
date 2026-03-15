@@ -15,7 +15,12 @@ import javax.inject.Singleton
 class FakeApresDeck @Inject constructor(
   private val factory: ApresFactory,
 ) : ApresDeck {
-  var apresCards: MutableList<ApresCard> = mutableListOf()
+  private var apresCards: MutableList<ApresCard> = mutableListOf()
+
+  /** Adds all [cards] to [apresCards]. */
+  fun add(vararg cards: ApresCard) {
+    this.apresCards.addAll(cards)
+  }
 
   override fun reset() {
     apresCards.clear()

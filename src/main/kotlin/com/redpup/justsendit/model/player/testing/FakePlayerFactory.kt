@@ -1,22 +1,19 @@
 package com.redpup.justsendit.model.player.testing
 
 import com.google.common.annotations.VisibleForTesting
-import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.model.player.*
-import com.redpup.justsendit.model.player.proto.PlayerCard
+import com.redpup.justsendit.model.player.PlayerFactory
+import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 import javax.inject.Singleton
 
 /** A testing implementation of [PlayerFactory] */
 @VisibleForTesting
 @Singleton
 class FakePlayerFactory : PlayerFactory {
-  private val abilityHandlers = mutableMapOf<String, AbilityHandler>()
+  override val factories: MutableMap<String, (PlayerCardProto) -> PlayerCard> = mutableMapOf()
 
   /** Registers [name] to [factory]. This overwrites any previous registration for [name]*/
-  fun register(name: String, abilityHandler: AbilityHandler) {
-    abilityHandlers[name] = abilityHandler
+  fun register(name: String, factory: (PlayerCardProto) -> PlayerCard) {
+    factories[name] = factory
   }
-
-  /** Creates a [Player] from a [PlayerCard] using this factory. */
-  override fun create(handler: PlayerController): MutablePlayer = MutablePlayer(handler)
 }

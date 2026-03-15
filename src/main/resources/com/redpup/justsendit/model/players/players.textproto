@@ -110,7 +110,7 @@ player {
     hazard: HAZARD_TREES
   }
   ability_name: "Glades Ranger"
-  ability_text: "Gain 2 [fun] when you ski a slope with [trees]"
+  ability_text: "Gain 1 [fun] when you ski a slope with [trees]"
 }
 player {
   name: "Dannver"
