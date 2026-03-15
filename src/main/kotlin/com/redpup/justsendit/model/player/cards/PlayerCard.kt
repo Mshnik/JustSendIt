@@ -1,6 +1,8 @@
 package com.redpup.justsendit.model.player.cards
 
+import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 
 /**
@@ -17,7 +19,7 @@ interface PlayerCard {
   fun startTurn() {}
 
   /** Handles the given [event]. */
-  fun handleGameEvent(event: PlayerGameEvent)
+  fun handleGameEvent(event: PlayerGameEvent, player: MutablePlayer, gameModel: GameModel)
 }
 
 /** Represents events that can trigger stockpile increases. */

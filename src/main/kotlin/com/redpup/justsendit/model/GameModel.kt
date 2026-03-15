@@ -216,7 +216,7 @@ class MutableGameModel @Inject constructor(
 
   /** Broadcasts this [PlayerGameEvent] to every [PlayerCard] in [player]. */
   private fun PlayerGameEvent.broadcast(player: MutablePlayer) {
-    player.playerCards.forEach { it.handleGameEvent(this@broadcast) }
+    player.playerCards.forEach { it.handleGameEvent(this@broadcast, player, this@MutableGameModel) }
   }
 
   private suspend fun executeDecision(

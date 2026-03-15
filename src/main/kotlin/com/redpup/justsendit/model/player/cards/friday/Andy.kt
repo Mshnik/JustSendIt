@@ -6,17 +6,14 @@ import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 
-/**
- *
- */
-class George(override val proto: PlayerCardProto) : PlayerCard {
+class Andy(override val proto: PlayerCardProto) : PlayerCard {
   override fun handleGameEvent(
     event: PlayerGameEvent,
     player: MutablePlayer,
     gameModel: GameModel,
   ) {
-    if (event is PlayerGameEvent.PlayerSkiRide && event.pointsOnSlope > 0) {
-      player.turn.points += 1
+    if (event is PlayerGameEvent.PlayerSkiRide && event.skill >= event.difficulty) {
+      player.turn.points += player.turn.speed
     }
   }
 }
