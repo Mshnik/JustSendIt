@@ -15,11 +15,35 @@ interface PlayerCard {
   /** The name of this player card. */
   val name: String get() = proto.name
 
+
+  /** Refreshes this [PlayerCard] for the start of their day. */
+  fun startDay() {}
+
   /** Resets the state of this [PlayerCard] for the start of their turn. */
   fun startTurn() {}
 
   /** Handles the given [event]. */
-  fun handleGameEvent(event: PlayerGameEvent, player: MutablePlayer, gameModel: GameModel)
+  fun handleGameEvent(event: PlayerGameEvent, player: MutablePlayer, gameModel: GameModel) {}
+
+  /** Activates this card. */
+  suspend fun activate(player: MutablePlayer, gameModel: GameModel) {}
+}
+
+/** A [PlayerCard] that can be activated once per day. */
+abstract class ActivatedPlayerCard : PlayerCard {
+  private var isUsed = false
+
+  override suspend fun activate(player: MutablePlayer, gameModel: GameModel) {
+    check(!isUsed)
+    onActivate(player, gameModel)
+  }
+
+  override fun startDay() {
+    isUsed = false
+  }
+
+  /** Handles flipping this [ActivatedPlayerCard]. */
+  abstract suspend fun onActivate(player: MutablePlayer, gameModel: GameModel)
 }
 
 /** Represents events that can trigger stockpile increases. */

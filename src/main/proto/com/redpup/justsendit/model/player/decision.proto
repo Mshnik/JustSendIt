@@ -16,7 +16,7 @@ message MountainDecision {
     google.protobuf.Empty lift = 3;
     google.protobuf.Empty pass = 4;
     google.protobuf.Empty exit = 5;
-    // TODO: add flip card here.
+    string activate_player_card = 6;
   }
 
   /** A decision to ski or ride in a given direction. */

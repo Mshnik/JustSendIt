@@ -163,6 +163,7 @@ class MutableGameModel @Inject constructor(
 
     for (player in playersInTurnOrder()) {
       player.location = player.controller.getStartingLocation(player, this)
+      player.playerCards.forEach { it.startDay() }
     }
   }
 
@@ -219,6 +220,10 @@ class MutableGameModel @Inject constructor(
     player.playerCards.forEach { it.handleGameEvent(this@broadcast, player, this@MutableGameModel) }
   }
 
+  /**
+   * Executes the given [decision] for [player]. Returns true iff the player's turn continues
+   * or false if it is now over.
+   */
   private suspend fun executeDecision(
     player: MutablePlayer,
     decision: MountainDecision,
@@ -246,7 +251,13 @@ class MutableGameModel @Inject constructor(
         false
       }
 
+      MountainDecision.DecisionCase.ACTIVATE_PLAYER_CARD -> {
+        executeActivatePlayerCard(player, decision.activatePlayerCard)
+        true
+      }
+
       MountainDecision.DecisionCase.DECISION_NOT_SET, null -> throw IllegalArgumentException()
+
     }
   }
 
@@ -340,6 +351,12 @@ class MutableGameModel @Inject constructor(
     }.log()
     player.location = destination
     player.refreshDecksAndChips()
+  }
+
+  private suspend fun executeActivatePlayerCard(player: MutablePlayer, playerCardName: String) {
+    val playerCard = player.playerCards.find { it.name == playerCardName }
+      ?: throw IllegalArgumentException("No player card $playerCardName in ${player.playerCards}.")
+    playerCard.activate(player, this)
   }
 
   private fun getOtherLiftLocation(color: LiftColor, location: HexPoint): HexPoint =
