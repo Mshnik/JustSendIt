@@ -336,6 +336,7 @@ class MutableGameModel @Inject constructor(
 
   private fun executeRest(player: MutablePlayer) {
     player.refreshDecksAndChips()
+    PlayerGameEvent.PlayerRested.broadcast(player)
   }
 
   private fun executeLift(player: MutablePlayer) {

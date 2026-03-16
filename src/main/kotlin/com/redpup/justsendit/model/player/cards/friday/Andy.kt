@@ -13,6 +13,8 @@ class Andy(override val proto: PlayerCardProto) : PlayerCard {
     gameModel: GameModel,
   ) {
     if (event is PlayerGameEvent.PlayerSkiRide && event.skill >= event.difficulty) {
+      // TODO: Fix this timing so it has to happen when you choose to continue to ski/ride
+      // not after a ski/ride finishes.
       player.turn.points += player.turn.speed
     }
   }

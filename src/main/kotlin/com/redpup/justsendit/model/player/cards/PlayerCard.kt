@@ -55,4 +55,5 @@ sealed class PlayerGameEvent {
     val skill: Int,
     val difficulty: Int,
   ) : PlayerGameEvent()
+  data object PlayerRested : PlayerGameEvent()
 }
