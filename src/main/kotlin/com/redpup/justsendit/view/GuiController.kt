@@ -10,7 +10,6 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
-import com.redpup.justsendit.model.player.proto.TrainingChip
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.util.FunctionExtensions.orElse
 import com.redpup.justsendit.util.FunctionExtensions.thenNonNull
@@ -146,24 +145,11 @@ class GuiController @Inject constructor() : PlayerController {
     }
   }
 
-  override suspend fun chooseChipsToUse(
-    player: Player,
-    tile: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
-    currentSkill: Int,
-    difficulty: Int,
-  ): List<TrainingChip> {
-    return emptyList()
-  }
-
   override suspend fun chooseOtherApres(
     player: Player,
     otherApres: List<Apres>,
     count: Int,
   ): List<Apres> {
-    TODO("Not yet implemented")
-  }
-
-  override suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip> {
     TODO("Not yet implemented")
   }
 }

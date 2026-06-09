@@ -8,7 +8,6 @@ import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.TrainingChip
 
 /** Handler for players making decisions. */
 interface PlayerController {
@@ -16,9 +15,6 @@ interface PlayerController {
 
   /** Asks the player to choose a player or upgrade card. */
   suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard
-
-  /** Asks the player to choose chips to gain from the supply. */
-  suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip>
 
   /** Queues the player to make a mountain decision. */
   suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
@@ -28,14 +24,6 @@ interface PlayerController {
 
   /** Asks the player to choose cards to remove from their deck. */
   suspend fun chooseCardsToRemove(player: Player, cards: List<Int>, maxToRemove: Int): List<Int>
-
-  /** Asks the player which chips to use to avoid a crash. */
-  suspend fun chooseChipsToUse(
-    player: Player,
-    tile: SlopeTile,
-    currentSkill: Int,
-    difficulty: Int,
-  ): List<TrainingChip>
 
   /**
    * Chooses [count] other apres from [otherApres] to apply.
@@ -49,10 +37,6 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun choosePlayerCard(player: Player, cards: List<PlayerCard>): PlayerCard {
     return cards.first()
-  }
-
-  override suspend fun chooseChipsToGain(player: Player, count: Int): List<TrainingChip> {
-    TODO("Not yet implemented")
   }
 
   override suspend fun makeMountainDecision(
@@ -73,15 +57,6 @@ class BasicPlayerController : PlayerController {
   ): List<Int> {
     // For BasicPlayerHandler, we'll just return an empty list for now.
     // Real implementations would have decision logic.
-    return emptyList()
-  }
-
-  override suspend fun chooseChipsToUse(
-    player: Player,
-    tile: SlopeTile,
-    currentSkill: Int,
-    difficulty: Int,
-  ): List<TrainingChip> {
     return emptyList()
   }
 

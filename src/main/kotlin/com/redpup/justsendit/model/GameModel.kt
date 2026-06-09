@@ -24,7 +24,6 @@ import com.redpup.justsendit.model.supply.ApresDeck
 import com.redpup.justsendit.model.supply.PlayerDeck
 import com.redpup.justsendit.model.supply.SkillDecks
 import com.redpup.justsendit.util.TimeSource
-import com.redpup.justsendit.util.peek
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -88,6 +87,11 @@ class MutableGameModel @Inject constructor(
   private val playerOrder = MutableList(players.size) { it }
   override val currentPlayer get() = players[playerOrder[currentPlayerIndex]]
 
+  private val passedPlayers = mutableSetOf<Int>()
+
+  private val shop = mutableListOf<SkillCard>()
+  private val saleTokens = mutableMapOf<SkillCard, Int>()
+
   override val clock = MutableClock()
 
   /** Adds this message as a log to this game model. */
@@ -119,10 +123,12 @@ class MutableGameModel @Inject constructor(
   /** Returns the players in turn order. */
   private fun playersInTurnOrder() = playerOrder.map { players[it] }
 
-  /** Has each player play the top card of their skill deck, then orders from highest to lowest. */
+  /** Randomly determines a leader and sets the starting player order. */
   private fun setStartingPlayerOrder() {
-    val topCards = players.map { it.playSkillCard()!! }
-    playerOrder.sortByDescending { topCards[it] }
+    playerOrder.shuffle()
+    for ((index, playerIdx) in playerOrder.withIndex()) {
+      players[playerIdx].setPoints(10 + (index * 2))
+    }
   }
 
   /** Gives each player a pick of the player cards, in order player. */
@@ -156,6 +162,7 @@ class MutableGameModel @Inject constructor(
     pickPlayerCards()
     populateApresSlots()
     populateMountainPoints()
+    replenishShop()
 
     if (clock.day == Day.DAY_FRIDAY) {
       setStartingPlayerOrder()
@@ -167,27 +174,46 @@ class MutableGameModel @Inject constructor(
     }
   }
 
+  /** Replenishes the shop to 5 cards. */
+  private fun replenishShop() {
+    // TODO: Implement shop replenishment from SkillDecks.
+    // SkillDecks currently only has draw(Grade). Rulebook V2 might need a Shop deck.
+  }
+
   /** Executes one turn for the current player. */
   suspend fun turn() {
-    if (currentPlayer.isOnMountain) {
-      currentPlayer.playerCards.forEach { it.startTurn() }
-      do {
-        val decision =
-          currentPlayer.controller.makeMountainDecision(currentPlayer, this).also { it.log() }
-        val continueTurn = executeDecision(currentPlayer, decision)
-        clock.advanceSubTurn()
-      } while (continueTurn)
-      currentPlayer.ingestTurn()
-      clock.resetSubTurn()
+    if (!passedPlayers.contains(playerOrder[currentPlayerIndex])) {
+      val player = currentPlayer
+      player.playerCards.forEach { it.startTurn() }
+      
+      val decision =
+        player.controller.makeMountainDecision(player, this).also { it.log() }
+      executeDecision(player, decision)
     }
 
-    currentPlayerIndex = (currentPlayerIndex + 1) % players.size
-    if (currentPlayerIndex == 0) { // Wrapped around
-      if (clock.turn < clock.maxTurn) {
-        clock.advanceTurn()
-      } else {
-        advanceDay()
-      }
+    // Move to next player who hasn't passed
+    do {
+      currentPlayerIndex = (currentPlayerIndex + 1) % players.size
+    } while (passedPlayers.size < players.size && passedPlayers.contains(playerOrder[currentPlayerIndex]))
+
+    if (passedPlayers.size == players.size) { // Round over
+      endRound()
+    }
+  }
+
+  /** Concludes the round, resets passed players, and moves leader token. */
+  private suspend fun endRound() {
+    passedPlayers.clear()
+    // Move leader: the playerOrder currently represents the turn order.
+    // In Rulebook V2: "At the end of the round, the leader token moves clockwise for the next round."
+    val first = playerOrder.removeFirst()
+    playerOrder.add(first)
+    currentPlayerIndex = 0
+
+    if (clock.turn < clock.maxTurn) {
+      clock.advanceTurn()
+    } else {
+      advanceDay()
     }
   }
 
@@ -229,20 +255,19 @@ class MutableGameModel @Inject constructor(
     decision: MountainDecision,
   ): Boolean {
     return when (decision.decisionCase) {
-      MountainDecision.DecisionCase.SKI_RIDE -> executeSkiRide(player, decision.skiRide)
-      MountainDecision.DecisionCase.REST -> {
-        check(clock.isFirstSubTurn) { "Can only rest at start of turn." }
-        executeRest(player)
+      MountainDecision.DecisionCase.SKI_RIDE -> {
+        executeSkiRide(player, decision.skiRide)
         false
       }
 
       MountainDecision.DecisionCase.LIFT -> {
-        executeLift(player)
+        executeLift(player, decision.lift)
         false
       }
 
       MountainDecision.DecisionCase.PASS -> {
-        check(!clock.isFirstSubTurn) { "Can't pass without taking at least one action" }
+        executePass(player, decision.pass)
+        passedPlayers.add(playerOrder[currentPlayerIndex])
         false
       }
 
@@ -251,13 +276,7 @@ class MutableGameModel @Inject constructor(
         false
       }
 
-      MountainDecision.DecisionCase.ACTIVATE_PLAYER_CARD -> {
-        executeActivatePlayerCard(player, decision.activatePlayerCard)
-        true
-      }
-
       MountainDecision.DecisionCase.DECISION_NOT_SET, null -> throw IllegalArgumentException()
-
     }
   }
 
@@ -303,21 +322,11 @@ class MutableGameModel @Inject constructor(
     val difficulty = baseDifficulty + speedDifficulty
 
     var success = skill >= difficulty
-    var bonus = 0
-    if (!success) {
-      bonus = player.controller.chooseChipsToUse(player, destinationTile.slope, skill, difficulty)
-        .peek { player.playTrainingChip(it) }
-        .sumOf { if (it.appliesTo(destinationTile.slope)) it.value() else 1 }
-
-      skill += bonus
-      success = skill >= difficulty
-    }
 
     skiRideAttempt {
       this.baseDifficulty = baseDifficulty
       this.speedDifficulty = speedDifficulty
       cardValue += cards
-      this.bonusValue = bonus
       this.success = success
     }.log()
 
@@ -335,7 +344,7 @@ class MutableGameModel @Inject constructor(
   }
 
   private fun executeRest(player: MutablePlayer) {
-    player.refreshDecksAndChips()
+    player.refreshDecks()
     PlayerGameEvent.PlayerRested.broadcast(player)
   }
 
@@ -351,7 +360,7 @@ class MutableGameModel @Inject constructor(
       to = destination
     }.log()
     player.location = destination
-    player.refreshDecksAndChips()
+    player.refreshDecks()
   }
 
   private suspend fun executeActivatePlayerCard(player: MutablePlayer, playerCardName: String) {
@@ -362,6 +371,34 @@ class MutableGameModel @Inject constructor(
 
   private fun getOtherLiftLocation(color: LiftColor, location: HexPoint): HexPoint =
     lifts[color]!!.find { it.key != location }!!.key
+
+  private fun executePass(player: MutablePlayer, passDecision: MountainDecision.PassDecision) {
+    player.discardInPlay()
+    
+    val studyValue = calculateStudyValue(player)
+    val buyCardName = passDecision.buyCardName
+    if (buyCardName.isNotEmpty()) {
+      val card = shop.find { it.name == buyCardName }
+      check(card != null) { "Card $buyCardName not in shop." }
+      val cost = (card.cost - (saleTokens[card] ?: 0)).coerceAtLeast(0)
+      check(studyValue >= cost) { "Insufficient study value $studyValue for card $buyCardName (cost $cost)." }
+      
+      shop.remove(card)
+      saleTokens.remove(card)
+      player.skillDeck.add(card) // Rulebook doesn't specify where it goes, assuming deck for now.
+    }
+  }
+
+  private fun calculateStudyValue(player: Player): Int {
+    var total = player.hand.size
+    val currentLocation = player.location ?: return total
+    val tile = tileMap[currentLocation] ?: return total
+    
+    // TODO: Implement icon matching for study value.
+    // Each symbol on a card that matches the tile they are currently on gives +1.
+    // Note that only wild match lifts.
+    return total
+  }
 
   private suspend fun executeExit(player: MutablePlayer) {
     val location = player.location
@@ -378,8 +415,6 @@ class MutableGameModel @Inject constructor(
   }
 
   companion object {
-    const val MAX_SPEED_ON_SLOW = 1
-    const val SPEED_DIFFICULTY_MODIFIER = 2
     const val APRES_SLOTS = 3
     const val MOUNTAIN_POINTS = 5
   }

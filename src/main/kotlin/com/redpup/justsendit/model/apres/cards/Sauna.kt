@@ -11,10 +11,8 @@ class Sauna(override val apresCard: ApresCard) : BaseApres(apresCard) {
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,
   ) {
-    val pointsPerUniqueChip = if (isFirstPlayerToArrive) 6 else 3
-    player.day.apresPoints +=
-      (player.trainingChips + player.usedTrainingChips)
-        .distinct()
-        .count() * pointsPerUniqueChip
+    // TODO: Update Sauna to Rulebook V2. Training Chips no longer exist.
+    // val pointsPerUniqueChip = if (isFirstPlayerToArrive) 6 else 3
+    // player.day.apresPoints += ...
   }
 }

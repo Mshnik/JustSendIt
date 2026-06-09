@@ -14,7 +14,7 @@ Just Send It takes place over 3 days (Fri, Sat, Sun). Each day contains some num
 
 Each mountain tile is either a slope or a lift.
 
-Lifts have the following content:
+Slopes have the following content:
 
 * Difficulty: Number in range 1-20  
 * Grade: Green, Blue, Black, Double Black  
@@ -22,7 +22,7 @@ Lifts have the following content:
 * Zero to two Hazards: Moguls, Trees, Cliffs  
 * Optionally, Slow sign
 
-Slopes have the following content:
+Lifts have the following content:
 
 * Direction: Top, Bottom  
 * Color: Red, Yellow, Cyan, Magenta, Grey  

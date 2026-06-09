@@ -12,16 +12,35 @@ import "google/protobuf/empty.proto";
 message MountainDecision {
   oneof decision {
     SkiRideDecision ski_ride = 1;
-    google.protobuf.Empty rest = 2;
-    google.protobuf.Empty lift = 3;
-    google.protobuf.Empty pass = 4;
-    google.protobuf.Empty exit = 5;
-    string activate_player_card = 6;
+    LiftDecision lift = 2;
+    PassDecision pass = 3;
+    google.protobuf.Empty exit = 4;
   }
 
   /** A decision to ski or ride in a given direction. */
   message SkiRideDecision {
     model.board.hex.HexDirection direction = 1;
-    int32 num_cards = 2;
+  }
+
+  /** A decision to ride a lift. */
+  message LiftDecision {
+    oneof action {
+      google.protobuf.Empty ride_up = 1;
+      google.protobuf.Empty stay = 2;
+    }
+  }
+
+  /** A decision to pass. */
+  message PassDecision {
+    // The name of the card to buy from the shop. Empty if none.
+    string buy_card_name = 1;
+  }
+}
+
+/** Actions a player can take during a ski/ride resolution. */
+message SkiRideResolutionAction {
+  oneof action {
+    string play_card_name = 1;
+    google.protobuf.Empty stop = 2;
   }
 }
