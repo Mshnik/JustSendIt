@@ -10,6 +10,24 @@ Just Send It takes place over 3 days (Fri, Sat, Sun). Each day contains some num
 * Reveal 3 random Apres cards and place them on the mountain exit spots  
 * Populate the shop with 5 skill cards
 
+## Tile Content
+
+Each mountain tile is either a slope or a lift.
+
+Lifts have the following content:
+
+* Difficulty: Number in range 1-20  
+* Grade: Green, Blue, Black, Double Black  
+* Snow Condition: Groomed, Powder, Ice  
+* Zero to two Hazards: Moguls, Trees, Cliffs  
+* Optionally, Slow sign
+
+Slopes have the following content:
+
+* Direction: Top, Bottom  
+* Color: Red, Yellow, Cyan, Magenta, Grey  
+* Optionally, mountain exit
+
 # Round Structure
 
 Each round consists of players taking turns (see below) and continues until everyone has passed. Play starts with the leader and goes clockwise. At the end of the round, the leader token moves clockwise for the next round.
@@ -26,7 +44,7 @@ This continues until everyone has passed. If a player has no cards in hand, they
 
 ## Ski/Ride
 
-The player chooses one of the three down mountain tiles from their current location and moves their player token there. At this point they are trying to ski/ride the tile. The player plays cards from their hand until they either succeed or run out of cards. If they run out and have not succeeded, they crash.
+The player chooses one of the three down mountain tiles from their current location and moves their player token there. At this point they are trying to ski/ride the tile. The player plays cards from their hand until they either succeed or run out of cards. Played skill cards remain in play until a player passes, at which point they are all discarded. If they run out and have not succeeded, they crash.
 
 The exact order of applying effects of cards is as follows. Most of these steps are skipped most of the time.
 
@@ -64,9 +82,13 @@ If a player crashes, they immediately stop skiing/riding. They do not gain any p
 
 If a player does not crash, they sum the values from all rolled dice, all matching icons (+1 each), and any previously summed values for this tile. If the result meets or beats the tile, they succeed\! They gain fun equal to the tile’s difficulty and their turn ends. Otherwise, their turn continues and they play another card. Alternatively, a player can decide to stop playing cards for this tile, in which case they automatically crash.
 
+### Slow
+
+Players can only enter tiles with slow signs if they have two or fewer skill cards in play.
+
 ## Pass
 
-Alternatively, a player may choose to pass. If they do, they reveal all cards remaining in their hand. They may choose to buy up to one card with total study cost equal to or less than their total study value. Each card in a player’s hand is worth 1 study value, \+1 for each symbol on a card that matches the tile they are currently on. (Note that only wild match lifts.)
+Alternatively, a player may choose to pass. After discarding all cards in play, they reveal all cards remaining in their hand. They may choose to buy up to one card with total study cost equal to or less than their total study value. Each card in a player’s hand is worth 1 study value, \+1 for each symbol on a card that matches the tile they are currently on. (Note that only wild match lifts.)
 
 ### The Shop
 
