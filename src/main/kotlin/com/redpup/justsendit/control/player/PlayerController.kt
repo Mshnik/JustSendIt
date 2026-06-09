@@ -4,10 +4,12 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
+import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
+import com.redpup.justsendit.model.supply.proto.SkillCard
 
 /** Handler for players making decisions. */
 interface PlayerController {
@@ -23,13 +25,44 @@ interface PlayerController {
   suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint
 
   /** Asks the player to choose cards to remove from their deck. */
-  suspend fun chooseCardsToRemove(player: Player, cards: List<Int>, maxToRemove: Int): List<Int>
+  suspend fun chooseCardsToRemove(
+    player: Player,
+    cards: List<SkillCard>,
+    maxToRemove: Int,
+  ): List<SkillCard>
 
   /**
    * Chooses [count] other apres from [otherApres] to apply.
    * If more than one, the order returned is the order applied.
    */
   suspend fun chooseOtherApres(player: Player, otherApres: List<Apres>, count: Int): List<Apres>
+
+  /** Asks the player to choose a card to play or stop during ski/ride resolution. */
+  suspend fun chooseSkiRideResolutionAction(
+    player: Player,
+    gameModel: GameModel,
+  ): SkiRideResolutionAction
+
+  /** Asks the player to choose cards to discard from hand to ride a lift. */
+  suspend fun chooseCardsToDiscardForLift(
+    player: Player,
+    hand: List<SkillCard>,
+    count: Int,
+  ): List<SkillCard>
+
+  /** Asks the player to choose cards to trash from their discard pile when riding a lift. */
+  suspend fun chooseCardsToTrashForLift(
+    player: Player,
+    candidates: List<SkillCard>,
+    maxToTrash: Int,
+  ): List<SkillCard>
+
+  /** Asks the player to choose cards from their discard pile to retrieve (e.g. for Rugged card). */
+  suspend fun chooseCardsFromDiscard(
+    player: Player,
+    discard: List<SkillCard>,
+    maxCount: Int,
+  ): List<SkillCard>
 }
 
 class BasicPlayerController : PlayerController {
@@ -52,11 +85,9 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun chooseCardsToRemove(
     player: Player,
-    cards: List<Int>,
+    cards: List<SkillCard>,
     maxToRemove: Int,
-  ): List<Int> {
-    // For BasicPlayerHandler, we'll just return an empty list for now.
-    // Real implementations would have decision logic.
+  ): List<SkillCard> {
     return emptyList()
   }
 
@@ -66,5 +97,44 @@ class BasicPlayerController : PlayerController {
     count: Int,
   ): List<Apres> {
     return otherApres.take(count)
+  }
+
+  override suspend fun chooseSkiRideResolutionAction(
+    player: Player,
+    gameModel: GameModel,
+  ): SkiRideResolutionAction {
+    return if (player.hand.isNotEmpty()) {
+      skiRideResolutionAction {
+        playCardName = player.hand.first().name
+      }
+    } else {
+      skiRideResolutionAction {
+        stop = com.google.protobuf.empty { }
+      }
+    }
+  }
+
+  override suspend fun chooseCardsToDiscardForLift(
+    player: Player,
+    hand: List<SkillCard>,
+    count: Int,
+  ): List<SkillCard> {
+    return hand.take(count)
+  }
+
+  override suspend fun chooseCardsToTrashForLift(
+    player: Player,
+    candidates: List<SkillCard>,
+    maxToTrash: Int,
+  ): List<SkillCard> {
+    return emptyList()
+  }
+
+  override suspend fun chooseCardsFromDiscard(
+    player: Player,
+    discard: List<SkillCard>,
+    maxCount: Int,
+  ): List<SkillCard> {
+    return discard.take(maxCount)
   }
 }

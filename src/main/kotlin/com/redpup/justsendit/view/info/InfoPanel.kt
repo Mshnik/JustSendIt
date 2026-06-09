@@ -74,7 +74,7 @@ class InfoPanel(private val gameModel: GameModel) : VBox() {
         val info = StringBuilder()
         info.append("Name: ${player.name}\n")
         info.append("Points: ${player.points}\n")
-        info.append("Chips: ${player.trainingChips}\n")
+        info.append("Wobbles: ${player.wobbles}\n")
         val playerBox = VBox()
         playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
         addInfoLabel(info.toString(), playerBox)

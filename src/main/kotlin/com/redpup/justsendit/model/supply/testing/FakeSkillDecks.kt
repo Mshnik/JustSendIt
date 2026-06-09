@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.supply.testing
 import com.google.common.annotations.VisibleForTesting
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.proto.SkillCard
 import com.redpup.justsendit.util.pop
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -11,24 +12,24 @@ import javax.inject.Singleton
 @VisibleForTesting
 @Singleton
 class FakeSkillDecks @Inject constructor() : SkillDecks {
-  private val greenDeck: MutableList<Int> = mutableListOf()
-  private val blueDeck: MutableList<Int> = mutableListOf()
-  private val blackDeck: MutableList<Int> = mutableListOf()
+  private val greenDeck: MutableList<SkillCard> = mutableListOf()
+  private val blueDeck: MutableList<SkillCard> = mutableListOf()
+  private val blackDeck: MutableList<SkillCard> = mutableListOf()
 
   /** Sets [greenDeck] to the given input, overriding any existing input. */
-  fun setGreenDeck(cards: List<Int>) {
+  fun setGreenDeck(cards: List<SkillCard>) {
     greenDeck.clear()
     greenDeck.addAll(cards)
   }
 
   /** Sets [blueDeck] to the given input, overriding any existing input. */
-  fun setBlueDeck(cards: List<Int>) {
+  fun setBlueDeck(cards: List<SkillCard>) {
     blueDeck.clear()
     blueDeck.addAll(cards)
   }
 
   /** Sets [blackDeck] to the given input, overriding any existing input. */
-  fun setBlackDeck(cards: List<Int>) {
+  fun setBlackDeck(cards: List<SkillCard>) {
     blackDeck.clear()
     blackDeck.addAll(cards)
   }
@@ -39,7 +40,7 @@ class FakeSkillDecks @Inject constructor() : SkillDecks {
     blackDeck.clear()
   }
 
-  override fun draw(grade: Grade): Int {
+  override fun draw(grade: Grade): SkillCard {
     return when (grade) {
       Grade.GRADE_GREEN -> greenDeck.pop("Green deck")
       Grade.GRADE_BLUE -> blueDeck.pop("Blue deck")

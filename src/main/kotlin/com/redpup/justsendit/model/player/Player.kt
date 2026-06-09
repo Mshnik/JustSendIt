@@ -75,99 +75,106 @@ interface Player {
   /** The skill cards the player has in play this round. */
   val inPlay: List<SkillCard>
 
-  /** The player's current skill deck, in order. */
-  val skillDeck: List<SkillCard>
-
-  /** The player's current skill discard, unordered. */
-  val skillDiscard: Collection<SkillCard>
-
   /** The player's current wobbles. */
   val wobbles: Int
 }
-...
+
+/** Hooks for player abilities. */
+interface AbilityHandler {}
+
+/** Mutable access to a player object. */
 class MutablePlayer(override val controller: PlayerController) : Player {
-override val playerCards = mutableListOf<PlayerCard>()
-override val name: String get() = playerCards.firstOrNull()?.name ?: "No Name"
-override var points = 0; internal set
+  override val playerCards = mutableListOf<PlayerCard>()
+  override val name: String get() = playerCards.firstOrNull()?.name ?: "No Name"
+  override var points = 0; internal set
 
-/** Sets the points for this player. */
-fun setPoints(points: Int) {
-  this.points = points
-}
-override var location: HexPoint? = null
-override var apresLink: Int? = null
+  /** Sets the points for this player. */
+  fun setPoints(points: Int) {
+    this.points = points
+  }
+  override var location: HexPoint? = null
+  override var apresLink: Int? = null
 
-override val turn = MutableTurn()
-override val day = MutableDay()
-val nextDay = MutableDay()
+  override val turn = MutableTurn()
+  override val day = MutableDay()
+  val nextDay = MutableDay()
 
-override val hand = mutableListOf<SkillCard>()
-override val inPlay = mutableListOf<SkillCard>()
-override val skillDeck = mutableListOf<SkillCard>()
-override val skillDiscard = mutableListOf<SkillCard>()
-override var wobbles = 0; internal set
+  override val hand = mutableListOf<SkillCard>()
+  override val inPlay = mutableListOf<SkillCard>()
+  override val skillDeck = mutableListOf<SkillCard>()
+  override val skillDiscard = mutableListOf<SkillCard>()
+  override var wobbles = 0; internal set
 
-override val abilityHandler = object : AbilityHandler {}
+  override val abilityHandler = object : AbilityHandler {}
 
-override fun toString() = name
+  override fun toString() = name
 
-/** Applies [fn] to this player. */
-override fun mutate(fn: MutablePlayer.() -> Unit) {
-  this.fn()
-}
+  /** Applies [fn] to this player. */
+  override fun mutate(fn: MutablePlayer.() -> Unit) {
+    this.fn()
+  }
 
-/** Plays [card] from [hand] into [inPlay]. */
-fun playCard(card: SkillCard) {
-  check(hand.remove(card))
-  inPlay.add(card)
-}
+  /** Plays [card] from [hand] into [inPlay]. */
+  fun playCard(card: SkillCard) {
+    check(hand.remove(card))
+    inPlay.add(card)
+  }
 
-/** Adds [count] wobbles to this player. */
-fun addWobbles(count: Int) {
-  wobbles += count
-}
-
-/** Resets wobbles to 0. */
-fun resetWobbles() {
-  wobbles = 0
-}
-
-/** Draws [count] cards from the deck into hand. */
-fun drawCards(count: Int) {
-  for (i in 1..count) {
+  /** Plays the top card of the skill deck, returning it and putting it in the discard. */
+  fun playSkillCard(): SkillCard? {
     val card = skillDeck.removeFirstOrNull()
     if (card != null) {
-      hand.add(card)
-    } else {
-      // Shuffle discard into deck and try again
-      refreshDecks()
-      val cardAfterShuffle = skillDeck.removeFirstOrNull()
-      if (cardAfterShuffle != null) {
-        hand.add(cardAfterShuffle)
+      skillDiscard.add(card)
+    }
+    return card
+  }
+
+  /** Adds [count] wobbles to this player. */
+  fun addWobbles(count: Int) {
+    wobbles += count
+  }
+
+  /** Resets wobbles to 0. */
+  fun resetWobbles() {
+    wobbles = 0
+  }
+
+  /** Draws [count] cards from the deck into hand. */
+  fun drawCards(count: Int) {
+    for (i in 1..count) {
+      val card = skillDeck.removeFirstOrNull()
+      if (card != null) {
+        hand.add(card)
+      } else {
+        // Shuffle discard into deck and try again
+        refreshDecks()
+        val cardAfterShuffle = skillDeck.removeFirstOrNull()
+        if (cardAfterShuffle != null) {
+          hand.add(cardAfterShuffle)
+        }
       }
     }
   }
-}
 
-/** Shuffles all cards from discard back into skill deck. */
-fun refreshDecks() {
-  skillDeck.addAll(skillDiscard)
-  skillDeck.shuffle()
-  skillDiscard.clear()
-}
+  /** Shuffles all cards from discard back into skill deck. */
+  fun refreshDecks() {
+    skillDeck.addAll(skillDiscard)
+    skillDeck.shuffle()
+    skillDiscard.clear()
+  }
 
-/** Discards [card] from [hand]. */
-fun discardFromHand(card: SkillCard) {
-  check(hand.remove(card))
-  skillDiscard.add(card)
-}
+  /** Discards [card] from [hand]. */
+  fun discardFromHand(card: SkillCard) {
+    check(hand.remove(card))
+    skillDiscard.add(card)
+  }
 
-/** Discards all [inPlay] cards. */
-fun discardInPlay() {
-  skillDiscard.addAll(inPlay)
-  inPlay.clear()
-}
-...
+  /** Discards all [inPlay] cards. */
+  fun discardInPlay() {
+    skillDiscard.addAll(inPlay)
+    inPlay.clear()
+  }
+
   /** Ingests the contents of [turn] into this player. */
   fun ingestTurn() {
     day.mountainPoints += turn.points

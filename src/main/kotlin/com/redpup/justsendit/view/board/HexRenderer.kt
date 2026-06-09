@@ -85,7 +85,7 @@ class HexRenderer(private val gc: GraphicsContext, private val hexSize: Double) 
       LiftColor.LIFT_COLOR_CYAN -> Color.CYAN
       LiftColor.LIFT_COLOR_RED -> Color.RED
       LiftColor.LIFT_COLOR_YELLOW -> Color.YELLOW
-      LiftColor.LIFT_COLOR_PURPLE -> Color.PURPLE
+      LiftColor.LIFT_COLOR_MAGENTA -> Color.MAGENTA
       LiftColor.LIFT_COLOR_GREY -> Color.GRAY
     }
     drawArrow(cx, cy, color, lift.direction)

@@ -4,6 +4,8 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
 
+import com.redpup.justsendit.model.supply.proto.SkillCard
+
 /** In-memory implementation of an apres card. */
 interface Apres {
   val apresCard: ApresCard
@@ -57,6 +59,6 @@ abstract class StockpilingBaseApres(override val apresCard: ApresCard) : BaseApr
 /** Represents events that can trigger stockpile increases. */
 sealed class ApresGameEvent {
   data object PlayerUsedLift : ApresGameEvent()
-  data class PlayerPlayedCard(val cardValue: Int) : ApresGameEvent()
+  data class PlayerPlayedCard(val card: SkillCard) : ApresGameEvent()
   data class PlayerSkiRide(val turn: Int, val success: Boolean) : ApresGameEvent()
 }

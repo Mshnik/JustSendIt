@@ -15,6 +15,17 @@ interface SkillDecks {
 
   /** Draws the top card of the given grade. */
   fun draw(grade: Grade): SkillCard
+
+  companion object {
+    fun SkillCard.getSkillGrade(): Grade {
+      return when {
+        this.blackDice > 0 || this.name.contains("Black", ignoreCase = true) -> Grade.GRADE_BLACK
+        this.blueDice > 0 || this.name.contains("Blue", ignoreCase = true) -> Grade.GRADE_BLUE
+        this.greenDice > 0 || this.name.contains("Green", ignoreCase = true) -> Grade.GRADE_GREEN
+        else -> Grade.GRADE_UNSET
+      }
+    }
+  }
 }
 
 /** The skill decks available for interaction in the supply. */
@@ -42,8 +53,7 @@ class SkillDecksInstance @Inject constructor() : SkillDecks {
   override fun reset() {
     decks.values.forEach { it.clear() }
     
-    // TODO: Implement Rulebook V2 deck composition.
-    // For now, just populate with dummy cards from textproto.
+    // Populate with starter cards from textproto.
     decks[Grade.GRADE_GREEN]!!.addAll(List(10) { allCards.find { it.name == "Green Starter" }!! })
     decks[Grade.GRADE_BLUE]!!.addAll(List(10) { allCards.find { it.name == "Blue Starter" }!! })
     decks[Grade.GRADE_BLACK]!!.addAll(List(10) { allCards.find { it.name == "Black Starter" }!! })
