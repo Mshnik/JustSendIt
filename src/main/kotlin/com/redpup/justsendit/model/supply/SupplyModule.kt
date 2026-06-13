@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.supply
 
 import com.google.inject.Provides
 import com.google.inject.Singleton
+import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.util.KtAbstractModule
 
 /** Binding module for the supply section of the game. */
@@ -15,20 +16,29 @@ class SupplyModule : KtAbstractModule() {
   @Provides
   @StarterDeck
   @Singleton
-  fun starterDeck(): SkillDeck =
-    SkillDeckInstance("src/main/resources/com/redpup/justsendit/model/skill/starter.textproto")
+  fun starterDeck(skillFactory: SkillFactory): SkillDeck =
+    SkillDeckInstance(
+      "src/main/resources/com/redpup/justsendit/model/skill/starter.textproto",
+      skillFactory
+    )
 
   @Provides
   @ShopDeck
   @Singleton
-  fun shopDeck(): SkillDeck =
-    SkillDeckInstance("src/main/resources/com/redpup/justsendit/model/skill/shop.textproto")
+  fun shopDeck(skillFactory: SkillFactory): SkillDeck =
+    SkillDeckInstance(
+      "src/main/resources/com/redpup/justsendit/model/skill/shop.textproto",
+      skillFactory
+    )
 
   @Provides
   @SpecialDeck
   @Singleton
-  fun specialDeck(): SkillDeck =
-    SkillDeckInstance("src/main/resources/com/redpup/justsendit/model/skill/special.textproto")
+  fun specialDeck(skillFactory: SkillFactory): SkillDeck =
+    SkillDeckInstance(
+      "src/main/resources/com/redpup/justsendit/model/skill/special.textproto",
+      skillFactory
+    )
 
   @Provides
   @ApresPath

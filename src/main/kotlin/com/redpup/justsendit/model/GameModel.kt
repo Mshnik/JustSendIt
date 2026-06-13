@@ -13,6 +13,8 @@ import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
+import com.redpup.justsendit.model.board.tile.proto.Condition
+import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.board.tile.proto.LiftColor
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.*
@@ -20,8 +22,8 @@ import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
-import com.redpup.justsendit.model.supply.proto.SkillCard
 import com.redpup.justsendit.util.TimeSource
 
 /** Immutable access to game model. */
@@ -89,8 +91,8 @@ class MutableGameModel @Inject constructor(
 
   private val passedPlayers = mutableSetOf<Int>()
 
-  private val shop = mutableListOf<SkillCard>()
-  private val saleTokens = mutableMapOf<SkillCard, Int>()
+  private val shop = mutableListOf<Skill>()
+  private val saleTokens = mutableMapOf<Skill, Int>()
 
   override val clock = MutableClock()
 
@@ -113,22 +115,22 @@ class MutableGameModel @Inject constructor(
 
   private fun resolveCard(
     player: MutablePlayer,
-    card: SkillCard,
+    skill: Skill,
     slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
   ): CardResolution {
-    var green = card.greenDice
-    var blue = card.blueDice
-    var black = card.blackDice
+    var green = skill.skillCard.greenDice
+    var blue = skill.skillCard.blueDice
+    var black = skill.skillCard.blackDice
 
     // Step 1: Terrain and effects that change dice
     // Powder: [Before roll] First card only: Remove your lowest die.
-    if (slope.condition == com.redpup.justsendit.model.board.tile.proto.Condition.CONDITION_POWDER && player.inPlay.size == 1) {
+    if (slope.condition == Condition.CONDITION_POWDER && player.inPlay.size == 1) {
       if (green > 0) green--
       else if (blue > 0) blue--
       else if (black > 0) black--
     }
     // Moguls: [Before roll] Downgrade your highest die.
-    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_MOGULS)) {
+    if (slope.hazardsList.contains(Hazard.HAZARD_MOGULS)) {
       if (black > 0) {
         black--
         blue++
@@ -149,27 +151,27 @@ class MutableGameModel @Inject constructor(
     // Step 4: Check for and gain wobbles
     var wobbles = rolls.count { it == 1 }
     // Ice: [After roll] Gain an additional wobble for each 1 rolled.
-    if (slope.condition == com.redpup.justsendit.model.board.tile.proto.Condition.CONDITION_ICY) {
+    if (slope.condition == Condition.CONDITION_ICY) {
       wobbles += rolls.count { it == 1 }
     }
 
     // Step 6: Sum skill
-    var skill = rolls.sum()
+    var sum = rolls.sum()
     // Trees: [After roll] All rolled 5s score 0 skill.
-    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_TREES)) {
-      skill -= rolls.count { it == 5 } * 5
+    if (slope.hazardsList.contains(Hazard.HAZARD_TREES)) {
+      sum -= rolls.count { it == 5 } * 5
     }
     // Cliffs: [After roll] All rolled 2s and 3s score 0 skill.
-    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_CLIFFS)) {
-      skill -= rolls.count { it == 2 } * 2
-      skill -= rolls.count { it == 3 } * 3
+    if (slope.hazardsList.contains(Hazard.HAZARD_CLIFFS)) {
+      sum -= rolls.count { it == 2 } * 2
+      sum -= rolls.count { it == 3 } * 3
     }
 
     // Matching icons (+1 each)
-    val matchingIcons = card.iconsList.count { matches(it, slope) }
-    skill += matchingIcons
+    val matchingIcons = skill.skillCard.iconsList.count { matches(it, slope) }
+    sum += matchingIcons
 
-    return CardResolution(skill, wobbles)
+    return CardResolution(sum, wobbles)
   }
 
   private fun crash(player: MutablePlayer) {
@@ -269,7 +271,7 @@ class MutableGameModel @Inject constructor(
     for (player in players) {
       starterDeck.reset()
       repeat(10) {
-        player.gainSkillCard(starterDeck.draw())
+        player.gainSkill(starterDeck.draw())
       }
     }
   }
@@ -538,7 +540,7 @@ class MutableGameModel @Inject constructor(
     if (buyCardName.isNotEmpty()) {
       val card = shop.find { it.name == buyCardName }
       check(card != null) { "Card $buyCardName not in shop." }
-      val cost = (card.cost - (saleTokens[card] ?: 0)).coerceAtLeast(0)
+      val cost = (card.skillCard.cost - (saleTokens[card] ?: 0)).coerceAtLeast(0)
       check(studyValue >= cost) { "Insufficient study value $studyValue for card $buyCardName (cost $cost)." }
 
       shop.remove(card)
@@ -554,13 +556,12 @@ class MutableGameModel @Inject constructor(
 
     if (tile.hasSlope()) {
       val slope = tile.slope
-      for (card in player.hand) {
-        total += card.iconsList.count { matches(it, slope) }
+      for (skill in player.hand) {
+        total += skill.skillCard.iconsList.count { matches(it, slope) }
       }
     } else if (tile.hasLift()) {
-      // Note that only wild match lifts.
-      for (card in player.hand) {
-        total += card.iconsList.count { it.hasWild() && it.wild }
+      for (skill in player.hand) {
+        total += skill.skillCard.iconsList.count { it.hasWild() && it.wild }
       }
     }
 

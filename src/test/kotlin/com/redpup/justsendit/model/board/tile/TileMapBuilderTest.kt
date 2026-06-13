@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import com.redpup.justsendit.model.supply.testing.FakeTileSupply
 import com.redpup.justsendit.util.TextProtoReader
@@ -26,7 +27,8 @@ class TileMapBuilderTest {
     Guice.createInjector(
       FakeApresModule(),
       FakeSupplyModule(),
-      FakePlayerModule()
+      FakePlayerModule(),
+      FakeSkillModule()
     ).injectMembers(this)
     fakeTileSupply.tiles = tiles()
     fakeTileSupply.locations = locations()

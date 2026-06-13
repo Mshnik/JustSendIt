@@ -18,14 +18,17 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
-import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.skill.SkillFactory
+import com.redpup.justsendit.model.skill.testing.FakeSkillModule
+import com.redpup.justsendit.model.supply.ShopDeck
+import com.redpup.justsendit.model.supply.SkillDeck
+import com.redpup.justsendit.model.supply.StarterDeck
+import com.redpup.justsendit.model.supply.proto.skillCard
 import com.redpup.justsendit.model.supply.testing.FakeApresDeck
 import com.redpup.justsendit.model.supply.testing.FakePlayerDeck
 import com.redpup.justsendit.model.supply.testing.FakeSkillDeck
 import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import com.redpup.justsendit.util.testing.FakeTimeSourceModule
-import com.redpup.justsendit.model.supply.SkillDeck
-import com.redpup.justsendit.model.supply.proto.skillCard
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
@@ -42,10 +45,11 @@ class GameModelTest {
   @Inject private lateinit var gameModel: MutableGameModel
   @Inject private lateinit var playerDeck: FakePlayerDeck
   @Inject private lateinit var playerFactory: FakePlayerFactory
-  @Inject @com.redpup.justsendit.model.supply.StarterDeck private lateinit var starterDeck: SkillDeck
-  @Inject @com.redpup.justsendit.model.supply.ShopDeck private lateinit var shopDeck: SkillDeck
+  @Inject @StarterDeck private lateinit var starterDeck: SkillDeck
+  @Inject @ShopDeck private lateinit var shopDeck: SkillDeck
   @Inject private lateinit var apresDeck: FakeApresDeck
   @Inject private lateinit var apresFactory: FakeApresFactory
+  @Inject private lateinit var skillFactory: SkillFactory
 
   private lateinit var player1: MutablePlayer
   private lateinit var player2: MutablePlayer
@@ -61,6 +65,7 @@ class GameModelTest {
       FakeSupplyModule(),
       FakePlayerModule(),
       FakePlayerControllerModule(listOf(playerController1, playerController2)),
+      FakeSkillModule(),
       LoggerModule()
     ).injectMembers(this)
 
@@ -163,7 +168,8 @@ class GameModelTest {
   fun `turn advances player`() = runBlocking {
     player1.location = createHexPoint(0, 0)
     whenever(playerController1.makeMountainDecision(any(), any())).thenReturn(mountainDecision {
-      pass = com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
+      pass =
+        com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
     })
 
     assertThat(gameModel.currentPlayer).isEqualTo(player1)
@@ -175,7 +181,7 @@ class GameModelTest {
   @Test
   fun `executePass discards in play cards`() = runBlocking {
     player1.location = createHexPoint(0, 0)
-    repeat(2) { player1.gainSkillCard(skillCard { name = "Card $it" }) }
+    repeat(2) { player1.gainSkill(skillFactory.create(skillCard { name = "Card $it" })) }
     player1.drawCards(2)
     player1.playCard(player1.hand.first())
     player1.playCard(player1.hand.first())
@@ -184,7 +190,8 @@ class GameModelTest {
         any(), any()
       )
     ).thenReturn(mountainDecision {
-      pass = com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
+      pass =
+        com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
     })
     gameModel.turn()
     assertThat(player1.inPlay).isEmpty()

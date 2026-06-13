@@ -2,8 +2,12 @@ package com.redpup.justsendit.model.supply
 
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
+import com.redpup.justsendit.model.apres.testing.FakeApresModule
+import com.redpup.justsendit.model.player.testing.FakePlayerModule
+import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
 import com.redpup.justsendit.model.supply.testing.FakeSkillDeck
+import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import javax.inject.Inject
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
@@ -16,13 +20,15 @@ class SkillDeckTest {
   @BeforeEach
   fun setup() {
     Guice.createInjector(
-      com.redpup.justsendit.model.supply.testing.FakeSupplyModule(),
-      com.redpup.justsendit.model.apres.testing.FakeApresModule(),
-      com.redpup.justsendit.model.player.testing.FakePlayerModule()
+      FakeSupplyModule(),
+      FakeApresModule(),
+      FakePlayerModule(),
+      FakeSkillModule()
     ).injectMembers(this)
     starterDeck.reset()
     (starterDeck as FakeSkillDeck).add(
-      *(1..10).map { skillCard { name = if (it == 1) "Green Starter" else "Starter $it" } }.toTypedArray()
+      *(1..10).map { skillCard { name = if (it == 1) "Green Starter" else "Starter $it" } }
+        .toTypedArray()
     )
   }
 
@@ -47,10 +53,10 @@ class SkillDeckTest {
   fun `find returns correct card and removes it`() {
     val card = starterDeck.find("Green Starter")
     assertThat(card.name).isEqualTo("Green Starter")
-    
+
     // There should be 9 cards left
     repeat(9) { starterDeck.draw() }
-    
+
     assertThrows(NoSuchElementException::class.java) {
       starterDeck.draw()
     }

@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.supply
 
-import com.redpup.justsendit.model.supply.proto.SkillCard
+import com.redpup.justsendit.model.skill.Skill
+import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.supply.proto.SkillCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
 import javax.inject.Qualifier
@@ -11,10 +12,10 @@ interface SkillDeck {
   fun reset()
 
   /** Draws the top card of the deck. */
-  fun draw(): SkillCard
+  fun draw(): Skill
 
-  /** Finds and removes the [SkillCard] with the given [name]. */
-  fun find(name: String): SkillCard
+  /** Finds and removes the [Skill] with the given [name]. */
+  fun find(name: String): Skill
 }
 
 /** [Qualifier] for the starter deck. */
@@ -30,7 +31,10 @@ annotation class ShopDeck
 annotation class SpecialDeck
 
 /** The skill decks available for interaction in the supply. */
-class SkillDeckInstance(path: String) : SkillDeck {
+class SkillDeckInstance(
+  path: String,
+  private val skillFactory: SkillFactory,
+) : SkillDeck {
   private val reader = TextProtoReaderImpl(
     path,
     SkillCardList::newBuilder,
@@ -48,7 +52,12 @@ class SkillDeckInstance(path: String) : SkillDeck {
     cards.addAll(reader())
   }
 
-  override fun draw(): SkillCard = cards.removeFirst()
+  override fun draw(): Skill = skillFactory.create(cards.removeFirst())
 
-  override fun find(name: String) = cards.find { it.name == name }!!.also { cards.remove(it) }
+  override fun find(name: String): Skill {
+    val card =
+      cards.find { it.name == name } ?: throw IllegalArgumentException("No card $name in $cards")
+    cards.remove(card)
+    return skillFactory.create(card)
+  }
 }

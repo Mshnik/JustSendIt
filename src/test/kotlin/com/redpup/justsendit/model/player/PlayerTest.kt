@@ -1,26 +1,30 @@
 package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
+import com.google.inject.Guice
+import com.google.inject.Inject
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.friday.George
 import com.redpup.justsendit.model.player.proto.playerCard
-import com.redpup.justsendit.model.supply.SkillDeck
+import com.redpup.justsendit.model.skill.SkillFactory
+import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 
 class PlayerTest {
 
   private lateinit var player: MutablePlayer
   private val handler = mock<PlayerController>()
-  private val skillDeck = mock<SkillDeck>()
+
+  @Inject private lateinit var skillFactory: SkillFactory
 
   @BeforeEach
   fun setUp() {
+    Guice.createInjector(FakeSkillModule()).injectMembers(this)
     player = MutablePlayer(handler)
   }
 
@@ -49,14 +53,14 @@ class PlayerTest {
 
   @Test
   fun `playSkillCard moves card from deck to discard`() {
-    val card1 = skillCard { name = "Card 1" }
-    val card2 = skillCard { name = "Card 2" }
-    val card3 = skillCard { name = "Card 3" }
+    val card1 = skillFactory.create(skillCard { name = "Card 1" })
+    val card2 = skillFactory.create(skillCard { name = "Card 2" })
+    val card3 = skillFactory.create(skillCard { name = "Card 3" })
     player.skillDeck.addAll(listOf(card1, card2, card3))
     assertThat(player.skillDeck.size).isEqualTo(3)
     assertThat(player.skillDiscard.isEmpty()).isTrue()
 
-    val card = player.playSkillCard()
+    val card = player.playSkill()
 
     assertThat(card).isEqualTo(card1)
     assertThat(player.skillDeck.size).isEqualTo(2)
@@ -67,15 +71,15 @@ class PlayerTest {
   @Test
   fun `playSkillCard on empty deck returns null`() {
     assertThat(player.skillDeck.isEmpty()).isTrue()
-    val card = player.playSkillCard()
+    val card = player.playSkill()
     assertThat(card).isNull()
   }
 
   @Test
   fun `refreshDecks moves discard to available`() {
-    val card1 = skillCard { name = "Card 1" }
-    val card2 = skillCard { name = "Card 2" }
-    val card3 = skillCard { name = "Card 3" }
+    val card1 = skillFactory.create(skillCard { name = "Card 1" })
+    val card2 = skillFactory.create(skillCard { name = "Card 2" })
+    val card3 = skillFactory.create(skillCard { name = "Card 3" })
     player.skillDiscard.addAll(listOf(card1, card2, card3))
 
     player.refreshDecks()
@@ -114,8 +118,8 @@ class PlayerTest {
 
   @Test
   fun `gainSkillCard adds card to deck`() {
-    val card = skillCard { name = "Test Card" }
-    player.gainSkillCard(card)
+    val card = skillFactory.create(skillCard { name = "Test Card" })
+    player.gainSkill(card)
 
     assertThat(player.skillDeck).containsExactly(card)
   }

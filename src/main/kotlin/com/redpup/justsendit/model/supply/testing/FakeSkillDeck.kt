@@ -1,6 +1,8 @@
 package com.redpup.justsendit.model.supply.testing
 
 import com.google.common.annotations.VisibleForTesting
+import com.redpup.justsendit.model.skill.Skill
+import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.supply.SkillDeck
 import com.redpup.justsendit.model.supply.proto.SkillCard
 import javax.inject.Inject
@@ -9,7 +11,7 @@ import javax.inject.Singleton
 /** A testing fake implementation of [SkillDeck]. */
 @VisibleForTesting
 @Singleton
-class FakeSkillDeck @Inject constructor() : SkillDeck {
+class FakeSkillDeck @Inject constructor(private val skillFactory: SkillFactory) : SkillDeck {
   private var cards: MutableList<SkillCard> = mutableListOf()
   private var baseCards: List<SkillCard> = emptyList()
 
@@ -24,13 +26,14 @@ class FakeSkillDeck @Inject constructor() : SkillDeck {
     cards.addAll(baseCards)
   }
 
-  override fun draw(): SkillCard {
-    return cards.removeFirst()
+  override fun draw(): Skill {
+    return skillFactory.create(cards.removeFirst())
   }
 
-  override fun find(name: String): SkillCard {
-    val card = cards.find { it.name == name } ?: throw IllegalArgumentException("No card $name in $cards")
+  override fun find(name: String): Skill {
+    val card =
+      cards.find { it.name == name } ?: throw IllegalArgumentException("No card $name in $cards")
     cards.remove(card)
-    return card
+    return skillFactory.create(card)
   }
 }

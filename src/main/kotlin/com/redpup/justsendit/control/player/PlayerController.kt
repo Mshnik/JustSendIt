@@ -2,14 +2,13 @@ package com.redpup.justsendit.control.player
 
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
 import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
-import com.redpup.justsendit.model.supply.proto.SkillCard
+import com.redpup.justsendit.model.skill.Skill
 
 /** Handler for players making decisions. */
 interface PlayerController {
@@ -27,9 +26,9 @@ interface PlayerController {
   /** Asks the player to choose cards to remove from their deck. */
   suspend fun chooseCardsToRemove(
     player: Player,
-    cards: List<SkillCard>,
+    cards: List<Skill>,
     maxToRemove: Int,
-  ): List<SkillCard>
+  ): List<Skill>
 
   /**
    * Chooses [count] other apres from [otherApres] to apply.
@@ -46,23 +45,23 @@ interface PlayerController {
   /** Asks the player to choose cards to discard from hand to ride a lift. */
   suspend fun chooseCardsToDiscardForLift(
     player: Player,
-    hand: List<SkillCard>,
+    hand: List<Skill>,
     count: Int,
-  ): List<SkillCard>
+  ): List<Skill>
 
   /** Asks the player to choose cards to trash from their discard pile when riding a lift. */
   suspend fun chooseCardsToTrashForLift(
     player: Player,
-    candidates: List<SkillCard>,
+    candidates: List<Skill>,
     maxToTrash: Int,
-  ): List<SkillCard>
+  ): List<Skill>
 
   /** Asks the player to choose cards from their discard pile to retrieve (e.g. for Rugged card). */
   suspend fun chooseCardsFromDiscard(
     player: Player,
-    discard: List<SkillCard>,
+    discard: List<Skill>,
     maxCount: Int,
-  ): List<SkillCard>
+  ): List<Skill>
 }
 
 class BasicPlayerController : PlayerController {
@@ -85,9 +84,9 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun chooseCardsToRemove(
     player: Player,
-    cards: List<SkillCard>,
+    cards: List<Skill>,
     maxToRemove: Int,
-  ): List<SkillCard> {
+  ): List<Skill> {
     return emptyList()
   }
 
@@ -116,25 +115,25 @@ class BasicPlayerController : PlayerController {
 
   override suspend fun chooseCardsToDiscardForLift(
     player: Player,
-    hand: List<SkillCard>,
+    hand: List<Skill>,
     count: Int,
-  ): List<SkillCard> {
+  ): List<Skill> {
     return hand.take(count)
   }
 
   override suspend fun chooseCardsToTrashForLift(
     player: Player,
-    candidates: List<SkillCard>,
+    candidates: List<Skill>,
     maxToTrash: Int,
-  ): List<SkillCard> {
+  ): List<Skill> {
     return emptyList()
   }
 
   override suspend fun chooseCardsFromDiscard(
     player: Player,
-    discard: List<SkillCard>,
+    discard: List<Skill>,
     maxCount: Int,
-  ): List<SkillCard> {
+  ): List<Skill> {
     return discard.take(maxCount)
   }
 }

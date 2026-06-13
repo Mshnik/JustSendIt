@@ -3,9 +3,7 @@ package com.redpup.justsendit.model.player
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDeck
-import com.redpup.justsendit.model.supply.proto.SkillCard
+import com.redpup.justsendit.model.skill.Skill
 
 /** Immutable access to a player object. */
 interface Player {
@@ -28,10 +26,10 @@ interface Player {
   val points: Int
 
   /** The player's current skill deck, in order. */
-  val skillDeck: List<SkillCard>
+  val skillDeck: List<Skill>
 
   /** The player's current skill discard, unordered. */
-  val skillDiscard: Collection<SkillCard>
+  val skillDiscard: Collection<Skill>
 
   /** The player's current location on the mountain. Null if not on mountain. */
   val location: HexPoint?
@@ -70,10 +68,10 @@ interface Player {
   val day: Day
 
   /** The player's current hand. */
-  val hand: List<SkillCard>
+  val hand: List<Skill>
 
   /** The skill cards the player has in play this round. */
-  val inPlay: List<SkillCard>
+  val inPlay: List<Skill>
 
   /** The player's current wobbles. */
   val wobbles: Int
@@ -92,6 +90,7 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   fun setPoints(points: Int) {
     this.points = points
   }
+
   override var location: HexPoint? = null
   override var apresLink: Int? = null
 
@@ -99,10 +98,10 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   override val day = MutableDay()
   val nextDay = MutableDay()
 
-  override val hand = mutableListOf<SkillCard>()
-  override val inPlay = mutableListOf<SkillCard>()
-  override val skillDeck = mutableListOf<SkillCard>()
-  override val skillDiscard = mutableListOf<SkillCard>()
+  override val hand = mutableListOf<Skill>()
+  override val inPlay = mutableListOf<Skill>()
+  override val skillDeck = mutableListOf<Skill>()
+  override val skillDiscard = mutableListOf<Skill>()
   override var wobbles = 0; internal set
 
   override val abilityHandler = object : AbilityHandler {}
@@ -115,13 +114,13 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Plays [card] from [hand] into [inPlay]. */
-  fun playCard(card: SkillCard) {
+  fun playCard(card: Skill) {
     check(hand.remove(card))
     inPlay.add(card)
   }
 
   /** Plays the top card of the skill deck, returning it and putting it in the discard. */
-  fun playSkillCard(): SkillCard? {
+  fun playSkill(): Skill? {
     val card = skillDeck.removeFirstOrNull()
     if (card != null) {
       skillDiscard.add(card)
@@ -164,7 +163,7 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Discards [card] from [hand]. */
-  fun discardFromHand(card: SkillCard) {
+  fun discardFromHand(card: Skill) {
     check(hand.remove(card))
     skillDiscard.add(card)
   }
@@ -192,7 +191,7 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Gains [card] skill card, then shuffles this player's [skillDeck]. */
-  fun gainSkillCard(card: SkillCard) {
+  fun gainSkill(card: Skill) {
     this.skillDeck.add(card)
     this.skillDeck.shuffle()
   }
