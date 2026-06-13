@@ -5,6 +5,7 @@ import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileList
 import com.redpup.justsendit.model.board.tile.proto.MountainTileLocation
 import com.redpup.justsendit.model.board.tile.proto.MountainTileLocationList
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.util.TextProtoReaderImpl
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -31,17 +32,19 @@ annotation class LocationPath
 class TileSupplyImpl @Inject constructor(
   @TilePath tilePath: String,
   @LocationPath locationPath: String,
+  shuffler: Random,
 ) : TileSupply {
   private val tileReader = TextProtoReaderImpl(
     tilePath,
     MountainTileList::newBuilder,
     MountainTileList.Builder::getTilesList,
-    shuffle = true
+    shuffler
   )
   private val locationReader = TextProtoReaderImpl(
     locationPath,
     MountainTileLocationList::newBuilder,
-    MountainTileLocationList.Builder::getLocationList
+    MountainTileLocationList.Builder::getLocationList,
+    null
   )
 
   override val tiles = tileReader()

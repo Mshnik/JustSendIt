@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.apres.proto.ApresCardList
 import com.redpup.justsendit.util.TextProtoReaderImpl
 import com.google.inject.Inject
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.util.pop
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -44,6 +45,7 @@ annotation class ApresPath
 @Singleton
 class ApresDeckImpl @Inject constructor(
   @ApresPath path: String,
+  shuffler: Random,
   private val factory: ApresFactory,
 ) :
   ApresDeck {
@@ -51,7 +53,7 @@ class ApresDeckImpl @Inject constructor(
     path,
     ApresCardList::newBuilder,
     ApresCardList.Builder::getApresList,
-    shuffle = true
+    shuffler
   )
   val cards = reader().toMutableList()
 

@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.supply
 
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.supply.proto.SkillCardList
@@ -33,13 +34,14 @@ annotation class SpecialDeck
 /** The skill decks available for interaction in the supply. */
 class SkillDeckInstance(
   path: String,
+  shuffler: Random,
   private val skillFactory: SkillFactory,
 ) : SkillDeck {
   private val reader = TextProtoReaderImpl(
     path,
     SkillCardList::newBuilder,
     SkillCardList.Builder::getCardsList,
-    shuffle = true
+    shuffler
   )
   val cards = reader().toMutableList()
 

@@ -15,6 +15,8 @@ class FakeRandom @Inject constructor() : Random {
 
   override fun nextInt(bound: Int): Int = nextIntValues[bound]?.removeFirst() ?: 0
 
+  override fun shuffle(iterable: Iterable<*>) {}
+
   /** Adds an entry for [nextInt]: The next time [bound] is requested, [value] is returned. */
   fun addNextInt(bound: Int, value: Int) {
     if (nextIntValues[value] == null) {

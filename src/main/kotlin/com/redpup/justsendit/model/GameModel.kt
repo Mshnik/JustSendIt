@@ -123,6 +123,7 @@ class MutableGameModel @Inject constructor(
       else if (blue > 0) blue--
       else if (black > 0) black--
     }
+
     // Moguls: [Before roll] Downgrade your highest die.
     if (slope.hazardsList.contains(Hazard.HAZARD_MOGULS)) {
       if (black > 0) {

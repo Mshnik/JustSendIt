@@ -6,6 +6,7 @@ import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
 import com.redpup.justsendit.model.player.proto.PlayerCardList
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.util.TextProtoReaderImpl
 import com.redpup.justsendit.util.pop
 import javax.inject.Qualifier
@@ -37,6 +38,7 @@ annotation class PlayerPath
 @Singleton
 class PlayerDeckImpl @Inject constructor(
   @PlayerPath path: String,
+  shuffler: Random,
   private val playerFactory: PlayerFactory,
 ) :
   PlayerDeck {
@@ -44,7 +46,7 @@ class PlayerDeckImpl @Inject constructor(
     path,
     PlayerCardList::newBuilder,
     PlayerCardList.Builder::getPlayerList,
-    shuffle = true
+    shuffler
   )
 
   /** Reads all cards from [reader]. */

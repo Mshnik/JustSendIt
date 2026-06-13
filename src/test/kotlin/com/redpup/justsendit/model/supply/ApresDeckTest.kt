@@ -5,6 +5,7 @@ import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.apres.testing.FakeApres
 import com.redpup.justsendit.model.apres.testing.FakeApresFactory
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.testing.FakeRandom
 import java.io.File
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
@@ -18,6 +19,7 @@ class ApresDeckTest {
 
   private lateinit var apresFile: File
   private lateinit var factory: FakeApresFactory
+  private val random = FakeRandom()
 
   @BeforeEach
   fun setup() {
@@ -52,7 +54,7 @@ class ApresDeckTest {
 
   @Test
   fun `reads cards from file`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     deck.reset()
 
     assertThat(deck.getCards()).containsExactly(
@@ -74,7 +76,7 @@ class ApresDeckTest {
 
   @Test
   fun `draw returns a card and reduces deck size`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     deck.reset()
 
     val card = deck.draw()
@@ -84,7 +86,7 @@ class ApresDeckTest {
 
   @Test
   fun `tuck adds card to bottom of deck`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     deck.reset()
     val card = deck.draw()
     deck.tuck(card)
@@ -93,7 +95,7 @@ class ApresDeckTest {
 
   @Test
   fun `reset restores deck to initial state`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     deck.draw()
     deck.reset()
     assertThat(deck.getCards()).hasSize(3)
@@ -101,7 +103,7 @@ class ApresDeckTest {
 
   @Test
   fun `drawForDay gets a valid card`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     deck.reset()
 
     val day1Card = deck.drawForDay(Day.DAY_FRIDAY)
@@ -115,7 +117,7 @@ class ApresDeckTest {
 
   @Test
   fun `drawForDay throws exception if no card is found`() {
-    val deck = ApresDeckImpl(apresFile.absolutePath, factory)
+    val deck = ApresDeckImpl(apresFile.absolutePath, random, factory)
     assertThrows(IllegalArgumentException::class.java) {
       deck.drawForDay(Day.DAY_SUNDAY)
     }
