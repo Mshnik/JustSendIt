@@ -5,6 +5,7 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,14 +26,20 @@ class IceSkatingTest {
 
   @Test
   fun `first player gets points for blue cards`() {
-    player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    val green = skillCard { greenDice = 1 }
+    val blue = skillCard { blueDice = 1 }
+    val black = skillCard { blackDice = 1 }
+    player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(15) // 3 blues * 5
   }
 
   @Test
   fun `other player gets points for blue cards`() {
-    player.skillDiscard.addAll(listOf(1, 2, 3, 4, 5, 6, 7, 8, 9))
+    val green = skillCard { greenDice = 1 }
+    val blue = skillCard { blueDice = 1 }
+    val black = skillCard { blackDice = 1 }
+    player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(9) // 3 blues * 3
   }

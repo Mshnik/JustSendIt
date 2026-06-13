@@ -24,6 +24,8 @@ import com.redpup.justsendit.model.supply.testing.FakePlayerDeck
 import com.redpup.justsendit.model.supply.testing.FakeSkillDeck
 import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import com.redpup.justsendit.util.testing.FakeTimeSourceModule
+import com.redpup.justsendit.model.supply.SkillDeck
+import com.redpup.justsendit.model.supply.proto.skillCard
 import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
@@ -40,7 +42,8 @@ class GameModelTest {
   @Inject private lateinit var gameModel: MutableGameModel
   @Inject private lateinit var playerDeck: FakePlayerDeck
   @Inject private lateinit var playerFactory: FakePlayerFactory
-  @Inject private lateinit var skillDecks: FakeSkillDeck
+  @Inject @com.redpup.justsendit.model.supply.StarterDeck private lateinit var starterDeck: SkillDeck
+  @Inject @com.redpup.justsendit.model.supply.ShopDeck private lateinit var shopDeck: SkillDeck
   @Inject private lateinit var apresDeck: FakeApresDeck
   @Inject private lateinit var apresFactory: FakeApresFactory
 
@@ -61,9 +64,12 @@ class GameModelTest {
       LoggerModule()
     ).injectMembers(this)
 
-    skillDecks.setGreenDeck(listOf(1, 1, 2, 2, 3, 3))
-    skillDecks.setBlueDeck(listOf(4, 4, 5, 5, 6, 6))
-    skillDecks.setBlackDeck(listOf(7, 7, 8, 8, 9, 9))
+    repeat(10) {
+      (starterDeck as FakeSkillDeck).add(skillCard { name = "Starter $it"; greenDice = 1 })
+    }
+    repeat(10) {
+      (shopDeck as FakeSkillDeck).add(skillCard { name = "Shop $it"; blueDice = 1 })
+    }
 
     playerDeck.add(
       playerCard {
@@ -142,18 +148,6 @@ class GameModelTest {
       )
     ).thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
 
-    gameModel.players.forEach {
-      it.mutate {
-        it.gainSkillCards(
-          listOf(
-            Grade.GRADE_GREEN,
-            Grade.GRADE_BLUE,
-            Grade.GRADE_BLACK
-          ), skillDecks
-        )
-      }
-    }
-
     gameModel.startDay()
 
     assertThat(gameModel.apres).hasSize(MutableGameModel.APRES_SLOTS)
@@ -166,30 +160,33 @@ class GameModelTest {
   }
 
   @Test
-  fun `turn advances sub-turn and eventually player`() = runBlocking {
+  fun `turn advances player`() = runBlocking {
     player1.location = createHexPoint(0, 0)
     whenever(playerController1.makeMountainDecision(any(), any())).thenReturn(mountainDecision {
-      rest = com.google.protobuf.Empty.getDefaultInstance()
+      pass = com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
     })
 
     assertThat(gameModel.currentPlayer).isEqualTo(player1)
     gameModel.turn()
+    // player1 passed, so currentPlayer should move to player2
     assertThat(gameModel.currentPlayer).isEqualTo(player2)
-    assertThat(gameModel.clock.subTurn).isEqualTo(1)
   }
 
   @Test
-  fun `executeRest refreshes decks`() = runBlocking {
+  fun `executePass discards in play cards`() = runBlocking {
     player1.location = createHexPoint(0, 0)
-    player1.gainSkillCards(listOf(Grade.GRADE_GREEN, Grade.GRADE_GREEN), skillDecks)
-    player1.playSkillCard()
-    player1.playSkillCard()
+    repeat(2) { player1.gainSkillCard(skillCard { name = "Card $it" }) }
+    player1.drawCards(2)
+    player1.playCard(player1.hand.first())
+    player1.playCard(player1.hand.first())
     whenever(
       playerController1.makeMountainDecision(
         any(), any()
       )
-    ).thenReturn(mountainDecision { rest = com.google.protobuf.Empty.getDefaultInstance() })
+    ).thenReturn(mountainDecision {
+      pass = com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
+    })
     gameModel.turn()
-    assertThat(player1.skillDiscard).isEmpty()
+    assertThat(player1.inPlay).isEmpty()
   }
 }

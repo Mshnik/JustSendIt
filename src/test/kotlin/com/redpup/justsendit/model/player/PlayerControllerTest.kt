@@ -5,6 +5,7 @@ import com.redpup.justsendit.control.player.BasicPlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -47,15 +48,8 @@ class PlayerControllerTest {
 
   @Test
   fun `chooseCardsToRemove returns empty list`() {
-    val cards = listOf(1, 2, 3)
+    val cards = listOf(skillCard { name = "1" }, skillCard { name = "2" })
     val result = runBlocking { handler.chooseCardsToRemove(player, cards, 1) }
-    assertThat(result).isEmpty()
-  }
-
-  @Test
-  fun `chooseChipsToUse returns empty list`() {
-    val tile = slopeTile {}
-    val result = runBlocking { handler.chooseChipsToUse(player, tile, 1, 2) }
     assertThat(result).isEmpty()
   }
 }

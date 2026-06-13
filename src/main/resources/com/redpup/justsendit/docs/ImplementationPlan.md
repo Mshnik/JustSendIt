@@ -57,14 +57,16 @@ Align the codebase with the new V2 rules, including:
     - [x] Sale tokens (-1 cost per token, max 2).
     - [x] Round-end replenishment and token addition.
 
-## Phase 4: Verification
-- [ ] Update existing tests.
-- [ ] Add new tests for:
-    - Dice rolling and wobble logic.
-    - Terrain effect application.
-    - Shop cost and sale token logic.
-    - Round-robin turn structure.
-
-## Unknowns & TODOs
-- [ ] Exact dice values for Green (d4), Blue (d6), Black (d8) - assuming standard dice.
-- [ ] Exact composition of the 10-card starter deck.
+## Phase 4: Verification & Testing [IN PROGRESS]
+- [x] **Update all existing tests:**
+    - [x] `GameModelTest.kt`: Update to reflect round-robin turns, starter decks, and new ski/ride resolution.
+    - [x] `PlayerTest.kt`: Update to use `SkillCard` objects and new state (wobbles, etc.).
+    - [x] `SkillDeckTest.kt`: Update for `SkillCard` loading and qualified decks.
+    - [x] Apres Card Tests (`BarTest.kt`, `FireworksTest.kt`, etc.): Update triggers and rewards to match dice-based logic.
+    - [x] `PlayerControllerTest.kt`: Update to use new resolution actions and lift/trash logic.
+- [ ] **Add new V2-specific tests:**
+    - [ ] Dice rolling and wobble accumulation logic.
+    - [ ] Terrain effect application during ski/ride resolution.
+    - [ ] Shop cost calculation with sale tokens and icon matching.
+    - [ ] Round-robin turn structure and leader token advancement.
+    - [ ] Lift cost and trashing mechanism.

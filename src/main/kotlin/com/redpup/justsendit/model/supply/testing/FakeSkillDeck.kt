@@ -11,14 +11,17 @@ import javax.inject.Singleton
 @Singleton
 class FakeSkillDeck @Inject constructor() : SkillDeck {
   private var cards: MutableList<SkillCard> = mutableListOf()
+  private var baseCards: List<SkillCard> = emptyList()
 
-  /** Adds all [cards] to [cards]. */
+  /** Adds all [cards] to [cards] and updates [baseCards]. */
   fun add(vararg cards: SkillCard) {
     this.cards.addAll(cards)
+    this.baseCards = this.cards.toList()
   }
 
   override fun reset() {
     cards.clear()
+    cards.addAll(baseCards)
   }
 
   override fun draw(): SkillCard {

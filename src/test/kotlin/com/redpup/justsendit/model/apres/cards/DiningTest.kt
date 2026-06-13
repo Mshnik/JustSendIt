@@ -5,6 +5,7 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -25,14 +26,20 @@ class DiningTest {
 
   @Test
   fun `first player gets points for pairs`() {
-    player.skillDiscard.addAll(listOf(1, 1, 2, 2, 2, 3))
+    val card1 = skillCard { name = "1" }
+    val card2 = skillCard { name = "2" }
+    val card3 = skillCard { name = "3" }
+    player.skillDiscard.addAll(listOf(card1, card1, card2, card2, card2, card3))
     runBlocking { dining.apply(player, true, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(14) // 2 pairs * 7
   }
 
   @Test
   fun `other player gets points for pairs`() {
-    player.skillDiscard.addAll(listOf(1, 1, 2, 2, 2, 3))
+    val card1 = skillCard { name = "1" }
+    val card2 = skillCard { name = "2" }
+    val card3 = skillCard { name = "3" }
+    player.skillDiscard.addAll(listOf(card1, card1, card2, card2, card2, card3))
     runBlocking { dining.apply(player, false, gameModel) }
     assertThat(player.day.apresPoints).isEqualTo(8) // 2 pairs * 4
   }

@@ -6,6 +6,7 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,22 +27,15 @@ class BarTest {
 
   @Test
   fun `first player reveals 6 cards`() {
-    player.skillDeck.addAll(listOf(1, 2, 3, 4, 5, 6, 7))
+    repeat(7) { player.skillDeck.add(skillCard { name = "Card $it" }) }
     runBlocking { bar.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isIn(
-      Range.closed(
-        1 + 2 + 3 + 4 + 5 + 6,
-        2 + 3 + 4 + 5 + 6 + 7
-      )
-    )
+    assertThat(player.day.apresPoints).isEqualTo(12) // 6 cards * 2 points
   }
 
   @Test
   fun `other player reveals 3 cards`() {
-    player.skillDeck.addAll(listOf(1, 2, 3, 4, 5, 6, 7))
+    repeat(7) { player.skillDeck.add(skillCard { name = "Card $it" }) }
     runBlocking { bar.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isIn(
-      Range.closed(1 + 2 + 3, 5 + 6 + 7)
-    )
+    assertThat(player.day.apresPoints).isEqualTo(6) // 3 cards * 2 points
   }
 }

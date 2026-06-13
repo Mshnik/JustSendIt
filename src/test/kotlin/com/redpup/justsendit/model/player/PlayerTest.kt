@@ -5,8 +5,8 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.friday.George
 import com.redpup.justsendit.model.player.proto.playerCard
-import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.SkillDeck
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -35,7 +35,7 @@ class PlayerTest {
   fun `name is taken from first player card`() {
     assertThat(player.name).isEqualTo("No Name")
     player.playerCards.add(George(playerCard { name = "Test Player" }))
-    assertThat(player.name).isEqualTo("George")
+    assertThat(player.name).isEqualTo("Test Player")
   }
 
   @Test
@@ -49,16 +49,19 @@ class PlayerTest {
 
   @Test
   fun `playSkillCard moves card from deck to discard`() {
-    player.skillDeck.addAll(listOf(1, 2, 3))
+    val card1 = skillCard { name = "Card 1" }
+    val card2 = skillCard { name = "Card 2" }
+    val card3 = skillCard { name = "Card 3" }
+    player.skillDeck.addAll(listOf(card1, card2, card3))
     assertThat(player.skillDeck.size).isEqualTo(3)
     assertThat(player.skillDiscard.isEmpty()).isTrue()
 
     val card = player.playSkillCard()
 
-    assertThat(card).isEqualTo(1)
+    assertThat(card).isEqualTo(card1)
     assertThat(player.skillDeck.size).isEqualTo(2)
     assertThat(player.skillDiscard.size).isEqualTo(1)
-    assertThat(player.skillDiscard.first()).isEqualTo(1)
+    assertThat(player.skillDiscard.first()).isEqualTo(card1)
   }
 
   @Test
@@ -70,7 +73,10 @@ class PlayerTest {
 
   @Test
   fun `refreshDecks moves discard to available`() {
-    player.skillDiscard.addAll(listOf(1, 2, 3))
+    val card1 = skillCard { name = "Card 1" }
+    val card2 = skillCard { name = "Card 2" }
+    val card3 = skillCard { name = "Card 3" }
+    player.skillDiscard.addAll(listOf(card1, card2, card3))
 
     player.refreshDecks()
 
@@ -107,27 +113,22 @@ class PlayerTest {
   }
 
   @Test
-  fun `gainSkillCards adds cards to deck`() {
-    whenever(skillDeck.draw(Grade.GRADE_GREEN)).thenReturn(1)
-    whenever(skillDeck.draw(Grade.GRADE_BLUE)).thenReturn(2)
+  fun `gainSkillCard adds card to deck`() {
+    val card = skillCard { name = "Test Card" }
+    player.gainSkillCard(card)
 
-    player.gainSkillCards(listOf(Grade.GRADE_GREEN, Grade.GRADE_BLUE), skillDeck)
-
-    assertThat(player.skillDeck).containsExactly(1, 2)
+    assertThat(player.skillDeck).containsExactly(card)
   }
 
   @Test
-  fun `gainPlayerCard adds card and its benefits`() = runBlocking {
+  fun `gainPlayerCard adds card`() = runBlocking {
     val card = George(playerCard {
       name = "Test Card"
-      skillCards += Grade.GRADE_GREEN
     })
-    whenever(skillDeck.draw(Grade.GRADE_GREEN)).thenReturn(1)
 
-    player.gainPlayerCard(card, skillDeck)
+    player.gainPlayerCard(card)
 
     assertThat(player.playerCards).contains(card)
-    assertThat(player.skillDeck).contains(1)
   }
 
   @Test

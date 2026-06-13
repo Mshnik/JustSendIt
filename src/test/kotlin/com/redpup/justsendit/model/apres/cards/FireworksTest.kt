@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres.Companion.NON_STOCKPILE_POINTS
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -26,16 +27,15 @@ class FireworksTest {
   private val fireworks = Fireworks(apresCard { name = "Fireworks" })
 
   @Test
-  fun `stockpile increases on playing a 9`() {
-    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(9), gameModel)
+  fun `stockpile increases on playing a black die card`() {
+    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { blackDice = 1 }), gameModel)
     assertThat(fireworks.stockpile).isEqualTo(2)
   }
 
   @Test
-  fun `stockpile does not increase on playing a non-9`() {
-    for (card in 1..8) {
-      fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(card), gameModel)
-    }
+  fun `stockpile does not increase on playing a non-black die card`() {
+    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { greenDice = 1 }), gameModel)
+    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { blueDice = 1 }), gameModel)
     assertThat(fireworks.stockpile).isEqualTo(0)
   }
 
