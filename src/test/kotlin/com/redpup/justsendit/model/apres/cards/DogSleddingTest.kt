@@ -7,6 +7,8 @@ import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres.Companion.NON_STOCKPILE_POINTS
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandom
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,6 +19,7 @@ class DogSleddingTest {
   private lateinit var player: MutablePlayer
   private val handler: PlayerController = mock()
   private val gameModel: GameModel = mock()
+  private val random: Random = FakeRandom()
 
   @BeforeEach
   fun setUp() {
@@ -43,7 +46,7 @@ class DogSleddingTest {
   @Test
   fun `apply gives stockpile to first player`() {
     dogSledding.stockpile = 20
-    runBlocking { dogSledding.apply(player, true, gameModel) }
+    runBlocking { dogSledding.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(20)
     assertThat(dogSledding.stockpile).isEqualTo(0)
   }
@@ -51,7 +54,7 @@ class DogSleddingTest {
   @Test
   fun `other player gets NON_STOCKPILE_POINTS points`() {
     dogSledding.stockpile = 20
-    runBlocking { dogSledding.apply(player, false, gameModel) }
+    runBlocking { dogSledding.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(dogSledding.stockpile).isEqualTo(20)
   }

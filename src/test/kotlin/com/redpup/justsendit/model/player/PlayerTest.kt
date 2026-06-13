@@ -7,6 +7,8 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.player.proto.playerCard
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
@@ -22,10 +24,11 @@ class PlayerTest {
   private val controller = mock<PlayerController>()
 
   @Inject private lateinit var skillFactory: SkillFactory
+  @Inject private lateinit var random: Random
 
   @BeforeEach
   fun setUp() {
-    Guice.createInjector(FakeSkillModule()).injectMembers(this)
+    Guice.createInjector(FakeSkillModule(), FakeRandomModule()).injectMembers(this)
     player = MutablePlayer(controller)
   }
 
@@ -84,7 +87,7 @@ class PlayerTest {
     val card3 = skillFactory.create(skillCard { name = "Card 3" })
     player.skillDiscard.addAll(listOf(card1, card2, card3))
 
-    player.refreshDecks()
+    player.refreshDecks(random)
 
     assertThat(player.skillDeck.size).isEqualTo(3)
     assertThat(player.skillDiscard).isEmpty()

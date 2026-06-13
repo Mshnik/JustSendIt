@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.player
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 
 /** Immutable access to a player object. */
@@ -112,14 +113,14 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Draws [count] cards from the deck into hand. */
-  fun drawCards(count: Int) {
+  fun drawCards(count: Int, random: Random) {
     for (i in 1..count) {
       val card = skillDeck.removeFirstOrNull()
       if (card != null) {
         hand.add(card)
       } else {
         // Shuffle discard into deck and try again
-        refreshDecks()
+        refreshDecks(random)
         val cardAfterShuffle = skillDeck.removeFirstOrNull()
         if (cardAfterShuffle != null) {
           hand.add(cardAfterShuffle)
@@ -129,9 +130,9 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Shuffles all cards from discard back into skill deck. */
-  fun refreshDecks() {
+  fun refreshDecks(random: Random) {
     skillDeck.addAll(skillDiscard)
-    skillDeck.shuffle()
+    random.shuffle(skillDeck)
     skillDiscard.clear()
   }
 

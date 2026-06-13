@@ -7,6 +7,8 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
@@ -22,10 +24,11 @@ class IceSkatingTest {
   private val gameModel: GameModel = mock()
 
   @Inject private lateinit var skillFactory: SkillFactory
+  @Inject private lateinit var random: Random
 
   @BeforeEach
   fun setUp() {
-    Guice.createInjector(FakeSkillModule()).injectMembers(this)
+    Guice.createInjector(FakeSkillModule(), FakeRandomModule()).injectMembers(this)
     player = MutablePlayer(handler)
   }
 
@@ -37,7 +40,7 @@ class IceSkatingTest {
     val blue = skillFactory.create(skillCard { blueDice = 1 })
     val black = skillFactory.create(skillCard { blackDice = 1 })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
-    runBlocking { iceSkating.apply(player, true, gameModel) }
+    runBlocking { iceSkating.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(15) // 3 blues * 5
   }
 
@@ -47,7 +50,7 @@ class IceSkatingTest {
     val blue = skillFactory.create(skillCard { blueDice = 1 })
     val black = skillFactory.create(skillCard { blackDice = 1 })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
-    runBlocking { iceSkating.apply(player, false, gameModel) }
+    runBlocking { iceSkating.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(9) // 3 blues * 3
   }
 }

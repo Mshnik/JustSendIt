@@ -6,6 +6,8 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandom
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,6 +19,7 @@ class ConcertTest {
   private lateinit var player: MutablePlayer
   private val handler: PlayerController = mock()
   private val gameModel: GameModel = mock()
+  private val random: Random = FakeRandom()
 
   @BeforeEach
   fun setUp() {
@@ -33,7 +36,7 @@ class ConcertTest {
     tileMapPoints[mock()] = 0
     whenever(gameModel.tileMapPoints).thenReturn(tileMapPoints)
 
-    runBlocking { concert.apply(player, true, gameModel) }
+    runBlocking { concert.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(2)
   }
 
@@ -46,7 +49,7 @@ class ConcertTest {
     tileMapPoints[mock()] = 0
     whenever(gameModel.tileMapPoints).thenReturn(tileMapPoints)
 
-    runBlocking { concert.apply(player, false, gameModel) }
+    runBlocking { concert.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(1)
   }
 }

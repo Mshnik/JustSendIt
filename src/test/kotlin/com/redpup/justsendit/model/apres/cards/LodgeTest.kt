@@ -6,6 +6,8 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandom
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -16,7 +18,8 @@ class LodgeTest {
   private lateinit var player: MutablePlayer
   private val handler: PlayerController = mock()
   private val gameModel: GameModel = mock()
-
+  private val random: Random = FakeRandom()
+  
   @BeforeEach
   fun setUp() {
     player = MutablePlayer(handler)
@@ -30,10 +33,10 @@ class LodgeTest {
     whenever(gameModel.apres).thenReturn(otherApres + lodge)
     whenever(handler.choose(any(), any<List<Apres>>(), any())).thenReturn(otherApres.take(2))
 
-    lodge.apply(player, true, gameModel)
+    lodge.apply(player, true, gameModel, random)
     verify(handler).choose(player, otherApres, Range.closed(2, 2))
-    verify(otherApres[0]).apply(player, false, gameModel)
-    verify(otherApres[1]).apply(player, false, gameModel)
+    verify(otherApres[0]).apply(player, false, gameModel, random)
+    verify(otherApres[1]).apply(player, false, gameModel, random)
   }
 
   @Test
@@ -42,9 +45,9 @@ class LodgeTest {
     whenever(gameModel.apres).thenReturn(otherApres + lodge)
     whenever(handler.choose(any(), any<List<Apres>>(), any())).thenReturn(otherApres.take(1))
 
-    lodge.apply(player, false, gameModel)
+    lodge.apply(player, false, gameModel, random)
     verify(handler).choose(player, otherApres, Range.closed(1, 1))
-    verify(otherApres[0]).apply(player, false, gameModel)
-    verify(otherApres[1], never()).apply(any(), any(), any())
+    verify(otherApres[0]).apply(player, false, gameModel, random)
+    verify(otherApres[1], never()).apply(any(), any(), any(), any())
   }
 }

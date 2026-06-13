@@ -7,6 +7,8 @@ import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres.Companion.NON_STOCKPILE_POINTS
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandom
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +19,8 @@ class MassageTest {
   private lateinit var player: MutablePlayer
   private val handler: PlayerController = mock()
   private val gameModel: GameModel = mock()
-
+  private val random: Random = FakeRandom()
+  
   @BeforeEach
   fun setUp() {
     player = MutablePlayer(handler)
@@ -34,7 +37,7 @@ class MassageTest {
   @Test
   fun `apply gives stockpile to first player`() {
     massage.stockpile = 20
-    runBlocking { massage.apply(player, true, gameModel) }
+    runBlocking { massage.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(20)
     assertThat(massage.stockpile).isEqualTo(0)
   }
@@ -42,7 +45,7 @@ class MassageTest {
   @Test
   fun `other player gets non stockpile points`() {
     massage.stockpile = 20
-    runBlocking { massage.apply(player, false, gameModel) }
+    runBlocking { massage.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(massage.stockpile).isEqualTo(20)
   }

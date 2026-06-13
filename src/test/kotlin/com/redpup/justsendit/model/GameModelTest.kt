@@ -19,6 +19,7 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
@@ -49,6 +50,7 @@ class GameModelTest {
   @Inject private lateinit var apresDeck: FakeApresDeck
   @Inject private lateinit var apresFactory: FakeApresFactory
   @Inject private lateinit var skillFactory: SkillFactory
+  @Inject private lateinit var random: Random
 
   private lateinit var player1: MutablePlayer
   private lateinit var player2: MutablePlayer
@@ -176,7 +178,7 @@ class GameModelTest {
   fun `executePass discards in play cards`() = runBlocking {
     player1.location = createHexPoint(0, 0)
     repeat(2) { player1.gainSkill(skillFactory.create(skillCard { name = "Card $it" })) }
-    player1.drawCards(2)
+    player1.drawCards(2, random)
     player1.playCard(player1.hand.first())
     player1.playCard(player1.hand.first())
     whenever(

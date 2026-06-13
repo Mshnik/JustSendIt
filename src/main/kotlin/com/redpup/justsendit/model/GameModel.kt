@@ -449,11 +449,6 @@ class MutableGameModel @Inject constructor(
     return succeeded
   }
 
-  private fun executeRest(player: MutablePlayer) {
-    player.refreshDecks()
-    PlayerGameEvent.PlayerRested.broadcast(player)
-  }
-
   private fun getLiftCost(color: LiftColor): Int {
     return when (color) {
       LiftColor.LIFT_COLOR_RED -> 1
@@ -559,7 +554,7 @@ class MutableGameModel @Inject constructor(
     }.log()
     player.location = null
     player.apresLink = link
-    apres[link - 1].apply(player, players.count { it.apresLink == link } == 1, this)
+    apres[link - 1].apply(player, players.count { it.apresLink == link } == 1, this, random)
   }
 
   companion object {

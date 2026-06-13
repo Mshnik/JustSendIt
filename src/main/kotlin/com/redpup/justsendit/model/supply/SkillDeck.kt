@@ -45,10 +45,6 @@ class SkillDeckInstance(
   )
   val cards = reader().toMutableList()
 
-  init {
-    reset()
-  }
-
   override fun reset() {
     cards.clear()
     cards.addAll(reader())

@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.apres
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
 
 import com.redpup.justsendit.model.supply.proto.SkillCard
 
@@ -18,6 +19,7 @@ interface Apres {
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,
+    random: Random,
   )
 
   /** Handles a game event, potentially updating the stockpile. */
@@ -39,6 +41,7 @@ abstract class StockpilingBaseApres(override val apresCard: ApresCard) : BaseApr
     player: MutablePlayer,
     isFirstPlayerToArrive: Boolean,
     gameModel: GameModel,
+    random: Random,
   ) {
     if (isFirstPlayerToArrive) {
       player.points += stockpile

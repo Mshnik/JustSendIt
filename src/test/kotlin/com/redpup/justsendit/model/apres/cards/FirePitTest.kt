@@ -7,6 +7,8 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
@@ -22,10 +24,11 @@ class FirePitTest {
   private val gameModel: GameModel = mock()
 
   @Inject private lateinit var skillFactory: SkillFactory
+  @Inject private lateinit var random: Random
 
   @BeforeEach
   fun setUp() {
-    Guice.createInjector(FakeSkillModule()).injectMembers(this)
+    Guice.createInjector(FakeSkillModule(), FakeRandomModule()).injectMembers(this)
     player = MutablePlayer(handler)
   }
 
@@ -37,7 +40,7 @@ class FirePitTest {
     val card2 = skillFactory.create(skillCard { name = "2" })
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card3, card3, card3))
-    runBlocking { firePit.apply(player, true, gameModel) }
+    runBlocking { firePit.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(12) // 3 unique * 4
   }
 
@@ -47,7 +50,7 @@ class FirePitTest {
     val card2 = skillFactory.create(skillCard { name = "2" })
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card3, card3, card3))
-    runBlocking { firePit.apply(player, false, gameModel) }
+    runBlocking { firePit.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(6) // 3 unique * 2
   }
 }
