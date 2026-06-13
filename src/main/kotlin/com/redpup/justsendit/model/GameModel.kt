@@ -35,9 +35,6 @@ interface GameModel {
   /** The mountain map. */
   val tileMap: HexGrid<MountainTile>
 
-  /** Points per mountain tile. */
-  val tileMapPoints: HexGrid<Int>
-
   /** Immutable access to all players. */
   val players: List<Player>
 
@@ -79,7 +76,6 @@ class MutableGameModel @Inject constructor(
   }
 
   override val tileMap: HexGrid<MountainTile> = tileMapBuilder.build()
-  override val tileMapPoints: HexGrid<Int> = tileMap.map { _, _ -> 0 }
   private val lifts =
     tileMap.entries().filter { it.value.hasLift() }.groupBy { it.value.lift.color }
 
@@ -228,20 +224,10 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  /** Adds fun to mountain tiles. */
-  private fun populateMountainPoints() {
-    for (point in tileMap.keys()) {
-      if (tileMap[point]!!.hasSlope()) {
-        tileMapPoints[point] = tileMapPoints[point]!! + MOUNTAIN_POINTS
-      }
-    }
-  }
-
   /** Starts a new day. May be the first day of the game or a later day in the game. */
   suspend fun startDay() {
     pickPlayerCards()
     populateApresSlots()
-    populateMountainPoints()
     replenishShop()
 
     if (clock.day == Day.DAY_FRIDAY) {

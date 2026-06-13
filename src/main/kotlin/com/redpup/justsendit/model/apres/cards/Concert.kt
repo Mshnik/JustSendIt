@@ -14,7 +14,7 @@ class Concert(override val apresCard: ApresCard) : BaseApres(apresCard) {
     random: Random,
   ) {
     val tilesPerPoint = if (isFirstPlayerToArrive) 1 else 2
-    player.points +=
-      gameModel.tileMapPoints.count { (_, points) -> points == 0 } / tilesPerPoint
+    // TODO
+    player.points += 0
   }
 }
