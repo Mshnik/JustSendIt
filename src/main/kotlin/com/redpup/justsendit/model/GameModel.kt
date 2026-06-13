@@ -3,11 +3,8 @@ package com.redpup.justsendit.model
 import com.google.common.collect.Range
 import com.google.inject.Inject
 import com.google.protobuf.util.Timestamps
-import com.redpup.justsendit.control.Choice
-import com.redpup.justsendit.control.Choice.PlayerCard
-import com.redpup.justsendit.control.Choice.SkillCard
-import com.redpup.justsendit.control.SkillCardZone
 import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.PlayerController.SkillZone
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
@@ -175,13 +172,12 @@ class MutableGameModel @Inject constructor(
   private suspend fun crash(player: MutablePlayer) {
     if (player.hand.isNotEmpty()) {
       with(player) {
-        discardFromHand(
-          controller.chooseOne(
-            Choice.skillCardInHand,
-            player,
-            player.hand
-          )
-        )
+        controller.chooseSkillCards(
+          player,
+          player.hand,
+          Range.closed(1, 1),
+          SkillZone.HAND
+        ).forEach { discardFromHand(it) }
       }
     } else {
       player.points -= 10
@@ -226,7 +222,7 @@ class MutableGameModel @Inject constructor(
   private suspend fun pickPlayerCards() {
     val cards = playerDeck.draw(clock.day, players.size + 2)
     for (player in players) {
-      with(player) { gainPlayerCard(controller.chooseOne(PlayerCard, player, cards)) }
+      with(player) { gainPlayerCard(controller.choosePlayerCard(player, cards)) }
     }
   }
 
@@ -250,7 +246,12 @@ class MutableGameModel @Inject constructor(
     }
 
     for (player in players) {
-      player.location = player.controller.getStartingLocation(player, this)
+      player.location = player.controller.chooseMountainTile(
+        player,
+        tileMap.entries()
+          .filter { it.value.hasLift() && it.value.lift.direction == LiftDirection.LIFT_DIRECTION_TOP }
+          .map { it.key }
+      )
       player.playerCards.forEach { it.startDay() }
     }
   }
@@ -460,11 +461,11 @@ class MutableGameModel @Inject constructor(
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
     val cost = tile.lift.cost
-    val toDiscard = player.controller.choose(
-      Choice.skillCardInHand,
+    val toDiscard = player.controller.chooseSkillCards(
       player,
       player.hand,
-      Range.closed(cost, cost)
+      Range.closed(cost, cost),
+      SkillZone.HAND
     )
     check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
 
@@ -472,11 +473,11 @@ class MutableGameModel @Inject constructor(
 
     // Rulebook: "choose to trash up the same number of cards from their discard pile ... optionally including the card(s) just discarded."
     val trashCandidates = player.skillDiscard.toList()
-    val toTrash = player.controller.choose(
-      SkillCard(SkillCardZone.DISCARD, SkillCardZone.PLAY),
+    val toTrash = player.controller.chooseSkillCards(
       player,
       trashCandidates,
-      Range.closed(0, cost)
+      Range.closed(0, cost),
+      SkillZone.PLAY, SkillZone.DISCARD,
     )
     toTrash.forEach {
       player.skillDiscard.remove(it)

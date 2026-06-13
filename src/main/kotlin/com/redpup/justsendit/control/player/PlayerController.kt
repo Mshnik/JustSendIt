@@ -1,31 +1,54 @@
 package com.redpup.justsendit.control.player
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.Choice
 import com.redpup.justsendit.model.GameModel
+import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
+import com.redpup.justsendit.model.skill.Skill
 
 /** Handler for players making decisions. */
 interface PlayerController {
   val name: String
 
-  /** Asks the player to some number of a list. */
-  suspend fun <T> choose(
-    choice: Choice,
+  /** Places a Skill can be, with regard to a choice. */
+  enum class SkillZone {
+    HAND,
+    PLAY,
+    DISCARD,
+    DECK,
+    SHOP
+  }
+
+  /** Asks the player to choose some number of skill cards from a list. */
+  suspend fun chooseSkillCards(
     player: Player,
-    elements: List<T>,
+    elements: List<Skill>,
     count: Range<Int>,
-  ): List<T>
+    vararg zones: SkillZone,
+  ): List<Skill>
 
-  /** Asks the player to one of a list. Defaults to [choose] with input of 1 [count]. */
-  suspend fun <T> chooseOne(choice: Choice, player: Player, elements: List<T>): T =
-    choose(choice, player, elements, Range.closed(1, 1)).first()
+  /** Asks the player to choose some number of Apres cards from a list. */
+  suspend fun chooseApresCard(
+    player: Player,
+    elements: List<Apres>,
+    count: Range<Int>,
+  ): List<Apres>
 
-  /** Returns the starting location for a player at the start of a day. */
-  suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint
+  /** Asks the player to choose a mountain tile from a list. */
+  suspend fun chooseMountainTile(
+    player: Player,
+    elements: List<HexPoint>,
+  ): HexPoint
+
+  /** Asks the player to choose a player card from a list. */
+  suspend fun choosePlayerCard(
+    player: Player,
+    elements: List<PlayerCard>,
+  ): PlayerCard
 
   /** Queues the player to make a mountain decision at the start of their turn. */
   suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
@@ -39,14 +62,29 @@ interface PlayerController {
 
 class BasicPlayerController : PlayerController {
   override val name = "BasicPlayerController-${System.identityHashCode(this)}"
-
-  override suspend fun <T> choose(
-    choice: Choice,
+  override suspend fun chooseSkillCards(
     player: Player,
-    elements: List<T>,
+    elements: List<Skill>,
     count: Range<Int>,
-  ): List<T> {
-    return elements.take(count.lowerEndpoint())
+    vararg zones: PlayerController.SkillZone,
+  ): List<Skill> {
+    TODO("Not yet implemented")
+  }
+
+  override suspend fun chooseApresCard(
+    player: Player,
+    elements: List<Apres>,
+    count: Range<Int>,
+  ): List<Apres> {
+    TODO("Not yet implemented")
+  }
+
+  override suspend fun chooseMountainTile(player: Player, elements: List<HexPoint>): HexPoint {
+    TODO("Not yet implemented")
+  }
+
+  override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
+    TODO("Not yet implemented")
   }
 
   override suspend fun makeMountainDecision(
@@ -60,10 +98,6 @@ class BasicPlayerController : PlayerController {
     player: Player,
     gameModel: GameModel,
   ): SkiRideResolutionAction {
-    TODO("Not yet implemented")
-  }
-
-  override suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint {
     TODO("Not yet implemented")
   }
 }

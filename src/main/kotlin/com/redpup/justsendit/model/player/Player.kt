@@ -137,9 +137,9 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Discards [card] from [hand]. */
-  fun discardFromHand(card: Skill) {
-    check(hand.remove(card))
-    skillDiscard.add(card)
+  fun discardFromHand(vararg card: Skill) {
+    check(hand.removeAll(card))
+    skillDiscard.addAll(card)
   }
 
   /** Discards all [inPlay] cards. */
