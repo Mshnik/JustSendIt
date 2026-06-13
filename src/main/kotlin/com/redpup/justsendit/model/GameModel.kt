@@ -20,11 +20,7 @@ import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
-import com.redpup.justsendit.model.supply.ApresDeck
-import com.redpup.justsendit.model.supply.PlayerDeck
-import com.redpup.justsendit.model.supply.SkillDeck
-import com.redpup.justsendit.model.supply.StarterDeck
-import com.redpup.justsendit.model.supply.ShopDeck
+import com.redpup.justsendit.model.supply.*
 import com.redpup.justsendit.model.supply.proto.SkillCard
 import com.redpup.justsendit.util.TimeSource
 
@@ -100,33 +96,10 @@ class MutableGameModel @Inject constructor(
 
   private val random = java.util.Random()
 
-  private enum class DieType { GREEN, BLUE, BLACK }
-
-  private fun rollDie(type: DieType): Int {
-    return when (type) {
-      DieType.GREEN -> random.nextInt(4) + 1
-      DieType.BLUE -> random.nextInt(6) + 1
-      DieType.BLACK -> random.nextInt(8) + 1
-    }
-  }
-
-  private fun upgradeDie(type: DieType): DieType {
-    return when (type) {
-      DieType.GREEN -> DieType.BLUE
-      DieType.BLUE -> DieType.BLACK
-      DieType.BLACK -> DieType.BLACK
-    }
-  }
-
-  private fun downgradeDie(type: DieType): DieType {
-    return when (type) {
-      DieType.GREEN -> DieType.GREEN
-      DieType.BLUE -> DieType.GREEN
-      DieType.BLACK -> DieType.BLUE
-    }
-  }
-
-  private fun matches(icon: com.redpup.justsendit.model.proto.Icon, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): Boolean {
+  private fun matches(
+    icon: com.redpup.justsendit.model.proto.Icon,
+    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+  ): Boolean {
     return when (icon.typeCase) {
       com.redpup.justsendit.model.proto.Icon.TypeCase.GRADE -> icon.grade == slope.grade
       com.redpup.justsendit.model.proto.Icon.TypeCase.CONDITION -> icon.condition == slope.condition
@@ -138,7 +111,11 @@ class MutableGameModel @Inject constructor(
 
   private data class CardResolution(val skill: Int, val wobbles: Int)
 
-  private fun resolveCard(player: MutablePlayer, card: SkillCard, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): CardResolution {
+  private fun resolveCard(
+    player: MutablePlayer,
+    card: SkillCard,
+    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+  ): CardResolution {
     var green = card.greenDice
     var blue = card.blueDice
     var black = card.blackDice
@@ -163,9 +140,9 @@ class MutableGameModel @Inject constructor(
 
     // Step 2: Roll dice
     val rolls = mutableListOf<Int>()
-    repeat(green) { rolls.add(rollDie(DieType.GREEN)) }
-    repeat(blue) { rolls.add(rollDie(DieType.BLUE)) }
-    repeat(black) { rolls.add(rollDie(DieType.BLACK)) }
+    repeat(green) { rolls.add(DieType.GREEN.roll(random)) }
+    repeat(blue) { rolls.add(DieType.BLUE.roll(random)) }
+    repeat(black) { rolls.add(DieType.BLACK.roll(random)) }
 
     // Step 3: All other terrain and effects (including rerolls) - TODO
 
@@ -507,7 +484,10 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  private suspend fun executeLift(player: MutablePlayer, liftDecision: MountainDecision.LiftDecision): Boolean {
+  private suspend fun executeLift(
+    player: MutablePlayer,
+    liftDecision: MountainDecision.LiftDecision,
+  ): Boolean {
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
@@ -552,7 +532,7 @@ class MutableGameModel @Inject constructor(
 
   private fun executePass(player: MutablePlayer, passDecision: MountainDecision.PassDecision) {
     player.discardInPlay()
-    
+
     val studyValue = calculateStudyValue(player)
     val buyCardName = passDecision.buyCardName
     if (buyCardName.isNotEmpty()) {
@@ -560,7 +540,7 @@ class MutableGameModel @Inject constructor(
       check(card != null) { "Card $buyCardName not in shop." }
       val cost = (card.cost - (saleTokens[card] ?: 0)).coerceAtLeast(0)
       check(studyValue >= cost) { "Insufficient study value $studyValue for card $buyCardName (cost $cost)." }
-      
+
       shop.remove(card)
       saleTokens.remove(card)
       player.skillDeck.add(card) // Rulebook doesn't specify where it goes, assuming deck for now.
