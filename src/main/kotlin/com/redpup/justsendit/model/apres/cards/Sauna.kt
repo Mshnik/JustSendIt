@@ -12,7 +12,9 @@ class Sauna(override val apresCard: ApresCard) : BaseApres(apresCard) {
     gameModel: GameModel,
   ) {
     val pointsPerUniqueIcon = if (isFirstPlayerToArrive) 6 else 3
-    val uniqueIcons = player.playerCards.mapNotNull { if (it.proto.hasIcon()) it.proto.icon else null }.distinct().count()
-    player.day.apresPoints += uniqueIcons * pointsPerUniqueIcon
+    val uniqueIcons =
+      player.playerCards.mapNotNull { if (it.proto.hasIcon()) it.proto.icon else null }.distinct()
+        .count()
+    player.points += uniqueIcons * pointsPerUniqueIcon
   }
 }

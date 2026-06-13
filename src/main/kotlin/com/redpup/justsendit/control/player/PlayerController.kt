@@ -21,7 +21,7 @@ interface PlayerController {
   /** Returns the starting location for a player at the start of a day. */
   suspend fun getStartingLocation(player: Player, gameModel: GameModel): HexPoint
 
-  /** Queues the player to make a mountain decision. */
+  /** Queues the player to make a mountain decision at the start of their turn. */
   suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
 
   /** Asks the player to choose a card to play or stop during ski/ride resolution. */

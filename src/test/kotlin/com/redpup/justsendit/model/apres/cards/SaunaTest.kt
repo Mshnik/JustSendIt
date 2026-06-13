@@ -27,13 +27,13 @@ class SaunaTest {
   fun `first player gets points`() {
     // TODO: Update Sauna to Rulebook V2.
     runBlocking { sauna.apply(player, true, gameModel) }
-    // assertThat(player.day.apresPoints).isEqualTo(...)
+    // assertThat(player.points).isEqualTo(...)
   }
 
   @Test
   fun `other player gets points`() {
     // TODO: Update Sauna to Rulebook V2.
     runBlocking { sauna.apply(player, false, gameModel) }
-    // assertThat(player.day.apresPoints).isEqualTo(...)
+    // assertThat(player.points).isEqualTo(...)
   }
 }

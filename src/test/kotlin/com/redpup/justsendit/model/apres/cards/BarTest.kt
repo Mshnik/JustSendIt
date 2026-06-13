@@ -35,13 +35,13 @@ class BarTest {
   fun `first player reveals 6 cards`() {
     repeat(7) { player.skillDeck.add(skillFactory.create(skillCard { name = "Card $it" })) }
     runBlocking { bar.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(12) // 6 cards * 2 points
+    assertThat(player.points).isEqualTo(12) // 6 cards * 2 points
   }
 
   @Test
   fun `other player reveals 3 cards`() {
     repeat(7) { player.skillDeck.add(skillFactory.create(skillCard { name = "Card $it" })) }
     runBlocking { bar.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(6) // 3 cards * 2 points
+    assertThat(player.points).isEqualTo(6) // 3 cards * 2 points
   }
 }

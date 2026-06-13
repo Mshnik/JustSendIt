@@ -35,7 +35,7 @@ class KaraokeTest {
   fun `apply gives stockpile to first player`() {
     karaoke.stockpile = 20
     runBlocking { karaoke.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(20)
+    assertThat(player.points).isEqualTo(20)
     assertThat(karaoke.stockpile).isEqualTo(0)
   }
 
@@ -43,7 +43,7 @@ class KaraokeTest {
   fun `other player gets non stockpile points`() {
     karaoke.stockpile = 20
     runBlocking { karaoke.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(NON_STOCKPILE_POINTS)
+    assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(karaoke.stockpile).isEqualTo(20)
   }
 }

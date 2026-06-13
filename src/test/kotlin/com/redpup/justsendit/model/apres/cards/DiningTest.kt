@@ -38,7 +38,7 @@ class DiningTest {
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card2, card2, card3))
     runBlocking { dining.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(14) // 2 pairs * 7
+    assertThat(player.points).isEqualTo(14) // 2 pairs * 7
   }
 
   @Test
@@ -48,6 +48,6 @@ class DiningTest {
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card2, card2, card3))
     runBlocking { dining.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(8) // 2 pairs * 4
+    assertThat(player.points).isEqualTo(8) // 2 pairs * 4
   }
 }

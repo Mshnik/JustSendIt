@@ -38,7 +38,7 @@ class FirePitTest {
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card3, card3, card3))
     runBlocking { firePit.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(12) // 3 unique * 4
+    assertThat(player.points).isEqualTo(12) // 3 unique * 4
   }
 
   @Test
@@ -48,6 +48,6 @@ class FirePitTest {
     val card3 = skillFactory.create(skillCard { name = "3" })
     player.skillDiscard.addAll(listOf(card1, card1, card2, card3, card3, card3))
     runBlocking { firePit.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(6) // 3 unique * 2
+    assertThat(player.points).isEqualTo(6) // 3 unique * 2
   }
 }

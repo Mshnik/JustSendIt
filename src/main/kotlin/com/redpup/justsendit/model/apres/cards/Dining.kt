@@ -13,6 +13,6 @@ class Dining(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val pointsPerPair = if (isFirstPlayerToArrive) 7 else 4
     val pairs = player.skillDiscard.groupingBy { it }.eachCount().values.sumOf { it / 2 }
-    player.day.apresPoints += pairs * pointsPerPair
+    player.points += pairs * pointsPerPair
   }
 }

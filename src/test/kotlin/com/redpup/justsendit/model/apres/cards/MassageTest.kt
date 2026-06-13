@@ -35,7 +35,7 @@ class MassageTest {
   fun `apply gives stockpile to first player`() {
     massage.stockpile = 20
     runBlocking { massage.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(20)
+    assertThat(player.points).isEqualTo(20)
     assertThat(massage.stockpile).isEqualTo(0)
   }
 
@@ -43,7 +43,7 @@ class MassageTest {
   fun `other player gets non stockpile points`() {
     massage.stockpile = 20
     runBlocking { massage.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(NON_STOCKPILE_POINTS)
+    assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(massage.stockpile).isEqualTo(20)
   }
 }

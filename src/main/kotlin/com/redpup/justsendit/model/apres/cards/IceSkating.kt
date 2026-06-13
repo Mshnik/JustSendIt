@@ -13,6 +13,6 @@ class IceSkating(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val pointsPerBlue = if (isFirstPlayerToArrive) 5 else 3
     val blues = player.skillDiscard.count { it.skillCard.blueDice >= 1 }
-    player.day.apresPoints += blues * pointsPerBlue
+    player.points += blues * pointsPerBlue
   }
 }

@@ -43,7 +43,7 @@ class FireworksTest {
   fun `apply gives stockpile to first player`() {
     fireworks.stockpile = 20
     runBlocking { fireworks.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(20)
+    assertThat(player.points).isEqualTo(20)
     assertThat(fireworks.stockpile).isEqualTo(0)
   }
 
@@ -51,7 +51,7 @@ class FireworksTest {
   fun `other player gets non stockpile points`() {
     fireworks.stockpile = 20
     runBlocking { fireworks.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(NON_STOCKPILE_POINTS)
+    assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(fireworks.stockpile).isEqualTo(20)
   }
 }

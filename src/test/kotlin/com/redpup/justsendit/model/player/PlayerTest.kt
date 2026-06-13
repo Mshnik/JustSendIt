@@ -5,7 +5,7 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
-import com.redpup.justsendit.model.player.cards.friday.George
+import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
@@ -14,18 +14,19 @@ import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
+import org.mockito.kotlin.whenever
 
 class PlayerTest {
 
   private lateinit var player: MutablePlayer
-  private val handler = mock<PlayerController>()
+  private val controller = mock<PlayerController>()
 
   @Inject private lateinit var skillFactory: SkillFactory
 
   @BeforeEach
   fun setUp() {
     Guice.createInjector(FakeSkillModule()).injectMembers(this)
-    player = MutablePlayer(handler)
+    player = MutablePlayer(controller)
   }
 
   @Test
@@ -36,9 +37,10 @@ class PlayerTest {
   }
 
   @Test
-  fun `name is taken from first player card`() {
-    assertThat(player.name).isEqualTo("No Name")
-    player.playerCards.add(George(playerCard { name = "Test Player" }))
+  fun `name is taken from first player card or controller`() {
+    whenever(controller.name).thenReturn("ControllerName")
+    assertThat(player.name).isEqualTo("ControllerName")
+    player.playerCards.add(FakePlayerCard(playerCard { name = "Test Player" }))
     assertThat(player.name).isEqualTo("Test Player")
   }
 
@@ -89,34 +91,6 @@ class PlayerTest {
   }
 
   @Test
-  fun `ingestTurn updates day points from turn points`() {
-    player.turn.points = 10
-    player.ingestTurn()
-
-    assertThat(player.day.mountainPoints).isEqualTo(10)
-    assertThat(player.turn.points).isEqualTo(0)
-  }
-
-  @Test
-  fun `ingestDayAndCopyNextDay updates player points and resets day`() {
-    player.day.mountainPoints = 5
-    player.day.bestDayPoints = 10
-    player.day.apresPoints = 20
-
-    player.nextDay.mountainPoints = 1
-    player.nextDay.bestDayPoints = 2
-    player.nextDay.apresPoints = 3
-
-    player.ingestDayAndCopyNextDay()
-
-    assertThat(player.points).isEqualTo(35)
-    assertThat(player.day.mountainPoints).isEqualTo(1)
-    assertThat(player.day.bestDayPoints).isEqualTo(2)
-    assertThat(player.day.apresPoints).isEqualTo(3)
-    assertThat(player.nextDay.mountainPoints).isEqualTo(0)
-  }
-
-  @Test
   fun `gainSkillCard adds card to deck`() {
     val card = skillFactory.create(skillCard { name = "Test Card" })
     player.gainSkill(card)
@@ -126,49 +100,12 @@ class PlayerTest {
 
   @Test
   fun `gainPlayerCard adds card`() = runBlocking {
-    val card = George(playerCard {
+    val card = FakePlayerCard(playerCard {
       name = "Test Card"
     })
 
     player.gainPlayerCard(card)
 
     assertThat(player.playerCards).contains(card)
-  }
-
-  @Test
-  fun `MutableTurn clear resets points and speed`() {
-    val turn = MutableTurn()
-    turn.points = 10
-    turn.speed = 5
-    turn.clear()
-    assertThat(turn.points).isEqualTo(0)
-    assertThat(turn.speed).isEqualTo(0)
-  }
-
-  @Test
-  fun `MutableDay clear resets points`() {
-    val day = MutableDay()
-    day.mountainPoints = 10
-    day.bestDayPoints = 5
-    day.apresPoints = 2
-    day.clear()
-    assertThat(day.mountainPoints).isEqualTo(0)
-    assertThat(day.bestDayPoints).isEqualTo(0)
-    assertThat(day.apresPoints).isEqualTo(0)
-  }
-
-  @Test
-  fun `MutableDay copyFrom copies points`() {
-    val day1 = MutableDay()
-    day1.mountainPoints = 10
-    day1.bestDayPoints = 5
-    day1.apresPoints = 2
-
-    val day2 = MutableDay()
-    day2.copyFrom(day1)
-
-    assertThat(day2.mountainPoints).isEqualTo(10)
-    assertThat(day2.bestDayPoints).isEqualTo(5)
-    assertThat(day2.apresPoints).isEqualTo(2)
   }
 }

@@ -13,6 +13,6 @@ class Bar(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     player.refreshDecks()
     val numCards = if (isFirstPlayerToArrive) 6 else 3
-    player.day.apresPoints += numCards * 2
+    player.points += numCards * 2
   }
 }

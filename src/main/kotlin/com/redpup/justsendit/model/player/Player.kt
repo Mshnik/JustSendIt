@@ -25,6 +25,15 @@ interface Player {
   /** How many points (fun) this player has. */
   val points: Int
 
+  /** The player's current wobbles. */
+  val wobbles: Int
+
+  /** The player's current hand. */
+  val hand: List<Skill>
+
+  /** The skill cards the player has in play this round. */
+  val inPlay: List<Skill>
+
   /** The player's current skill deck, in order. */
   val skillDeck: List<Skill>
 
@@ -34,47 +43,14 @@ interface Player {
   /** The player's current location on the mountain. Null if not on mountain. */
   val location: HexPoint?
 
+  /** True iff the player has passed this round. */
+  val isPassed: Boolean
+
   /** Returns true iff the player is on the mountain. */
   val isOnMountain: Boolean get() = location != null
 
   /** The apres link the player took this day. Null if still on mountain today. */
   val apresLink: Int?
-
-  /** A single day for the player. */
-  interface Day {
-    /** How many points (fun) this player has gained in this day on the mountain. */
-    val mountainPoints: Int
-
-    /** How many points (fun) this player has gained in this day by having the best day on the mountain. */
-    val bestDayPoints: Int
-
-    /** How many points (fun) this player has gained in this day off the mountain. */
-    val apresPoints: Int
-  }
-
-  /** A single turn for the player. */
-  interface Turn {
-    /** How many points (fun) this player has gained in this turn. */
-    val points: Int
-
-    /** How much speed the player has in this turn. */
-    val speed: Int
-  }
-
-  /** The player's current turn, if any. */
-  val turn: Turn
-
-  /** The player's current day, if any. */
-  val day: Day
-
-  /** The player's current hand. */
-  val hand: List<Skill>
-
-  /** The skill cards the player has in play this round. */
-  val inPlay: List<Skill>
-
-  /** The player's current wobbles. */
-  val wobbles: Int
 }
 
 /** Hooks for player abilities. */
@@ -83,7 +59,8 @@ interface AbilityHandler {}
 /** Mutable access to a player object. */
 class MutablePlayer(override val controller: PlayerController) : Player {
   override val playerCards = mutableListOf<PlayerCard>()
-  override val name: String get() = playerCards.firstOrNull()?.name ?: "No Name"
+  override val name: String
+    get() = playerCards.firstOrNull()?.name ?: controller.name
   override var points = 0
     set(points) {
       field = points
@@ -92,10 +69,7 @@ class MutablePlayer(override val controller: PlayerController) : Player {
 
   override var location: HexPoint? = null
   override var apresLink: Int? = null
-
-  override val turn = MutableTurn()
-  override val day = MutableDay()
-  val nextDay = MutableDay()
+  override var isPassed: Boolean = false
 
   override val hand = mutableListOf<Skill>()
   override val inPlay = mutableListOf<Skill>()
@@ -173,22 +147,6 @@ class MutablePlayer(override val controller: PlayerController) : Player {
     inPlay.clear()
   }
 
-  /** Ingests the contents of [turn] into this player. */
-  fun ingestTurn() {
-    day.mountainPoints += turn.points
-    turn.clear()
-  }
-
-  /** Ingests the contents of [day] into this player. */
-  fun ingestDayAndCopyNextDay() {
-    points += day.mountainPoints
-    points += day.bestDayPoints
-    points += day.apresPoints
-    day.clear()
-    day.copyFrom(nextDay)
-    nextDay.clear()
-  }
-
   /** Gains [card] skill card, then shuffles this player's [skillDeck]. */
   fun gainSkill(card: Skill) {
     this.skillDeck.add(card)
@@ -198,38 +156,5 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   /** Gains [playerCard] and all of its associated benefits. */
   fun gainPlayerCard(playerCard: PlayerCard) {
     playerCards.add(playerCard)
-  }
-}
-
-/** A mutable instance of a player's turn. */
-class MutableTurn : Player.Turn {
-  override var points = 0
-  override var speed = 0
-
-  /** Clears this mutable turn. */
-  fun clear() {
-    points = 0
-    speed = 0
-  }
-}
-
-/** A mutable instance of a player's turn. */
-class MutableDay : Player.Day {
-  override var mountainPoints = 0
-  override var bestDayPoints = 0
-  override var apresPoints = 0
-
-  /** Clears this mutable experience. */
-  fun clear() {
-    mountainPoints = 0
-    bestDayPoints = 0
-    apresPoints = 0
-  }
-
-  /** Copies the contents of [other] into this. */
-  fun copyFrom(other: MutableDay) {
-    mountainPoints = other.mountainPoints
-    bestDayPoints = other.bestDayPoints
-    apresPoints = other.apresPoints
   }
 }

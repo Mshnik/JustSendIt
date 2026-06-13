@@ -85,16 +85,13 @@ class MutableGameModel @Inject constructor(
 
   override val apres: MutableList<Apres> = mutableListOf()
 
-  override val players: List<MutablePlayer> = playerControllers.map { MutablePlayer(it) }
+  override val players: MutableList<MutablePlayer> =
+    playerControllers.map { MutablePlayer(it) }.toMutableList()
 
   private var currentPlayerIndex = 0
-  private val playerOrder = MutableList(players.size) { it }
-  override val currentPlayer get() = players[playerOrder[currentPlayerIndex]]
+  override val currentPlayer get() = players[currentPlayerIndex]
 
-  private val passedPlayers = mutableSetOf<Int>()
-
-  private val shop = mutableListOf<Skill>()
-  private val saleTokens = mutableMapOf<Skill, Int>()
+  private val shop = mutableMapOf<Skill, Int>()
 
   override val clock = MutableClock()
 
@@ -207,15 +204,10 @@ class MutableGameModel @Inject constructor(
       .filter { tileMap.contains(it.key) }
   }
 
-  /** Returns the players in turn order. */
-  private fun playersInTurnOrder() = playerOrder.map { players[it] }
-
   /** Randomly determines a leader and sets the starting player order. */
-  private fun setStartingPlayerOrder() {
-    // TODO: Attach random to shuffling (here and elsewhere).
-    playerOrder.shuffle()
-    for ((index, playerIdx) in playerOrder.withIndex()) {
-      players[playerIdx].points += 10 + (index * 2)
+  private fun giveStartingPoints() {
+    for ((index, player) in players.withIndex()) {
+      player.points += 10 + (index * 2)
     }
   }
 
@@ -252,11 +244,11 @@ class MutableGameModel @Inject constructor(
     replenishShop()
 
     if (clock.day == Day.DAY_FRIDAY) {
-      setStartingPlayerOrder()
+      giveStartingPoints()
       giveStarterDecks()
     }
 
-    for (player in playersInTurnOrder()) {
+    for (player in players) {
       player.location = player.controller.getStartingLocation(player, this)
       player.playerCards.forEach { it.startDay() }
     }
@@ -272,58 +264,53 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  /** Replenishes the shop to 5 cards, adding sale tokens to existing cards and removing old ones. */
+  /**
+   * Replenishes the shop to 5 cards, adding sale tokens to existing cards and removing old
+   * ones.
+   */
   private fun replenishShop() {
-    // Add sale tokens to existing cards
-    for (card in shop) {
-      saleTokens[card] = (saleTokens[card] ?: 0) + 1
-    }
+    // Add sale tokens to existing cards.
+    shop.mapValues { it.value + 1 }
 
-    // Remove cards with 2 sale tokens
-    val toRemove = shop.filter { (saleTokens[it] ?: 0) >= 2 }
-    shop.removeAll(toRemove)
-    toRemove.forEach { saleTokens.remove(it) }
+    // Remove cards with 2 sale tokens.
+    shop.filterValues { it <= 1 }
 
-    // Replenish up to 5 cards
+    // Replenish up to 5 cards.
     while (shop.size < 5) {
-      shop.add(skillDeck.draw())
+      shop[skillDeck.draw()] = 0
     }
   }
 
   /** Executes one turn for the current player. */
   suspend fun turn() {
-    if (!passedPlayers.contains(playerOrder[currentPlayerIndex])) {
-      val player = currentPlayer
-      player.playerCards.forEach { it.startTurn() }
+    check(!currentPlayer.isPassed) { "Player $currentPlayer has passed" }
+    val player = currentPlayer
+    player.playerCards.forEach { it.startTurn() }
 
-      var continueTurn: Boolean
-      do {
-        val decision =
-          player.controller.makeMountainDecision(player, this).also { it.log() }
-        continueTurn = executeDecision(player, decision)
-      } while (continueTurn)
-    }
-
-    // Move to next player who hasn't passed
+    var continueTurn: Boolean
     do {
-      currentPlayerIndex = (currentPlayerIndex + 1) % players.size
-    } while (passedPlayers.size < players.size && passedPlayers.contains(playerOrder[currentPlayerIndex]))
+      val decision = player.controller.makeMountainDecision(player, this).also { it.log() }
+      continueTurn = executeDecision(player, decision)
+    } while (continueTurn)
 
-    if (passedPlayers.size == players.size) { // Round over
-      endRound()
+    // If not all players have passed, advance to the next non-passed player.
+    if (!players.all { it.isPassed }) {
+      do {
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.size
+      } while (currentPlayer.isPassed)
     }
   }
 
   /** Concludes the round, resets passed players, and moves leader token. */
-  private suspend fun endRound() {
-    passedPlayers.clear()
-    // Rulebook V2: "At the end of the round ... add a 'sale' token ... remove all cards that have two sale tokens and replenish the shop up to five cards."
+  suspend fun endRound() {
     replenishShop()
 
-    // Move leader: the playerOrder currently represents the turn order.
-    // In Rulebook V2: "At the end of the round, the leader token moves clockwise for the next round."
-    val first = playerOrder.removeFirst()
-    playerOrder.add(first)
+    // "Un-pass" each player.
+    players.forEach { it.isPassed = false }
+    // Move leader to back of line.
+    val first = players.removeFirst()
+    players.add(first)
+    // Reset current player to new leader.
     currentPlayerIndex = 0
 
     if (clock.turn < clock.maxTurn) {
@@ -338,10 +325,6 @@ class MutableGameModel @Inject constructor(
    * Returns true if the game is over, false otherwise.
    */
   suspend fun advanceDay(): Boolean {
-    // Ingest points and award the best day on mountain.
-    players.forEach { it.ingestDayAndCopyNextDay() }
-    playerOrder.sortBy { players[it].points }
-
     // Update clock, advance to next day if there is one.
     if (clock.day == Day.DAY_SUNDAY) {
       return false
@@ -381,7 +364,6 @@ class MutableGameModel @Inject constructor(
 
       MountainDecision.DecisionCase.PASS -> {
         executePass(player, decision.pass)
-        passedPlayers.add(playerOrder[currentPlayerIndex])
         false
       }
 
@@ -528,21 +510,22 @@ class MutableGameModel @Inject constructor(
   private fun getOtherLiftLocation(color: LiftColor, location: HexPoint): HexPoint =
     lifts[color]!!.find { it.key != location }!!.key
 
+  /** Ends the player's round and allows them to buy a card. */
   private fun executePass(player: MutablePlayer, passDecision: MountainDecision.PassDecision) {
-    player.discardInPlay()
-
     val studyValue = calculateStudyValue(player)
     val buyCardName = passDecision.buyCardName
     if (buyCardName.isNotEmpty()) {
-      val card = shop.find { it.name == buyCardName }
+      val card = shop.entries.find { it.key.name == buyCardName }
       check(card != null) { "Card $buyCardName not in shop." }
-      val cost = (card.skillCard.cost - (saleTokens[card] ?: 0)).coerceAtLeast(0)
+      val cost = (card.key.skillCard.cost - card.value).coerceAtLeast(0)
       check(studyValue >= cost) { "Insufficient study value $studyValue for card $buyCardName (cost $cost)." }
 
-      shop.remove(card)
-      saleTokens.remove(card)
-      player.skillDeck.add(card) // Rulebook doesn't specify where it goes, assuming deck for now.
+      shop.remove(card.key)
+      player.skillDiscard.add(card.key)
     }
+
+    player.discardInPlay()
+    player.isPassed = true
   }
 
   private fun calculateStudyValue(player: Player): Int {

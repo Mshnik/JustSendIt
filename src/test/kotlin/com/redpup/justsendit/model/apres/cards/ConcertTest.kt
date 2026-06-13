@@ -34,7 +34,7 @@ class ConcertTest {
     whenever(gameModel.tileMapPoints).thenReturn(tileMapPoints)
 
     runBlocking { concert.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(2)
+    assertThat(player.points).isEqualTo(2)
   }
 
   @Test
@@ -47,6 +47,6 @@ class ConcertTest {
     whenever(gameModel.tileMapPoints).thenReturn(tileMapPoints)
 
     runBlocking { concert.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(1)
+    assertThat(player.points).isEqualTo(1)
   }
 }

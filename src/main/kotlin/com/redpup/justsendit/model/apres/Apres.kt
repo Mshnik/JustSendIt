@@ -41,10 +41,10 @@ abstract class StockpilingBaseApres(override val apresCard: ApresCard) : BaseApr
     gameModel: GameModel,
   ) {
     if (isFirstPlayerToArrive) {
-      player.day.apresPoints += stockpile
+      player.points += stockpile
       stockpile = 0
     } else {
-      player.day.apresPoints += NON_STOCKPILE_POINTS
+      player.points += NON_STOCKPILE_POINTS
     }
   }
 

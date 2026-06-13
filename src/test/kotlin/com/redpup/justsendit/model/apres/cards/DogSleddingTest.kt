@@ -44,7 +44,7 @@ class DogSleddingTest {
   fun `apply gives stockpile to first player`() {
     dogSledding.stockpile = 20
     runBlocking { dogSledding.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(20)
+    assertThat(player.points).isEqualTo(20)
     assertThat(dogSledding.stockpile).isEqualTo(0)
   }
 
@@ -52,7 +52,7 @@ class DogSleddingTest {
   fun `other player gets NON_STOCKPILE_POINTS points`() {
     dogSledding.stockpile = 20
     runBlocking { dogSledding.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(NON_STOCKPILE_POINTS)
+    assertThat(player.points).isEqualTo(NON_STOCKPILE_POINTS)
     assertThat(dogSledding.stockpile).isEqualTo(20)
   }
 }

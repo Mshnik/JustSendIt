@@ -13,6 +13,6 @@ class FirePit(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val pointsPerUnique = if (isFirstPlayerToArrive) 4 else 2
     val unique = player.skillDiscard.distinct().count()
-    player.day.apresPoints += unique * pointsPerUnique
+    player.points += unique * pointsPerUnique
   }
 }

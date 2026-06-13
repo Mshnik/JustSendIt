@@ -13,6 +13,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
+import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
@@ -162,8 +163,7 @@ class GameModelTest {
   fun `turn advances player`() = runBlocking {
     player1.location = createHexPoint(0, 0)
     whenever(playerController1.makeMountainDecision(any(), any())).thenReturn(mountainDecision {
-      pass =
-        com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
+      pass = MountainDecision.PassDecision.getDefaultInstance()
     })
 
     assertThat(gameModel.currentPlayer).isEqualTo(player1)
@@ -185,7 +185,7 @@ class GameModelTest {
       )
     ).thenReturn(mountainDecision {
       pass =
-        com.redpup.justsendit.model.player.proto.MountainDecision.PassDecision.getDefaultInstance()
+        MountainDecision.PassDecision.getDefaultInstance()
     })
     gameModel.turn()
     assertThat(player1.inPlay).isEmpty()

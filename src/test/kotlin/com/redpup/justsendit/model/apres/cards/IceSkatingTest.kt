@@ -38,7 +38,7 @@ class IceSkatingTest {
     val black = skillFactory.create(skillCard { blackDice = 1 })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, true, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(15) // 3 blues * 5
+    assertThat(player.points).isEqualTo(15) // 3 blues * 5
   }
 
   @Test
@@ -48,6 +48,6 @@ class IceSkatingTest {
     val black = skillFactory.create(skillCard { blackDice = 1 })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, false, gameModel) }
-    assertThat(player.day.apresPoints).isEqualTo(9) // 3 blues * 3
+    assertThat(player.points).isEqualTo(9) // 3 blues * 3
   }
 }

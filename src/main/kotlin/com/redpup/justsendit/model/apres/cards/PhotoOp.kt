@@ -12,6 +12,7 @@ class PhotoOp(override val apresCard: ApresCard) : BaseApres(apresCard) {
     gameModel: GameModel,
   ) {
     val pointsPerSpeed = if (isFirstPlayerToArrive) 6 else 3
-    player.day.apresPoints += player.turn.speed * pointsPerSpeed
+    // TODO
+    // player.points += player.turn.speed * pointsPerSpeed
   }
 }
