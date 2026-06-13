@@ -361,6 +361,7 @@ class MutableGameModel @Inject constructor(
 
       MountainDecision.DecisionCase.LIFT -> {
         executeLift(player, decision.lift)
+        false
       }
 
       MountainDecision.DecisionCase.PASS -> {
@@ -449,31 +450,16 @@ class MutableGameModel @Inject constructor(
     return succeeded
   }
 
-  private fun getLiftCost(color: LiftColor): Int {
-    return when (color) {
-      LiftColor.LIFT_COLOR_RED -> 1
-      LiftColor.LIFT_COLOR_YELLOW -> 2
-      LiftColor.LIFT_COLOR_CYAN -> 3
-      LiftColor.LIFT_COLOR_MAGENTA -> 4
-      LiftColor.LIFT_COLOR_GREY -> 5
-      else -> 1
-    }
-  }
-
   private suspend fun executeLift(
     player: MutablePlayer,
     liftDecision: MountainDecision.LiftDecision,
-  ): Boolean {
+  ) {
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
-    if (liftDecision.actionCase == MountainDecision.LiftDecision.ActionCase.STAY) {
-      return false
-    }
-
-    val cost = getLiftCost(tile.lift.color)
+    val cost = tile.lift.cost
     val toDiscard = player.controller.choose(player, player.hand, Range.closed(cost, cost))
     check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
 
@@ -493,8 +479,6 @@ class MutableGameModel @Inject constructor(
       to = destination
     }.log()
     player.location = destination
-
-    return false
   }
 
   private suspend fun executeActivatePlayerCard(player: MutablePlayer, playerCardName: String) {

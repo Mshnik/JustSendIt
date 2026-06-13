@@ -8,6 +8,7 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.MountainDecisionKt.exitDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
@@ -95,25 +96,12 @@ class GuiController @Inject constructor() : PlayerController {
       }
 
       "Lift" -> {
-        val liftChoices = listOf("Ride Up", "Stay")
-        val liftDialog = ChoiceDialog(liftChoices[0], liftChoices)
-        liftDialog.title = "Lift Action"
-        liftDialog.headerText = "Do you want to ride the lift up or stay?"
-        val liftResult = liftDialog.showAndWait()
-        val rideUpDecision = liftResult.isPresent && liftResult.get() == "Ride Up"
-
         continuation.resume(mountainDecision {
-          lift = liftDecision {
-            if (rideUpDecision) {
-              rideUp = empty { }
-            } else {
-              stay = empty { }
-            }
-          }
+          lift = liftDecision {}
         })
       }
 
-      "Exit" -> continuation.resume(mountainDecision { exit = empty { } })
+      "Exit" -> continuation.resume(mountainDecision { exit = exitDecision { } })
       "Pass" -> {
         val buyDialog = TextInputDialog()
         buyDialog.title = "Pass Action"

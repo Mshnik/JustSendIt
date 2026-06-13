@@ -14,7 +14,7 @@ message MountainDecision {
     SkiRideDecision ski_ride = 1;
     LiftDecision lift = 2;
     PassDecision pass = 3;
-    google.protobuf.Empty exit = 5;
+    ExitDecision exit = 5;
   }
 
   /** A decision to ski or ride in a given direction. */
@@ -23,18 +23,16 @@ message MountainDecision {
   }
 
   /** A decision to ride a lift. */
-  message LiftDecision {
-    oneof action {
-      google.protobuf.Empty ride_up = 1;
-      google.protobuf.Empty stay = 2;
-    }
-  }
+  message LiftDecision {}
 
   /** A decision to pass. */
   message PassDecision {
     // The name of the card to buy from the shop. Empty if none.
     string buy_card_name = 1;
   }
+
+  /** A decision to exit the mountain. */
+  message ExitDecision {}
 }
 
 /** Actions a player can take during a ski/ride resolution. */
