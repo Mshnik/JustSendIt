@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.apres.cards
 
 import com.google.common.collect.Range
+import com.redpup.justsendit.control.Choice
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.BaseApres
 import com.redpup.justsendit.model.apres.proto.ApresCard
@@ -16,7 +17,7 @@ class Lodge(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val count = if (isFirstPlayerToArrive) 2 else 1
     val otherApres = gameModel.apres.filter { it != this }
-    player.controller.choose(player, otherApres, Range.closed(count, count))
+    player.controller.choose(Choice.ApresCard, player, otherApres, Range.closed(count, count))
       .forEach { it.apply(player, false, gameModel, random) }
   }
 }

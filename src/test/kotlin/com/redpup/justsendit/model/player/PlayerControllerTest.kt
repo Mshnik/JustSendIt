@@ -4,6 +4,7 @@ import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.google.inject.Inject
+import com.redpup.justsendit.control.Choice
 import com.redpup.justsendit.control.player.BasicPlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.cards.PlayerCard
@@ -35,7 +36,7 @@ class PlayerControllerTest {
     val card2 = mock<PlayerCard>()
     val cards = listOf(card1, card2)
 
-    val result = runBlocking { handler.chooseOne(player, cards) }
+    val result = runBlocking { handler.chooseOne(Choice.PlayerCard, player, cards) }
 
     assertThat(result).isEqualTo(card1)
   }
@@ -64,7 +65,8 @@ class PlayerControllerTest {
       skillFactory.create(skillCard { name = "1" }),
       skillFactory.create(skillCard { name = "2" })
     )
-    val result = runBlocking { handler.choose(player, cards, Range.closed(0, 1)) }
+    val result =
+      runBlocking { handler.choose(Choice.SkillCard(), player, cards, Range.closed(0, 1)) }
     assertThat(result).isEmpty()
   }
 }

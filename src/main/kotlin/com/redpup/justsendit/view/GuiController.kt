@@ -2,6 +2,7 @@ package com.redpup.justsendit.view
 
 import com.google.common.collect.Range
 import com.google.protobuf.empty
+import com.redpup.justsendit.control.Choice
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -48,13 +49,8 @@ class GuiController @Inject constructor() : PlayerController {
     gameModel: GameModel,
     continuation: CancellableContinuation<MountainDecision>,
   ) {
-    val choices = mutableListOf<String>()
-    if (player.location != null) {
-      choices.add("Ski/Ride")
-      choices.add("Lift")
-      choices.add("Exit")
-    }
-    choices.add("Pass")
+    check(player.location != null) { "Player $player is off mountain." }
+    val choices = listOf("Ski/Ride", "Lift", "Exit", "Pass")
 
     val dialog = ChoiceDialog(choices[0], choices)
     dialog.title = "Choose Action"
@@ -126,6 +122,7 @@ class GuiController @Inject constructor() : PlayerController {
   }
 
   override suspend fun <T> choose(
+    choice: Choice,
     player: Player,
     elements: List<T>,
     count: Range<Int>,

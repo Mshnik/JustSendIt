@@ -2,6 +2,7 @@ package com.redpup.justsendit.model
 
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
+import com.redpup.justsendit.control.Choice
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.control.player.testing.FakePlayerControllerModule
 import com.redpup.justsendit.log.LoggerModule
@@ -140,22 +141,18 @@ class GameModelTest {
     whenever(playerController1.getStartingLocation(any(), any())).thenReturn(mock())
     whenever(playerController2.getStartingLocation(any(), any())).thenReturn(mock())
     wheneverBlocking {
-      playerController1.chooseOne(
-        any(), any<List<PlayerCard>>()
-      )
-    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+      playerController1.chooseOne(any(), any(), any<List<PlayerCard>>())
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(2).first() }
     wheneverBlocking {
-      playerController2.chooseOne(
-        any(), any<List<PlayerCard>>()
-      )
-    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+      playerController2.chooseOne(any(), any(), any<List<PlayerCard>>())
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(2).first() }
 
     gameModel.startDay()
 
     assertThat(gameModel.apres).hasSize(MutableGameModel.APRES_SLOTS)
 
-    verify(playerController1).chooseOne(any(), any<List<PlayerCard>>())
-    verify(playerController2).chooseOne(any(), any<List<PlayerCard>>())
+    verify(playerController1).chooseOne(eq(Choice.PlayerCard), any(), any<List<PlayerCard>>())
+    verify(playerController2).chooseOne(eq(Choice.PlayerCard), any(), any<List<PlayerCard>>())
     verify(playerController1).getStartingLocation(any(), any())
     verify(playerController2).getStartingLocation(any(), any())
     Unit
