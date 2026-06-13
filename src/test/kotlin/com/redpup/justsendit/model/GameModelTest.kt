@@ -21,7 +21,7 @@ import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Grade
 import com.redpup.justsendit.model.supply.testing.FakeApresDeck
 import com.redpup.justsendit.model.supply.testing.FakePlayerDeck
-import com.redpup.justsendit.model.supply.testing.FakeSkillDecks
+import com.redpup.justsendit.model.supply.testing.FakeSkillDeck
 import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import com.redpup.justsendit.util.testing.FakeTimeSourceModule
 import javax.inject.Inject
@@ -40,7 +40,7 @@ class GameModelTest {
   @Inject private lateinit var gameModel: MutableGameModel
   @Inject private lateinit var playerDeck: FakePlayerDeck
   @Inject private lateinit var playerFactory: FakePlayerFactory
-  @Inject private lateinit var skillDecks: FakeSkillDecks
+  @Inject private lateinit var skillDecks: FakeSkillDeck
   @Inject private lateinit var apresDeck: FakeApresDeck
   @Inject private lateinit var apresFactory: FakeApresFactory
 

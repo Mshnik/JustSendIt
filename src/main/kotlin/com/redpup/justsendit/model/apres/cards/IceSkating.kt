@@ -4,8 +4,6 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.BaseApres
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecks.Companion.getSkillGrade
 
 class IceSkating(override val apresCard: ApresCard) : BaseApres(apresCard) {
   override suspend fun apply(
@@ -14,7 +12,7 @@ class IceSkating(override val apresCard: ApresCard) : BaseApres(apresCard) {
     gameModel: GameModel,
   ) {
     val pointsPerBlue = if (isFirstPlayerToArrive) 5 else 3
-    val blues = player.skillDiscard.count { it.getSkillGrade() == Grade.GRADE_BLUE }
+    val blues = player.skillDiscard.count { it.blueDice >= 1 }
     player.day.apresPoints += blues * pointsPerBlue
   }
 }

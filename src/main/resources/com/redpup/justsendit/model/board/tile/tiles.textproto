@@ -769,7 +769,7 @@ tiles {
 }
 tiles {
   lift {
-    color: LIFT_COLOR_PURPLE
+    color: LIFT_COLOR_MAGENTA
     direction: LIFT_DIRECTION_TOP
   }
 }
@@ -801,7 +801,7 @@ tiles {
 }
 tiles {
   lift {
-    color: LIFT_COLOR_PURPLE
+    color: LIFT_COLOR_MAGENTA
     direction: LIFT_DIRECTION_BOTTOM
   }
   apres_link: 1

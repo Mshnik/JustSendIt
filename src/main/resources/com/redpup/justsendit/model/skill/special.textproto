@@ -1,0 +1,11 @@
+# proto-file: com/redpup/justsendit/model/supply/skill_card.proto
+# proto-message: SkillCardList
+
+cards {
+  name: "Super Send It"
+  cost: 20
+  black_dice: 5
+  icons { wild: true }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}

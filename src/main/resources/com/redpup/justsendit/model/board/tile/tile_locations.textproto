@@ -224,7 +224,7 @@ location {
     r: 8
   }
   lift {
-    color: LIFT_COLOR_PURPLE
+    color: LIFT_COLOR_MAGENTA
     direction: LIFT_DIRECTION_BOTTOM
   }
 }
@@ -236,7 +236,7 @@ location {
     r: 3
   }
   lift {
-    color: LIFT_COLOR_PURPLE
+    color: LIFT_COLOR_MAGENTA
     direction: LIFT_DIRECTION_TOP
   }
 }

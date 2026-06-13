@@ -24,38 +24,38 @@ Align the codebase with the new V2 rules, including:
 - [x] Update `src/main/proto/com/redpup/justsendit/model/player/decision.proto`.
 - [x] Update `src/main/proto/com/redpup/justsendit/model/board/tile/lift.proto` (LiftColor update).
 
-## Phase 3: Core Model Implementation [IN PROGRESS]
-- [/] **Skill Cards & Decks:**
+## Phase 3: Core Model Implementation [COMPLETE]
+- [x] Skill Cards & Decks:
     - [x] Update `SkillDecks.kt` to load and provide `SkillCard` objects.
-    - [ ] Implement starter deck (10 cards) and shop deck.
-- [/] **Player State:**
+    - [x] Implement starter deck (10 cards) and shop deck.
+- [x] Player State:
     - [x] Update `MutablePlayer` to track:
         - `hand`: List of `SkillCard`.
         - `inPlay`: List of `SkillCard`.
         - `discardPile`: List of `SkillCard`.
         - `wobbles`: Int.
         - `studyValue`: Calculated from hand + matching icons.
-- [ ] **Game Model Logic:**
+- [x] Game Model Logic:
     - [x] Update `startDay()`: Distribute starting fun (Leader: 10, 2nd: 12, etc.).
     - [x] Implement `turn()`: Round-robin turns until all pass. Advance leader token.
-    - [ ] Implement `executeSkiRide()`:
+    - [x] Implement `executeSkiRide()`:
         - Handle movement.
         - Implement the 6-step resolution loop.
         - Dice rolling: Green(d4), Blue(d6), Black(d8).
         - Terrain effects (Ice, Powder, Moguls, Trees, Cliffs).
         - Wobble calculation and Crash check (3+ wobbles).
         - Wipeout check (Crash with no cards in hand).
-    - [ ] Implement `executePass()`:
+    - [x] Implement `executePass()`:
         - Reveal hand, calculate study value.
         - Handle Shop purchase.
-    - [ ] Implement `executeLift()`:
+    - [x] Implement `executeLift()`:
         - Free movement onto lift.
         - Upward movement cost (discard cards).
         - Trashing logic.
-- [ ] **Shop System:**
-    - 5 cards in shop.
-    - Sale tokens (-1 cost per token, max 2).
-    - Round-end replenishment and token addition.
+- [x] Shop System:
+    - [x] 5 cards in shop.
+    - [x] Sale tokens (-1 cost per token, max 2).
+    - [x] Round-end replenishment and token addition.
 
 ## Phase 4: Verification
 - [ ] Update existing tests.

@@ -6,7 +6,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.friday.George
 import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.SkillDeck
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -17,7 +17,7 @@ class PlayerTest {
 
   private lateinit var player: MutablePlayer
   private val handler = mock<PlayerController>()
-  private val skillDecks = mock<SkillDecks>()
+  private val skillDeck = mock<SkillDeck>()
 
   @BeforeEach
   fun setUp() {
@@ -108,10 +108,10 @@ class PlayerTest {
 
   @Test
   fun `gainSkillCards adds cards to deck`() {
-    whenever(skillDecks.draw(Grade.GRADE_GREEN)).thenReturn(1)
-    whenever(skillDecks.draw(Grade.GRADE_BLUE)).thenReturn(2)
+    whenever(skillDeck.draw(Grade.GRADE_GREEN)).thenReturn(1)
+    whenever(skillDeck.draw(Grade.GRADE_BLUE)).thenReturn(2)
 
-    player.gainSkillCards(listOf(Grade.GRADE_GREEN, Grade.GRADE_BLUE), skillDecks)
+    player.gainSkillCards(listOf(Grade.GRADE_GREEN, Grade.GRADE_BLUE), skillDeck)
 
     assertThat(player.skillDeck).containsExactly(1, 2)
   }
@@ -122,9 +122,9 @@ class PlayerTest {
       name = "Test Card"
       skillCards += Grade.GRADE_GREEN
     })
-    whenever(skillDecks.draw(Grade.GRADE_GREEN)).thenReturn(1)
+    whenever(skillDeck.draw(Grade.GRADE_GREEN)).thenReturn(1)
 
-    player.gainPlayerCard(card, skillDecks)
+    player.gainPlayerCard(card, skillDeck)
 
     assertThat(player.playerCards).contains(card)
     assertThat(player.skillDeck).contains(1)

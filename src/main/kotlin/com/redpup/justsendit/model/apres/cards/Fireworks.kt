@@ -4,11 +4,10 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres
 import com.redpup.justsendit.model.apres.proto.ApresCard
-import com.redpup.justsendit.model.supply.SkillDecks.Companion.value
 
 class Fireworks(override val apresCard: ApresCard) : StockpilingBaseApres(apresCard) {
   override fun handleGameEvent(event: ApresGameEvent, gameModel: GameModel) {
-    if (event is ApresGameEvent.PlayerPlayedCard && event.card.value == 9) {
+    if (event is ApresGameEvent.PlayerPlayedCard && event.card.blackDice >= 1) {
       stockpile += 2
     }
   }

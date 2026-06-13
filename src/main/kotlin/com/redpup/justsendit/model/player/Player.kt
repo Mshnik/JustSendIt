@@ -4,7 +4,7 @@ import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.SkillDeck
 import com.redpup.justsendit.model.supply.proto.SkillCard
 
 /** Immutable access to a player object. */
@@ -191,15 +191,14 @@ class MutablePlayer(override val controller: PlayerController) : Player {
     nextDay.clear()
   }
 
-  /** Gains [cards] skill cards from the [skillDecks], then shuffles this player's [skillDeck]. */
-  fun gainSkillCards(cards: List<Grade>, skillDecks: SkillDecks) {
-    cards.forEach { skillDeck.add(skillDecks.draw(it)) }
-    skillDeck.shuffle()
+  /** Gains [card] skill card, then shuffles this player's [skillDeck]. */
+  fun gainSkillCard(card: SkillCard) {
+    this.skillDeck.add(card)
+    this.skillDeck.shuffle()
   }
 
   /** Gains [playerCard] and all of its associated benefits. */
-  suspend fun gainPlayerCard(playerCard: PlayerCard, skillDecks: SkillDecks) {
-    gainSkillCards(playerCard.proto.skillCardsList, skillDecks)
+  suspend fun gainPlayerCard(playerCard: PlayerCard) {
     playerCards.add(playerCard)
   }
 }

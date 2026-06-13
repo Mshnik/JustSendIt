@@ -3,13 +3,13 @@ package com.redpup.justsendit.model.supply
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.redpup.justsendit.model.proto.Grade
-import com.redpup.justsendit.model.supply.SkillDecks.Companion.getSkillGrade
+import com.redpup.justsendit.model.supply.SkillDeck.Companion.getSkillGrade
 import javax.inject.Inject
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-class SkillDecksTest {
+class SkillDeckTest {
 
   @Inject private lateinit var skillDecks: SkillDecksInstance
 

@@ -1,0 +1,52 @@
+# proto-file: com/redpup/justsendit/model/supply/skill_card.proto
+# proto-message: SkillCardList
+
+cards {
+  name: "Groomed Pro"
+  cost: 5
+  green_dice: 2
+  icons { condition: CONDITION_GROOMED }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}
+cards {
+  name: "Powder Hound"
+  cost: 6
+  blue_dice: 2
+  icons { condition: CONDITION_POWDER }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}
+cards {
+  name: "Ice Specialist"
+  cost: 7
+  black_dice: 2
+  icons { condition: CONDITION_ICY }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}
+cards {
+  name: "Mogul Master"
+  cost: 8
+  blue_dice: 1
+  black_dice: 1
+  icons { hazard: HAZARD_MOGULS }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}
+cards {
+  name: "Tree Weaver"
+  cost: 9
+  black_dice: 2
+  icons { hazard: HAZARD_TREES }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}
+cards {
+  name: "Cliff Dropper"
+  cost: 10
+  black_dice: 3
+  icons { hazard: HAZARD_CLIFFS }
+  category: EFFECT_CATEGORY_PLAY
+  text: "No effect."
+}

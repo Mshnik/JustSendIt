@@ -22,7 +22,10 @@ import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.supply.ApresDeck
 import com.redpup.justsendit.model.supply.PlayerDeck
-import com.redpup.justsendit.model.supply.SkillDecks
+import com.redpup.justsendit.model.supply.SkillDeck
+import com.redpup.justsendit.model.supply.StarterDeck
+import com.redpup.justsendit.model.supply.ShopDeck
+import com.redpup.justsendit.model.supply.proto.SkillCard
 import com.redpup.justsendit.util.TimeSource
 
 /** Immutable access to game model. */
@@ -52,7 +55,7 @@ interface GameModel {
   val clock: Clock
 
   /** The skill decks in the game. */
-  val skillDecks: SkillDecks
+  val skillDeck: SkillDeck
 
   /** The current player whose turn it is. */
   val currentPlayer: Player
@@ -65,7 +68,8 @@ class MutableGameModel @Inject constructor(
   playerFactory: PlayerFactory,
   private val playerDeck: PlayerDeck,
   private val apresDeck: ApresDeck,
-  override val skillDecks: SkillDecks,
+  @StarterDeck private val starterDeck: SkillDeck,
+  @ShopDeck override val skillDeck: SkillDeck,
   private val timeSource: TimeSource,
   private val loggers: Set<Logger>,
 ) : GameModel {
@@ -93,6 +97,114 @@ class MutableGameModel @Inject constructor(
   private val saleTokens = mutableMapOf<SkillCard, Int>()
 
   override val clock = MutableClock()
+
+  private val random = java.util.Random()
+
+  private enum class DieType { GREEN, BLUE, BLACK }
+
+  private fun rollDie(type: DieType): Int {
+    return when (type) {
+      DieType.GREEN -> random.nextInt(4) + 1
+      DieType.BLUE -> random.nextInt(6) + 1
+      DieType.BLACK -> random.nextInt(8) + 1
+    }
+  }
+
+  private fun upgradeDie(type: DieType): DieType {
+    return when (type) {
+      DieType.GREEN -> DieType.BLUE
+      DieType.BLUE -> DieType.BLACK
+      DieType.BLACK -> DieType.BLACK
+    }
+  }
+
+  private fun downgradeDie(type: DieType): DieType {
+    return when (type) {
+      DieType.GREEN -> DieType.GREEN
+      DieType.BLUE -> DieType.GREEN
+      DieType.BLACK -> DieType.BLUE
+    }
+  }
+
+  private fun matches(icon: com.redpup.justsendit.model.proto.Icon, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): Boolean {
+    return when (icon.typeCase) {
+      com.redpup.justsendit.model.proto.Icon.TypeCase.GRADE -> icon.grade == slope.grade
+      com.redpup.justsendit.model.proto.Icon.TypeCase.CONDITION -> icon.condition == slope.condition
+      com.redpup.justsendit.model.proto.Icon.TypeCase.HAZARD -> slope.hazardsList.contains(icon.hazard)
+      com.redpup.justsendit.model.proto.Icon.TypeCase.WILD -> icon.wild
+      else -> false
+    }
+  }
+
+  private data class CardResolution(val skill: Int, val wobbles: Int)
+
+  private fun resolveCard(player: MutablePlayer, card: SkillCard, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): CardResolution {
+    var green = card.greenDice
+    var blue = card.blueDice
+    var black = card.blackDice
+
+    // Step 1: Terrain and effects that change dice
+    // Powder: [Before roll] First card only: Remove your lowest die.
+    if (slope.condition == com.redpup.justsendit.model.board.tile.proto.Condition.CONDITION_POWDER && player.inPlay.size == 1) {
+      if (green > 0) green--
+      else if (blue > 0) blue--
+      else if (black > 0) black--
+    }
+    // Moguls: [Before roll] Downgrade your highest die.
+    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_MOGULS)) {
+      if (black > 0) {
+        black--
+        blue++
+      } else if (blue > 0) {
+        blue--
+        green++
+      }
+    }
+
+    // Step 2: Roll dice
+    val rolls = mutableListOf<Int>()
+    repeat(green) { rolls.add(rollDie(DieType.GREEN)) }
+    repeat(blue) { rolls.add(rollDie(DieType.BLUE)) }
+    repeat(black) { rolls.add(rollDie(DieType.BLACK)) }
+
+    // Step 3: All other terrain and effects (including rerolls) - TODO
+
+    // Step 4: Check for and gain wobbles
+    var wobbles = rolls.count { it == 1 }
+    // Ice: [After roll] Gain an additional wobble for each 1 rolled.
+    if (slope.condition == com.redpup.justsendit.model.board.tile.proto.Condition.CONDITION_ICY) {
+      wobbles += rolls.count { it == 1 }
+    }
+
+    // Step 6: Sum skill
+    var skill = rolls.sum()
+    // Trees: [After roll] All rolled 5s score 0 skill.
+    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_TREES)) {
+      skill -= rolls.count { it == 5 } * 5
+    }
+    // Cliffs: [After roll] All rolled 2s and 3s score 0 skill.
+    if (slope.hazardsList.contains(com.redpup.justsendit.model.board.tile.proto.Hazard.HAZARD_CLIFFS)) {
+      skill -= rolls.count { it == 2 } * 2
+      skill -= rolls.count { it == 3 } * 3
+    }
+
+    // Matching icons (+1 each)
+    val matchingIcons = card.iconsList.count { matches(it, slope) }
+    skill += matchingIcons
+
+    return CardResolution(skill, wobbles)
+  }
+
+  private fun crash(player: MutablePlayer) {
+    player.resetWobbles()
+    if (player.hand.isNotEmpty()) {
+      // Discard one card from hand if they have any remaining.
+      player.discardFromHand(player.hand.first())
+    } else {
+      // Wipeout! Lose 10 fun.
+      player.setPoints((player.points - 10).coerceAtLeast(0))
+    }
+  }
 
   /** Adds this message as a log to this game model. */
   private fun Any.log() {
@@ -136,7 +248,7 @@ class MutableGameModel @Inject constructor(
     val cards = playerDeck.draw(clock.day, players.size + 2)
     for (player in players) {
       val card = player.controller.choosePlayerCard(player, cards)
-      player.gainPlayerCard(card, skillDecks)
+      player.gainPlayerCard(card)
     }
   }
 
@@ -166,6 +278,7 @@ class MutableGameModel @Inject constructor(
 
     if (clock.day == Day.DAY_FRIDAY) {
       setStartingPlayerOrder()
+      giveStarterDecks()
     }
 
     for (player in playersInTurnOrder()) {
@@ -174,10 +287,32 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  /** Replenishes the shop to 5 cards. */
+  /** Gives each player their 10-card starter deck. */
+  private fun giveStarterDecks() {
+    for (player in players) {
+      starterDeck.reset()
+      repeat(10) {
+        player.gainSkillCard(starterDeck.draw())
+      }
+    }
+  }
+
+  /** Replenishes the shop to 5 cards, adding sale tokens to existing cards and removing old ones. */
   private fun replenishShop() {
-    // TODO: Implement shop replenishment from SkillDecks.
-    // SkillDecks currently only has draw(Grade). Rulebook V2 might need a Shop deck.
+    // Add sale tokens to existing cards
+    for (card in shop) {
+      saleTokens[card] = (saleTokens[card] ?: 0) + 1
+    }
+
+    // Remove cards with 2 sale tokens
+    val toRemove = shop.filter { (saleTokens[it] ?: 0) >= 2 }
+    shop.removeAll(toRemove)
+    toRemove.forEach { saleTokens.remove(it) }
+
+    // Replenish up to 5 cards
+    while (shop.size < 5) {
+      shop.add(skillDeck.draw())
+    }
   }
 
   /** Executes one turn for the current player. */
@@ -185,10 +320,13 @@ class MutableGameModel @Inject constructor(
     if (!passedPlayers.contains(playerOrder[currentPlayerIndex])) {
       val player = currentPlayer
       player.playerCards.forEach { it.startTurn() }
-      
-      val decision =
-        player.controller.makeMountainDecision(player, this).also { it.log() }
-      executeDecision(player, decision)
+
+      var continueTurn: Boolean
+      do {
+        val decision =
+          player.controller.makeMountainDecision(player, this).also { it.log() }
+        continueTurn = executeDecision(player, decision)
+      } while (continueTurn)
     }
 
     // Move to next player who hasn't passed
@@ -204,6 +342,9 @@ class MutableGameModel @Inject constructor(
   /** Concludes the round, resets passed players, and moves leader token. */
   private suspend fun endRound() {
     passedPlayers.clear()
+    // Rulebook V2: "At the end of the round ... add a 'sale' token ... remove all cards that have two sale tokens and replenish the shop up to five cards."
+    replenishShop()
+
     // Move leader: the playerOrder currently represents the turn order.
     // In Rulebook V2: "At the end of the round, the leader token moves clockwise for the next round."
     val first = playerOrder.removeFirst()
@@ -257,12 +398,10 @@ class MutableGameModel @Inject constructor(
     return when (decision.decisionCase) {
       MountainDecision.DecisionCase.SKI_RIDE -> {
         executeSkiRide(player, decision.skiRide)
-        false
       }
 
       MountainDecision.DecisionCase.LIFT -> {
         executeLift(player, decision.lift)
-        false
       }
 
       MountainDecision.DecisionCase.PASS -> {
@@ -297,50 +436,59 @@ class MutableGameModel @Inject constructor(
 
     if (destinationTile.hasLift()) {
       player.location = destination
-      check(skiRideDecision.numCards == 0) { "Must play 0 cards to ski/ride onto lift, got ${skiRideDecision.numCards}" }
       return true
     }
 
-    check(!(destinationTile.slope.slow && player.turn.speed > MAX_SPEED_ON_SLOW)) {
-      "Cannot travel to SLOW tile with speed ${player.turn.speed}"
-    }
-    check(skiRideDecision.numCards >= 1 && skiRideDecision.numCards <= clock.maxCards) {
-      "Must play between [1,${clock.day}] cards, got ${skiRideDecision.numCards}"
-    }
-    check(skiRideDecision.numCards <= player.skillDeck.size) {
-      "Only ${player.skillDeck.size} cards remaining, cannot play ${skiRideDecision.numCards} cards"
+    val slope = destinationTile.slope
+    // Slow check: can only enter if 2 or fewer skill cards in play.
+    if (slope.slow) {
+      check(player.inPlay.size <= 2) { "Cannot enter slow tile with ${player.inPlay.size} cards in play" }
     }
 
     player.location = destination
-    player.turn.points += tileMapPoints[destination]!!
-    tileMapPoints[destination] = 0
 
-    val cards = (1..skiRideDecision.numCards).map { player.playSkillCard()!! }
-    val baseDifficulty = destinationTile.slope.difficulty
-    val speedDifficulty = player.turn.speed * SPEED_DIFFICULTY_MODIFIER
-    var skill = cards.sum()
-    val difficulty = baseDifficulty + speedDifficulty
+    var cumulativeSkill = 0
+    var succeeded = false
 
-    var success = skill >= difficulty
+    while (!succeeded) {
+      val action = player.controller.chooseSkiRideResolutionAction(player, this)
+      if (action.hasStop()) {
+        crash(player)
+        break
+      }
 
-    skiRideAttempt {
-      this.baseDifficulty = baseDifficulty
-      this.speedDifficulty = speedDifficulty
-      cardValue += cards
-      this.success = success
-    }.log()
+      val card = player.hand.find { it.name == action.playCardName }
+      if (card == null) {
+        crash(player)
+        break
+      }
 
-    if (success) {
-      player.turn.points += difficulty
-      player.turn.speed++
-    } else {
-      player.turn.points = 0
+      player.playCard(card)
+
+      val resolution = resolveCard(player, card, slope)
+      cumulativeSkill += resolution.skill
+      player.addWobbles(resolution.wobbles)
+
+      if (player.wobbles >= 3) {
+        crash(player)
+        break
+      }
+
+      if (cumulativeSkill >= slope.difficulty) {
+        succeeded = true
+        player.mutate { points += slope.difficulty }
+      } else if (player.hand.isEmpty()) {
+        crash(player)
+        break
+      }
     }
 
-    ApresGameEvent.PlayerSkiRide(clock.turn, success).broadcast()
-    cards.forEach { ApresGameEvent.PlayerPlayedCard(it).broadcast() }
+    skiRideAttempt {
+      this.baseDifficulty = slope.difficulty
+      this.success = succeeded
+    }.log()
 
-    return success
+    return succeeded
   }
 
   private fun executeRest(player: MutablePlayer) {
@@ -348,11 +496,40 @@ class MutableGameModel @Inject constructor(
     PlayerGameEvent.PlayerRested.broadcast(player)
   }
 
-  private fun executeLift(player: MutablePlayer) {
+  private fun getLiftCost(color: LiftColor): Int {
+    return when (color) {
+      LiftColor.LIFT_COLOR_RED -> 1
+      LiftColor.LIFT_COLOR_YELLOW -> 2
+      LiftColor.LIFT_COLOR_CYAN -> 3
+      LiftColor.LIFT_COLOR_MAGENTA -> 4
+      LiftColor.LIFT_COLOR_GREY -> 5
+      else -> 1
+    }
+  }
+
+  private suspend fun executeLift(player: MutablePlayer, liftDecision: MountainDecision.LiftDecision): Boolean {
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
+
+    if (liftDecision.actionCase == MountainDecision.LiftDecision.ActionCase.STAY) {
+      return false
+    }
+
+    val cost = getLiftCost(tile.lift.color)
+    val toDiscard = player.controller.chooseCardsToDiscardForLift(player, player.hand, cost)
+    check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
+
+    toDiscard.forEach { player.discardFromHand(it) }
+
+    // Rulebook: "choose to trash up the same number of cards from their discard pile ... optionally including the card(s) just discarded."
+    val trashCandidates = player.skillDiscard.toList()
+    val toTrash = player.controller.chooseCardsToTrashForLift(player, trashCandidates, cost)
+    toTrash.forEach {
+      player.skillDiscard.remove(it)
+    }
+
     ApresGameEvent.PlayerUsedLift.broadcast()
     val destination = getOtherLiftLocation(tile.lift.color, location)
     playerMove {
@@ -360,7 +537,8 @@ class MutableGameModel @Inject constructor(
       to = destination
     }.log()
     player.location = destination
-    player.refreshDecks()
+
+    return false
   }
 
   private suspend fun executeActivatePlayerCard(player: MutablePlayer, playerCardName: String) {
@@ -393,10 +571,19 @@ class MutableGameModel @Inject constructor(
     var total = player.hand.size
     val currentLocation = player.location ?: return total
     val tile = tileMap[currentLocation] ?: return total
-    
-    // TODO: Implement icon matching for study value.
-    // Each symbol on a card that matches the tile they are currently on gives +1.
-    // Note that only wild match lifts.
+
+    if (tile.hasSlope()) {
+      val slope = tile.slope
+      for (card in player.hand) {
+        total += card.iconsList.count { matches(it, slope) }
+      }
+    } else if (tile.hasLift()) {
+      // Note that only wild match lifts.
+      for (card in player.hand) {
+        total += card.iconsList.count { it.hasWild() && it.wild }
+      }
+    }
+
     return total
   }
 
