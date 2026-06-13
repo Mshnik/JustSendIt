@@ -4,7 +4,6 @@ import com.google.common.collect.Range
 import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.MountainTile.TileCase
 import com.redpup.justsendit.model.player.Player
@@ -16,7 +15,6 @@ import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
 import com.redpup.justsendit.model.player.proto.SkiRideResolutionActionKt.playCardAction
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
-import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.util.FunctionExtensions.orElse
 import com.redpup.justsendit.util.FunctionExtensions.thenNonNull
 import com.redpup.justsendit.view.board.HexGridViewer
@@ -34,12 +32,6 @@ class GuiController @Inject constructor() : PlayerController {
 
   lateinit var hexGridViewer: HexGridViewer
   override val name = "GuiController"
-  override suspend fun choosePlayerCard(
-    player: Player,
-    cards: List<com.redpup.justsendit.model.player.cards.PlayerCard>,
-  ): com.redpup.justsendit.model.player.cards.PlayerCard {
-    TODO("Not yet implemented")
-  }
 
   override suspend fun makeMountainDecision(
     player: Player,
@@ -145,36 +137,31 @@ class GuiController @Inject constructor() : PlayerController {
     return gameModel.tileMap.keys().first { gameModel.tileMap[it]!!.hasLift() }
   }
 
-  override suspend fun chooseCardsToRemove(
+  override suspend fun <T> choose(
     player: Player,
-    cards: List<Skill>,
-    maxToRemove: Int,
-  ): List<Skill> {
+    elements: List<T>,
+    count: Range<Int>,
+  ): List<T> {
     return suspendCancellableCoroutine { continuation ->
       Platform.runLater {
         val dialog = TextInputDialog()
-        dialog.title = "Choose Cards to Remove"
-        dialog.headerText = "Enter card indices to remove (comma-separated), max $maxToRemove"
-        dialog.contentText =
-          "Your cards: ${cards.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()}"
+        // TODO: Metadata based on choose event.
+        // dialog.title = "Choose Cards to Remove"
+        // dialog.headerText = "Enter card indices to remove (comma-separated), max $maxToRemove"
+        // dialog.contentText =
+        //   "Your cards: ${cards.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()}"
         val result = dialog.showAndWait()
         if (result.isPresent) {
           val indices = result.get().split(",").mapNotNull { it.trim().toIntOrNull() }
-          val selected = indices.filter { it in cards.indices }.map { cards[it] }.take(maxToRemove)
+          val selected = indices.filter { it in elements.indices }.map { elements[it] }
+            .take(count.lowerEndpoint())
           continuation.resume(selected)
         } else {
-          continuation.resume(emptyList())
+          // TODO: bad selection
+          // continuation.resume(emptyList())
         }
       }
     }
-  }
-
-  override suspend fun chooseOtherApres(
-    player: Player,
-    otherApres: List<Apres>,
-    count: Int,
-  ): List<Apres> {
-    TODO("Not yet implemented")
   }
 
   override suspend fun chooseSkiRideResolutionAction(
@@ -201,87 +188,6 @@ class GuiController @Inject constructor() : PlayerController {
           continuation.resume(skiRideResolutionAction {
             stop = empty { }
           })
-        }
-      }
-    }
-  }
-
-  override suspend fun chooseCardsToDiscard(
-    player: Player,
-    hand: List<Skill>,
-    count: Range<Int>,
-  ): List<Skill> {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val dialog = TextInputDialog()
-        dialog.title = "Lift Discard"
-        dialog.headerText = "Enter indices of $count cards in hand to discard (comma-separated)"
-        dialog.contentText =
-          "Hand: ${hand.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()}"
-        val result = dialog.showAndWait()
-        if (result.isPresent) {
-          val indices = result.get().split(",").mapNotNull { it.trim().toIntOrNull() }
-          val selected = indices.filter { it in hand.indices }.map { hand[it] }
-          if (count.contains(selected.count())) {
-            continuation.resume(selected)
-          } else {
-            // continuation.resume(hand.take(count))
-          }
-        } else {
-          // continuation.resume(hand.take(count))
-        }
-      }
-    }
-  }
-
-  override suspend fun chooseCardsToTrash(
-    player: Player,
-    candidates: List<Skill>,
-    count: Range<Int>,
-  ): List<Skill> {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val dialog = TextInputDialog()
-        dialog.title = "Lift Trash"
-        dialog.headerText = "Enter indices of $count cards to trash (comma-separated)"
-        dialog.contentText = "Candidates: ${
-          candidates.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()
-        }"
-        val result = dialog.showAndWait()
-        if (result.isPresent) {
-          val indices = result.get().split(",").mapNotNull { it.trim().toIntOrNull() }
-          val selected =
-            indices.filter { it in candidates.indices }.map { candidates[it] }
-              .take(count.upperEndpoint())
-          continuation.resume(selected)
-        } else {
-          continuation.resume(emptyList())
-        }
-      }
-    }
-  }
-
-  override suspend fun chooseCardsFromDiscard(
-    player: Player,
-    discard: List<Skill>,
-    count: Range<Int>,
-  ): List<Skill> {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val dialog = TextInputDialog()
-        dialog.title = "Choose Cards from Discard"
-        dialog.headerText =
-          "Enter indices of up to $count cards from discard to retrieve (comma-separated)"
-        dialog.contentText =
-          "Discard: ${discard.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()}"
-        val result = dialog.showAndWait()
-        if (result.isPresent) {
-          val indices = result.get().split(",").mapNotNull { it.trim().toIntOrNull() }
-          val selected =
-            indices.filter { it in discard.indices }.map { discard[it] }.take(count.upperEndpoint())
-          continuation.resume(selected)
-        } else {
-          continuation.resume(emptyList())
         }
       }
     }

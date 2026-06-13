@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.apres.cards
 
+import com.google.common.collect.Range
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
@@ -27,10 +28,10 @@ class LodgeTest {
   fun `first player chooses 2 other apres`() = runBlocking {
     val otherApres = listOf<Apres>(mock(), mock())
     whenever(gameModel.apres).thenReturn(otherApres + lodge)
-    whenever(handler.chooseOtherApres(any(), any(), any())).thenReturn(otherApres.take(2))
+    whenever(handler.choose(any(), any<List<Apres>>(), any())).thenReturn(otherApres.take(2))
 
     lodge.apply(player, true, gameModel)
-    verify(handler).chooseOtherApres(player, otherApres, 2)
+    verify(handler).choose(player, otherApres, Range.closed(2, 2))
     verify(otherApres[0]).apply(player, false, gameModel)
     verify(otherApres[1]).apply(player, false, gameModel)
   }
@@ -39,10 +40,10 @@ class LodgeTest {
   fun `other player chooses 1 other apres`() = runBlocking {
     val otherApres = listOf<Apres>(mock(), mock())
     whenever(gameModel.apres).thenReturn(otherApres + lodge)
-    whenever(handler.chooseOtherApres(any(), any(), any())).thenReturn(otherApres.take(1))
+    whenever(handler.choose(any(), any<List<Apres>>(), any())).thenReturn(otherApres.take(1))
 
     lodge.apply(player, false, gameModel)
-    verify(handler).chooseOtherApres(player, otherApres, 1)
+    verify(handler).choose(player, otherApres, Range.closed(1, 1))
     verify(otherApres[0]).apply(player, false, gameModel)
     verify(otherApres[1], never()).apply(any(), any(), any())
   }

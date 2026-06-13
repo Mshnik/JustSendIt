@@ -174,9 +174,7 @@ class MutableGameModel @Inject constructor(
   /** Called when [player] crashes. */
   private suspend fun crash(player: MutablePlayer) {
     if (player.hand.isNotEmpty()) {
-      val card =
-        player.controller.chooseCardsToDiscard(player, player.hand, Range.closed(1, 1)).first()
-      player.discardFromHand(card)
+      with(player) { discardFromHand(controller.chooseOne(player, player.hand)) }
     } else {
       player.points -= 10
     }
@@ -225,8 +223,7 @@ class MutableGameModel @Inject constructor(
   private suspend fun pickPlayerCards() {
     val cards = playerDeck.draw(clock.day, players.size + 2)
     for (player in players) {
-      val card = player.controller.choosePlayerCard(player, cards)
-      player.gainPlayerCard(card)
+      with(player) { gainPlayerCard(controller.chooseOne(player, cards)) }
     }
   }
 
@@ -499,16 +496,14 @@ class MutableGameModel @Inject constructor(
     }
 
     val cost = getLiftCost(tile.lift.color)
-    val toDiscard =
-      player.controller.chooseCardsToDiscard(player, player.hand, Range.closed(cost, cost))
+    val toDiscard = player.controller.choose(player, player.hand, Range.closed(cost, cost))
     check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
 
     toDiscard.forEach { player.discardFromHand(it) }
 
     // Rulebook: "choose to trash up the same number of cards from their discard pile ... optionally including the card(s) just discarded."
     val trashCandidates = player.skillDiscard.toList()
-    val toTrash =
-      player.controller.chooseCardsToTrash(player, trashCandidates, Range.closed(0, cost))
+    val toTrash = player.controller.choose(player, trashCandidates, Range.closed(0, cost))
     toTrash.forEach {
       player.skillDiscard.remove(it)
     }

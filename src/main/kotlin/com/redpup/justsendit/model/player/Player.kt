@@ -196,7 +196,7 @@ class MutablePlayer(override val controller: PlayerController) : Player {
   }
 
   /** Gains [playerCard] and all of its associated benefits. */
-  suspend fun gainPlayerCard(playerCard: PlayerCard) {
+  fun gainPlayerCard(playerCard: PlayerCard) {
     playerCards.add(playerCard)
   }
 }

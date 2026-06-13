@@ -34,10 +34,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.mockito.kotlin.any
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.kotlin.*
 
 class GameModelTest {
   private val playerController1: PlayerController = mock()
@@ -78,24 +75,19 @@ class GameModelTest {
       (shopDeck as FakeSkillDeck).add(skillCard { name = "Shop $it"; blueDice = 1 })
     }
 
-    playerDeck.add(
-      playerCard {
-        name = "1"
-        day = Day.DAY_FRIDAY
-      },
-      playerCard {
-        name = "2"
-        day = Day.DAY_FRIDAY
-      },
-      playerCard {
-        name = "3"
-        day = Day.DAY_FRIDAY
-      },
-      playerCard {
-        name = "4"
-        day = Day.DAY_FRIDAY
-      }
-    )
+    playerDeck.add(playerCard {
+      name = "1"
+      day = Day.DAY_FRIDAY
+    }, playerCard {
+      name = "2"
+      day = Day.DAY_FRIDAY
+    }, playerCard {
+      name = "3"
+      day = Day.DAY_FRIDAY
+    }, playerCard {
+      name = "4"
+      day = Day.DAY_FRIDAY
+    })
 
     playerFactory.register("1") { FakePlayerCard(it) }
     playerFactory.register("2") { FakePlayerCard(it) }
@@ -144,23 +136,23 @@ class GameModelTest {
   fun `startDay initializes players and apres`() = runBlocking {
     whenever(playerController1.getStartingLocation(any(), any())).thenReturn(mock())
     whenever(playerController2.getStartingLocation(any(), any())).thenReturn(mock())
-    whenever(
-      playerController1.choosePlayerCard(
-        any(), any()
+    wheneverBlocking {
+      playerController1.chooseOne(
+        any(), any<List<PlayerCard>>()
       )
-    ).thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
-    whenever(
-      playerController2.choosePlayerCard(
-        any(), any()
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+    wheneverBlocking {
+      playerController2.chooseOne(
+        any(), any<List<PlayerCard>>()
       )
-    ).thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
 
     gameModel.startDay()
 
     assertThat(gameModel.apres).hasSize(MutableGameModel.APRES_SLOTS)
 
-    verify(playerController1).choosePlayerCard(any(), any())
-    verify(playerController2).choosePlayerCard(any(), any())
+    verify(playerController1).chooseOne(any(), any<List<PlayerCard>>())
+    verify(playerController2).chooseOne(any(), any<List<PlayerCard>>())
     verify(playerController1).getStartingLocation(any(), any())
     verify(playerController2).getStartingLocation(any(), any())
     Unit

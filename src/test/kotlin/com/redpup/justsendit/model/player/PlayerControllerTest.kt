@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.player
 
+import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.google.inject.Inject
@@ -34,7 +35,7 @@ class PlayerControllerTest {
     val card2 = mock<PlayerCard>()
     val cards = listOf(card1, card2)
 
-    val result = runBlocking { handler.choosePlayerCard(player, cards) }
+    val result = runBlocking { handler.chooseOne(player, cards) }
 
     assertThat(result).isEqualTo(card1)
   }
@@ -63,7 +64,7 @@ class PlayerControllerTest {
       skillFactory.create(skillCard { name = "1" }),
       skillFactory.create(skillCard { name = "2" })
     )
-    val result = runBlocking { handler.chooseCardsToRemove(player, cards, 1) }
+    val result = runBlocking { handler.choose(player, cards, Range.closed(0, 1)) }
     assertThat(result).isEmpty()
   }
 }
