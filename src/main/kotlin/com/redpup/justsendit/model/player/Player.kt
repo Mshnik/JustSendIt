@@ -84,12 +84,11 @@ interface AbilityHandler {}
 class MutablePlayer(override val controller: PlayerController) : Player {
   override val playerCards = mutableListOf<PlayerCard>()
   override val name: String get() = playerCards.firstOrNull()?.name ?: "No Name"
-  override var points = 0; internal set
-
-  /** Sets the points for this player. */
-  fun setPoints(points: Int) {
-    this.points = points
-  }
+  override var points = 0
+    set(points) {
+      field = points
+      field.coerceAtLeast(0)
+    }
 
   override var location: HexPoint? = null
   override var apresLink: Int? = null

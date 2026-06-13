@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model
 
+import com.google.common.collect.Range
 import com.google.inject.Inject
 import com.google.protobuf.util.Timestamps
 import com.redpup.justsendit.control.player.PlayerController
@@ -13,15 +14,14 @@ import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
-import com.redpup.justsendit.model.board.tile.proto.Condition
-import com.redpup.justsendit.model.board.tile.proto.Hazard
-import com.redpup.justsendit.model.board.tile.proto.LiftColor
-import com.redpup.justsendit.model.board.tile.proto.MountainTile
+import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.*
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.proto.Icon
+import com.redpup.justsendit.model.proto.Icon.TypeCase
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
@@ -98,15 +98,12 @@ class MutableGameModel @Inject constructor(
 
   override val clock = MutableClock()
 
-  private fun matches(
-    icon: com.redpup.justsendit.model.proto.Icon,
-    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
-  ): Boolean {
+  private fun matches(icon: Icon, slope: SlopeTile): Boolean {
     return when (icon.typeCase) {
-      com.redpup.justsendit.model.proto.Icon.TypeCase.GRADE -> icon.grade == slope.grade
-      com.redpup.justsendit.model.proto.Icon.TypeCase.CONDITION -> icon.condition == slope.condition
-      com.redpup.justsendit.model.proto.Icon.TypeCase.HAZARD -> slope.hazardsList.contains(icon.hazard)
-      com.redpup.justsendit.model.proto.Icon.TypeCase.WILD -> icon.wild
+      TypeCase.GRADE -> icon.grade == slope.grade
+      TypeCase.CONDITION -> icon.condition == slope.condition
+      TypeCase.HAZARD -> slope.hazardsList.contains(icon.hazard)
+      TypeCase.WILD -> icon.wild
       else -> false
     }
   }
@@ -116,7 +113,7 @@ class MutableGameModel @Inject constructor(
   private fun resolveCard(
     player: MutablePlayer,
     skill: Skill,
-    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+    slope: SlopeTile,
   ): CardResolution {
     var green = skill.skillCard.greenDice
     var blue = skill.skillCard.blueDice
@@ -174,15 +171,16 @@ class MutableGameModel @Inject constructor(
     return CardResolution(sum, wobbles)
   }
 
-  private fun crash(player: MutablePlayer) {
-    player.resetWobbles()
+  /** Called when [player] crashes. */
+  private suspend fun crash(player: MutablePlayer) {
     if (player.hand.isNotEmpty()) {
-      // Discard one card from hand if they have any remaining.
-      player.discardFromHand(player.hand.first())
+      val card =
+        player.controller.chooseCardsToDiscard(player, player.hand, Range.closed(1, 1)).first()
+      player.discardFromHand(card)
     } else {
-      // Wipeout! Lose 10 fun.
-      player.setPoints((player.points - 10).coerceAtLeast(0))
+      player.points -= 10
     }
+    player.resetWobbles()
   }
 
   /** Adds this message as a log to this game model. */
@@ -219,7 +217,7 @@ class MutableGameModel @Inject constructor(
     // TODO: Attach random to shuffling (here and elsewhere).
     playerOrder.shuffle()
     for ((index, playerIdx) in playerOrder.withIndex()) {
-      players[playerIdx].setPoints(10 + (index * 2))
+      players[playerIdx].points += 10 + (index * 2)
     }
   }
 
@@ -437,7 +435,7 @@ class MutableGameModel @Inject constructor(
         break
       }
 
-      val card = player.hand.find { it.name == action.playCardName }
+      val card = player.hand.find { it.name == action.play.cardName }
       if (card == null) {
         crash(player)
         break
@@ -501,14 +499,16 @@ class MutableGameModel @Inject constructor(
     }
 
     val cost = getLiftCost(tile.lift.color)
-    val toDiscard = player.controller.chooseCardsToDiscardForLift(player, player.hand, cost)
+    val toDiscard =
+      player.controller.chooseCardsToDiscard(player, player.hand, Range.closed(cost, cost))
     check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
 
     toDiscard.forEach { player.discardFromHand(it) }
 
     // Rulebook: "choose to trash up the same number of cards from their discard pile ... optionally including the card(s) just discarded."
     val trashCandidates = player.skillDiscard.toList()
-    val toTrash = player.controller.chooseCardsToTrashForLift(player, trashCandidates, cost)
+    val toTrash =
+      player.controller.chooseCardsToTrash(player, trashCandidates, Range.closed(0, cost))
     toTrash.forEach {
       player.skillDiscard.remove(it)
     }

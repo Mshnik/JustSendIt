@@ -1,5 +1,6 @@
 package com.redpup.justsendit.control.player
 
+import com.google.common.collect.Range
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -7,7 +8,6 @@ import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
-import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
 import com.redpup.justsendit.model.skill.Skill
 
 /** Handler for players making decisions. */
@@ -42,25 +42,25 @@ interface PlayerController {
     gameModel: GameModel,
   ): SkiRideResolutionAction
 
-  /** Asks the player to choose cards to discard from hand to ride a lift. */
-  suspend fun chooseCardsToDiscardForLift(
+  /** Asks the player to choose cards to discard from hand. */
+  suspend fun chooseCardsToDiscard(
     player: Player,
     hand: List<Skill>,
-    count: Int,
+    count: Range<Int>,
   ): List<Skill>
 
-  /** Asks the player to choose cards to trash from their discard pile when riding a lift. */
-  suspend fun chooseCardsToTrashForLift(
+  /** Asks the player to choose cards to trash. */
+  suspend fun chooseCardsToTrash(
     player: Player,
     candidates: List<Skill>,
-    maxToTrash: Int,
+    count: Range<Int>,
   ): List<Skill>
 
   /** Asks the player to choose cards from their discard pile to retrieve (e.g. for Rugged card). */
   suspend fun chooseCardsFromDiscard(
     player: Player,
     discard: List<Skill>,
-    maxCount: Int,
+    count: Range<Int>,
   ): List<Skill>
 }
 
@@ -102,29 +102,21 @@ class BasicPlayerController : PlayerController {
     player: Player,
     gameModel: GameModel,
   ): SkiRideResolutionAction {
-    return if (player.hand.isNotEmpty()) {
-      skiRideResolutionAction {
-        playCardName = player.hand.first().name
-      }
-    } else {
-      skiRideResolutionAction {
-        stop = com.google.protobuf.empty { }
-      }
-    }
+    TODO("Not yet implemented")
   }
 
-  override suspend fun chooseCardsToDiscardForLift(
+  override suspend fun chooseCardsToDiscard(
     player: Player,
     hand: List<Skill>,
-    count: Int,
+    count: Range<Int>,
   ): List<Skill> {
-    return hand.take(count)
+    return hand.take(count.upperEndpoint())
   }
 
-  override suspend fun chooseCardsToTrashForLift(
+  override suspend fun chooseCardsToTrash(
     player: Player,
     candidates: List<Skill>,
-    maxToTrash: Int,
+    count: Range<Int>,
   ): List<Skill> {
     return emptyList()
   }
@@ -132,8 +124,8 @@ class BasicPlayerController : PlayerController {
   override suspend fun chooseCardsFromDiscard(
     player: Player,
     discard: List<Skill>,
-    maxCount: Int,
+    count: Range<Int>,
   ): List<Skill> {
-    return discard.take(maxCount)
+    return discard.take(count.upperEndpoint())
   }
 }
