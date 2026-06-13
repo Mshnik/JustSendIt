@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model
 
-import java.util.*
+import com.redpup.justsendit.model.random.Random
+
 
 /** Types of dice that can be rolled. */
 enum class DieType {

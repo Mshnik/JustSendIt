@@ -18,6 +18,7 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.ShopDeck
@@ -65,6 +66,7 @@ class GameModelTest {
       FakeSupplyModule(),
       FakePlayerModule(),
       FakePlayerControllerModule(listOf(playerController1, playerController2)),
+      FakeRandomModule(),
       FakeSkillModule(),
       LoggerModule()
     ).injectMembers(this)

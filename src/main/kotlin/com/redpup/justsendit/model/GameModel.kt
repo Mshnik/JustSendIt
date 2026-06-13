@@ -22,6 +22,7 @@ import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
 import com.redpup.justsendit.util.TimeSource
@@ -69,6 +70,7 @@ class MutableGameModel @Inject constructor(
   @StarterDeck private val starterDeck: SkillDeck,
   @ShopDeck override val skillDeck: SkillDeck,
   private val timeSource: TimeSource,
+  private val random: Random,
   private val loggers: Set<Logger>,
 ) : GameModel {
   /** Applies fn to this. */
@@ -95,8 +97,6 @@ class MutableGameModel @Inject constructor(
   private val saleTokens = mutableMapOf<Skill, Int>()
 
   override val clock = MutableClock()
-
-  private val random = java.util.Random()
 
   private fun matches(
     icon: com.redpup.justsendit.model.proto.Icon,
@@ -216,6 +216,7 @@ class MutableGameModel @Inject constructor(
 
   /** Randomly determines a leader and sets the starting player order. */
   private fun setStartingPlayerOrder() {
+    // TODO: Attach random to shuffling (here and elsewhere).
     playerOrder.shuffle()
     for ((index, playerIdx) in playerOrder.withIndex()) {
       players[playerIdx].setPoints(10 + (index * 2))
