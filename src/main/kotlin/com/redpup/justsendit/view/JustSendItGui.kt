@@ -16,6 +16,7 @@ import com.redpup.justsendit.view.log.LogPanel
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
+import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 import javafx.stage.Stage
 
@@ -24,6 +25,9 @@ class JustSendItGui : Application() {
   private lateinit var logPanel: LogPanel
   private lateinit var guiState: GuiState
   private lateinit var advanceButton: AdvanceButton
+  private lateinit var opponentPanel: OpponentPanel
+  private lateinit var sidebarHub: SidebarHub
+  private lateinit var activePlayerArea: ActivePlayerArea
 
   /** Binding module for [JustSendItGui]. */
   private class JustSendItGuiModule(private val gui: JustSendItGui) : KtAbstractModule() {
@@ -84,11 +88,10 @@ class JustSendItGui : Application() {
 
     advanceButton = AdvanceButton(guiState, gameInfoPanel)
     advanceButton.setupStart()
-    
-    val opponentPanel = OpponentPanel(gameModel)
-    val sidebarHub = SidebarHub(gameModel, logPanel)
-    val activePlayerArea = ActivePlayerArea(guiState)
-    guiController.activePlayerArea = activePlayerArea
+
+    opponentPanel = OpponentPanel(gameModel)
+    sidebarHub = SidebarHub(gameModel, logPanel)
+    activePlayerArea = ActivePlayerArea(guiState)
 
     val mainLayout = BorderPane()
     mainLayout.top = opponentPanel
@@ -103,11 +106,13 @@ class JustSendItGui : Application() {
     val root = StackPane(mainLayout)
     CardInspector.init(root)
     val scene = Scene(root, 1200.0, 800.0)
-    scene.stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/style.css")!!.toExternalForm())
+    scene.stylesheets.add(
+      javaClass.getResource("/com/redpup/justsendit/view/style.css")!!.toExternalForm()
+    )
     stage.scene = scene
     stage.title = "Just Send It!"
     stage.show()
-    
+
     // Initial update
     activePlayerArea.update(gameModel.currentPlayer)
   }

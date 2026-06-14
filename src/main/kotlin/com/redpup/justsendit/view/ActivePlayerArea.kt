@@ -1,25 +1,21 @@
 package com.redpup.justsendit.view
 
+import com.redpup.justsendit.log.Logger
+import com.redpup.justsendit.log.proto.Log
 import com.redpup.justsendit.model.player.Player
-import com.redpup.justsendit.model.skill.Skill
+import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
+import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
+import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
+import com.redpup.justsendit.model.player.proto.mountainDecision
+import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.control.Button
 import javafx.scene.control.Label
 import javafx.scene.layout.HBox
 import javafx.scene.layout.Priority
-import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
-
-import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import kotlinx.coroutines.CompletableDeferred
-
-import com.redpup.justsendit.log.Logger
-import com.redpup.justsendit.log.proto.Log
-import javafx.application.Platform
 
 /**
  * Bottom region of the GUI.
@@ -55,8 +51,8 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     setupRight()
 
     children.addAll(leftSection, centerSection, rightSection)
-    HBox.setHgrow(centerSection, Priority.ALWAYS)
-    
+    setHgrow(centerSection, Priority.ALWAYS)
+
     setButtonsEnabled(false)
     confirmButton.isDisable = true
   }
@@ -77,17 +73,17 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
 
     phaseChooser.alignment = Pos.CENTER
     phaseChooser.spacing = 15.0
-    
+
     skiButton.styleClass.add("phase-button")
     liftButton.styleClass.add("phase-button")
     passButton.styleClass.add("phase-button")
     confirmButton.styleClass.add("confirm-button")
-    
+
     skiButton.setOnAction { completeDecision(mountainDecision { skiRide = skiRideDecision {} }) }
     liftButton.setOnAction { completeDecision(mountainDecision { lift = liftDecision {} }) }
     passButton.setOnAction { completeDecision(mountainDecision { pass = passDecision {} }) }
     confirmButton.setOnAction { confirmDeferred?.complete(Unit) }
-    
+
     phaseChooser.children.addAll(skiButton, liftButton, passButton, confirmButton)
 
     handRow.alignment = Pos.CENTER
@@ -107,7 +103,7 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     skiButton.isDisable = !enabled
     liftButton.isDisable = !enabled
     passButton.isDisable = !enabled
-    
+
     // Reset visual state
     skiButton.styleClass.remove("selected")
     liftButton.styleClass.remove("selected")
@@ -121,8 +117,7 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
   }
 
   suspend fun awaitConfirm() {
-    confirmDeferred = CompletableDeferred()
-    confirmDeferred!!.await()
+    confirmDeferred = CompletableDeferred<Unit>().also { it.await() }
     confirmButton.isDisable = true
   }
 
@@ -147,16 +142,4 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     rightSection.alignment = Pos.CENTER_RIGHT
     rightSection.children.add(Label("Decks Info"))
   }
-  
-  fun update(player: Player) {
-    // Update hand
-    handRow.children.clear()
-    player.hand.forEach { skill ->
-      val cardWidget = CardWidget(skill)
-      handRow.children.add(cardWidget)
-    }
-  }
-
-  /** Returns all card widgets in hand. */
-  fun getHandWidgets(): List<CardWidget> = handRow.children.filterIsInstance<CardWidget>()
 }
