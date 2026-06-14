@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 import csv
 import os
-import re
 
 # --- CONFIGURATION CONSTANTS ---
 INPUT_CSV = "../resources/com/redpup/justsendit/model/shop/SkillCards.csv"
 FILE_PREFIX = "../resources/com/redpup/justsendit/model/shop/"
-
-
+IMG_FILEPATH = "src/main/resources/com/redpup/justsendit/img/skill_cards/"
 # -------------------------------
 
 def format_icon_message(bonus_val):
@@ -22,19 +20,16 @@ def format_icon_message(bonus_val):
 
   # 1. Check if it's a Grade
   if val_lower in ["green", "blue", "black", "doubleblack"]:
-    # Map to enum e.g. GRADE_GREEN, GRADE_DOUBLEBLACK
     enum_val = f"GRADE_{bonus_val.strip().upper()}"
     return f"  icons {{\n    grade: {enum_val}\n  }}"
 
   # 2. Check if it's a Condition
   elif val_lower in ["groomed", "powder", "ice"]:
-    # Map to enum e.g. CONDITION_GROOMED, CONDITION_ICE
     enum_val = f"CONDITION_{bonus_val.strip().upper()}"
     return f"  icons {{\n    condition: {enum_val}\n  }}"
 
   # 3. Check if it's a Hazard
   elif val_lower in ["moguls", "trees", "cliffs"]:
-    # Map to enum e.g. HAZARD_MOGULS, HAZARD_TREES
     enum_val = f"HAZARD_{bonus_val.strip().upper()}"
     return f"  icons {{\n    hazard: {enum_val}\n  }}"
 
@@ -91,7 +86,15 @@ def main():
 
       base_filename = f"{file_target if file_target else 'default'}.textproto"
       target_filepath = os.path.join(FILE_PREFIX, base_filename)
-      filename_field = re.sub(r'\s+', '_', name.lower())
+
+      img_filename = get_val("Img Filename")
+      if img_filename:
+        # Safely construct the path using a forward slash for cross-platform proto string compatibility
+        clean_prefix = IMG_FILEPATH.rstrip('/')
+        clean_img = img_filename.lstrip('/')
+        filename_field = f"{clean_prefix}/{clean_img}"
+      else:
+        filename_field = ""
 
       # Write header to target file if it's the first time accessing it this run
       if target_filepath not in initialized_files:
@@ -161,11 +164,11 @@ def main():
       for block in icon_blocks:
         card_block += block + "\n"
 
-      # 1) If category is UNSET, omit it entirely from the proto text representation
+      # If category is UNSET, omit it entirely from the proto text representation
       if proto_category != "EFFECT_CATEGORY_UNSET":
         card_block += f'  category: {proto_category}\n'
 
-      # 2) If text is empty, omit it entirely from the proto text representation
+      # If text is empty, omit it entirely from the proto text representation
       if text:
         card_block += f'  text: "{text}"\n'
 

@@ -2,7 +2,7 @@
 # proto-message: SkillCardList
 
 cards {
-  filename: "speed_check"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-7.png"
   name: "Speed Check"
   cost: 0
   green_dice: 1
@@ -20,7 +20,7 @@ cards {
 }
 
 cards {
-  filename: "centrifugal_force"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-8.png"
   name: "Centrifugal Force"
   cost: 0
   green_dice: 1
@@ -38,7 +38,7 @@ cards {
 }
 
 cards {
-  filename: "tireless_training"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-9.png"
   name: "Tireless Training"
   cost: 0
   green_dice: 0
@@ -53,7 +53,7 @@ cards {
 }
 
 cards {
-  filename: "pushed_to_the_limit"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-10.png"
   name: "Pushed to the Limit"
   cost: 0
   green_dice: 1
@@ -68,7 +68,7 @@ cards {
 }
 
 cards {
-  filename: "local's_discount"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-11.png"
   name: "Local's Discount"
   cost: 0
   green_dice: 1
@@ -82,7 +82,7 @@ cards {
 }
 
 cards {
-  filename: "brand_new_boots"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-12.png"
   name: "Brand New Boots"
   cost: 0
   green_dice: 0
@@ -100,7 +100,7 @@ cards {
 }
 
 cards {
-  filename: "purge_the_pack"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-13.png"
   name: "Purge the Pack"
   cost: 0
   green_dice: 0
@@ -118,7 +118,7 @@ cards {
 }
 
 cards {
-  filename: "demo_fleet"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-14.png"
   name: "Demo Fleet"
   cost: 0
   green_dice: 1
@@ -133,7 +133,7 @@ cards {
 }
 
 cards {
-  filename: "tuck_and_hold"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-15.png"
   name: "Tuck and Hold"
   cost: 0
   green_dice: 1
@@ -151,7 +151,7 @@ cards {
 }
 
 cards {
-  filename: "helmet_headphones"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-16.png"
   name: "Helmet Headphones"
   cost: 0
   green_dice: 2
@@ -166,7 +166,7 @@ cards {
 }
 
 cards {
-  filename: "hot_lap"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-17.png"
   name: "Hot Lap"
   cost: 0
   green_dice: 0
@@ -181,7 +181,7 @@ cards {
 }
 
 cards {
-  filename: "scope_the_line"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-18.png"
   name: "Scope the Line"
   cost: 0
   green_dice: 0
@@ -196,7 +196,7 @@ cards {
 }
 
 cards {
-  filename: "scout_run"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-19.png"
   name: "Scout Run"
   cost: 0
   green_dice: 0
@@ -214,7 +214,7 @@ cards {
 }
 
 cards {
-  filename: "pre-season_hype"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-20.png"
   name: "Pre-Season Hype"
   cost: 0
   green_dice: 0
@@ -232,7 +232,7 @@ cards {
 }
 
 cards {
-  filename: "lost_and_found"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-21.png"
   name: "Lost and Found"
   cost: 0
   green_dice: 1
@@ -250,7 +250,7 @@ cards {
 }
 
 cards {
-  filename: "double_down"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-22.png"
   name: "Double Down"
   cost: 0
   green_dice: 1
@@ -265,7 +265,7 @@ cards {
 }
 
 cards {
-  filename: "bootleg_tune_up"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-23.png"
   name: "Bootleg Tune Up"
   cost: 0
   green_dice: 1
@@ -280,7 +280,7 @@ cards {
 }
 
 cards {
-  filename: "single-ski_style"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-24.png"
   name: "Single-Ski Style"
   cost: 0
   green_dice: 1
@@ -295,7 +295,7 @@ cards {
 }
 
 cards {
-  filename: "watch_this"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-25.png"
   name: "Watch This"
   cost: 0
   green_dice: 1
@@ -310,7 +310,7 @@ cards {
 }
 
 cards {
-  filename: "forever_four"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-26.png"
   name: "Forever Four"
   cost: 0
   green_dice: 2
@@ -325,7 +325,7 @@ cards {
 }
 
 cards {
-  filename: "clean_edge"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-27.png"
   name: "Clean Edge"
   cost: 0
   green_dice: 1
@@ -343,7 +343,7 @@ cards {
 }
 
 cards {
-  filename: "butt_pads"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-28.png"
   name: "Butt Pads"
   cost: 0
   green_dice: 2
@@ -361,7 +361,7 @@ cards {
 }
 
 cards {
-  filename: "crowdpleaser"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-29.png"
   name: "Crowdpleaser"
   cost: 0
   green_dice: 1
@@ -376,7 +376,7 @@ cards {
 }
 
 cards {
-  filename: "roof_rack"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-30.png"
   name: "Roof Rack"
   cost: 0
   green_dice: 0
@@ -394,7 +394,7 @@ cards {
 }
 
 cards {
-  filename: "snow_report"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-31.png"
   name: "Snow Report"
   cost: 0
   green_dice: 0
@@ -412,7 +412,7 @@ cards {
 }
 
 cards {
-  filename: "lens_swap"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-32.png"
   name: "Lens Swap"
   cost: 0
   green_dice: 0
@@ -430,7 +430,7 @@ cards {
 }
 
 cards {
-  filename: "mountain_run"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-33.png"
   name: "Mountain Run"
   cost: 0
   green_dice: 0
@@ -448,7 +448,7 @@ cards {
 }
 
 cards {
-  filename: "summer_sun_run"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-34.png"
   name: "Summer Sun Run"
   cost: 0
   green_dice: 2
@@ -466,7 +466,7 @@ cards {
 }
 
 cards {
-  filename: "second_chance"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-35.png"
   name: "Second Chance"
   cost: 0
   green_dice: 1
@@ -481,7 +481,7 @@ cards {
 }
 
 cards {
-  filename: "timeless_three"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-36.png"
   name: "TImeless Three"
   cost: 0
   green_dice: 2
@@ -496,7 +496,7 @@ cards {
 }
 
 cards {
-  filename: "lean_into_it"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-37.png"
   name: "Lean Into It"
   cost: 0
   green_dice: 1
@@ -511,7 +511,7 @@ cards {
 }
 
 cards {
-  filename: "stacking_the_deck"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-38.png"
   name: "Stacking the Deck"
   cost: 0
   green_dice: 1
@@ -526,7 +526,7 @@ cards {
 }
 
 cards {
-  filename: "complementary_tuning"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-39.png"
   name: "Complementary Tuning"
   cost: 0
   green_dice: 0
@@ -544,7 +544,7 @@ cards {
 }
 
 cards {
-  filename: "conditioning"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-40.png"
   name: "Conditioning"
   cost: 0
   green_dice: 0
@@ -562,7 +562,7 @@ cards {
 }
 
 cards {
-  filename: "peripheral_vision"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-41.png"
   name: "Peripheral Vision"
   cost: 0
   green_dice: 1
@@ -580,7 +580,7 @@ cards {
 }
 
 cards {
-  filename: "spring_cleaning"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-42.png"
   name: "Spring Cleaning"
   cost: 0
   green_dice: 0
@@ -598,7 +598,7 @@ cards {
 }
 
 cards {
-  filename: "lone_wolf"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-43.png"
   name: "Lone Wolf"
   cost: 0
   green_dice: 0
@@ -616,7 +616,7 @@ cards {
 }
 
 cards {
-  filename: "spot_the_danger"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-44.png"
   name: "Spot the Danger"
   cost: 0
   green_dice: 1
@@ -628,7 +628,7 @@ cards {
 }
 
 cards {
-  filename: "wild_ride"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-45.png"
   name: "Wild Ride"
   cost: 0
   green_dice: 2
@@ -640,7 +640,7 @@ cards {
 }
 
 cards {
-  filename: "shop_connections"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-46.png"
   name: "Shop Connections"
   cost: 0
   green_dice: 0
@@ -658,7 +658,7 @@ cards {
 }
 
 cards {
-  filename: "deep_breath"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-47.png"
   name: "Deep Breath"
   cost: 0
   green_dice: 1
@@ -673,7 +673,7 @@ cards {
 }
 
 cards {
-  filename: "edge_control"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-48.png"
   name: "Edge Control"
   cost: 0
   green_dice: 0
@@ -688,7 +688,7 @@ cards {
 }
 
 cards {
-  filename: "tunnel_vision"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-49.png"
   name: "Tunnel Vision"
   cost: 0
   green_dice: 0
@@ -703,7 +703,7 @@ cards {
 }
 
 cards {
-  filename: "true_two"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-50.png"
   name: "True Two"
   cost: 0
   green_dice: 2
@@ -718,7 +718,7 @@ cards {
 }
 
 cards {
-  filename: "straight_line"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-51.png"
   name: "Straight Line"
   cost: 0
   green_dice: 0
@@ -733,7 +733,7 @@ cards {
 }
 
 cards {
-  filename: "fifth_finger"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-52.png"
   name: "Fifth Finger"
   cost: 0
   green_dice: 0
@@ -748,7 +748,7 @@ cards {
 }
 
 cards {
-  filename: "steady_rhythm"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-53.png"
   name: "Steady Rhythm"
   cost: 0
   green_dice: 0
@@ -763,7 +763,7 @@ cards {
 }
 
 cards {
-  filename: "glove_warmers"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-54.png"
   name: "Glove Warmers"
   cost: 0
   green_dice: 1
@@ -781,7 +781,7 @@ cards {
 }
 
 cards {
-  filename: "third_strike"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-55.png"
   name: "Third Strike"
   cost: 0
   green_dice: 0
@@ -796,7 +796,7 @@ cards {
 }
 
 cards {
-  filename: "feelin_five"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-56.png"
   name: "Feelin Five"
   cost: 0
   green_dice: 0
@@ -811,7 +811,7 @@ cards {
 }
 
 cards {
-  filename: "super_six"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-57.png"
   name: "Super Six"
   cost: 0
   green_dice: 0
@@ -826,7 +826,7 @@ cards {
 }
 
 cards {
-  filename: "only_one"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-58.png"
   name: "Only One"
   cost: 0
   green_dice: 2
@@ -841,7 +841,7 @@ cards {
 }
 
 cards {
-  filename: "hail_mary"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-59.png"
   name: "Hail Mary"
   cost: 0
   green_dice: 0
@@ -856,7 +856,7 @@ cards {
 }
 
 cards {
-  filename: "full_quiver"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-60.png"
   name: "Full Quiver"
   cost: 0
   green_dice: 0
@@ -871,7 +871,7 @@ cards {
 }
 
 cards {
-  filename: "dual_calibration"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-61.png"
   name: "Dual Calibration"
   cost: 0
   green_dice: 1
@@ -889,7 +889,7 @@ cards {
 }
 
 cards {
-  filename: "stomp_the_landing"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-62.png"
   name: "Stomp the Landing"
   cost: 0
   green_dice: 3
@@ -904,7 +904,7 @@ cards {
 }
 
 cards {
-  filename: "pocket_snack"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-63.png"
   name: "Pocket Snack"
   cost: 0
   green_dice: 1
@@ -922,7 +922,7 @@ cards {
 }
 
 cards {
-  filename: "seat-of-the-pants"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-64.png"
   name: "Seat-of-the-pants"
   cost: 0
   green_dice: 2
@@ -940,7 +940,7 @@ cards {
 }
 
 cards {
-  filename: "split_second"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-65.png"
   name: "Split Second"
   cost: 0
   green_dice: 0
@@ -955,7 +955,7 @@ cards {
 }
 
 cards {
-  filename: "ski_delivery"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-66.png"
   name: "Ski Delivery"
   cost: 0
   green_dice: 0
@@ -973,7 +973,7 @@ cards {
 }
 
 cards {
-  filename: "deep_carve"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-67.png"
   name: "Deep Carve"
   cost: 0
   green_dice: 0
@@ -988,7 +988,7 @@ cards {
 }
 
 cards {
-  filename: "memory_lane"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-68.png"
   name: "Memory Lane"
   cost: 0
   green_dice: 1
@@ -1003,7 +1003,7 @@ cards {
 }
 
 cards {
-  filename: "flawless_line"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-69.png"
   name: "Flawless Line"
   cost: 0
   green_dice: 2
@@ -1021,7 +1021,7 @@ cards {
 }
 
 cards {
-  filename: "instant_reflex"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-70.png"
   name: "Instant Reflex"
   cost: 0
   green_dice: 1
@@ -1036,7 +1036,7 @@ cards {
 }
 
 cards {
-  filename: "into_the_abyss"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-71.png"
   name: "Into the Abyss"
   cost: 0
   green_dice: 0
@@ -1051,7 +1051,7 @@ cards {
 }
 
 cards {
-  filename: "fluid_motion"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-72.png"
   name: "Fluid Motion"
   cost: 0
   green_dice: 1
@@ -1063,7 +1063,7 @@ cards {
 }
 
 cards {
-  filename: "huck_and_pray"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-73.png"
   name: "Huck and Pray"
   cost: 0
   green_dice: 1
@@ -1073,7 +1073,7 @@ cards {
 }
 
 cards {
-  filename: "windstorm"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-74.png"
   name: "Windstorm"
   cost: 0
   green_dice: 1
@@ -1088,7 +1088,7 @@ cards {
 }
 
 cards {
-  filename: "nostalgia_run"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-75.png"
   name: "Nostalgia Run"
   cost: 0
   green_dice: 0
@@ -1103,7 +1103,7 @@ cards {
 }
 
 cards {
-  filename: "brief_respite"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-76.png"
   name: "Brief Respite"
   cost: 0
   green_dice: 0
@@ -1121,7 +1121,7 @@ cards {
 }
 
 cards {
-  filename: "quick_pivot"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-77.png"
   name: "Quick Pivot"
   cost: 0
   green_dice: 0
@@ -1136,7 +1136,7 @@ cards {
 }
 
 cards {
-  filename: "zero-g"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-78.png"
   name: "Zero-G"
   cost: 0
   green_dice: 0
@@ -1151,7 +1151,7 @@ cards {
 }
 
 cards {
-  filename: "punch_through"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-79.png"
   name: "Punch Through"
   cost: 0
   green_dice: 0
@@ -1166,7 +1166,7 @@ cards {
 }
 
 cards {
-  filename: "oh_so_seven"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-80.png"
   name: "Oh So Seven"
   cost: 0
   green_dice: 0
@@ -1181,7 +1181,7 @@ cards {
 }
 
 cards {
-  filename: "extreme_eight"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-81.png"
   name: "Extreme Eight"
   cost: 0
   green_dice: 0
@@ -1193,7 +1193,7 @@ cards {
 }
 
 cards {
-  filename: "in_the_zone"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-82.png"
   name: "In the Zone"
   cost: 0
   green_dice: 2
@@ -1208,7 +1208,7 @@ cards {
 }
 
 cards {
-  filename: "rail-to-rail"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-83.png"
   name: "Rail-to-Rail"
   cost: 0
   green_dice: 0
@@ -1218,7 +1218,7 @@ cards {
 }
 
 cards {
-  filename: "absolute_send"
+  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-84.png"
   name: "Absolute Send"
   cost: 0
   green_dice: 0
