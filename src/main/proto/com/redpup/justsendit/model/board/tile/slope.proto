@@ -12,7 +12,7 @@ enum Condition {
   CONDITION_UNSET = 0;
   CONDITION_GROOMED = 1;
   CONDITION_POWDER = 2;
-  CONDITION_ICY = 3;
+  CONDITION_ICE = 3;
 }
 
 /** Types of hazards found on a ski trail. */

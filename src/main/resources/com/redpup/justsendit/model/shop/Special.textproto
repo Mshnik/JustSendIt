@@ -1,0 +1,303 @@
+# proto-file: com/redpup/justsendit/model/supply/skill.proto
+# proto-message: SkillCardList
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+
+cards {
+  filename: "lesson"
+  name: "Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+}
+

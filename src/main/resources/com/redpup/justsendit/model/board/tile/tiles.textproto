@@ -132,14 +132,14 @@ tiles {
   slope {
     difficulty: 3
     grade: GRADE_GREEN
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
   slope {
     difficulty: 3
     grade: GRADE_GREEN
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -189,7 +189,7 @@ tiles {
   slope {
     difficulty: 4
     grade: GRADE_GREEN
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -212,7 +212,7 @@ tiles {
   slope {
     difficulty: 5
     grade: GRADE_GREEN
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_TREES
   }
 }
@@ -220,7 +220,7 @@ tiles {
   slope {
     difficulty: 5
     grade: GRADE_GREEN
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_TREES
   }
 }
@@ -362,7 +362,7 @@ tiles {
   slope {
     difficulty: 7
     grade: GRADE_BLUE
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -393,14 +393,14 @@ tiles {
   slope {
     difficulty: 8
     grade: GRADE_BLUE
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
   slope {
     difficulty: 8
     grade: GRADE_BLUE
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -417,7 +417,7 @@ tiles {
   slope {
     difficulty: 9
     grade: GRADE_BLUE
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -433,7 +433,7 @@ tiles {
   slope {
     difficulty: 10
     grade: GRADE_BLUE
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
   }
@@ -486,7 +486,7 @@ tiles {
   slope {
     difficulty: 10
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -500,7 +500,7 @@ tiles {
   slope {
     difficulty: 11
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -516,21 +516,21 @@ tiles {
   slope {
     difficulty: 11
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
   slope {
     difficulty: 11
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
   slope {
     difficulty: 11
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -583,14 +583,14 @@ tiles {
   slope {
     difficulty: 12
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
   slope {
     difficulty: 12
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -629,7 +629,7 @@ tiles {
   slope {
     difficulty: 13
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -645,7 +645,7 @@ tiles {
   slope {
     difficulty: 14
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
   }
@@ -654,7 +654,7 @@ tiles {
   slope {
     difficulty: 14
     grade: GRADE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_CLIFFS
   }
 }
@@ -679,7 +679,7 @@ tiles {
   slope {
     difficulty: 14
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
   }
 }
 tiles {
@@ -693,7 +693,7 @@ tiles {
   slope {
     difficulty: 15
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -709,7 +709,7 @@ tiles {
   slope {
     difficulty: 15
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
   }
 }
@@ -717,7 +717,7 @@ tiles {
   slope {
     difficulty: 16
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
   }
@@ -743,7 +743,7 @@ tiles {
   slope {
     difficulty: 17
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICY
+    condition: CONDITION_ICE
     hazards: HAZARD_CLIFFS
   }
 }

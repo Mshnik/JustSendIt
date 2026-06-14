@@ -1,0 +1,109 @@
+# proto-file: com/redpup/justsendit/model/supply/skill.proto
+# proto-message: SkillCardList
+
+cards {
+  filename: "falling_leaves"
+  name: "Falling Leaves"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+}
+
+cards {
+  filename: "falling_leaves"
+  name: "Falling Leaves"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+}
+
+cards {
+  filename: "pizza_party"
+  name: "Pizza Party"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+}
+
+cards {
+  filename: "pizza_party"
+  name: "Pizza Party"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+}
+
+cards {
+  filename: "bold_beginnings"
+  name: "Bold Beginnings"
+  cost: 1
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+}
+
+cards {
+  filename: "bold_beginnings"
+  name: "Bold Beginnings"
+  cost: 1
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+}
+
+cards {
+  filename: "skill_up"
+  name: "Skill Up"
+  cost: 1
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+}
+
+cards {
+  filename: "skill_up"
+  name: "Skill Up"
+  cost: 1
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+}
+
+cards {
+  filename: "signature_style"
+  name: "Signature Style"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  text: "use [Fri] effect"
+}
+
+cards {
+  filename: "just_send_it"
+  name: "Just Send It"
+  cost: 1
+  green_dice: 3
+  blue_dice: 0
+  black_dice: 0
+}
+

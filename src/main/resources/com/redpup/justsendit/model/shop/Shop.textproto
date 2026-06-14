@@ -1,0 +1,1229 @@
+# proto-file: com/redpup/justsendit/model/supply/skill.proto
+# proto-message: SkillCardList
+
+cards {
+  filename: "speed_check"
+  name: "Speed Check"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may discard a card to remove all of your wobbles."
+  flavor_text: "Drop the speed, save the run"
+}
+
+cards {
+  filename: "centrifugal_force"
+  name: "Centrifugal Force"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Upgrade 1 die for each wobble you have."
+  flavor_text: "Catapulted straight out of your comfort zone"
+}
+
+cards {
+  filename: "tireless_training"
+  name: "Tireless Training"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Increase any number of dice showing 2 or higher 1"
+  flavor_text: "All that hard work just paid off"
+}
+
+cards {
+  filename: "pushed_to_the_limit"
+  name: "Pushed to the Limit"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "At the end of your turn, trash the next card played."
+  flavor_text: "That old board saved you, one last time"
+}
+
+cards {
+  filename: "local's_discount"
+  name: "Local's Discount"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  text: "Use the [Play] or [Next] effect of a card in the shop"
+  flavor_text: "The ultimate passholder perk is knowing which line moves fastest."
+}
+
+cards {
+  filename: "brand_new_boots"
+  name: "Brand New Boots"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Discard a card. Gain a black die and upgrade a die."
+  flavor_text: "They're stiff now, but you'll thank them later"
+}
+
+cards {
+  filename: "purge_the_pack"
+  name: "Purge the Pack"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "You may trash an additional card."
+  flavor_text: "The lighter the pack, the faster you'll go"
+}
+
+cards {
+  filename: "demo_fleet"
+  name: "Demo Fleet"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Gain 1 green die."
+  flavor_text: "Demos are built for things you'd never do to your own."
+}
+
+cards {
+  filename: "tuck_and_hold"
+  name: "Tuck and Hold"
+  cost: 0
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may discard 2 cards. If you do, at the start of the next round, draw 2 cards."
+  flavor_text: "Once you can hear your jacket flapping, you're halfway there"
+}
+
+cards {
+  filename: "helmet_headphones"
+  name: "Helmet Headphones"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Discard the top card of your deck: Gain fun equal to its cost."
+  flavor_text: "Music so loud you can't hear your own thoughts"
+}
+
+cards {
+  filename: "hot_lap"
+  name: "Hot Lap"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "After taking the lift, immediately take another turn."
+  flavor_text: "Straight out of the chair and down the mountain"
+}
+
+cards {
+  filename: "scope_the_line"
+  name: "Scope the Line"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Discard the top card of your deck. If its cost is equal to or greater than the card played, upgrade 2 dice."
+  flavor_text: "Looks entirely doable, from up here."
+}
+
+cards {
+  filename: "scout_run"
+  name: "Scout Run"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "Look at the top 3 cards of your deck. Put 1 card on top and discard the other 2."
+  flavor_text: "The shortest path down is rarely the safest one."
+}
+
+cards {
+  filename: "pre-season_hype"
+  name: "Pre-Season Hype"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "You may put cards you gain on top of your deck."
+  flavor_text: "The mountain is calling."
+}
+
+cards {
+  filename: "lost_and_found"
+  name: "Lost and Found"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "You may gain a card from the trash to your hand."
+  flavor_text: "Nothing like finding a perfectly good energy bar in snow."
+}
+
+cards {
+  filename: "double_down"
+  name: "Double Down"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Activate the next played card's effect an additional time."
+  flavor_text: "First run so good you gotta run it back"
+}
+
+cards {
+  filename: "bootleg_tune_up"
+  name: "Bootleg Tune Up"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Before rolling, set one die to any value."
+  flavor_text: "Factory spec performance on a backyard budget"
+}
+
+cards {
+  filename: "single-ski_style"
+  name: "Single-Ski Style"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Before rolling, set one die to 1 and gain 10 fun."
+  flavor_text: "You bragged about it, so now you have to do it"
+}
+
+cards {
+  filename: "watch_this"
+  name: "Watch This"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Gain fun equal to highest value rolled"
+  flavor_text: "The cameras are rolling. Don't fall now!"
+}
+
+cards {
+  filename: "forever_four"
+  name: "Forever Four"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each die showing 4."
+  flavor_text: "Friends carving their stories in the snow"
+}
+
+cards {
+  filename: "clean_edge"
+  name: "Clean Edge"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you have no wobbles, you get +3 skill"
+  flavor_text: "A sharp crescent drawn along a clean canvas"
+}
+
+cards {
+  filename: "butt_pads"
+  name: "Butt Pads"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you crash this turn, do not discard a card."
+  flavor_text: "So good you'll want to fall down!"
+}
+
+cards {
+  filename: "crowdpleaser"
+  name: "Crowdpleaser"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain 5 additional fun when you succeed this turn."
+  flavor_text: "The whole lift line is watching!"
+}
+
+cards {
+  filename: "roof_rack"
+  name: "Roof Rack"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "You may purchase an additional card this turn (you must pay both costs)"
+  flavor_text: "For the very, very well prepared"
+}
+
+cards {
+  filename: "snow_report"
+  name: "Snow Report"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "You may put your deck into your discard pile. If you do, put one card from your discard on top of your deck."
+  flavor_text: "The lifties always know the best lines"
+}
+
+cards {
+  filename: "lens_swap"
+  name: "Lens Swap"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "Discard any number of cards: Draw that many cards."
+  flavor_text: "Yellow lens for flat light, dark tint for the glory days."
+}
+
+cards {
+  filename: "mountain_run"
+  name: "Mountain Run"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "Gain +Study equal to your run length this round."
+  flavor_text: "From peak to parking lot"
+}
+
+cards {
+  filename: "summer_sun_run"
+  name: "Summer Sun Run"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Discard a card to gain 8 fun."
+  flavor_text: "Just skiis, snow, and skin"
+}
+
+cards {
+  filename: "second_chance"
+  name: "Second Chance"
+  cost: 0
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may reroll any dice showing 2, once each."
+  flavor_text: "The mountain always provides a solid shot at redemption."
+}
+
+cards {
+  filename: "timeless_three"
+  name: "TImeless Three"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +3 skill for each die showing 3."
+  flavor_text: "A long weekend of incredible adventure"
+}
+
+cards {
+  filename: "lean_into_it"
+  name: "Lean Into It"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may gain 1 wobble to draw a card."
+  flavor_text: "Leaning back means the mountain wins"
+}
+
+cards {
+  filename: "stacking_the_deck"
+  name: "Stacking the Deck"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Put up to 2 cards from your discard pile on top of your deck."
+  flavor_text: "Ride a setup that feels technically illegal."
+}
+
+cards {
+  filename: "complementary_tuning"
+  name: "Complementary Tuning"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "Gain fun equal to the value of the cards you buy"
+  flavor_text: "Nothing sharper than never-used edges"
+}
+
+cards {
+  filename: "conditioning"
+  name: "Conditioning"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "After buying cards, put any number of cards from your hand on top of your deck"
+  flavor_text: "Slow and steady, sun-up to sun-down"
+}
+
+cards {
+  filename: "peripheral_vision"
+  name: "Peripheral Vision"
+  cost: 0
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Look at the top 2 cards of your deck. Put 1 on top and discard the other."
+  flavor_text: "Keep the eyes wide. The mountain moves fast."
+}
+
+cards {
+  filename: "spring_cleaning"
+  name: "Spring Cleaning"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "After buying cards, you may trash a card from your hand."
+  flavor_text: "Keep the best, lose the rest"
+}
+
+cards {
+  filename: "lone_wolf"
+  name: "Lone Wolf"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "If this is the only card you reveal, +4 study"
+  flavor_text: "Amidst a cloud of snow, you're still on your feet"
+}
+
+cards {
+  filename: "spot_the_danger"
+  name: "Spot the Danger"
+  cost: 0
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you have 1 or more wobbles, you may reroll one die showing 1."
+  flavor_text: "Can't fool me twice"
+}
+
+cards {
+  filename: "wild_ride"
+  name: "Wild Ride"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each wobble you have"
+  flavor_text: "Barely under control is still under control"
+}
+
+cards {
+  filename: "shop_connections"
+  name: "Shop Connections"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "Clear up to one card from the shop, then replenish the shop"
+  flavor_text: "Need new gear? You know a guy"
+}
+
+cards {
+  filename: "deep_breath"
+  name: "Deep Breath"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Draw 2 cards, then put 2 cards on top of your deck."
+  flavor_text: "One last pause before the plunge"
+}
+
+cards {
+  filename: "edge_control"
+  name: "Edge Control"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "After rolling, change one 1 to a 2."
+  flavor_text: "Hold the angle and trust your gear!"
+}
+
+cards {
+  filename: "tunnel_vision"
+  name: "Tunnel Vision"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "Before rolling, set one die to 6"
+  flavor_text: "Amidst the chaos, you see the line"
+}
+
+cards {
+  filename: "true_two"
+  name: "True Two"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +4 skill for each die showing 2."
+  flavor_text: "Just you and the mountain"
+}
+
+cards {
+  filename: "straight_line"
+  name: "Straight Line"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may gain 1 wobble to set one die instead of rolling."
+  flavor_text: "The faster you go, the easier it is! Right?"
+}
+
+cards {
+  filename: "fifth_finger"
+  name: "Fifth Finger"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may reroll any dice showing 5, once each."
+  flavor_text: "Wooden hands grasp, but you're just out of reach"
+}
+
+cards {
+  filename: "steady_rhythm"
+  name: "Steady Rhythm"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "If you have 1 or fewer wobbles, gain 1 blue die."
+  flavor_text: "Smooth and clean"
+}
+
+cards {
+  filename: "glove_warmers"
+  name: "Glove Warmers"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_LIFT
+  text: "Gain 10 fun."
+  flavor_text: "Warm hands, warm heart"
+}
+
+cards {
+  filename: "third_strike"
+  name: "Third Strike"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may reroll any dice showing 3, once each."
+  flavor_text: "You're not out yet"
+}
+
+cards {
+  filename: "feelin_five"
+  name: "Feelin Five"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each die showing 5."
+  flavor_text: "Hands grip poles, feet stomp boards"
+}
+
+cards {
+  filename: "super_six"
+  name: "Super Six"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each die showing 6."
+  flavor_text: "We were up at dawn for this"
+}
+
+cards {
+  filename: "only_one"
+  name: "Only One"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +5 skill for each die showing 1. (You still gain wobbles)"
+  flavor_text: "It's now or never"
+}
+
+cards {
+  filename: "hail_mary"
+  name: "Hail Mary"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "If your hand is empty, upgrde all dice twice, then gain a green die."
+  flavor_text: "Just crazy enough to work"
+}
+
+cards {
+  filename: "full_quiver"
+  name: "Full Quiver"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +1 skill for each card in your hand"
+  flavor_text: "New snow? New ski."
+}
+
+cards {
+  filename: "dual_calibration"
+  name: "Dual Calibration"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_TREES
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Discard the top two cards of your deck. If they have at least one matching symbol, put one into your hand."
+  flavor_text: "A final failsafe before a sudden fall"
+}
+
+cards {
+  filename: "stomp_the_landing"
+  name: "Stomp the Landing"
+  cost: 0
+  green_dice: 3
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain 3 fun for each maximum die value rolled."
+  flavor_text: "Cleanest landing of the entire weekend. No hands down!"
+}
+
+cards {
+  filename: "pocket_snack"
+  name: "Pocket Snack"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_NEXT
+  text: "When you pass, return the next card played to your hand."
+  flavor_text: "Food tastes better at ten thousand feet."
+}
+
+cards {
+  filename: "seat-of-the-pants"
+  name: "Seat-of-the-pants"
+  cost: 0
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you have exactly 2 wobbles, gain 8 fun."
+  flavor_text: "Weight shifted back, arms flailing, still upright!"
+}
+
+cards {
+  filename: "split_second"
+  name: "Split Second"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may switch your deck and discard. If you do, shuffle your deck."
+  flavor_text: "A final decision changes the entire line down."
+}
+
+cards {
+  filename: "ski_delivery"
+  name: "Ski Delivery"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "When you gain a card this turn that matches your current tile, set it aside and put it into your hand at the start of the next round."
+  flavor_text: "Fresh gear, straight to your doorstep"
+}
+
+cards {
+  filename: "deep_carve"
+  name: "Deep Carve"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may gain 1 wobble to gain 7 fun"
+  flavor_text: "Low enough to kiss the slope"
+}
+
+cards {
+  filename: "memory_lane"
+  name: "Memory Lane"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Draw a card from your discard pile that matches your current tile."
+  flavor_text: "The classics never go out of style."
+}
+
+cards {
+  filename: "flawless_line"
+  name: "Flawless Line"
+  cost: 0
+  green_dice: 2
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If all of your dice show different values, gain +2 skill for each die rolled"
+  flavor_text: "A line so clean it belongs in a museum"
+}
+
+cards {
+  filename: "instant_reflex"
+  name: "Instant Reflex"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you have 2 or fewer cards in your hand, draw a card."
+  flavor_text: "Empty minds come up with more ideas"
+}
+
+cards {
+  filename: "into_the_abyss"
+  name: "Into the Abyss"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Discard the top card of your deck. If it has a symbol matching your current tile, play it."
+  flavor_text: "A pure leap of faith into a massive cloud of white."
+}
+
+cards {
+  filename: "fluid_motion"
+  name: "Fluid Motion"
+  cost: 0
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  text: "If you have played 3 or more cards this turn, draw a card."
+  flavor_text: "One long endless run"
+}
+
+cards {
+  filename: "huck_and_pray"
+  name: "Huck and Pray"
+  cost: 0
+  green_dice: 1
+  blue_dice: 2
+  black_dice: 0
+  flavor_text: "You'll get down the mountain, one way or another."
+}
+
+cards {
+  filename: "windstorm"
+  name: "Windstorm"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "You may discard your hand and draw that many cards."
+  flavor_text: "The snow's flying, and so are you"
+}
+
+cards {
+  filename: "nostalgia_run"
+  name: "Nostalgia Run"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain 1 fun for each card in your discard"
+  flavor_text: "You've run it so many times your name should be on it"
+}
+
+cards {
+  filename: "brief_respite"
+  name: "Brief Respite"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PASS
+  text: "Draw a card."
+  flavor_text: "A pause to consider just exactly how that all happened"
+}
+
+cards {
+  filename: "quick_pivot"
+  name: "Quick Pivot"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Discard a card, then draw a card. If you discarded one with cost greater than 0, draw 2 cards instead."
+  flavor_text: "If it's not working, try something new!"
+}
+
+cards {
+  filename: "zero-g"
+  name: "Zero-G"
+  cost: 0
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "If your hand is empty, gain +5 skill."
+  flavor_text: "Weightless across the crest as the world holds its breath"
+}
+
+cards {
+  filename: "punch_through"
+  name: "Punch Through"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Draw a card for each wobble you have"
+  flavor_text: "You're down, but you're not out"
+}
+
+cards {
+  filename: "oh_so_seven"
+  name: "Oh So Seven"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 2
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each die showing 7."
+  flavor_text: "Counting down to the weekend"
+}
+
+cards {
+  filename: "extreme_eight"
+  name: "Extreme Eight"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 2
+  category: EFFECT_CATEGORY_PLAY
+  text: "Gain +2 skill for each die showing 8."
+  flavor_text: "Green light - let's go!"
+}
+
+cards {
+  filename: "in_the_zone"
+  name: "In the Zone"
+  cost: 0
+  green_dice: 2
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  text: "Draw a card for each maximum die roll"
+  flavor_text: "Maximum effort, zero thought"
+}
+
+cards {
+  filename: "rail-to-rail"
+  name: "Rail-to-Rail"
+  cost: 0
+  green_dice: 0
+  blue_dice: 3
+  black_dice: 0
+  flavor_text: "Daring in, expertise out"
+}
+
+cards {
+  filename: "absolute_send"
+  name: "Absolute Send"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 2
+  flavor_text: "No time left for second-guessing."
+}
+
