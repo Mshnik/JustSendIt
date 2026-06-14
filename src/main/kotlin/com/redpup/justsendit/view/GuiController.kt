@@ -25,16 +25,19 @@ import com.redpup.justsendit.view.board.HexGridViewer
 import javafx.application.Platform
 import javafx.scene.control.ChoiceDialog
 import javafx.scene.control.TextInputDialog
+import javafx.scene.input.MouseButton
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Singleton
 class GuiController @Inject constructor() : PlayerController {
 
   lateinit var hexGridViewer: HexGridViewer
+  lateinit var activePlayerArea: ActivePlayerArea
   override val name = "GuiController"
 
   override suspend fun chooseSkillCards(
@@ -43,7 +46,49 @@ class GuiController @Inject constructor() : PlayerController {
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
-    TODO("Not yet implemented")
+    return suspendCancellableCoroutine { continuation ->
+      Platform.runLater {
+        val selected = mutableListOf<Skill>()
+        val widgets = activePlayerArea.getHandWidgets()
+        
+        widgets.forEach { widget ->
+            widget.setOnMouseClicked { event ->
+                if (event.button == MouseButton.PRIMARY) {
+                    if (widget.isSelected) {
+                        widget.isSelected = false
+                        selected.remove(widget.skill)
+                    } else {
+                        if (selected.size < count.upperEndpoint()) {
+                            widget.isSelected = true
+                            selected.add(widget.skill)
+                        }
+                    }
+                    
+                    // Update badges
+                    widgets.forEach { w ->
+                        val index = selected.indexOf(w.skill)
+                        w.selectionIndex = if (index != -1) index + 1 else null
+                    }
+                    
+                    activePlayerArea.setConfirmEnabled(count.contains(selected.size))
+                } else if (event.button == MouseButton.SECONDARY) {
+                    CardInspector.inspect(widget.skill)
+                }
+            }
+        }
+        
+        guiState.coroutineScope.launch {
+            activePlayerArea.awaitConfirm()
+            // Cleanup
+            widgets.forEach { 
+                it.isSelected = false
+                it.selectionIndex = null
+                it.setOnMouseClicked(null) // TODO: restore default right-click
+            }
+            continuation.resume(selected)
+        }
+      }
+    }
   }
 
   override suspend fun chooseApresCard(
@@ -76,28 +121,27 @@ class GuiController @Inject constructor() : PlayerController {
     player: Player,
     gameModel: GameModel,
   ): MountainDecision {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater { handleMountainDecision(player, gameModel, continuation) }
+    val decision = activePlayerArea.awaitMountainDecision()
+    
+    // If it was ski/ride, we need to handle the direction selection
+    if (decision.hasSkiRide()) {
+        return handleSkiRideSelection(player, gameModel)
     }
+    
+    // For other decisions, they might be complete or need more info
+    if (decision.hasPass()) {
+        // TODO: handle card buying in a non-native dialog way
+    }
+    
+    return decision
   }
 
-  private fun handleMountainDecision(
+  private suspend fun handleSkiRideSelection(
     player: Player,
-    gameModel: GameModel,
-    continuation: CancellableContinuation<MountainDecision>,
-  ) {
-    check(player.location != null) { "Player $player is off mountain." }
-    val choices = listOf("Ski/Ride", "Lift", "Exit", "Pass")
-
-    val dialog = ChoiceDialog(choices[0], choices)
-    dialog.title = "Choose Action"
-    dialog.headerText = "What do you want to do?"
-    val result = dialog.showAndWait()
-    check(result.isPresent)
-
-    val choice = result.get()
-    when (choice) {
-      "Ski/Ride" -> {
+    gameModel: GameModel
+  ): MountainDecision {
+    return suspendCancellableCoroutine { continuation ->
+      Platform.runLater {
         val availableMoves = gameModel.getAvailableMoves(player)
         hexGridViewer.highlightHexes(availableMoves.keys)
 
@@ -108,49 +152,14 @@ class GuiController @Inject constructor() : PlayerController {
         }.thenNonNull {
           hexGridViewer.highlightHexes(emptySet())
           hexGridViewer.onHexClicked = null
-          when (it.second.tileCase) {
-            TileCase.SLOPE -> continuation.resume(
-              mountainDecision {
-                skiRide = skiRideDecision {
-                  this.direction = it.first
-                }
-              })
-
-            TileCase.LIFT -> continuation.resume(
-              mountainDecision {
-                skiRide = skiRideDecision {
-                  this.direction = it.first
-                }
-              })
-
-            TileCase.TILE_NOT_SET, null -> {}
-          }
+          continuation.resume(
+            mountainDecision {
+              skiRide = skiRideDecision {
+                this.direction = it.first
+              }
+            })
         }.orElse(Unit)
       }
-
-      "Lift" -> {
-        continuation.resume(mountainDecision {
-          lift = liftDecision {}
-        })
-      }
-
-      "Exit" -> continuation.resume(mountainDecision { exit = exitDecision { } })
-      "Pass" -> {
-        val buyDialog = TextInputDialog()
-        buyDialog.title = "Pass Action"
-        buyDialog.headerText =
-          "Enter the name of the card to buy from the shop (leave empty if none)."
-        val buyResult = buyDialog.showAndWait()
-        val buyName = if (buyResult.isPresent) buyResult.get() else ""
-
-        continuation.resume(mountainDecision {
-          pass = passDecision {
-            buyCardName = buyName
-          }
-        })
-      }
-
-      else -> throw IllegalArgumentException()
     }
   }
 

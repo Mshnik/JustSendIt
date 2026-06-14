@@ -52,7 +52,10 @@ class JustSendItGui : Application() {
       SystemTimeSourceModule(),
       LoggerModule(
         LoggerInstance(LazyForwardingLogger { logPanel }),
-        LoggerInstance(LazyForwardingLogger { advanceButton })
+        LoggerInstance(LazyForwardingLogger { advanceButton }),
+        LoggerInstance(LazyForwardingLogger { opponentPanel }),
+        LoggerInstance(LazyForwardingLogger { sidebarHub }),
+        LoggerInstance(LazyForwardingLogger { activePlayerArea })
       )
     ).getInstance(GuiState::class.java)
   }
@@ -81,17 +84,32 @@ class JustSendItGui : Application() {
 
     advanceButton = AdvanceButton(guiState, gameInfoPanel)
     advanceButton.setupStart()
-    val topPanel = VBox(gameInfoPanel, advanceButton)
+    
+    val opponentPanel = OpponentPanel(gameModel)
+    val sidebarHub = SidebarHub(gameModel, logPanel)
+    val activePlayerArea = ActivePlayerArea(guiState)
+    guiController.activePlayerArea = activePlayerArea
 
-    val root = BorderPane()
-    root.center = hexGridViewer
-    root.right = infoPanel
-    root.top = topPanel
-    root.bottom = logPanel
+    val mainLayout = BorderPane()
+    mainLayout.top = opponentPanel
+    mainLayout.center = hexGridViewer
+    mainLayout.right = sidebarHub
+    mainLayout.bottom = activePlayerArea
 
-    stage.scene = Scene(root)
+    // Temporary: Add advance button to the top left or something
+    val debugBox = VBox(gameInfoPanel, advanceButton)
+    mainLayout.left = debugBox
+
+    val root = StackPane(mainLayout)
+    CardInspector.init(root)
+    val scene = Scene(root, 1200.0, 800.0)
+    scene.stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/style.css")!!.toExternalForm())
+    stage.scene = scene
     stage.title = "Just Send It!"
     stage.show()
+    
+    // Initial update
+    activePlayerArea.update(gameModel.currentPlayer)
   }
 }
 

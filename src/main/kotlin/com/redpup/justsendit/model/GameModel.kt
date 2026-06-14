@@ -63,6 +63,9 @@ interface GameModel {
   /** The skill decks in the game. */
   val skillDeck: SkillDeck
 
+  /** The shop where players can buy skills. Map of skill to sale tokens. */
+  val shop: Map<Skill, Int>
+
   /** The current player whose turn it is. */
   val currentPlayer: Player
 }
@@ -106,7 +109,7 @@ class MutableGameModel @Inject constructor(
   private var currentPlayerIndex = 0
   override val currentPlayer get() = players[currentPlayerIndex]
 
-  private val shop = mutableMapOf<Skill, Int>()
+  override val shop = mutableMapOf<Skill, Int>()
 
   override val clock = MutableClock()
 
