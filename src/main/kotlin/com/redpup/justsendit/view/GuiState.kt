@@ -9,7 +9,6 @@ import kotlinx.coroutines.CoroutineScope
 class GuiState @Inject constructor(
   private val gameModelProvider: Provider<MutableGameModel>,
   val coroutineScope: CoroutineScope,
-  val guiController: GuiController,
 ) {
   val gameModel: MutableGameModel get() = gameModelProvider.get()
 }

@@ -24,6 +24,7 @@ import javafx.stage.Stage
 class JustSendItGui : Application() {
   private lateinit var logPanel: LogPanel
   private lateinit var guiState: GuiState
+  private lateinit var guiController: GuiController
   private lateinit var advanceButton: AdvanceButton
   private lateinit var opponentPanel: OpponentPanel
   private lateinit var sidebarHub: SidebarHub
@@ -48,7 +49,7 @@ class JustSendItGui : Application() {
   }
 
   override fun init() {
-    guiState = Guice.createInjector(
+    var injector = Guice.createInjector(
       JustSendItGuiModule(this),
       GameModelModule(),
       GuiCoroutineModule(),
@@ -61,12 +62,13 @@ class JustSendItGui : Application() {
         LoggerInstance(LazyForwardingLogger { sidebarHub }),
         LoggerInstance(LazyForwardingLogger { activePlayerArea })
       )
-    ).getInstance(GuiState::class.java)
+    )
+    guiState = injector.getInstance(GuiState::class.java)
+    guiController = injector.getInstance(GuiController::class.java)
   }
 
   override fun start(stage: Stage) {
     val gameModel = guiState.gameModel
-    val guiController = guiState.guiController
     val hexGridViewer = HexGridViewer(gameModel)
     guiController.hexGridViewer = hexGridViewer
     val infoPanel = InfoPanel(gameModel)

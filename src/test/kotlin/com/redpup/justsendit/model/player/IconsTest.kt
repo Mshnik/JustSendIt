@@ -25,7 +25,7 @@ class IconsTest {
   fun `matches condition`() {
     val powderIcon = icon { condition = Condition.CONDITION_POWDER }
     val powderSlope = slopeTile { condition = Condition.CONDITION_POWDER }
-    val icySlope = slopeTile { condition = Condition.CONDITION_ICY }
+    val icySlope = slopeTile { condition = Condition.CONDITION_ICE }
 
     assertThat(powderIcon.matches(powderSlope)).isTrue()
     assertThat(powderIcon.matches(icySlope)).isFalse()

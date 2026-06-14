@@ -157,7 +157,7 @@ class MutableGameModel @Inject constructor(
     // Step 4: Check for and gain wobbles
     var wobbles = rolls.count { it == 1 }
     // Ice: [After roll] Gain an additional wobble for each 1 rolled.
-    if (slope.condition == Condition.CONDITION_ICY) {
+    if (slope.condition == Condition.CONDITION_ICE) {
       wobbles += rolls.count { it == 1 }
     }
 
