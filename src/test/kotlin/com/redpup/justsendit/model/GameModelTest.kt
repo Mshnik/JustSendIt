@@ -147,7 +147,7 @@ class GameModelTest {
       playerController2.choosePlayerCard(any(), any())
     }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
 
-    gameModel.startDay()
+    gameModel.startGame()
 
     assertThat(gameModel.apres).hasSize(MutableGameModel.APRES_SLOTS)
 

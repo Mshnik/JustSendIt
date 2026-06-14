@@ -38,7 +38,7 @@ class AdvanceButton(
   /** Sets up the AdvanceButton to be a "Start Game" button. */
   fun setupStart() {
     setup("Start Game") {
-      guiState.gameModel.startDay()
+      guiState.gameModel.startGame()
       gameInfoPanel.update()
     }
   }

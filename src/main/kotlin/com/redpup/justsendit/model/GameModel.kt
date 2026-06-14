@@ -27,7 +27,6 @@ import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
-import com.redpup.justsendit.model.random.Dice
 import com.redpup.justsendit.model.random.Dice.roll
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
@@ -228,13 +227,6 @@ class MutableGameModel @Inject constructor(
       .filter { tileMap.contains(it.key) }
   }
 
-  /** Randomly determines a leader and sets the starting player order. */
-  private fun giveStartingPoints() {
-    for ((index, player) in players.withIndex()) {
-      player.points += 10 + (index * 2)
-    }
-  }
-
   /** Gives each player a pick of the player cards, in order player. */
   private suspend fun pickPlayerCards() {
     val cards = playerDeck.draw(clock.day, players.size + 2)
@@ -251,20 +243,44 @@ class MutableGameModel @Inject constructor(
     }
   }
 
+  /** Starts the game. */
+  suspend fun startGame() {
+    check(state == GameState.BEFORE_START) {
+      "State must be start of game"
+    }
+
+    state = GameState.BETWEEN_DAYS
+    giveStartingPoints()
+    giveStarterDecks()
+    startDay()
+  }
+
+  /** Randomly determines a leader and sets the starting player order. */
+  private fun giveStartingPoints() {
+    for ((index, player) in players.withIndex()) {
+      player.points += 10 + (index * 2)
+    }
+  }
+
+  /** Gives each player their 10-card starter deck. */
+  private fun giveStarterDecks() {
+    for (player in players) {
+      starterDeck.reset()
+      repeat(10) {
+        player.gainSkill(starterDeck.draw())
+      }
+    }
+  }
+
   /** Starts a new day. May be the first day of the game or a later day in the game. */
-  suspend fun startDay() {
-    check(state == GameState.BEFORE_START || state == GameState.BETWEEN_DAYS) {
-      "State must be start of game or between days, found $state"
+  private suspend fun startDay() {
+    check(state == GameState.BETWEEN_DAYS) {
+      "State must be between days"
     }
 
     pickPlayerCards()
     populateApresSlots()
     replenishShop()
-
-    if (clock.day == Day.DAY_FRIDAY) {
-      giveStartingPoints()
-      giveStarterDecks()
-    }
 
     for (player in players) {
       player.location = player.controller.chooseMountainTile(
@@ -276,17 +292,8 @@ class MutableGameModel @Inject constructor(
       player.playerCards.forEach { it.startDay() }
     }
 
-    state = GameState.BETWEEN_TURNS
-  }
-
-  /** Gives each player their 10-card starter deck. */
-  private fun giveStarterDecks() {
-    for (player in players) {
-      starterDeck.reset()
-      repeat(10) {
-        player.gainSkill(starterDeck.draw())
-      }
-    }
+    state = GameState.BETWEEN_ROUNDS
+    startRound()
   }
 
   /**
@@ -304,6 +311,19 @@ class MutableGameModel @Inject constructor(
     while (shop.size < 5) {
       shop[skillDeck.draw()] = 0
     }
+  }
+
+  /** Starts a round. */
+  private fun startRound() {
+    check(state == GameState.BETWEEN_ROUNDS) { "State must be between rounds, found $state" }
+
+    players.forEach {
+      it.discardInPlay()
+      it.discardHand()
+      it.drawCards(5, random)
+    }
+
+    state = GameState.BETWEEN_TURNS
   }
 
   /** Executes one turn for the current player. */
@@ -348,9 +368,9 @@ class MutableGameModel @Inject constructor(
     currentPlayerIndex = 0
 
     if (clock.round < clock.maxRound) {
-      // This did not end the day - we are back to between turns.
+      // This did not end the day - start a new round.
       clock.advanceRound()
-      state = GameState.BETWEEN_TURNS
+      startRound()
     } else {
       // This ended the day - we are now between days.
       state = GameState.BETWEEN_DAYS
@@ -370,7 +390,7 @@ class MutableGameModel @Inject constructor(
     }
 
     clock.advanceDay()
-    startDay()
+    startGame()
     return true
   }
 
