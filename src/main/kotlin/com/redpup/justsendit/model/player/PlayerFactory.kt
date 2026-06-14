@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.player
 
+import com.redpup.justsendit.model.player.cards.BasePlayerCard
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 import javax.inject.Inject
@@ -10,9 +11,16 @@ interface PlayerFactory {
 
 
   /** Creates an [PlayerCard] from an [PlayerCardProto] using this factory. */
-  fun create(card: PlayerCardProto): PlayerCard = factories[card.name]
-    ?.let { it(card) }
-    ?: throw IllegalArgumentException("No card found for ${card.name} in $factories")
+  fun create(card: PlayerCardProto): PlayerCard {
+    val factory = factories[card.name]
+    return if (factory != null) {
+      factory(card)
+    } else if (!card.hasSignatureText() && !card.hasPassiveAbilityText()) {
+      BasePlayerCard(card)
+    } else {
+      throw IllegalArgumentException("No card found for ${card.name} in $factories")
+    }
+  }
 }
 
 /** Factory for creating [Player] objects from [PlayerCard]s. */

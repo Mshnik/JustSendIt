@@ -29,8 +29,11 @@ interface PlayerCard {
   suspend fun activate(player: MutablePlayer, gameModel: GameModel) {}
 }
 
+/** Base impl of [PlayerCard]. */
+open class BasePlayerCard(override val proto: PlayerCardProto) : PlayerCard {}
+
 /** A [PlayerCard] that can be activated once per day. */
-abstract class ActivatedPlayerCard : PlayerCard {
+abstract class ActivatedPlayerCard(override val proto: PlayerCardProto) : BasePlayerCard(proto) {
   private var isUsed = false
 
   override suspend fun activate(player: MutablePlayer, gameModel: GameModel) {
