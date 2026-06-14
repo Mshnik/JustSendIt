@@ -1,6 +1,7 @@
 package com.redpup.justsendit.util
 
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.model.supply.proto.PlayerCardList
 import com.redpup.justsendit.proto.TestMessage
 import java.io.File
 import kotlin.test.Test
@@ -65,14 +66,14 @@ class TextProtoReaderTest {
     """.trimIndent()
     testFile.writeText(protoText)
 
-    val reader = com.redpup.justsendit.model.player.proto.PlayerCardList.newBuilder()
+    val reader = PlayerCardList.newBuilder()
     com.google.protobuf.TextFormat.merge(protoText, reader)
 
 
     val listReader = TextProtoReaderImpl(
       testFile.absolutePath,
-      com.redpup.justsendit.model.player.proto.PlayerCardList::newBuilder,
-      com.redpup.justsendit.model.player.proto.PlayerCardList.Builder::getPlayerList
+      PlayerCardList::newBuilder,
+      PlayerCardList.Builder::getPlayerList
     )
 
     val result = listReader()

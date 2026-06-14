@@ -15,7 +15,7 @@ import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.player.proto.playerCard
+import com.redpup.justsendit.model.supply.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day

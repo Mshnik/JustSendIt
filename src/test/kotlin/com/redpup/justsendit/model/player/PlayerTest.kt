@@ -6,11 +6,11 @@ import com.google.inject.Inject
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
-import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
+import com.redpup.justsendit.model.supply.proto.playerCard
 import com.redpup.justsendit.model.supply.proto.skillCard
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.BeforeEach

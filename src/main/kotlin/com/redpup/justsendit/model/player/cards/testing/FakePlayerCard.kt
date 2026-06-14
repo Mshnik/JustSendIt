@@ -5,7 +5,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 
 /** A testing implementation of [PlayerCard]. */
 @VisibleForTesting

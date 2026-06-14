@@ -1,13 +1,11 @@
 package com.redpup.justsendit.model.supply
 
 import com.google.common.truth.Truth.assertThat
-import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.random.testing.FakeRandom
 import java.io.File
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir

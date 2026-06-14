@@ -3,7 +3,7 @@ package com.redpup.justsendit.model.player.cards
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.MutablePlayer
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 
 /**
  *
@@ -55,5 +55,6 @@ sealed class PlayerGameEvent {
     val skill: Int,
     val difficulty: Int,
   ) : PlayerGameEvent()
+
   data object PlayerRested : PlayerGameEvent()
 }

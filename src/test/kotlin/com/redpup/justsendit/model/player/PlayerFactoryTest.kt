@@ -2,7 +2,7 @@ package com.redpup.justsendit.model.player
 
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.playerCard
+import com.redpup.justsendit.model.supply.proto.playerCard
 import kotlin.reflect.KClass
 import kotlin.test.Ignore
 import org.junit.jupiter.params.ParameterizedTest

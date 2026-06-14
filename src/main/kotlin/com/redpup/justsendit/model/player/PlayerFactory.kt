@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.player
 
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 import javax.inject.Inject
 
 interface PlayerFactory {

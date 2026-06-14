@@ -5,7 +5,7 @@ import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Icons.matches
-import com.redpup.justsendit.model.player.proto.icon
+import com.redpup.justsendit.model.supply.proto.icon
 import com.redpup.justsendit.model.proto.Grade
 import org.junit.jupiter.api.Test
 

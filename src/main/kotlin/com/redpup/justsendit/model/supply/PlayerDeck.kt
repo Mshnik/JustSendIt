@@ -3,8 +3,8 @@ package com.redpup.justsendit.model.supply
 import com.google.inject.Inject
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
-import com.redpup.justsendit.model.player.proto.PlayerCardList
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCardList
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.util.TextProtoReaderImpl

@@ -1,11 +1,11 @@
 edition = "2023";
 
-package com.redpup.justsendit.model.player;
+package com.redpup.justsendit.model.supply;
 
 option java_multiple_files = true;
-option java_package = "com.redpup.justsendit.model.player.proto";
+option java_package = "com.redpup.justsendit.model.supply.proto";
 
-import "com/redpup/justsendit/model/player/icon.proto";
+import "com/redpup/justsendit/model/supply/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
 
 /** The immutable params associated with a player or upgrade. */
@@ -16,7 +16,7 @@ message PlayerCard {
   Day day = 2;
   
   // V2 fields
-  player.Icon icon = 3;
+  Icon icon = 3;
   string passive_ability_text = 4;
   model.EffectCategory signature_category = 5;
   string signature_text = 6;

@@ -4,7 +4,7 @@ import com.google.common.annotations.VisibleForTesting
 import com.google.inject.Inject
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.supply.PlayerDeck
 import com.redpup.justsendit.util.pop

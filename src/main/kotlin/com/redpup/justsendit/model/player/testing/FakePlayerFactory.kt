@@ -3,7 +3,7 @@ package com.redpup.justsendit.model.player.testing
 import com.google.common.annotations.VisibleForTesting
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.PlayerCard as PlayerCardProto
+import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 import javax.inject.Singleton
 
 /** A testing implementation of [PlayerFactory] */
