@@ -22,7 +22,7 @@ class SupplyModule : KtAbstractModule() {
     random: Random,
   ): SkillDeck =
     SkillDeckInstance(
-      "src/main/resources/com/redpup/justsendit/model/skill/starter.textproto",
+      "src/main/resources/com/redpup/justsendit/model/shop/skill/Starter.textproto",
       random,
       skillFactory
     )
@@ -32,7 +32,7 @@ class SupplyModule : KtAbstractModule() {
   @Singleton
   fun shopDeck(skillFactory: SkillFactory, random: Random): SkillDeck =
     SkillDeckInstance(
-      "src/main/resources/com/redpup/justsendit/model/skill/shop.textproto",
+      "src/main/resources/com/redpup/justsendit/model/shop/skill/Shop.textproto",
       random,
       skillFactory
     )
@@ -42,19 +42,19 @@ class SupplyModule : KtAbstractModule() {
   @Singleton
   fun specialDeck(skillFactory: SkillFactory, random: Random): SkillDeck =
     SkillDeckInstance(
-      "src/main/resources/com/redpup/justsendit/model/skill/special.textproto",
+      "src/main/resources/com/redpup/justsendit/model/shop/skill/Special.textproto",
       random,
       skillFactory
     )
 
   @Provides
   @ApresPath
-  fun apresPath(): String = "src/main/resources/com/redpup/justsendit/model/apres/apres.textproto"
+  fun apresPath(): String = "src/main/resources/com/redpup/justsendit/model/shop/apres.textproto"
 
   @Provides
   @PlayerPath
   fun playerPath(): String =
-    "src/main/resources/com/redpup/justsendit/model/players/players.textproto"
+    "src/main/resources/com/redpup/justsendit/model/shop/players.textproto"
 
   @Provides
   @TilePath

@@ -1,0 +1,39 @@
+# proto-file: com/redpup/justsendit/model/supply/player.proto
+# proto-message: PlayerCardList
+
+player {
+  name: "No Name"
+  day: DAY_FRIDAY
+  icon {
+    wild: true
+  }
+}
+player {
+  name: "No Name"
+  day: DAY_FRIDAY
+  icon {
+    wild: true
+  }
+}
+player {
+  name: "No Name"
+  day: DAY_FRIDAY
+  icon {
+    wild: true
+  }
+}
+player {
+  name: "No Name"
+  day: DAY_FRIDAY
+  icon {
+    wild: true
+  }
+}
+player {
+  name: "No Name"
+  day: DAY_FRIDAY
+  icon {
+    wild: true
+  }
+}
+
