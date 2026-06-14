@@ -8,6 +8,9 @@ import javafx.scene.layout.VBox
 import javafx.scene.paint.Color
 import javafx.scene.shape.Rectangle
 
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+
 /**
  * Global inspector that shows a high-resolution card view.
  */
@@ -24,22 +27,24 @@ object CardInspector {
     val overlay = StackPane()
     overlay.styleClass.add("card-inspector-overlay")
 
-    val cardView = VBox()
+    val imagePath = skill.skillCard.filename.removePrefix("src/main/resources")
+    val image = Image(javaClass.getResource(imagePath)!!.toExternalForm())
+    val imageView = ImageView(image)
+    imageView.isPreserveRatio = true
+    imageView.fitHeight = 700.0 // High resolution view
+
+    val cardView = VBox(imageView)
     cardView.alignment = Pos.CENTER
     cardView.styleClass.add("card-inspector-view")
-    cardView.setMaxSize(400.0, 600.0)
+    cardView.setMaxSize(500.0, 750.0)
 
-    val title = Label(skill.name)
-    title.styleClass.add("card-inspector-title")
-
-    val details = Label("Full rules and high-res art here...\nCost: ${skill.skillCard.cost}")
-
-    cardView.children.addAll(title, details)
     overlay.children.add(cardView)
+
     overlay.setOnMouseClicked {
-      root.children.remove(overlay)
+        root.children.remove(overlay)
     }
 
     root.children.add(overlay)
   }
 }
+

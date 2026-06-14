@@ -12,6 +12,8 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import kotlin.math.round
 
+import javafx.scene.image.Image
+
 class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
   private val hexSize = 60.0 // Radius from center to corner
@@ -21,9 +23,11 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   private var highlightedHexes : Collection<HexPoint> = setOf()
   var onHexClicked: ((HexPoint) -> Unit)? = null
 
+  private val boardImage = Image(javaClass.getResource("/com/redpup/justsendit/img/Board.png")!!.toExternalForm())
+
   init {
-    width = bounds.width * hexSize + margin
-    height = bounds.height * hexSize + margin
+    width = bounds.width * hexSize + margin * 2
+    height = bounds.height * hexSize + margin * 2
     playerRenderer = PlayerRenderer(graphicsContext2D, hexSize, margin)
 
     val timer = object : AnimationTimer() {
@@ -45,6 +49,10 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
   private fun drawGrid(gc: GraphicsContext) {
     gc.clearRect(0.0, 0.0, width, height)
+    
+    // Draw background board image
+    gc.drawImage(boardImage, 0.0, 0.0, width, height)
+
     val hexRenderer = HexRenderer(gc, hexSize)
     gameModel.tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top

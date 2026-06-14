@@ -18,14 +18,19 @@ class HexRenderer(private val gc: GraphicsContext, private val hexSize: Double) 
     val yPoints = DoubleArray(6) { i -> cy + hexSize * cos(i * PI / 3 + PI / 6) }
 
     if (isHighlighted) {
-        gc.fill = Color.YELLOW
-        gc.globalAlpha = 0.5
+        gc.fill = Color.GOLD
+        gc.globalAlpha = 0.4
         gc.fillPolygon(xPoints, yPoints, 6)
         gc.globalAlpha = 1.0
+        
+        gc.stroke = Color.GOLD
+        gc.lineWidth = 3.0
+        gc.strokePolygon(xPoints, yPoints, 6)
+        gc.lineWidth = 1.0
+    } else {
+        gc.stroke = Color.color(0.5, 0.5, 0.5, 0.2) // Very faint border
+        gc.strokePolygon(xPoints, yPoints, 6)
     }
-
-    gc.stroke = Color.LIGHTGREY
-    gc.strokePolygon(xPoints, yPoints, 6)
 
     when (tile.tileCase) {
       MountainTile.TileCase.SLOPE -> drawSlope(tile.slope, cx, cy)

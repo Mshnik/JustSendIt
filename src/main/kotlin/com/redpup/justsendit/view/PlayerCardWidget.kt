@@ -6,6 +6,9 @@ import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+
 /**
  * A widget representing a single player card.
  */
@@ -14,16 +17,16 @@ class PlayerCardWidget(val playerCard: PlayerCard) : VBox() {
   init {
     this.styleClass.add("card-widget")
     this.alignment = Pos.CENTER
-    this.setPrefSize(200.0, 300.0)
+    
+    val image = Image(javaClass.getResource("/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex.png")!!.toExternalForm())
+    val imageView = ImageView(image)
+    imageView.isPreserveRatio = true
+    imageView.fitWidth = 200.0
 
-    val header = StackPane(Label(playerCard.name))
-    header.styleClass.add("card-header")
-    header.setPrefSize(200.0, 40.0)
-
-    val content = VBox(Label("Player Card details here..."))
-    content.alignment = Pos.CENTER
-    VBox.setVgrow(content, javafx.scene.layout.Priority.ALWAYS)
-
-    children.addAll(header, content)
+    children.add(imageView)
+    
+    // We can still add the name as a label on top if needed, 
+    // but the instruction implies using real images.
+    // Let's add the name in a badge or similar if it's important.
   }
 }

@@ -120,3 +120,8 @@ When an active sequence requires selecting multiple cards, the client tracks sel
     - [ ] Animations (Full hand sliding, smooth accordion expansion)
 - [ ] **Advanced Interactions**
     - [x] Player Card Selection Overlay (3 horizontal cards, clickable)
+- [ ] **Asset Integration**
+    - [x] Board Image Rendering (Background layer)
+    - [x] Hex Grid Alignment with Board Image
+    - [x] Skill Card Image Rendering (using `filename` from proto)
+    - [x] High-Resolution Inspection Modal (using full card images)

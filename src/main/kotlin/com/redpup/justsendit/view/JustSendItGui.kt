@@ -46,6 +46,11 @@ class JustSendItGui : Application() {
     fun provideAdvanceButton(): AdvanceButton {
       return gui.advanceButton
     }
+
+    @Provides
+    fun provideActivePlayerArea(): ActivePlayerArea {
+      return gui.activePlayerArea
+    }
   }
 
   override fun init() {
@@ -94,6 +99,7 @@ class JustSendItGui : Application() {
     opponentPanel = OpponentPanel(gameModel)
     sidebarHub = SidebarHub(gameModel, logPanel)
     activePlayerArea = ActivePlayerArea(guiState)
+    guiController.activePlayerArea = activePlayerArea
 
     val mainLayout = BorderPane()
     mainLayout.top = opponentPanel
@@ -109,7 +115,9 @@ class JustSendItGui : Application() {
     CardInspector.init(root)
     PlayerCardChooser.init(root)
     val scene = Scene(root, 1400.0, 900.0)
-    scene.stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/light-theme.css")!!.toExternalForm())
+    scene.stylesheets.add(
+      javaClass.getResource("/com/redpup/justsendit/view/light-theme.css")!!.toExternalForm()
+    )
     stage.scene = scene
 
     stage.title = "Just Send It!"

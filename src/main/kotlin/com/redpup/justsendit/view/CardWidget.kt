@@ -7,16 +7,17 @@ import javafx.scene.input.MouseButton
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 
+import javafx.scene.image.Image
+import javafx.scene.image.ImageView
+
 /**
  * A widget representing a single skill card.
  * Can be used in hand or in accordion lists.
  */
 class CardWidget(val skill: Skill) : VBox() {
 
-  private val header = StackPane(Label(skill.name))
-  private val content =
-    VBox(Label("Cost: ${skill.skillCard.cost}"), Label("Rules text goes here..."))
   private val badge = Label()
+  private val imageView = ImageView()
 
   var isSelected = false
     set(value) {
@@ -33,21 +34,21 @@ class CardWidget(val skill: Skill) : VBox() {
 
   init {
     this.styleClass.add("card-widget")
-    header.styleClass.add("card-header")
-    header.setPrefSize(200.0, 30.0)
-
-    content.setPrefSize(200.0, 150.0)
-    content.isManaged = false
-    content.isVisible = false
-
+    
+    val imagePath = skill.skillCard.filename.removePrefix("src/main/resources")
+    val image = Image(javaClass.getResource(imagePath)!!.toExternalForm())
+    imageView.image = image
+    imageView.isPreserveRatio = true
+    imageView.fitWidth = 150.0 // Adjusted for accordion/hand
+    
     badge.styleClass.add("card-badge")
     badge.isVisible = false
-
-    val headerStack = StackPane(header, badge)
+    
+    val stack = StackPane(imageView, badge)
     StackPane.setAlignment(badge, Pos.TOP_RIGHT)
 
-    children.addAll(headerStack, content)
-
+    children.add(stack)
+    
     setOnMouseClicked { event ->
         if (event.button == MouseButton.SECONDARY) {
             CardInspector.inspect(skill)
@@ -68,13 +69,11 @@ class CardWidget(val skill: Skill) : VBox() {
 
 
   fun expand() {
-    content.isManaged = true
-    content.isVisible = true
+    imageView.fitWidth = 200.0
   }
 
   fun collapse() {
-    content.isManaged = false
-    content.isVisible = false
+    imageView.fitWidth = 150.0
   }
 }
 
