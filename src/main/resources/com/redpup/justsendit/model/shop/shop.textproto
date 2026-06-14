@@ -1,4 +1,4 @@
-# proto-file: com/redpup/justsendit/model/supply/skill_card.proto
+# proto-file: com/redpup/justsendit/model/supply/skill.proto
 # proto-message: SkillCardList
 
 cards {
