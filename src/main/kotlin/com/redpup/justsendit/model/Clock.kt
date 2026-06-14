@@ -4,8 +4,8 @@ import com.redpup.justsendit.model.proto.Day
 
 /** Recording of time in game. */
 interface Clock {
-  /** What turn of day it is. */
-  val turn: Int
+  /** What round of day it is. */
+  val round: Int
 
   /** What sub-turn of the day it is. */
   val subTurn: Int
@@ -13,20 +13,17 @@ interface Clock {
   /** Returns whether it is the first subTurn of the turn. */
   val isFirstSubTurn: Boolean get() = subTurn == 1
 
-  /** The max turn of this day. */
-  val maxTurn: Int
+  /** The max round of this day. */
+  val maxRound: Int
 
   /** What game of day it is. */
   val day: Day
-
-  /** Returns the maximum number of cards that can be played on a day. */
-  val maxCards: Int get() = day.number
 }
 
 /** Mutable instance of [Clock]. */
-class MutableClock(override var turn: Int = 1, override var day: Day = Day.DAY_FRIDAY) : Clock {
+class MutableClock(override var round: Int = 1, override var day: Day = Day.DAY_FRIDAY) : Clock {
   /** Returns the max turn of the day. */
-  override val maxTurn: Int
+  override val maxRound: Int
     get() = when (day) {
       Day.DAY_FRIDAY -> 9
       Day.DAY_SATURDAY -> 8
@@ -47,14 +44,14 @@ class MutableClock(override var turn: Int = 1, override var day: Day = Day.DAY_F
   }
 
   /** Advances to the next turn. */
-  fun advanceTurn() {
-    turn++
+  fun advanceRound() {
+    round++
     resetSubTurn()
   }
 
   /** Advances to the next day. */
   fun advanceDay() {
-    turn = 1
+    round = 1
     resetSubTurn()
     day = when (day) {
       Day.DAY_FRIDAY -> Day.DAY_SATURDAY

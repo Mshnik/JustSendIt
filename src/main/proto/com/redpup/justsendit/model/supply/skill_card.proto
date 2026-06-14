@@ -7,20 +7,21 @@ option java_package = "com.redpup.justsendit.model.supply.proto";
 
 import "com/redpup/justsendit/model/common.proto";
 
-/** A skill card in a player's deck. */
+/** A skill card in a player's deck, discard, hand, play, or the shop. */
 message SkillCard {
-  string name = 1;
-  int32 cost = 2;
+  string filename = 1;
+  string name = 2;
+  int32 cost = 3;
 
   // Dice counts
-  int32 green_dice = 3;
-  int32 blue_dice = 4;
-  int32 black_dice = 5;
+  int32 green_dice = 4;
+  int32 blue_dice = 5;
+  int32 black_dice = 6;
 
-  repeated model.Icon icons = 6;
+  repeated model.Icon icons = 7;
 
-  model.EffectCategory category = 7;
-  string text = 8;
+  model.EffectCategory category = 8;
+  string text = 9;
 }
 
 /** A list of skill cards. */

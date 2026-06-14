@@ -19,6 +19,7 @@ import com.redpup.justsendit.model.player.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.proto.GameState
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
@@ -159,6 +160,7 @@ class GameModelTest {
 
   @Test
   fun `turn advances player`() = runBlocking {
+    gameModel.state = GameState.BETWEEN_TURNS
     player1.location = createHexPoint(0, 0)
     whenever(playerController1.makeMountainDecision(any(), any())).thenReturn(mountainDecision {
       pass = MountainDecision.PassDecision.getDefaultInstance()
@@ -172,6 +174,7 @@ class GameModelTest {
 
   @Test
   fun `executePass discards in play cards`() = runBlocking {
+    gameModel.state = GameState.BETWEEN_TURNS
     player1.location = createHexPoint(0, 0)
     repeat(2) { player1.gainSkill(skillFactory.create(skillCard { name = "Card $it" })) }
     player1.drawCards(2, random)

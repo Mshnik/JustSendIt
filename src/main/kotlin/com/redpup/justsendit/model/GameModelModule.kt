@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model
 
+import com.redpup.justsendit.log.LoggerClass
 import com.redpup.justsendit.log.LoggerModule
 import com.redpup.justsendit.log.PrintlineLogger
 import com.redpup.justsendit.model.apres.ApresModule
@@ -17,7 +18,7 @@ class GameModelModule : KtAbstractModule() {
     install(RandomModule())
     install(SkillModule())
     install(SupplyModule())
-    install(LoggerModule(PrintlineLogger::class))
+    install(LoggerModule(LoggerClass(PrintlineLogger::class)))
 
     bind<GameModel>().to<MutableGameModel>()
   }

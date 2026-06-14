@@ -12,3 +12,13 @@ enum Day {
   DAY_SATURDAY = 2;
   DAY_SUNDAY = 3;
 }
+
+/** States the game can be in.*/
+enum GameState {
+  GAME_STATE_UNSET = 0;
+  BEFORE_START = 1;
+  BETWEEN_DAYS = 2;
+  BETWEEN_ROUNDS = 3;
+  BETWEEN_TURNS = 4;
+  TURN_IN_PROGRESS = 5;
+}

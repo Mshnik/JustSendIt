@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 
-// 1. Define a Scope for your UI (e.g., in your Controller)
+// Define a Scope for your UI (e.g., in your Controller)
 private val uiScope = object : CoroutineScope {
   override val coroutineContext = SupervisorJob() + Dispatchers.Main
 }

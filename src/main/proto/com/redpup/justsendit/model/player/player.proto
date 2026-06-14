@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
 import "com/redpup/justsendit/model/common.proto";
-import "com/redpup/justsendit/model/day.proto";
+import "com/redpup/justsendit/model/time.proto";
 
 /** The immutable params associated with a player or upgrade. */
 message PlayerCard {

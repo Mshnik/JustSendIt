@@ -1,8 +1,6 @@
 package com.redpup.justsendit.log
 
-import com.google.inject.multibindings.Multibinder
 import com.redpup.justsendit.log.proto.Log
-import com.redpup.justsendit.util.KtAbstractModule
 
 /** Logging access through different means of logging. */
 interface Logger {
@@ -14,5 +12,12 @@ interface Logger {
 class PrintlineLogger : Logger {
   override fun log(log: Log) {
     println(log)
+  }
+}
+
+/** A wrapping logger that logs to the given [logger]. */
+class LazyForwardingLogger(private val logger: () -> Logger) : Logger {
+  override fun log(log: Log) {
+    logger().log(log)
   }
 }

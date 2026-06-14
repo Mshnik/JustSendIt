@@ -14,7 +14,7 @@ class GameInfoPanel(private val gameModel: GameModel) : VBox() {
     }
 
     fun update() {
-        clockLabel.text = "Day: ${gameModel.clock.day}, Turn: ${gameModel.clock.turn}"
+        clockLabel.text = "Day: ${gameModel.clock.day}, Turn: ${gameModel.clock.round}"
         playerLabel.text = "Current Player: ${gameModel.currentPlayer.name}"
     }
 }

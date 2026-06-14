@@ -55,7 +55,17 @@ class GuiController @Inject constructor() : PlayerController {
   }
 
   override suspend fun chooseMountainTile(player: Player, elements: List<HexPoint>): HexPoint {
-    TODO("Not yet implemented")
+    return suspendCancellableCoroutine { continuation ->
+      Platform.runLater {
+        hexGridViewer.highlightHexes(elements)
+
+        hexGridViewer.onHexClicked = { clicked: HexPoint ->
+          hexGridViewer.highlightHexes(emptySet())
+          hexGridViewer.onHexClicked = null
+          continuation.resume(clicked)
+        }
+      }
+    }
   }
 
   override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
