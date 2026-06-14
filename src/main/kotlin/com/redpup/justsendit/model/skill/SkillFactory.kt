@@ -22,7 +22,8 @@ interface SkillFactory {
     } else if (card.category == EffectCategory.EFFECT_CATEGORY_UNSET) {
       BaseSkill(card)
     } else {
-      throw IllegalArgumentException("No card found for ${card.name} in $factories")
+      println("No card found for ${card.name} in $factories; falling back to BaseSkill.")
+      BaseSkill(card)
     }
   }
 }
