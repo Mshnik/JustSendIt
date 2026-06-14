@@ -3,8 +3,8 @@ import csv
 import os
 
 # --- CONFIGURATION CONSTANTS ---
-INPUT_CSV = "../resources/com/redpup/justsendit/model/shop/SkillCards.csv"
-FILE_PREFIX = "../resources/com/redpup/justsendit/model/shop/"
+INPUT_CSV = "../resources/com/redpup/justsendit/model/shop/skill/SkillCards.csv"
+FILE_PREFIX = "../resources/com/redpup/justsendit/model/shop/skill/"
 IMG_FILEPATH = "src/main/resources/com/redpup/justsendit/img/skill_cards/"
 # -------------------------------
 
