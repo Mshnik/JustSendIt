@@ -19,8 +19,8 @@ class FakeRandom @Inject constructor() : Random {
 
   /** Adds an entry for [nextInt]: The next time [bound] is requested, [value] is returned. */
   fun addNextInt(bound: Int, value: Int) {
-    if (nextIntValues[value] == null) {
-      nextIntValues[value] = mutableListOf()
+    if (nextIntValues[bound] == null) {
+      nextIntValues[bound] = mutableListOf()
     }
     nextIntValues[bound]!!.add(value)
   }
