@@ -5,6 +5,7 @@ package com.redpup.justsendit.model.supply;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.supply.proto";
 
+import "com/redpup/justsendit/model/player/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
 
 /** A skill card in a player's deck, discard, hand, play, or the shop. */
@@ -18,7 +19,7 @@ message SkillCard {
   int32 blue_dice = 5;
   int32 black_dice = 6;
 
-  repeated model.Icon icons = 7;
+  repeated player.Icon icons = 7;
 
   model.EffectCategory category = 8;
   string text = 9;

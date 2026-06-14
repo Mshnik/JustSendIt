@@ -5,8 +5,40 @@ package com.redpup.justsendit.model;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.proto";
 
-import "com/redpup/justsendit/model/grade.proto";
-import "com/redpup/justsendit/model/board/tile/slope.proto";
+/** Days of the game. */
+enum Day {
+  DAY_UNSET = 0;
+  DAY_FRIDAY = 1;
+  DAY_SATURDAY = 2;
+  DAY_SUNDAY = 3;
+}
+
+/** States the game can be in.*/
+enum GameState {
+  GAME_STATE_UNSET = 0;
+  BEFORE_START = 1;
+  BETWEEN_DAYS = 2;
+  BETWEEN_ROUNDS = 3;
+  BETWEEN_TURNS = 4;
+  TURN_IN_PROGRESS = 5;
+}
+
+/** Types of dice. */
+enum Die {
+  DIE_UNSET = 0;
+  DIE_GREEN = 1;
+  DIE_BLUE = 2;
+  DIE_BLACK = 3;
+}
+
+/** Difficulty grades of a ski trail or skill card. */
+enum Grade {
+  GRADE_UNSET = 0;
+  GRADE_GREEN = 1;
+  GRADE_BLUE = 2;
+  GRADE_BLACK = 3;
+  GRADE_DOUBLE_BLACK = 4;
+}
 
 /** The category of effect on a skill card or player card. */
 enum EffectCategory {
@@ -15,14 +47,4 @@ enum EffectCategory {
   EFFECT_CATEGORY_NEXT = 2;
   EFFECT_CATEGORY_PASS = 3;
   EFFECT_CATEGORY_LIFT = 4;
-}
-
-/** Icons that can appear on a skill card or player card. */
-message Icon {
-  oneof type {
-    model.Grade grade = 1;
-    model.board.tile.Condition condition = 2;
-    model.board.tile.Hazard hazard = 3;
-    bool wild = 4;
-  }
 }

@@ -5,7 +5,7 @@ package com.redpup.justsendit.model.apres;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.apres.proto";
 
-import "com/redpup/justsendit/model/time.proto";
+import "com/redpup/justsendit/model/common.proto";
 
 /** An apres card that can be claimed when a player exits the mountain. */
 message ApresCard {

@@ -5,8 +5,8 @@ package com.redpup.justsendit.model.player;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
+import "com/redpup/justsendit/model/player/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
-import "com/redpup/justsendit/model/time.proto";
 
 /** The immutable params associated with a player or upgrade. */
 message PlayerCard {
@@ -16,7 +16,7 @@ message PlayerCard {
   Day day = 2;
   
   // V2 fields
-  model.Icon icon = 3;
+  player.Icon icon = 3;
   string passive_ability_text = 4;
   model.EffectCategory signature_category = 5;
   string signature_text = 6;

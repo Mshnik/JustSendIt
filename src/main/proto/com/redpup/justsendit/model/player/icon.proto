@@ -1,0 +1,19 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.player;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.player.proto";
+
+import "com/redpup/justsendit/model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/common.proto";
+
+/** Icons that can appear on a skill card or player card. */
+message Icon {
+  oneof type {
+    model.Grade grade = 1;
+    board.tile.Condition condition = 2;
+    board.tile.Hazard hazard = 3;
+    bool wild = 4;
+  }
+}

@@ -3,7 +3,7 @@ edition = "2023";
 package com.redpup.justsendit.log;
 
 import "google/protobuf/timestamp.proto";
-import "com/redpup/justsendit/model/time.proto";
+import "com/redpup/justsendit/model/common.proto";
 import "com/redpup/justsendit/model/player/decision.proto";
 import "com/redpup/justsendit/model/board/hex/hex_point.proto";
 

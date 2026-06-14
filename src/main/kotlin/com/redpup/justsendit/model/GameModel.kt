@@ -17,6 +17,7 @@ import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.*
+import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
@@ -24,9 +25,10 @@ import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
-import com.redpup.justsendit.model.proto.Icon
-import com.redpup.justsendit.model.proto.Icon.TypeCase
+import com.redpup.justsendit.model.random.Dice
+import com.redpup.justsendit.model.random.Dice.roll
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
@@ -108,16 +110,6 @@ class MutableGameModel @Inject constructor(
 
   override val clock = MutableClock()
 
-  private fun matches(icon: Icon, slope: SlopeTile): Boolean {
-    return when (icon.typeCase) {
-      TypeCase.GRADE -> icon.grade == slope.grade
-      TypeCase.CONDITION -> icon.condition == slope.condition
-      TypeCase.HAZARD -> slope.hazardsList.contains(icon.hazard)
-      TypeCase.WILD -> icon.wild
-      else -> false
-    }
-  }
-
   private data class CardResolution(val skill: Int, val wobbles: Int)
 
   private fun resolveCard(
@@ -148,11 +140,14 @@ class MutableGameModel @Inject constructor(
       }
     }
 
+    val dice = buildList {
+      repeat(green) { add(Die.DIE_GREEN) }
+      repeat(blue) { add(Die.DIE_BLUE) }
+      repeat(black) { add(Die.DIE_BLACK) }
+    }
+
     // Step 2: Roll dice
-    val rolls = mutableListOf<Int>()
-    repeat(green) { rolls.add(DieType.GREEN.roll(random)) }
-    repeat(blue) { rolls.add(DieType.BLUE.roll(random)) }
-    repeat(black) { rolls.add(DieType.BLACK.roll(random)) }
+    val rolls = dice.map { it.roll(random) }
 
     // Step 3: All other terrain and effects (including rerolls) - TODO
 
@@ -176,7 +171,7 @@ class MutableGameModel @Inject constructor(
     }
 
     // Matching icons (+1 each)
-    val matchingIcons = skill.skillCard.iconsList.count { matches(it, slope) }
+    val matchingIcons = skill.skillCard.iconsList.count { it.matches(slope) }
     sum += matchingIcons
 
     return CardResolution(sum, wobbles)
@@ -566,7 +561,7 @@ class MutableGameModel @Inject constructor(
     if (tile.hasSlope()) {
       val slope = tile.slope
       for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { matches(it, slope) }
+        total += skill.skillCard.iconsList.count { it.matches(slope) }
       }
     } else if (tile.hasLift()) {
       for (skill in player.hand) {
