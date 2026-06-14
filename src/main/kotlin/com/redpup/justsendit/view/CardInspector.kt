@@ -22,21 +22,20 @@ object CardInspector {
     val root = this.root ?: return
 
     val overlay = StackPane()
-    overlay.style = "-fx-background-color: rgba(0, 0, 0, 0.75);"
+    overlay.styleClass.add("card-inspector-overlay")
 
     val cardView = VBox()
     cardView.alignment = Pos.CENTER
-    cardView.style = "-fx-background-color: white; -fx-border-color: black; -fx-padding: 20;"
+    cardView.styleClass.add("card-inspector-view")
     cardView.setMaxSize(400.0, 600.0)
 
     val title = Label(skill.name)
-    title.style = "-fx-font-size: 24; -fx-font-weight: bold;"
+    title.styleClass.add("card-inspector-title")
 
     val details = Label("Full rules and high-res art here...\nCost: ${skill.skillCard.cost}")
 
     cardView.children.addAll(title, details)
     overlay.children.add(cardView)
-
     overlay.setOnMouseClicked {
       root.children.remove(overlay)
     }

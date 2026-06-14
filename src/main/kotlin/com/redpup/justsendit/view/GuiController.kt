@@ -108,7 +108,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   }
 
   override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
-    TODO("Not yet implemented")
+    return PlayerCardChooser.choose(elements)
   }
 
   override suspend fun makeMountainDecision(

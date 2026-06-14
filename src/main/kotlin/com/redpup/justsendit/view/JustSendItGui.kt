@@ -107,11 +107,11 @@ class JustSendItGui : Application() {
 
     val root = StackPane(mainLayout)
     CardInspector.init(root)
-    val scene = Scene(root, 1200.0, 800.0)
-    scene.stylesheets.add(
-      javaClass.getResource("/com/redpup/justsendit/view/style.css")!!.toExternalForm()
-    )
+    PlayerCardChooser.init(root)
+    val scene = Scene(root, 1400.0, 900.0)
+    scene.stylesheets.add(javaClass.getResource("/com/redpup/justsendit/view/light-theme.css")!!.toExternalForm())
     stage.scene = scene
+
     stage.title = "Just Send It!"
     stage.show()
 

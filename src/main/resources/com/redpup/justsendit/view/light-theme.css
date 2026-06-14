@@ -1,0 +1,123 @@
+/* Global Light Theme */
+
+.root {
+    -fx-background-color: #f4f4f4;
+    -fx-text-fill: #333333;
+}
+
+.active-player-area {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 2 0 0 0;
+    -fx-padding: 10;
+}
+
+.phase-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-font-weight: bold;
+    -fx-padding: 8 15;
+    -fx-background-radius: 5;
+    -fx-border-color: #bbbbbb;
+    -fx-border-radius: 5;
+}
+
+.phase-button:hover {
+    -fx-background-color: #eeeeee;
+}
+
+.phase-button:disabled {
+    -fx-opacity: 0.3;
+}
+
+.phase-button.selected {
+    -fx-border-color: #ffd700; /* Gold */
+    -fx-border-width: 2;
+}
+
+.confirm-button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.confirm-button:disabled {
+    -fx-opacity: 0.3;
+}
+
+.opponent-panel {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 5;
+}
+
+.opponent-widget {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-padding: 5;
+    -fx-text-fill: #333333;
+}
+
+.sidebar-hub {
+    -fx-background-color: #eeeeee;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: #e0e0e0;
+}
+
+.tab {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+}
+
+.tab:selected {
+    -fx-background-color: #eeeeee;
+}
+
+.card-widget {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #999999;
+    -fx-border-width: 1;
+    -fx-padding: 5;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+.card-header {
+    -fx-background-color: #add8e6; /* LightBlue */
+    -fx-padding: 5;
+}
+
+.card-badge {
+    -fx-background-color: #ffd700; /* Gold */
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-padding: 2;
+    -fx-background-radius: 10;
+}
+
+.card-inspector-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.75);
+}
+
+.card-inspector-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #000000;
+    -fx-padding: 20;
+}
+
+.card-inspector-title {
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+}
+
+.player-card-chooser-overlay {
+    -fx-background-color: rgba(0, 0, 0, 0.85);
+}
+
+.player-card-chooser-title {
+    -fx-font-size: 32;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+}

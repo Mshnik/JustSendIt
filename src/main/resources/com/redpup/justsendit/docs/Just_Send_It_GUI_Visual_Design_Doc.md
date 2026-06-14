@@ -114,4 +114,9 @@ When an active sequence requires selecting multiple cards, the client tracks sel
     - [x] Integrated GuiController flow (Initial Phase Chooser integration)
 - [ ] **Visuals & Polish**
     - [x] CSS Styling (Initial dark theme and component styling)
+    - [x] Consolidate all CSS into external files (Removing inline styles)
+    - [x] Light Theme Implementation
+    - [x] Correct initial window sizing
     - [ ] Animations (Full hand sliding, smooth accordion expansion)
+- [ ] **Advanced Interactions**
+    - [x] Player Card Selection Overlay (3 horizontal cards, clickable)

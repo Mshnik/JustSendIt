@@ -33,16 +33,14 @@ class CardWidget(val skill: Skill) : VBox() {
 
   init {
     this.styleClass.add("card-widget")
-    this.style = "-fx-background-color: white; -fx-border-color: black; -fx-padding: 5;"
-    header.style = "-fx-background-color: lightblue;"
+    header.styleClass.add("card-header")
     header.setPrefSize(200.0, 30.0)
 
     content.setPrefSize(200.0, 150.0)
     content.isManaged = false
     content.isVisible = false
 
-    badge.style =
-      "-fx-background-color: gold; -fx-text-fill: black; -fx-font-weight: bold; -fx-padding: 2; -fx-background-radius: 10;"
+    badge.styleClass.add("card-badge")
     badge.isVisible = false
 
     val headerStack = StackPane(header, badge)
@@ -51,24 +49,23 @@ class CardWidget(val skill: Skill) : VBox() {
     children.addAll(headerStack, content)
 
     setOnMouseClicked { event ->
-      if (event.button == MouseButton.SECONDARY) {
-        CardInspector.inspect(skill)
-        event.consume()
-      }
+        if (event.button == MouseButton.SECONDARY) {
+            CardInspector.inspect(skill)
+            event.consume()
+        }
     }
   }
 
   private fun updateVisualState() {
     if (isSelected) {
-      this.style =
-        "-fx-background-color: #ffffcc; -fx-border-color: gold; -fx-border-width: 2; -fx-padding: 5;"
-      this.translateY = -12.0
+        this.styleClass.add("selected")
+        this.translateY = -12.0
     } else {
-      this.style =
-        "-fx-background-color: white; -fx-border-color: black; -fx-border-width: 1; -fx-padding: 5;"
-      this.translateY = 0.0
+        this.styleClass.remove("selected")
+        this.translateY = 0.0
     }
   }
+
 
   fun expand() {
     content.isManaged = true

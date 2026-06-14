@@ -41,7 +41,6 @@ class OpponentPanel(private val gameModel: GameModel) : HBox(), Logger {
     val widget = VBox()
     widget.alignment = Pos.CENTER
     widget.styleClass.add("opponent-widget")
-    widget.style = "-fx-border-color: grey; -fx-padding: 5; -fx-background-color: #f0f0f0;"
     
     val nameLabel = Label(player.name)
     val scoreLabel = Label("Points: ${player.points}")
