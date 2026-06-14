@@ -80,8 +80,12 @@
     -fx-background-color: #ffffff;
     -fx-border-color: #999999;
     -fx-border-width: 1;
-    -fx-padding: 5;
+    -fx-padding: 0;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 0);
+}
+
+.accordion-card {
+    -fx-border-width: 0 0 1 0; /* Only bottom border */
 }
 
 .card-header {

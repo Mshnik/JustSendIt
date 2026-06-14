@@ -117,7 +117,12 @@ When an active sequence requires selecting multiple cards, the client tracks sel
     - [x] Consolidate all CSS into external files (Removing inline styles)
     - [x] Light Theme Implementation
     - [x] Correct initial window sizing
+    - [ ] Accordion View Fixes (Remove jitter, adjust collapsed height to ~25%)
+    - [x] Fix accordion card swapping/flickering (Stable Z-order)
+    - [x] Fix accordion alignment (Remove right-shift and white space)
+
     - [ ] Animations (Full hand sliding, smooth accordion expansion)
+
 - [ ] **Advanced Interactions**
     - [x] Player Card Selection Overlay (3 horizontal cards, clickable)
 - [ ] **Asset Integration**
