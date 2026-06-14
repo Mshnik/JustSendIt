@@ -307,8 +307,8 @@ class MutableGameModel @Inject constructor(
     // Remove cards with 2 sale tokens.
     shop.filterValues { it <= 1 }
 
-    // Replenish up to 5 cards.
-    while (shop.size < 5) {
+    // Replenish up to SHOP_SIZE cards.
+    while (shop.size < SHOP_SIZE) {
       shop[skillDeck.draw()] = 0
     }
   }
@@ -320,7 +320,7 @@ class MutableGameModel @Inject constructor(
     players.forEach {
       it.discardInPlay()
       it.discardHand()
-      it.drawCards(5, random)
+      it.drawCards(INITIAL_HAND_SIZE, random)
     }
 
     state = GameState.BETWEEN_TURNS
@@ -612,5 +612,8 @@ class MutableGameModel @Inject constructor(
   companion object {
     const val APRES_SLOTS = 3
     const val MOUNTAIN_POINTS = 5
+
+    const val INITIAL_HAND_SIZE = 5
+    const val SHOP_SIZE = 5
   }
 }
