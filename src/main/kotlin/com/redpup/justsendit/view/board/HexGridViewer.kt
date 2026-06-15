@@ -19,10 +19,17 @@ import kotlin.math.sin
 
 class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
-  private val hexSize = 49.15 // Radius from center to corner
-  private val margin = 100.0 // Extra space on sides.
-  private val xNudge = 10.0
-  private val yNudge = 0.0
+  companion object {
+    private const val SCALE = 0.15
+
+    private const val BOARD_WIDTH = 6377.0 * SCALE
+    private const val BOARD_HEIGHT = 4656.0 * SCALE
+    private const val HEX_SIZE = 327 * SCALE // Radius from center to corner
+    private const val MARGIN = 667 * SCALE // Extra space on sides.
+    private const val X_NUDGE = 67 * SCALE
+    private const val Y_NUDGE = 0 * SCALE
+  }
+
   private val bounds: Bounds = gameModel.tileMap.bounds()
   private val playerRenderer: PlayerRenderer
   private var highlightedHexes: Collection<HexPoint> = setOf()
@@ -33,10 +40,9 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   private val tileImageCache = mutableMapOf<String, Image>()
 
   init {
-    val scale = 0.15
-    width = 6377.0 * scale
-    height = 4656.0 * scale
-    playerRenderer = PlayerRenderer(graphicsContext2D, hexSize, margin)
+    width = BOARD_WIDTH
+    height = BOARD_HEIGHT
+    playerRenderer = PlayerRenderer(graphicsContext2D, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
 
     val timer = object : AnimationTimer() {
       override fun handle(now: Long) {
@@ -63,8 +69,8 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
     gameModel.tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
-      val x = xNudge + hexSize * (pt.toX() - bounds.minX) + margin
-      val y = yNudge + hexSize * (pt.toY() - bounds.minY) + margin
+      val x = X_NUDGE + HEX_SIZE * (pt.toX() - bounds.minX) + MARGIN
+      val y = Y_NUDGE + HEX_SIZE * (pt.toY() - bounds.minY) + MARGIN
 
       gameModel.tileMap[pt]?.let { tile ->
         val image = if (tile.filename.isNotEmpty()) {
@@ -83,8 +89,8 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   }
 
   fun hexFromPixel(x: Double, y: Double): HexPoint {
-    val q = ((x - margin - xNudge) / hexSize + bounds.minX) / 1.5
-    val r = ((y - margin - yNudge) / hexSize + bounds.minY) / 1.732 - q / 2
+    val q = ((x - MARGIN - X_NUDGE) / HEX_SIZE + bounds.minX) / 1.5
+    val r = ((y - MARGIN - Y_NUDGE) / HEX_SIZE + bounds.minY) / 1.732 - q / 2
     return hexRound(q, r)
   }
 
@@ -115,14 +121,14 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
     if (image != null) {
       // Draw the tile image centered at cx, cy
       // For flat-top hexes, width is 2*R, height is sqrt(3)*R
-      val imgWidth = hexSize * 2.0
-      val imgHeight = hexSize * 1.73205
+      val imgWidth = HEX_SIZE * 2.0
+      val imgHeight = HEX_SIZE * 1.73205
       drawImage(image, cx - imgWidth / 2.0, cy - imgHeight / 2.0, imgWidth, imgHeight)
     }
 
     // Draw Hexagon Border / Highlight
-    val xPoints = DoubleArray(6) { i -> cx + hexSize * sin(i * PI / 3 + PI / 6) }
-    val yPoints = DoubleArray(6) { i -> cy + hexSize * cos(i * PI / 3 + PI / 6) }
+    val xPoints = DoubleArray(6) { i -> cx + HEX_SIZE * sin(i * PI / 3 + PI / 6) }
+    val yPoints = DoubleArray(6) { i -> cy + HEX_SIZE * cos(i * PI / 3 + PI / 6) }
 
     if (isHighlighted) {
       fill = Color.GOLD

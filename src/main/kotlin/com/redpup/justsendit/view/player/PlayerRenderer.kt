@@ -14,6 +14,8 @@ class PlayerRenderer(
   private val gc: GraphicsContext,
   private val hexSize: Double,
   private val margin: Double,
+  private val xNudge: Double,
+  private val yNudge: Double
 ) {
   private val playerColors = listOf(
     Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE,
@@ -31,8 +33,8 @@ class PlayerRenderer(
       .groupBy({ it.second }, { Pair(it.first, it.third) })
 
     playersByLocation.forEach { (location, players) ->
-      val x = hexSize * (location.toX() - bounds.minX) + margin
-      val y = hexSize * (location.toY() - bounds.minY) + margin
+      val x = hexSize * (location.toX() - bounds.minX) + margin + xNudge
+      val y = hexSize * (location.toY() - bounds.minY) + margin + yNudge
       val totalPlayersOnHex = players.size
       val totalHeight = totalPlayersOnHex * playerOnHexVerticalSpacing
 
