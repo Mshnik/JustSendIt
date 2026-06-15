@@ -16,9 +16,11 @@ import javafx.scene.image.Image
 
 class HexGridViewer(private val gameModel: GameModel) : Canvas() {
 
-  private val hexSize = 60.0 // Radius from center to corner
-  private val margin = 60.0 // Extra space on sides.
-  val bounds: Bounds = gameModel.tileMap.bounds()
+  private val hexSize = 49.15 // Radius from center to corner
+  private val margin = 100.0 // Extra space on sides.
+  private val xNudge = 10.0
+  private val yNudge = 0.0
+  private val bounds: Bounds = gameModel.tileMap.bounds()
   private val playerRenderer: PlayerRenderer
   private var highlightedHexes : Collection<HexPoint> = setOf()
   var onHexClicked: ((HexPoint) -> Unit)? = null
@@ -26,8 +28,9 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   private val boardImage = Image(javaClass.getResource("/com/redpup/justsendit/img/Board.png")!!.toExternalForm())
 
   init {
-    width = bounds.width * hexSize + margin * 2
-    height = bounds.height * hexSize + margin * 2
+    val scale = 0.15
+    width = 6377.0 * scale
+    height = 4656.0 * scale
     playerRenderer = PlayerRenderer(graphicsContext2D, hexSize, margin)
 
     val timer = object : AnimationTimer() {
@@ -56,8 +59,8 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
     val hexRenderer = HexRenderer(gc, hexSize)
     gameModel.tileMap.keys().forEach { pt ->
       // Axial to Pixel conversion for Flat-Top
-      val x = hexSize * (pt.toX() - bounds.minX) + margin
-      val y = hexSize * (pt.toY() - bounds.minY) + margin
+      val x = xNudge + hexSize * (pt.toX() - bounds.minX) + margin
+      val y = yNudge + hexSize * (pt.toY() - bounds.minY) + margin
 
       gameModel.tileMap[pt]?.let { tile ->
         hexRenderer.draw(tile, x, y, pt in highlightedHexes)
@@ -67,8 +70,8 @@ class HexGridViewer(private val gameModel: GameModel) : Canvas() {
   }
 
   fun hexFromPixel(x: Double, y: Double): HexPoint {
-    val q = ((x - margin) / hexSize + bounds.minX) / 1.5
-    val r = ((y - margin) / hexSize + bounds.minY) / 1.732 - q / 2
+    val q = ((x - margin - xNudge) / hexSize + bounds.minX) / 1.5
+    val r = ((y - margin - yNudge) / hexSize + bounds.minY) / 1.732 - q / 2
     return hexRound(q, r)
   }
 
