@@ -112,7 +112,12 @@ class MutableGameModel @Inject constructor(
 
   override val clock = MutableClock()
 
-  private data class CardResolution(val skill: Int, val wobbles: Int)
+  private data class CardResolution(
+    val rolls: List<Int>,
+    val skill: Int,
+    val iconBonus: Int,
+    val wobbles: Int,
+  )
 
   private fun resolveCard(
     player: MutablePlayer,
@@ -176,24 +181,7 @@ class MutableGameModel @Inject constructor(
     val matchingIcons = skill.skillCard.iconsList.count { it.matches(slope) }
     sum += matchingIcons
 
-    return CardResolution(sum, wobbles)
-  }
-
-  /** Called when [player] crashes. */
-  private suspend fun crash(player: MutablePlayer) {
-    if (player.hand.isNotEmpty()) {
-      with(player) {
-        controller.chooseSkillCards(
-          player,
-          player.hand,
-          Range.closed(1, 1),
-          SkillZone.HAND
-        ).forEach { discardFromHand(it) }
-      }
-    } else {
-      player.points -= 10
-    }
-    player.resetWobbles()
+    return CardResolution(rolls, sum, matchingIcons, wobbles)
   }
 
   /** Adds this message as a log to this game model. */
@@ -473,15 +461,11 @@ class MutableGameModel @Inject constructor(
     while (!succeeded) {
       val action = player.controller.chooseSkiRideResolutionAction(player, this)
       if (action.hasStop()) {
-        crash(player)
+        crash(player, SkiRideCrash.Cause.CAUSE_INTENTIONAL)
         break
       }
 
-      val card = player.hand.find { it.name == action.play.cardName }
-      if (card == null) {
-        crash(player)
-        break
-      }
+      val card = checkNotNull(player.hand.find { it.name == action.play.cardName })
 
       player.playCard(card)
 
@@ -489,26 +473,50 @@ class MutableGameModel @Inject constructor(
       cumulativeSkill += resolution.skill
       player.addWobbles(resolution.wobbles)
 
+      succeeded = cumulativeSkill >= slope.difficulty && player.wobbles < 3
+
+      skiRideAttempt {
+        this.totalTileDifficulty = slope.difficulty
+        this.cardName = card.name
+        this.rolledValues += resolution.rolls
+        this.totalIconValue = resolution.iconBonus
+        this.cumulativeSkill = cumulativeSkill
+        this.cumulativeWobbles = player.wobbles
+        this.success = succeeded
+      }.log()
+
       if (player.wobbles >= 3) {
-        crash(player)
+        crash(player, SkiRideCrash.Cause.CAUSE_WOBBLES)
         break
       }
 
-      if (cumulativeSkill >= slope.difficulty) {
-        succeeded = true
+      if (succeeded) {
         player.mutate { points += slope.difficulty }
       } else if (player.hand.isEmpty()) {
-        crash(player)
+        crash(player, SkiRideCrash.Cause.CAUSE_NO_CARDS)
         break
       }
     }
 
-    skiRideAttempt {
-      this.baseDifficulty = slope.difficulty
-      this.success = succeeded
-    }.log()
-
     return succeeded
+  }
+
+  /** Called when [player] crashes. */
+  private suspend fun crash(player: MutablePlayer, cause: SkiRideCrash.Cause) {
+    if (player.hand.isNotEmpty()) {
+      with(player) {
+        controller.chooseSkillCards(
+          player,
+          player.hand,
+          Range.closed(1, 1),
+          SkillZone.HAND
+        ).forEach { discardFromHand(it) }
+      }
+    } else {
+      player.points -= 10
+    }
+    player.resetWobbles()
+    skiRideCrash { this.cause = cause }.log()
   }
 
   private suspend fun executeLift(

@@ -31,6 +31,7 @@ message Log {
     model.player.MountainDecision mountain_decision = 9;
     PlayerMove player_move = 10;
     SkiRideAttempt ski_ride_attempt = 11;
+    SkiRideCrash ski_ride_crash = 12;
   }
 }
 
@@ -42,9 +43,22 @@ message PlayerMove {
 
 // A log of a player attempting to ski/ride a tile.
 message SkiRideAttempt {
-  int32 base_difficulty = 1;
-  int32 speed_difficulty = 2;
-  repeated int32 card_value = 3;
-  int32 bonus_value = 4;
-  bool success = 5;
+  int32 total_tile_difficulty = 1;
+  string card_name = 2;
+  repeated int32 rolled_values = 3;
+  int32 total_icon_value = 4;
+  int32 cumulative_skill = 5;
+  int32 cumulative_wobbles = 6;
+  bool success = 7;
+}
+
+// A log of a player crashing.
+message SkiRideCrash {
+  enum Cause {
+    CAUSE_UNKNOWN = 0;
+    CAUSE_INTENTIONAL = 1;
+    CAUSE_WOBBLES = 2;
+    CAUSE_NO_CARDS = 3;
+  }
+  Cause cause = 1;
 }

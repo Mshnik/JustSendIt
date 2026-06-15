@@ -23,8 +23,20 @@ class LogPanel(private val gameModel: GameModel) : ScrollPane(), Logger {
     val event = when (eventCase) {
       Log.EventCase.STATE_TRANSITION -> "State: $stateTransition"
       Log.EventCase.MOUNTAIN_DECISION -> "$playerName chose $mountainDecision"
-      Log.EventCase.PLAYER_MOVE -> "$playerName moved from ${playerMove.from} to ${playerMove.to}"
-      Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName attempted to ski ride: ${toString()}"
+      Log.EventCase.PLAYER_MOVE -> "$playerName moved from ${
+        playerMove.from.toString().replace("\n", " ").trim()
+      } to ${playerMove.to.toString().replace("\n", " ").trim()}"
+
+      Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName played ${skiRideAttempt.cardName}\n" +
+        "  Total Difficulty: ${skiRideAttempt.totalTileDifficulty}\n" +
+        "  Rolls: ${skiRideAttempt.rolledValuesList}\n" +
+        "  Bonus: ${skiRideAttempt.totalIconValue}\n" +
+        "  Total Skill (Cumulative): ${skiRideAttempt.cumulativeSkill}\n" +
+        "  Total Wobbles (Cumulative): ${skiRideAttempt.cumulativeWobbles}\n" +
+        "  Success: ${skiRideAttempt.success}"
+
+      Log.EventCase.SKI_RIDE_CRASH -> "$playerName crashed: ${skiRideCrash.cause}"
+
       else -> "Unknown event"
     }
     return "[$day/$turn/$subturn] $event"
