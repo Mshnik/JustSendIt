@@ -8,7 +8,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard.png"
+  filename: "Tile.png"
 }
 
 tiles {
@@ -18,7 +18,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-1.png"
+  filename: "Tile-1.png"
 }
 
 tiles {
@@ -28,7 +28,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-2.png"
+  filename: "Tile-2.png"
 }
 
 tiles {
@@ -38,7 +38,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-3.png"
+  filename: "Tile-3.png"
 }
 
 tiles {
@@ -48,7 +48,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-4.png"
+  filename: "Tile-4.png"
 }
 
 tiles {
@@ -58,7 +58,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-5.png"
+  filename: "Tile-5.png"
 }
 
 tiles {
@@ -68,7 +68,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-6.png"
+  filename: "Tile-6.png"
 }
 
 tiles {
@@ -78,7 +78,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-7.png"
+  filename: "Tile-7.png"
 }
 
 tiles {
@@ -88,7 +88,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-8.png"
+  filename: "Tile-8.png"
 }
 
 tiles {
@@ -98,7 +98,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-9.png"
+  filename: "Tile-9.png"
 }
 
 tiles {
@@ -108,7 +108,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-10.png"
+  filename: "Tile-10.png"
 }
 
 tiles {
@@ -118,7 +118,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-11.png"
+  filename: "Tile-11.png"
 }
 
 tiles {
@@ -128,7 +128,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-12.png"
+  filename: "Tile-12.png"
 }
 
 tiles {
@@ -138,7 +138,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-13.png"
+  filename: "Tile-13.png"
 }
 
 tiles {
@@ -148,7 +148,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-14.png"
+  filename: "Tile-14.png"
 }
 
 tiles {
@@ -158,7 +158,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-15.png"
+  filename: "Tile-15.png"
 }
 
 tiles {
@@ -168,7 +168,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-16.png"
+  filename: "Tile-16.png"
 }
 
 tiles {
@@ -178,7 +178,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-17.png"
+  filename: "Tile-17.png"
 }
 
 tiles {
@@ -188,7 +188,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-18.png"
+  filename: "Tile-18.png"
 }
 
 tiles {
@@ -198,7 +198,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-19.png"
+  filename: "Tile-19.png"
 }
 
 tiles {
@@ -208,7 +208,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
-  filename: "Front-Standard-20.png"
+  filename: "Tile-20.png"
 }
 
 tiles {
@@ -218,7 +218,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-21.png"
+  filename: "Tile-21.png"
 }
 
 tiles {
@@ -228,7 +228,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-22.png"
+  filename: "Tile-22.png"
 }
 
 tiles {
@@ -238,7 +238,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-23.png"
+  filename: "Tile-23.png"
 }
 
 tiles {
@@ -248,7 +248,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-24.png"
+  filename: "Tile-24.png"
 }
 
 tiles {
@@ -258,7 +258,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-25.png"
+  filename: "Tile-25.png"
 }
 
 tiles {
@@ -269,7 +269,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-26.png"
+  filename: "Tile-26.png"
 }
 
 tiles {
@@ -280,7 +280,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-27.png"
+  filename: "Tile-27.png"
 }
 
 tiles {
@@ -291,7 +291,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-28.png"
+  filename: "Tile-28.png"
 }
 
 tiles {
@@ -302,7 +302,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-29.png"
+  filename: "Tile-29.png"
 }
 
 tiles {
@@ -312,7 +312,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-30.png"
+  filename: "Tile-30.png"
 }
 
 tiles {
@@ -322,7 +322,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-31.png"
+  filename: "Tile-31.png"
 }
 
 tiles {
@@ -332,7 +332,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-32.png"
+  filename: "Tile-32.png"
 }
 
 tiles {
@@ -342,7 +342,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-33.png"
+  filename: "Tile-33.png"
 }
 
 tiles {
@@ -352,7 +352,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-34.png"
+  filename: "Tile-34.png"
 }
 
 tiles {
@@ -362,7 +362,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-35.png"
+  filename: "Tile-35.png"
 }
 
 tiles {
@@ -372,7 +372,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-36.png"
+  filename: "Tile-36.png"
 }
 
 tiles {
@@ -382,7 +382,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-37.png"
+  filename: "Tile-37.png"
 }
 
 tiles {
@@ -392,7 +392,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-38.png"
+  filename: "Tile-38.png"
 }
 
 tiles {
@@ -402,7 +402,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-39.png"
+  filename: "Tile-39.png"
 }
 
 tiles {
@@ -412,7 +412,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-40.png"
+  filename: "Tile-40.png"
 }
 
 tiles {
@@ -422,7 +422,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-41.png"
+  filename: "Tile-41.png"
 }
 
 tiles {
@@ -432,7 +432,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-42.png"
+  filename: "Tile-42.png"
 }
 
 tiles {
@@ -442,7 +442,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-43.png"
+  filename: "Tile-43.png"
 }
 
 tiles {
@@ -452,7 +452,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-44.png"
+  filename: "Tile-44.png"
 }
 
 tiles {
@@ -462,7 +462,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-45.png"
+  filename: "Tile-45.png"
 }
 
 tiles {
@@ -473,7 +473,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-46.png"
+  filename: "Tile-46.png"
 }
 
 tiles {
@@ -483,7 +483,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-47.png"
+  filename: "Tile-47.png"
 }
 
 tiles {
@@ -493,7 +493,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-48.png"
+  filename: "Tile-48.png"
 }
 
 tiles {
@@ -503,7 +503,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-49.png"
+  filename: "Tile-49.png"
 }
 
 tiles {
@@ -513,7 +513,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-50.png"
+  filename: "Tile-50.png"
 }
 
 tiles {
@@ -524,7 +524,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-51.png"
+  filename: "Tile-51.png"
 }
 
 tiles {
@@ -536,7 +536,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-52.png"
+  filename: "Tile-52.png"
 }
 
 tiles {
@@ -546,7 +546,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-53.png"
+  filename: "Tile-53.png"
 }
 
 tiles {
@@ -557,7 +557,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-54.png"
+  filename: "Tile-54.png"
 }
 
 tiles {
@@ -569,7 +569,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-55.png"
+  filename: "Tile-55.png"
 }
 
 tiles {
@@ -580,7 +580,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-56.png"
+  filename: "Tile-56.png"
 }
 
 tiles {
@@ -591,7 +591,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-57.png"
+  filename: "Tile-57.png"
 }
 
 tiles {
@@ -603,7 +603,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-58.png"
+  filename: "Tile-58.png"
 }
 
 tiles {
@@ -615,7 +615,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-59.png"
+  filename: "Tile-59.png"
 }
 
 tiles {
@@ -625,7 +625,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-60.png"
+  filename: "Tile-60.png"
 }
 
 tiles {
@@ -635,7 +635,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-61.png"
+  filename: "Tile-61.png"
 }
 
 tiles {
@@ -645,7 +645,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-62.png"
+  filename: "Tile-62.png"
 }
 
 tiles {
@@ -655,7 +655,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-63.png"
+  filename: "Tile-63.png"
 }
 
 tiles {
@@ -665,7 +665,7 @@ tiles {
     condition: CONDITION_GROOMED
     slow: false
   }
-  filename: "Front-Standard-64.png"
+  filename: "Tile-64.png"
 }
 
 tiles {
@@ -675,7 +675,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-65.png"
+  filename: "Tile-65.png"
 }
 
 tiles {
@@ -685,7 +685,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-66.png"
+  filename: "Tile-66.png"
 }
 
 tiles {
@@ -696,7 +696,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-67.png"
+  filename: "Tile-67.png"
 }
 
 tiles {
@@ -707,7 +707,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-68.png"
+  filename: "Tile-68.png"
 }
 
 tiles {
@@ -717,7 +717,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-69.png"
+  filename: "Tile-69.png"
 }
 
 tiles {
@@ -727,7 +727,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-70.png"
+  filename: "Tile-70.png"
 }
 
 tiles {
@@ -737,7 +737,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-71.png"
+  filename: "Tile-71.png"
 }
 
 tiles {
@@ -747,7 +747,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-72.png"
+  filename: "Tile-72.png"
 }
 
 tiles {
@@ -757,7 +757,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-73.png"
+  filename: "Tile-73.png"
 }
 
 tiles {
@@ -767,93 +767,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-74.png"
-}
-
-tiles {
-  slope {
-    difficulty: 12
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-    slow: false
-  }
-  filename: "Front-Standard-75.png"
-}
-
-tiles {
-  slope {
-    difficulty: 9
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    slow: false
-  }
-  filename: "Front-Standard-76.png"
-}
-
-tiles {
-  slope {
-    difficulty: 10
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    slow: false
-  }
-  filename: "Front-Standard-77.png"
-}
-
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-    slow: false
-  }
-  filename: "Front-Standard-78.png"
-}
-
-tiles {
-  slope {
-    difficulty: 12
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-    slow: false
-  }
-  filename: "Front-Standard-79.png"
-}
-
-tiles {
-  slope {
-    difficulty: 9
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    slow: false
-  }
-  filename: "Front-Standard-80.png"
-}
-
-tiles {
-  slope {
-    difficulty: 10
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    slow: false
-  }
-  filename: "Front-Standard-81.png"
-}
-
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-    slow: false
-  }
-  filename: "Front-Standard-82.png"
+  filename: "Tile-74.png"
 }
 
 tiles {
@@ -865,18 +779,18 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-83.png"
+  filename: "Tile-75.png"
 }
 
 tiles {
   slope {
     difficulty: 9
     grade: GRADE_BLACK
-    condition: CONDITION_ICE
+    condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-84.png"
+  filename: "Tile-76.png"
 }
 
 tiles {
@@ -887,7 +801,93 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-85.png"
+  filename: "Tile-77.png"
+}
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Tile-78.png"
+}
+
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Tile-79.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Tile-80.png"
+}
+
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Tile-81.png"
+}
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
+  }
+  filename: "Tile-82.png"
+}
+
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
+  }
+  filename: "Tile-83.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Tile-84.png"
+}
+
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Tile-85.png"
 }
 
 tiles {
@@ -899,7 +899,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-86.png"
+  filename: "Tile-86.png"
 }
 
 tiles {
@@ -910,7 +910,7 @@ tiles {
     hazards: HAZARD_CLIFFS
     slow: false
   }
-  filename: "Front-Standard-87.png"
+  filename: "Tile-87.png"
 }
 
 tiles {
@@ -922,7 +922,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-88.png"
+  filename: "Tile-88.png"
 }
 
 tiles {
@@ -933,7 +933,7 @@ tiles {
     hazards: HAZARD_CLIFFS
     slow: false
   }
-  filename: "Front-Standard-89.png"
+  filename: "Tile-89.png"
 }
 
 tiles {
@@ -943,7 +943,7 @@ tiles {
     condition: CONDITION_ICE
     slow: false
   }
-  filename: "Front-Standard-90.png"
+  filename: "Tile-90.png"
 }
 
 tiles {
@@ -953,7 +953,7 @@ tiles {
     condition: CONDITION_POWDER
     slow: false
   }
-  filename: "Front-Standard-91.png"
+  filename: "Tile-91.png"
 }
 
 tiles {
@@ -964,7 +964,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-92.png"
+  filename: "Tile-92.png"
 }
 
 tiles {
@@ -975,7 +975,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-93.png"
+  filename: "Tile-93.png"
 }
 
 tiles {
@@ -986,7 +986,7 @@ tiles {
     hazards: HAZARD_MOGULS
     slow: false
   }
-  filename: "Front-Standard-94.png"
+  filename: "Tile-94.png"
 }
 
 tiles {
@@ -998,7 +998,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-95.png"
+  filename: "Tile-95.png"
 }
 
 tiles {
@@ -1010,7 +1010,7 @@ tiles {
     hazards: HAZARD_TREES
     slow: false
   }
-  filename: "Front-Standard-96.png"
+  filename: "Tile-96.png"
 }
 
 tiles {
@@ -1021,7 +1021,7 @@ tiles {
     hazards: HAZARD_CLIFFS
     slow: false
   }
-  filename: "Front-Standard-97.png"
+  filename: "Tile-97.png"
 }
 
 tiles {
@@ -1032,7 +1032,7 @@ tiles {
     hazards: HAZARD_CLIFFS
     slow: false
   }
-  filename: "Front-Standard-98.png"
+  filename: "Tile-98.png"
 }
 
 tiles {
@@ -1043,6 +1043,96 @@ tiles {
     hazards: HAZARD_CLIFFS
     slow: false
   }
-  filename: "Front-Standard-99.png"
+  filename: "Tile-99.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_TOP
+  }
+  filename: "Tile-100.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_RED
+    direction: LIFT_DIRECTION_BOTTOM
+    min_cards: 1
+    max_cards: 1
+  }
+  filename: "Tile-101.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_TOP
+  }
+  filename: "Tile-102.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_CYAN
+    direction: LIFT_DIRECTION_BOTTOM
+    min_cards: 1
+    max_cards: 1
+  }
+  filename: "Tile-103.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_TOP
+  }
+  filename: "Tile-104.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_YELLOW
+    direction: LIFT_DIRECTION_BOTTOM
+    min_cards: 2
+    max_cards: 2
+  }
+  filename: "Tile-105.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_PINK
+    direction: LIFT_DIRECTION_TOP
+  }
+  filename: "Tile-106.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_PINK
+    direction: LIFT_DIRECTION_BOTTOM
+    min_cards: 2
+    max_cards: 2
+  }
+  filename: "Tile-107.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_GREY
+    direction: LIFT_DIRECTION_TOP
+  }
+  filename: "Tile-108.png"
+}
+
+tiles {
+  lift {
+    color: LIFT_COLOR_GREY
+    direction: LIFT_DIRECTION_BOTTOM
+    min_cards: 1
+    max_cards: 2
+  }
+  filename: "Tile-109.png"
 }
 

@@ -96,6 +96,30 @@ def clean_proto_enum_string(prefix: str, enum_value: str) -> str:
   return f"{prefix}_{sanitized}"
 
 
+def parse_lift_card_bounds(text_val: str) -> tuple:
+  """
+  Scrapes the text column for lift card capacities.
+  Returns a tuple containing (min_cards, max_cards).
+  - If format is a range 'X-Y' -> returns (X, Y)
+  - If format is a standalone number 'X' -> returns (X, X)
+  - Otherwise returns (0, 0)
+  """
+  if not text_val:
+    return 0, 0
+
+  # Match 'X-Y' range format (allowing potential whitespace around the hyphen)
+  range_match = re.match(r'^(\d+)\s*-\s*(\d+)$', text_val)
+  if range_match:
+    return int(range_match.group(1)), int(range_match.group(2))
+
+  # Match single digit format 'X'
+  if text_val.isdigit():
+    val = int(text_val)
+    return val, val
+
+  return 0, 0
+
+
 # =====================================================================
 # --- PIPELINE IMPLEMENTATIONS ---
 # =====================================================================
@@ -208,7 +232,7 @@ def process_skill_cards_pipeline():
 
 
 def process_mountain_tiles_pipeline():
-  """Reads the tiles CSV and outputs structured MountainTile textprotos."""
+  """Reads the tiles CSV and outputs structured MountainTile textprotos supporting Slope and Lift variants."""
   if not os.path.isfile(TILE_INPUT_CSV):
     print(f"Skipping Mountain Tiles: Source '{TILE_INPUT_CSV}' not found.")
     return
@@ -236,45 +260,75 @@ def process_mountain_tiles_pipeline():
       if not row or len(row) < len(header_map):
         continue
 
-      grade_raw = get_safe_cell_value(row, header_map, "Grade")
-      if not grade_raw:
+      tile_type = get_safe_cell_value(row, header_map, "Type").lower()
+      if tile_type not in ["slope", "lift"]:
         continue
 
-      slow_raw = get_safe_cell_value(row, header_map, "Slow").upper()
-      is_slow = "true" if slow_raw == "TRUE" else "false"
-
-      difficulty_raw = get_safe_cell_value(row, header_map, "Text")
-      difficulty = int(difficulty_raw) if difficulty_raw.isdigit() else 1
-
-      proto_grade = clean_proto_enum_string("GRADE", grade_raw)
-      proto_condition = clean_proto_enum_string("CONDITION", get_safe_cell_value(row, header_map, "Terrain type"))
-
-      # Parse visual image layout string column
+      # Common MountainTile Root Properties
       tile_filename = get_safe_cell_value(row, header_map, "Img Filename")
-
-      hazards = []
-      for i in range(1, 3):
-        hazard_val = get_safe_cell_value(row, header_map, f"Hazard Type {i}")
-        if hazard_val and hazard_val.lower() != "none" and hazard_val != "0":
-          hazards.append(clean_proto_enum_string("HAZARD", hazard_val))
+      apres_raw = get_safe_cell_value(row, header_map, "Apres Link")
+      apres_link = int(apres_raw) if apres_raw.isdigit() else 0
 
       copies_raw = get_safe_cell_value(row, header_map, "Copies")
       num_copies = int(copies_raw) if copies_raw.isdigit() else 1
 
-      # Build nested structures mapping 'filename' dynamically to the MountainTile root
       tile_block = "tiles {\n"
-      tile_block += "  slope {\n"
-      tile_block += f"    difficulty: {difficulty}\n"
-      if proto_grade != "GRADE_UNSET":
-        tile_block += f"    grade: {proto_grade}\n"
-      if proto_condition != "CONDITION_UNSET":
-        tile_block += f"    condition: {proto_condition}\n"
 
-      for haz in hazards:
-        tile_block += f"    hazards: {haz}\n"
+      # --- BRANCH 1: SLOPE TILE HANDLING ---
+      if tile_type == "slope":
+        grade_raw = get_safe_cell_value(row, header_map, "Grade")
+        slow_raw = get_safe_cell_value(row, header_map, "Slow").upper()
+        is_slow = "true" if slow_raw == "TRUE" else "false"
 
-      tile_block += f"    slow: {is_slow}\n"
-      tile_block += "  }\n"
+        difficulty_raw = get_safe_cell_value(row, header_map, "Text")
+        difficulty = int(difficulty_raw) if difficulty_raw.isdigit() else 1
+
+        proto_grade = clean_proto_enum_string("GRADE", grade_raw)
+        proto_condition = clean_proto_enum_string("CONDITION", get_safe_cell_value(row, header_map, "Terrain type"))
+
+        hazards = []
+        for i in range(1, 3):
+          hazard_val = get_safe_cell_value(row, header_map, f"Hazard Type {i}")
+          if hazard_val and hazard_val.lower() != "none" and hazard_val != "0":
+            hazards.append(clean_proto_enum_string("HAZARD", hazard_val))
+
+        tile_block += "  slope {\n"
+        tile_block += f"    difficulty: {difficulty}\n"
+        if proto_grade != "GRADE_UNSET":
+          tile_block += f"    grade: {proto_grade}\n"
+        if proto_condition != "CONDITION_UNSET":
+          tile_block += f"    condition: {proto_condition}\n"
+        for haz in hazards:
+          tile_block += f"    hazards: {haz}\n"
+        tile_block += f"    slow: {is_slow}\n"
+        tile_block += "  }\n"
+
+      # --- BRANCH 2: LIFT TILE HANDLING ---
+      elif tile_type == "lift":
+        lift_color_raw = get_safe_cell_value(row, header_map, "LiftColor")
+        lift_dir_raw = get_safe_cell_value(row, header_map, "LiftEnd")
+
+        proto_lift_color = clean_proto_enum_string("LIFT_COLOR", lift_color_raw)
+        proto_lift_dir = clean_proto_enum_string("LIFT_DIRECTION", lift_dir_raw)
+
+        # Scrape and parse the 'Text' column dynamically for capacity ranges
+        text_column_val = get_safe_cell_value(row, header_map, "Text")
+        min_cards, max_cards = parse_lift_card_bounds(text_column_val)
+
+        tile_block += "  lift {\n"
+        if proto_lift_color != "LIFT_COLOR_UNSET":
+          tile_block += f"    color: {proto_lift_color}\n"
+        if proto_lift_dir != "LIFT_DIRECTION_UNSET":
+          tile_block += f"    direction: {proto_lift_dir}\n"
+        if min_cards > 0:
+          tile_block += f"    min_cards: {min_cards}\n"
+        if max_cards > 0:
+          tile_block += f"    max_cards: {max_cards}\n"
+        tile_block += "  }\n"
+
+      # --- ROOT assignment blocks ---
+      if apres_link > 0:
+        tile_block += f"  apres_link: {apres_link}\n"
       if tile_filename:
         tile_block += f'  filename: "{tile_filename}"\n'
       tile_block += "}\n"

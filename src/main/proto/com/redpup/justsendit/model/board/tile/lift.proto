@@ -26,5 +26,6 @@ enum LiftDirection {
 message LiftTile {
   LiftColor color = 1;
   LiftDirection direction = 2;
-  int32 cost = 3;
+  int32 min_cards = 3;
+  int32 max_cards = 4;
 }
