@@ -18,6 +18,7 @@ message MountainTile {
 
   // Link to an apres slot. 0 if no apres linked.
   int32 apres_link = 3;
+  string filename = 4;
 }
 
 /** A list of mountain tiles. */

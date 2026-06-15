@@ -3,116 +3,14 @@
 
 tiles {
   slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 1
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
     difficulty: 2
     grade: GRADE_GREEN
     condition: CONDITION_GROOMED
     slow: true
   }
+  filename: "Front-Standard.png"
 }
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 2
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
+
 tiles {
   slope {
     difficulty: 3
@@ -120,266 +18,515 @@ tiles {
     condition: CONDITION_GROOMED
     slow: true
   }
+  filename: "Front-Standard-1.png"
 }
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-    slow: true
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 3
-    grade: GRADE_GREEN
-    condition: CONDITION_GROOMED
-  }
-}
+
 tiles {
   slope {
     difficulty: 4
     grade: GRADE_GREEN
-    condition: CONDITION_POWDER
+    condition: CONDITION_GROOMED
+    slow: true
   }
+  filename: "Front-Standard-2.png"
 }
+
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-3.png"
+}
+
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-4.png"
+}
+
 tiles {
   slope {
     difficulty: 4
     grade: GRADE_GREEN
-    condition: CONDITION_POWDER
+    condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-5.png"
 }
+
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-6.png"
+}
+
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-7.png"
+}
+
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-8.png"
+}
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-9.png"
+}
+
+tiles {
+  slope {
+    difficulty: 2
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-10.png"
+}
+
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-11.png"
+}
+
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-12.png"
+}
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-13.png"
+}
+
+tiles {
+  slope {
+    difficulty: 3
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-14.png"
+}
+
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-15.png"
+}
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-16.png"
+}
+
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_GREEN
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-17.png"
+}
+
 tiles {
   slope {
     difficulty: 4
     grade: GRADE_GREEN
     condition: CONDITION_ICE
+    slow: false
   }
+  filename: "Front-Standard-18.png"
 }
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-19.png"
+}
+
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: true
+  }
+  filename: "Front-Standard-20.png"
+}
+
+tiles {
+  slope {
+    difficulty: 4
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-21.png"
+}
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-22.png"
+}
+
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-23.png"
+}
+
+tiles {
+  slope {
+    difficulty: 5
+    grade: GRADE_GREEN
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-24.png"
+}
+
+tiles {
+  slope {
+    difficulty: 6
+    grade: GRADE_GREEN
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-25.png"
+}
+
 tiles {
   slope {
     difficulty: 5
     grade: GRADE_GREEN
     condition: CONDITION_POWDER
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-26.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 6
     grade: GRADE_GREEN
     condition: CONDITION_POWDER
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-27.png"
 }
+
 tiles {
   slope {
     difficulty: 5
     grade: GRADE_GREEN
     condition: CONDITION_ICE
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-28.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 6
     grade: GRADE_GREEN
     condition: CONDITION_ICE
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-29.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-30.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-31.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 9
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-32.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-33.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-34.png"
 }
+
 tiles {
   slope {
-    difficulty: 4
+    difficulty: 9
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-35.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-36.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-37.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 9
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-38.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-39.png"
 }
+
 tiles {
   slope {
-    difficulty: 5
+    difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-40.png"
 }
+
 tiles {
   slope {
-    difficulty: 6
+    difficulty: 9
     grade: GRADE_BLUE
     condition: CONDITION_POWDER
+    slow: false
   }
+  filename: "Front-Standard-41.png"
 }
+
 tiles {
   slope {
-    difficulty: 6
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-42.png"
 }
+
 tiles {
   slope {
-    difficulty: 6
+    difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-43.png"
 }
+
 tiles {
   slope {
-    difficulty: 6
+    difficulty: 9
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-44.png"
 }
+
 tiles {
   slope {
-    difficulty: 6
+    difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-45.png"
 }
+
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-46.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-47.png"
+}
+
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-48.png"
+}
+
+tiles {
+  slope {
+    difficulty: 8
+    grade: GRADE_BLUE
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-49.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-50.png"
+}
+
 tiles {
   slope {
     difficulty: 7
     grade: GRADE_BLUE
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-51.png"
 }
-tiles {
-  slope {
-    difficulty: 7
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 7
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 7
-    grade: GRADE_BLUE
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 8
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 8
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-  }
-}
+
 tiles {
   slope {
     difficulty: 8
@@ -387,23 +534,78 @@ tiles {
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-52.png"
 }
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-53.png"
+}
+
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_ICE
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-54.png"
+}
+
 tiles {
   slope {
     difficulty: 8
     grade: GRADE_BLUE
-    condition: CONDITION_ICE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-55.png"
 }
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLUE
+    condition: CONDITION_ICE
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-56.png"
+}
+
+tiles {
+  slope {
+    difficulty: 7
+    grade: GRADE_BLUE
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-57.png"
+}
+
 tiles {
   slope {
     difficulty: 8
     grade: GRADE_BLUE
     condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-58.png"
 }
+
 tiles {
   slope {
     difficulty: 9
@@ -411,149 +613,163 @@ tiles {
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-59.png"
 }
-tiles {
-  slope {
-    difficulty: 9
-    grade: GRADE_BLUE
-    condition: CONDITION_ICE
-    hazards: HAZARD_MOGULS
-  }
-}
-tiles {
-  slope {
-    difficulty: 9
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-  }
-}
-tiles {
-  slope {
-    difficulty: 10
-    grade: GRADE_BLUE
-    condition: CONDITION_ICE
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-  }
-}
-tiles {
-  slope {
-    difficulty: 10
-    grade: GRADE_BLUE
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-  }
-}
-tiles {
-  slope {
-    difficulty: 7
-    grade: GRADE_BLACK
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 7
-    grade: GRADE_BLACK
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 8
-    grade: GRADE_BLACK
-    condition: CONDITION_GROOMED
-  }
-}
-tiles {
-  slope {
-    difficulty: 8
-    grade: GRADE_BLACK
-    condition: CONDITION_GROOMED
-  }
-}
+
 tiles {
   slope {
     difficulty: 9
     grade: GRADE_BLACK
     condition: CONDITION_GROOMED
+    slow: false
   }
+  filename: "Front-Standard-60.png"
 }
+
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-61.png"
+}
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-62.png"
+}
+
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-63.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
+    slow: false
+  }
+  filename: "Front-Standard-64.png"
+}
+
 tiles {
   slope {
     difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_ICE
+    slow: false
   }
+  filename: "Front-Standard-65.png"
 }
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-66.png"
+}
+
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-67.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-68.png"
+}
+
+tiles {
+  slope {
+    difficulty: 10
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-69.png"
+}
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-70.png"
+}
+
+tiles {
+  slope {
+    difficulty: 12
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-71.png"
+}
+
+tiles {
+  slope {
+    difficulty: 9
+    grade: GRADE_BLACK
+    condition: CONDITION_POWDER
+    slow: false
+  }
+  filename: "Front-Standard-72.png"
+}
+
 tiles {
   slope {
     difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
+    slow: false
   }
+  filename: "Front-Standard-73.png"
 }
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-    hazards: HAZARD_MOGULS
-  }
-}
+
 tiles {
   slope {
     difficulty: 11
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-74.png"
 }
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-  }
-}
-tiles {
-  slope {
-    difficulty: 11
-    grade: GRADE_BLACK
-    condition: CONDITION_POWDER
-  }
-}
+
 tiles {
   slope {
     difficulty: 12
@@ -561,260 +777,272 @@ tiles {
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-75.png"
 }
+
 tiles {
   slope {
-    difficulty: 12
+    difficulty: 9
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-76.png"
 }
+
 tiles {
   slope {
-    difficulty: 12
+    difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-77.png"
 }
+
+tiles {
+  slope {
+    difficulty: 11
+    grade: GRADE_BLACK
+    condition: CONDITION_ICE
+    slow: false
+  }
+  filename: "Front-Standard-78.png"
+}
+
 tiles {
   slope {
     difficulty: 12
     grade: GRADE_BLACK
     condition: CONDITION_ICE
+    slow: false
   }
+  filename: "Front-Standard-79.png"
 }
+
 tiles {
   slope {
-    difficulty: 12
-    grade: GRADE_BLACK
-    condition: CONDITION_ICE
-  }
-}
-tiles {
-  slope {
-    difficulty: 12
+    difficulty: 9
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
+    slow: false
   }
+  filename: "Front-Standard-80.png"
 }
+
 tiles {
   slope {
-    difficulty: 12
+    difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
+    slow: false
   }
+  filename: "Front-Standard-81.png"
 }
+
 tiles {
   slope {
-    difficulty: 13
+    difficulty: 11
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-82.png"
 }
+
 tiles {
   slope {
-    difficulty: 13
+    difficulty: 12
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-83.png"
 }
+
 tiles {
   slope {
-    difficulty: 13
+    difficulty: 9
     grade: GRADE_BLACK
     condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-84.png"
 }
+
 tiles {
   slope {
-    difficulty: 13
+    difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-85.png"
 }
+
 tiles {
   slope {
-    difficulty: 14
+    difficulty: 11
     grade: GRADE_BLACK
     condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-86.png"
 }
+
 tiles {
   slope {
-    difficulty: 14
+    difficulty: 12
     grade: GRADE_BLACK
     condition: CONDITION_ICE
     hazards: HAZARD_CLIFFS
+    slow: false
   }
+  filename: "Front-Standard-87.png"
 }
+
 tiles {
   slope {
-    difficulty: 14
+    difficulty: 10
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
     hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-88.png"
 }
+
 tiles {
   slope {
-    difficulty: 14
+    difficulty: 11
     grade: GRADE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_CLIFFS
+    slow: false
   }
+  filename: "Front-Standard-89.png"
 }
+
 tiles {
   slope {
-    difficulty: 14
+    difficulty: 13
     grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_ICE
+    slow: false
   }
+  filename: "Front-Standard-90.png"
 }
+
 tiles {
   slope {
     difficulty: 14
     grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_POWDER
+    slow: false
   }
+  filename: "Front-Standard-91.png"
 }
+
 tiles {
   slope {
     difficulty: 15
     grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-92.png"
 }
+
 tiles {
   slope {
-    difficulty: 15
+    difficulty: 13
     grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_MOGULS
+    slow: false
   }
+  filename: "Front-Standard-93.png"
 }
+
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICE
+    hazards: HAZARD_MOGULS
+    slow: false
+  }
+  filename: "Front-Standard-94.png"
+}
+
 tiles {
   slope {
     difficulty: 15
     grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_ICE
     hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
   }
+  filename: "Front-Standard-95.png"
 }
+
+tiles {
+  slope {
+    difficulty: 13
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_MOGULS
+    hazards: HAZARD_TREES
+    slow: false
+  }
+  filename: "Front-Standard-96.png"
+}
+
+tiles {
+  slope {
+    difficulty: 14
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_POWDER
+    hazards: HAZARD_CLIFFS
+    slow: false
+  }
+  filename: "Front-Standard-97.png"
+}
+
+tiles {
+  slope {
+    difficulty: 15
+    grade: GRADE_DOUBLE_BLACK
+    condition: CONDITION_ICE
+    hazards: HAZARD_CLIFFS
+    slow: false
+  }
+  filename: "Front-Standard-98.png"
+}
+
 tiles {
   slope {
     difficulty: 16
     grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICE
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-  }
-}
-tiles {
-  slope {
-    difficulty: 16
-    grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_MOGULS
-    hazards: HAZARD_TREES
-  }
-}
-tiles {
-  slope {
-    difficulty: 17
-    grade: GRADE_DOUBLE_BLACK
     condition: CONDITION_POWDER
     hazards: HAZARD_CLIFFS
+    slow: false
   }
+  filename: "Front-Standard-99.png"
 }
-tiles {
-  slope {
-    difficulty: 17
-    grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_ICE
-    hazards: HAZARD_CLIFFS
-  }
-}
-tiles {
-  slope {
-    difficulty: 18
-    grade: GRADE_DOUBLE_BLACK
-    condition: CONDITION_POWDER
-    hazards: HAZARD_CLIFFS
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_GREY
-    direction: LIFT_DIRECTION_TOP
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_CYAN
-    direction: LIFT_DIRECTION_TOP
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_MAGENTA
-    direction: LIFT_DIRECTION_TOP
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_RED
-    direction: LIFT_DIRECTION_TOP
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_YELLOW
-    direction: LIFT_DIRECTION_TOP
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_YELLOW
-    direction: LIFT_DIRECTION_BOTTOM
-  }
-  apres_link: 3
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_GREY
-    direction: LIFT_DIRECTION_BOTTOM
-  }
-  apres_link: 2
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_MAGENTA
-    direction: LIFT_DIRECTION_BOTTOM
-  }
-  apres_link: 1
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_RED
-    direction: LIFT_DIRECTION_BOTTOM
-  }
-}
-tiles {
-  lift {
-    color: LIFT_COLOR_CYAN
-    direction: LIFT_DIRECTION_BOTTOM
-  }
-}
+
