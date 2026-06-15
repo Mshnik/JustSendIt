@@ -128,5 +128,7 @@ When an active sequence requires selecting multiple cards, the client tracks sel
 - [ ] **Asset Integration**
     - [x] Board Image Rendering (Background layer)
     - [x] Hex Grid Alignment with Board Image
+    - [x] Image-Based Hex Tile Rendering (using `filename` from proto)
     - [x] Skill Card Image Rendering (using `filename` from proto)
     - [x] High-Resolution Inspection Modal (using full card images)
+

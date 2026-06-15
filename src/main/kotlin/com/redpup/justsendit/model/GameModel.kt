@@ -520,6 +520,7 @@ class MutableGameModel @Inject constructor(
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
+    // TODO: Don't discard for lift, play instead.
     val toDiscard = player.controller.chooseSkillCards(
       player,
       player.hand,
@@ -529,7 +530,7 @@ class MutableGameModel @Inject constructor(
 
     toDiscard.forEach { player.discardFromHand(it) }
 
-    // Rulebook: "choose to trash up the same number of cards from their discard pile ... optionally including the card(s) just discarded."
+    // TODO: Add play, hand to trash candidates.
     val trashCandidates = player.skillDiscard.toList()
     val toTrash = player.controller.chooseSkillCards(
       player,
