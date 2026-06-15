@@ -10,6 +10,20 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="$USER_HOME$/Downloads/Redesign - Tiles.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="/src/main/resources/com/redpup/justsendit/model/shop/skill/SkillCards.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
