@@ -7,7 +7,10 @@ interface Clock {
   /** What round of day it is. */
   val round: Int
 
-  /** What sub-turn of the day it is. */
+  /** What turn of the round it is. */
+  val turn: Int
+
+  /** What sub-turn of the turn it is. */
   val subTurn: Int
 
   /** Returns whether it is the first subTurn of the turn. */
@@ -31,6 +34,8 @@ class MutableClock(override var round: Int = 1, override var day: Day = Day.DAY_
       Day.DAY_UNSET, Day.UNRECOGNIZED -> throw IllegalArgumentException()
     }
 
+  override var turn: Int = 1; private set
+
   override var subTurn: Int = 1; private set
 
   /** Advances to the next subturn. */
@@ -38,21 +43,24 @@ class MutableClock(override var round: Int = 1, override var day: Day = Day.DAY_
     subTurn++
   }
 
-  /** Resets the subturn. */
-  fun resetSubTurn() {
+  /** Advances to the next turn. */
+  fun advanceTurn() {
+    turn++
     subTurn = 1
   }
 
-  /** Advances to the next turn. */
+  /** Advances to the next round. */
   fun advanceRound() {
     round++
-    resetSubTurn()
+    turn = 1
+    subTurn = 1
   }
 
   /** Advances to the next day. */
   fun advanceDay() {
     round = 1
-    resetSubTurn()
+    turn = 1
+    subTurn = 1
     day = when (day) {
       Day.DAY_FRIDAY -> Day.DAY_SATURDAY
       Day.DAY_SATURDAY -> Day.DAY_SUNDAY

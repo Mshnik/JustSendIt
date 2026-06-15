@@ -206,7 +206,8 @@ class MutableGameModel @Inject constructor(
     log {
       timestamp = Timestamps.fromMillis(timeSource.now().toEpochMilli())
       day = clock.day
-      turn = clock.round
+      round = clock.round
+      turn = clock.turn
       subturn = clock.subTurn
       playerName = currentPlayer.name
       controllerName = currentPlayer.controller.name
@@ -339,6 +340,7 @@ class MutableGameModel @Inject constructor(
     do {
       val decision = player.controller.makeMountainDecision(player, this).also { it.log() }
       continueTurn = executeDecision(player, decision)
+      clock.advanceSubTurn()
     } while (continueTurn)
 
     // If not all players have passed, advance to the next non-passed player.
@@ -349,6 +351,7 @@ class MutableGameModel @Inject constructor(
       do {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size
       } while (currentPlayer.isPassed)
+      clock.advanceTurn()
       state = GameState.BETWEEN_TURNS
     }
   }

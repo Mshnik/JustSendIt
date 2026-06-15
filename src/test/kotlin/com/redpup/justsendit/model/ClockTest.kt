@@ -11,6 +11,7 @@ class ClockTest {
   fun `MutableClock default values`() {
     val clock = MutableClock()
     assertThat(clock.round).isEqualTo(1)
+    assertThat(clock.turn).isEqualTo(1)
     assertThat(clock.day).isEqualTo(Day.DAY_FRIDAY)
     assertThat(clock.subTurn).isEqualTo(1)
     assertThat(clock.isFirstSubTurn).isTrue()
@@ -35,30 +36,33 @@ class ClockTest {
   }
 
   @Test
-  fun `resetSubTurn sets subTurn back to 1`() {
+  fun `advanceTurn increments turn and resets subTurn`() {
     val clock = MutableClock()
     clock.advanceSubTurn()
-    clock.resetSubTurn()
+    clock.advanceTurn()
+    assertThat(clock.turn).isEqualTo(2)
     assertThat(clock.subTurn).isEqualTo(1)
-    assertThat(clock.isFirstSubTurn).isTrue()
   }
 
   @Test
-  fun `advanceRound increments round and resets subTurn`() {
+  fun `advanceRound increments round and resets turn and subTurn`() {
     val clock = MutableClock()
+    clock.advanceTurn()
     clock.advanceSubTurn()
     clock.advanceRound()
     assertThat(clock.round).isEqualTo(2)
+    assertThat(clock.turn).isEqualTo(1)
     assertThat(clock.subTurn).isEqualTo(1)
   }
 
   @Test
-  fun `advanceDay advances day, resets round and subTurn`() {
+  fun `advanceDay advances day, resets round, turn, and subTurn`() {
     val clock = MutableClock(round = 5, day = Day.DAY_FRIDAY)
     clock.advanceSubTurn()
     clock.advanceDay()
     assertThat(clock.day).isEqualTo(Day.DAY_SATURDAY)
     assertThat(clock.round).isEqualTo(1)
+    assertThat(clock.turn).isEqualTo(1)
     assertThat(clock.subTurn).isEqualTo(1)
 
     clock.advanceDay()

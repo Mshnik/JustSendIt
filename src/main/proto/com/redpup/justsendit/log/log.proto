@@ -17,19 +17,20 @@ message Log {
 
   // When the log occurred in the game.
   model.Day day = 2;
-  int32 turn = 3;
-  int32 subturn = 4;
+  int32 round = 3;
+  int32 turn = 4;
+  int32 subturn = 5;
 
   // Who triggered the log
-  string player_name = 5;
-  string controller_name = 6;
+  string player_name = 6;
+  string controller_name = 7;
 
   // The log that occurred.
   oneof event {
-    model.GameState state_transition = 7;
-    model.player.MountainDecision mountain_decision = 8;
-    PlayerMove player_move = 9;
-    SkiRideAttempt ski_ride_attempt = 10;
+    model.GameState state_transition = 8;
+    model.player.MountainDecision mountain_decision = 9;
+    PlayerMove player_move = 10;
+    SkiRideAttempt ski_ride_attempt = 11;
   }
 }
 
