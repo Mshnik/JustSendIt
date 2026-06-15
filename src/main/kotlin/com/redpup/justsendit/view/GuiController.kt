@@ -76,7 +76,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
           widgets.forEach {
             it.isSelected = false
             it.selectionIndex = null
-            it.onMouseClicked = null // TODO: restore default right-click
+            it.resetListeners()
           }
           continuation.resume(selected)
         }

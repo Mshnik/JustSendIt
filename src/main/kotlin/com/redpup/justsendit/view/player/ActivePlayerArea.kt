@@ -119,7 +119,10 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
   }
 
   suspend fun awaitConfirm() {
-    confirmDeferred = CompletableDeferred<Unit>().also { it.await() }
+    val deferred = CompletableDeferred<Unit>()
+    confirmDeferred = deferred
+    deferred.await()
+    confirmDeferred = null
     confirmButton.isDisable = true
   }
 

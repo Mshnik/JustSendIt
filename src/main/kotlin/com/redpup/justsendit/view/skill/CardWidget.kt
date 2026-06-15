@@ -79,6 +79,10 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
         }
     }
     
+    resetListeners()
+  }
+
+  fun resetListeners() {
     setOnMouseClicked { event ->
         if (event.button == MouseButton.SECONDARY) {
           CardInspector.inspect(skill)
