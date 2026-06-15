@@ -520,14 +520,12 @@ class MutableGameModel @Inject constructor(
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
-    val cost = tile.lift.cost
     val toDiscard = player.controller.chooseSkillCards(
       player,
       player.hand,
-      Range.closed(cost, cost),
+      Range.closed(tile.lift.minCards, tile.lift.maxCards),
       SkillZone.HAND
     )
-    check(toDiscard.size == cost) { "Must discard $cost cards, got ${toDiscard.size}" }
 
     toDiscard.forEach { player.discardFromHand(it) }
 
@@ -536,7 +534,7 @@ class MutableGameModel @Inject constructor(
     val toTrash = player.controller.chooseSkillCards(
       player,
       trashCandidates,
-      Range.closed(0, cost),
+      Range.closed(0, toDiscard.size),
       SkillZone.PLAY, SkillZone.DISCARD,
     )
     toTrash.forEach {
