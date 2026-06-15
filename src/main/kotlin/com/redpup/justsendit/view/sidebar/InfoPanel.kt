@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view.info
+package com.redpup.justsendit.view.sidebar
 
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.MountainTile

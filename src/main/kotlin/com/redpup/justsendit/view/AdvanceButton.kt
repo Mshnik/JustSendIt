@@ -3,7 +3,7 @@ package com.redpup.justsendit.view
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
 import com.redpup.justsendit.model.proto.GameState
-import com.redpup.justsendit.view.info.GameInfoPanel
+import com.redpup.justsendit.view.sidebar.GameInfoPanel
 import javafx.scene.control.Button
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch

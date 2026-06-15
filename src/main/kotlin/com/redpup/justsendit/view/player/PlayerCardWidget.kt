@@ -1,9 +1,7 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.player
 
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import javafx.geometry.Pos
-import javafx.scene.control.Label
-import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
 
 import javafx.scene.image.Image

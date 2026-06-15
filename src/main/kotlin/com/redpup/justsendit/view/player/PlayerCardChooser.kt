@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.player
 
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import javafx.geometry.Pos
@@ -15,11 +15,11 @@ object PlayerCardChooser {
   private var root: StackPane? = null
 
   fun init(root: StackPane) {
-    this.root = root
+    PlayerCardChooser.root = root
   }
 
   suspend fun choose(cards: List<PlayerCard>): PlayerCard {
-    val root = this.root ?: throw IllegalStateException("PlayerCardChooser not initialized")
+    val root = root ?: throw IllegalStateException("PlayerCardChooser not initialized")
     val deferred = CompletableDeferred<PlayerCard>()
 
     val overlay = StackPane()

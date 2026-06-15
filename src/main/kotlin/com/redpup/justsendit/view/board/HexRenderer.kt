@@ -18,18 +18,18 @@ class HexRenderer(private val gc: GraphicsContext, private val hexSize: Double) 
     val yPoints = DoubleArray(6) { i -> cy + hexSize * cos(i * PI / 3 + PI / 6) }
 
     if (isHighlighted) {
-        gc.fill = Color.GOLD
-        gc.globalAlpha = 0.4
-        gc.fillPolygon(xPoints, yPoints, 6)
-        gc.globalAlpha = 1.0
-        
-        gc.stroke = Color.GOLD
-        gc.lineWidth = 3.0
-        gc.strokePolygon(xPoints, yPoints, 6)
-        gc.lineWidth = 1.0
+      gc.fill = Color.GOLD
+      gc.globalAlpha = 0.4
+      gc.fillPolygon(xPoints, yPoints, 6)
+      gc.globalAlpha = 1.0
+
+      gc.stroke = Color.GOLD
+      gc.lineWidth = 3.0
+      gc.strokePolygon(xPoints, yPoints, 6)
+      gc.lineWidth = 1.0
     } else {
-        gc.stroke = Color.color(0.5, 0.5, 0.5, 0.2) // Very faint border
-        gc.strokePolygon(xPoints, yPoints, 6)
+      gc.stroke = Color.color(0.5, 0.5, 0.5, 0.2) // Very faint border
+      gc.strokePolygon(xPoints, yPoints, 6)
     }
 
     when (tile.tileCase) {
@@ -86,11 +86,11 @@ class HexRenderer(private val gc: GraphicsContext, private val hexSize: Double) 
   /** Draws this [lift] using [gc]. */
   private fun drawLift(lift: LiftTile, cx: Double, cy: Double) {
     val color = when (lift.color) {
-      LiftColor.LIFT_COLOR_UNSET, LiftColor.UNRECOGNIZED -> Color.BLACK
+      LiftColor.LIFT_COLOR_UNSET, LiftColor.UNRECOGNIZED, null -> Color.BLACK
       LiftColor.LIFT_COLOR_CYAN -> Color.CYAN
       LiftColor.LIFT_COLOR_RED -> Color.RED
       LiftColor.LIFT_COLOR_YELLOW -> Color.YELLOW
-      LiftColor.LIFT_COLOR_MAGENTA -> Color.MAGENTA
+      LiftColor.LIFT_COLOR_PINK -> Color.PINK
       LiftColor.LIFT_COLOR_GREY -> Color.GRAY
     }
     drawArrow(cx, cy, color, lift.direction)

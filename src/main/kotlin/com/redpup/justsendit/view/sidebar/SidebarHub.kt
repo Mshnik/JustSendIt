@@ -1,14 +1,12 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.sidebar
 
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.view.log.LogPanel
 import javafx.scene.control.Tab
 import javafx.scene.control.TabPane
-import javafx.scene.layout.Priority
-import javafx.scene.layout.VBox
 
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
+import com.redpup.justsendit.view.skill.AccordionCardList
 import javafx.application.Platform
 
 /**

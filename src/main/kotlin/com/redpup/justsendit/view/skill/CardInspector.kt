@@ -1,12 +1,9 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.skill
 
 import com.redpup.justsendit.model.skill.Skill
 import javafx.geometry.Pos
-import javafx.scene.control.Label
 import javafx.scene.layout.StackPane
 import javafx.scene.layout.VBox
-import javafx.scene.paint.Color
-import javafx.scene.shape.Rectangle
 
 import javafx.scene.image.Image
 import javafx.scene.image.ImageView
@@ -18,11 +15,11 @@ object CardInspector {
   private var root: StackPane? = null
 
   fun init(root: StackPane) {
-    this.root = root
+    CardInspector.root = root
   }
 
   fun inspect(skill: Skill) {
-    val root = this.root ?: return
+    val root = root ?: return
 
     val overlay = StackPane()
     overlay.styleClass.add("card-inspector-overlay")

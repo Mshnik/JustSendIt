@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.skill
 
 import com.redpup.justsendit.model.skill.Skill
 import javafx.geometry.Pos
@@ -81,7 +81,7 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
     
     setOnMouseClicked { event ->
         if (event.button == MouseButton.SECONDARY) {
-            CardInspector.inspect(skill)
+          CardInspector.inspect(skill)
             event.consume()
         }
     }

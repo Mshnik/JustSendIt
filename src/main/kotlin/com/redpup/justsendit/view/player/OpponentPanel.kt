@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.player
 
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.Player

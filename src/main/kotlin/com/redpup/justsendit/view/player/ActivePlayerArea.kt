@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.player
 
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
@@ -8,6 +8,8 @@ import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
+import com.redpup.justsendit.view.GuiState
+import com.redpup.justsendit.view.skill.CardWidget
 import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.control.Button

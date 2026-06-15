@@ -1,4 +1,4 @@
-package com.redpup.justsendit.view.log
+package com.redpup.justsendit.view.sidebar
 
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log

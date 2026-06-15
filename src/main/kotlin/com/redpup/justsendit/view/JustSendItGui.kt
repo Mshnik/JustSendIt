@@ -10,9 +10,14 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.info.GameInfoPanel
-import com.redpup.justsendit.view.info.InfoPanel
-import com.redpup.justsendit.view.log.LogPanel
+import com.redpup.justsendit.view.skill.CardInspector
+import com.redpup.justsendit.view.sidebar.GameInfoPanel
+import com.redpup.justsendit.view.sidebar.InfoPanel
+import com.redpup.justsendit.view.sidebar.LogPanel
+import com.redpup.justsendit.view.player.ActivePlayerArea
+import com.redpup.justsendit.view.player.OpponentPanel
+import com.redpup.justsendit.view.player.PlayerCardChooser
+import com.redpup.justsendit.view.sidebar.SidebarHub
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane

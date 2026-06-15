@@ -8,10 +8,10 @@ option java_package = "com.redpup.justsendit.model.board.tile.proto";
 /** Colors of lift tiles. */
 enum LiftColor {
   LIFT_COLOR_UNSET = 0;
-  LIFT_COLOR_CYAN = 1;
-  LIFT_COLOR_RED = 2;
+  LIFT_COLOR_RED = 1;
+  LIFT_COLOR_CYAN = 2;
   LIFT_COLOR_YELLOW = 3;
-  LIFT_COLOR_MAGENTA = 4;
+  LIFT_COLOR_PINK = 4;
   LIFT_COLOR_GREY = 5;
 }
 

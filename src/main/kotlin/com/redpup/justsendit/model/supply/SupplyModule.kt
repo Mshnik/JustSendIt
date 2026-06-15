@@ -59,7 +59,7 @@ class SupplyModule : KtAbstractModule() {
   @Provides
   @TilePath
   fun tilePath(): String =
-    "src/main/resources/com/redpup/justsendit/model/board/tile/tiles.textproto"
+    "src/main/resources/com/redpup/justsendit/model/board/tile/mountain_tiles.textproto"
 
   @Provides
   @LocationPath
