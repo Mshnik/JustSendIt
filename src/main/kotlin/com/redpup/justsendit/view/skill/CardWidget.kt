@@ -20,7 +20,11 @@ import javafx.util.Duration
  * A widget representing a single skill card.
  * Can be used in hand or in accordion lists.
  */
-class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
+class CardWidget(
+  val skill: Skill,
+  val isAccordion: Boolean = false,
+  val isInPlay: Boolean = false
+) : VBox() {
 
   private val badge = Label()
   private val imageView = ImageView()
@@ -29,6 +33,7 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
   private val fullWidth = if (isAccordion) 187.5 else 112.5
   private val fullHeight = fullWidth * 1.4 // Assuming standard ratio
   private val collapsedHeight = fullHeight * 0.25
+  private val inPlayHeight = fullHeight * 0.5
 
   var isSelected = false
     set(value) {
@@ -51,6 +56,11 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
         this.minHeight = collapsedHeight
         this.maxWidth = fullWidth
         this.alignment = Pos.TOP_LEFT
+    } else if (isInPlay) {
+        this.prefHeight = inPlayHeight
+        this.minHeight = inPlayHeight
+        this.maxWidth = fullWidth
+        this.alignment = Pos.TOP_LEFT
     }
     
     val imagePath = skill.skillCard.filename.removePrefix("src/main/resources")
@@ -68,9 +78,10 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
 
     children.add(stack)
     
-    // Clipping for accordion effect
-    if (isAccordion) {
-        val clip = Rectangle(fullWidth, collapsedHeight)
+    // Clipping
+    if (isAccordion || isInPlay) {
+        val initialHeight = if (isAccordion) collapsedHeight else inPlayHeight
+        val clip = Rectangle(fullWidth, initialHeight)
         this.clip = clip
         
         // Ensure clip size follows prefHeight

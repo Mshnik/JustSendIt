@@ -4,7 +4,9 @@ import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
 import com.redpup.justsendit.model.proto.GameState
 import com.redpup.justsendit.view.sidebar.GameInfoPanel
+import javafx.application.Platform
 import javafx.scene.control.Button
+import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -14,7 +16,13 @@ class AdvanceButton(
   private val gameInfoPanel: GameInfoPanel,
 ) : Button(), Logger {
 
+  private var confirmDeferred: CompletableDeferred<Unit>? = null
+  private var lastLog: Log? = null
+
   override fun log(log: Log) {
+    lastLog = log
+    if (confirmDeferred != null) return // Don't update if in confirm mode
+
     when (log.stateTransition) {
       GameState.BEFORE_START -> setupStart()
       GameState.BETWEEN_DAYS -> setupDay()
@@ -25,14 +33,34 @@ class AdvanceButton(
     }
   }
 
+  /** Sets up the button for confirmation. */
+  fun setupConfirm(deferred: CompletableDeferred<Unit>) {
+    Platform.runLater {
+      this.confirmDeferred = deferred
+      text = "CONFIRM"
+      isDisable = true // Start disabled until selection is made
+      setOnAction { 
+        deferred.complete(Unit)
+        this.confirmDeferred = null
+        // Restore last state if possible
+        lastLog?.let { log(it) } ?: disarm()
+      }
+    }
+  }
+
   /** Sets up the button with [label] and [onAction]. Does nothing if the label is already [label]. */
   private fun setup(label: String, onAction: suspend CoroutineScope.() -> Unit) {
-    arm()
+    isDisable = false
     if (text == label) {
       return
     }
     text = label
     setOnAction { guiState.coroutineScope.launch { onAction() } }
+  }
+
+  override fun disarm() {
+    super.disarm()
+    isDisable = true
   }
 
   /** Sets up the AdvanceButton to be a "Start Game" button. */

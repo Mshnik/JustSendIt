@@ -46,10 +46,8 @@ class ActivePlayerArea(
   private val skiButton = Button("SKI / RIDE")
   private val liftButton = Button("TAKE LIFT")
   private val passButton = Button("PASS")
-  private val confirmButton = Button("CONFIRM")
 
   private var decisionDeferred: CompletableDeferred<MountainDecision>? = null
-  private var confirmDeferred: CompletableDeferred<Unit>? = null
 
   init {
     this.styleClass.add("active-player-area")
@@ -65,7 +63,6 @@ class ActivePlayerArea(
     setHgrow(centerSection, Priority.ALWAYS)
 
     setButtonsEnabled(false)
-    confirmButton.isDisable = true
   }
 
   override fun log(log: Log) {
@@ -98,14 +95,12 @@ class ActivePlayerArea(
     skiButton.styleClass.add("phase-button")
     liftButton.styleClass.add("phase-button")
     passButton.styleClass.add("phase-button")
-    confirmButton.styleClass.add("confirm-button")
 
     skiButton.setOnAction { completeDecision(mountainDecision { skiRide = skiRideDecision {} }) }
     liftButton.setOnAction { completeDecision(mountainDecision { lift = liftDecision {} }) }
     passButton.setOnAction { completeDecision(mountainDecision { pass = passDecision {} }) }
-    confirmButton.setOnAction { confirmDeferred?.complete(Unit) }
 
-    phaseChooser.children.addAll(skiButton, liftButton, passButton, confirmButton, advanceButton)
+    phaseChooser.children.addAll(skiButton, liftButton, passButton, advanceButton)
 
     handRow.alignment = Pos.CENTER
     handRow.spacing = 6.0
@@ -145,14 +140,12 @@ class ActivePlayerArea(
 
   suspend fun awaitConfirm() {
     val deferred = CompletableDeferred<Unit>()
-    confirmDeferred = deferred
+    advanceButton.setupConfirm(deferred)
     deferred.await()
-    confirmDeferred = null
-    confirmButton.isDisable = true
   }
 
   fun setConfirmEnabled(enabled: Boolean) {
-    confirmButton.isDisable = !enabled
+    advanceButton.isDisable = !enabled
   }
 
   fun update(player: Player) {
@@ -167,7 +160,7 @@ class ActivePlayerArea(
     // Update in-play
     inPlayRow.children.clear()
     player.inPlay.forEach { skill ->
-      val cardWidget = CardWidget(skill)
+      val cardWidget = CardWidget(skill, isInPlay = true)
       inPlayRow.children.add(cardWidget)
     }
 

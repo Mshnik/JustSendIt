@@ -10,16 +10,17 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.skill.CardInspector
+import com.redpup.justsendit.view.player.ActivePlayerArea
+import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.GameInfoPanel
 import com.redpup.justsendit.view.sidebar.InfoPanel
 import com.redpup.justsendit.view.sidebar.LogPanel
-import com.redpup.justsendit.view.player.ActivePlayerArea
-import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.SidebarHub
+import com.redpup.justsendit.view.skill.CardInspector
 import com.redpup.justsendit.view.skill.DiscardInspector
 import javafx.application.Application
 import javafx.scene.Scene
+import javafx.scene.control.ScrollPane
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
@@ -97,7 +98,7 @@ class JustSendItGui : Application() {
 
     advanceButton = AdvanceButton(guiState, gameInfoPanel)
     advanceButton.setupStart()
-    
+
     sidebarHub = SidebarHub(gameModel, logPanel)
     activePlayerArea = ActivePlayerArea(guiState, advanceButton)
     guiController.activePlayerArea = activePlayerArea
@@ -107,11 +108,18 @@ class JustSendItGui : Application() {
     mainLayout.right = sidebarHub
     mainLayout.bottom = activePlayerArea
 
-    val root = StackPane(mainLayout)
+    val scrollPane = ScrollPane(mainLayout)
+    scrollPane.isFitToWidth = true
+    scrollPane.isFitToHeight = true
+    scrollPane.hbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
+    scrollPane.vbarPolicy = ScrollPane.ScrollBarPolicy.AS_NEEDED
+
+    val root = StackPane(scrollPane)
     CardInspector.init(root)
     DiscardInspector.init(root)
     PlayerCardChooser.init(root)
-    val scene = Scene(root, 1400.0, 1200.0)
+    val scene = Scene(root, 1400.0, 900.0)
+
     scene.stylesheets.add(
       javaClass.getResource("/com/redpup/justsendit/view/light-theme.css")!!.toExternalForm()
     )
