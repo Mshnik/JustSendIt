@@ -15,7 +15,6 @@ import com.redpup.justsendit.view.sidebar.GameInfoPanel
 import com.redpup.justsendit.view.sidebar.InfoPanel
 import com.redpup.justsendit.view.sidebar.LogPanel
 import com.redpup.justsendit.view.player.ActivePlayerArea
-import com.redpup.justsendit.view.player.OpponentPanel
 import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.SidebarHub
 import com.redpup.justsendit.view.skill.DiscardInspector
@@ -23,7 +22,6 @@ import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
-import javafx.scene.layout.VBox
 import javafx.stage.Stage
 
 /** A top level JavaFX application for JustSendIt. */
@@ -32,7 +30,6 @@ class JustSendItGui : Application() {
   private lateinit var guiState: GuiState
   private lateinit var guiController: GuiController
   private lateinit var advanceButton: AdvanceButton
-  private lateinit var opponentPanel: OpponentPanel
   private lateinit var sidebarHub: SidebarHub
   private lateinit var activePlayerArea: ActivePlayerArea
 
@@ -69,7 +66,6 @@ class JustSendItGui : Application() {
       LoggerModule(
         LoggerInstance(LazyForwardingLogger { logPanel }),
         LoggerInstance(LazyForwardingLogger { advanceButton }),
-        LoggerInstance(LazyForwardingLogger { opponentPanel }),
         LoggerInstance(LazyForwardingLogger { sidebarHub }),
         LoggerInstance(LazyForwardingLogger { activePlayerArea })
       )
@@ -101,16 +97,12 @@ class JustSendItGui : Application() {
 
     advanceButton = AdvanceButton(guiState, gameInfoPanel)
     advanceButton.setupStart()
-
-    opponentPanel = OpponentPanel(gameModel)
-    val headerPanel = HeaderPanel(gameInfoPanel, opponentPanel, advanceButton)
     
     sidebarHub = SidebarHub(gameModel, logPanel)
-    activePlayerArea = ActivePlayerArea(guiState)
+    activePlayerArea = ActivePlayerArea(guiState, advanceButton)
     guiController.activePlayerArea = activePlayerArea
 
     val mainLayout = BorderPane()
-    mainLayout.top = headerPanel
     mainLayout.center = hexGridViewer
     mainLayout.right = sidebarHub
     mainLayout.bottom = activePlayerArea

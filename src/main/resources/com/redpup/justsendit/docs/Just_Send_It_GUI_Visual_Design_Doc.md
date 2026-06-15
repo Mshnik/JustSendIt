@@ -133,7 +133,11 @@ When an active sequence requires selecting multiple cards, the client tracks sel
     - [x] Image-Based Hex Tile Rendering (using `filename` from proto)
     - [x] Skill Card Image Rendering (using `filename` from proto)
     - [x] High-Resolution Inspection Modal (using full card images)
-    - [ ] Active Player Area: Deck Pile (with card back and count)
-    - [ ] Active Player Area: In-Play Area (Horizontal row)
-    - [ ] Active Player Area: Discard Pile (Top card and count)
+    - [x] Active Player Area: Deck Pile (with card back and count)
+    - [x] Active Player Area: In-Play Area (Horizontal row)
+    - [x] Active Player Area: Discard Pile (Top card and count)
+- [ ] **Layout Refinements**
+    - [ ] Scale all main-view cards to 75% of current size
+    - [ ] Move Opponents into Sidebar (One tab per opponent)
+    - [ ] Move Advance Button to Action Row (Bottom center)
 

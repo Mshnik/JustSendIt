@@ -26,7 +26,7 @@ class CardWidget(val skill: Skill, val isAccordion: Boolean = false) : VBox() {
   private val imageView = ImageView()
   private var timeline: Timeline? = null
   
-  private val fullWidth = if (isAccordion) 250.0 else 150.0
+  private val fullWidth = if (isAccordion) 187.5 else 112.5
   private val fullHeight = fullWidth * 1.4 // Assuming standard ratio
   private val collapsedHeight = fullHeight * 0.25
 

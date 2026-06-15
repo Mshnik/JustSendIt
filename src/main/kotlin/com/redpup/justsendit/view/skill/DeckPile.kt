@@ -20,7 +20,7 @@ class DeckPile : StackPane() {
     val image = Image(javaClass.getResource("/com/redpup/justsendit/img/skill_cards/Skill Card Back.png")!!.toExternalForm())
     imageView.image = image
     imageView.isPreserveRatio = true
-    imageView.fitWidth = 100.0
+    imageView.fitWidth = 75.0
     
     badge.styleClass.add("card-badge")
     

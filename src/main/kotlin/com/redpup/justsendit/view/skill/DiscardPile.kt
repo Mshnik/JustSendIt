@@ -19,7 +19,7 @@ class DiscardPile : StackPane() {
     this.styleClass.add("pile-widget")
     
     imageView.isPreserveRatio = true
-    imageView.fitWidth = 100.0
+    imageView.fitWidth = 75.0
     
     badge.styleClass.add("card-badge")
     

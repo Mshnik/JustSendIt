@@ -8,6 +8,7 @@ import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
 import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
 import com.redpup.justsendit.model.player.proto.mountainDecision
+import com.redpup.justsendit.view.AdvanceButton
 import com.redpup.justsendit.view.GuiState
 import com.redpup.justsendit.view.skill.CardWidget
 import com.redpup.justsendit.view.skill.DeckPile
@@ -27,7 +28,10 @@ import kotlinx.coroutines.CompletableDeferred
  * - Center: In-Play Area, Phase Chooser Block, and Active Hand
  * - Right: Discard Pile
  */
-class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
+class ActivePlayerArea(
+  private val guiState: GuiState,
+  private val advanceButton: AdvanceButton,
+) : HBox(), Logger {
 
   private val leftSection = VBox()
   private val centerSection = VBox()
@@ -101,7 +105,7 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     passButton.setOnAction { completeDecision(mountainDecision { pass = passDecision {} }) }
     confirmButton.setOnAction { confirmDeferred?.complete(Unit) }
 
-    phaseChooser.children.addAll(skiButton, liftButton, passButton, confirmButton)
+    phaseChooser.children.addAll(skiButton, liftButton, passButton, confirmButton, advanceButton)
 
     handRow.alignment = Pos.CENTER
     handRow.spacing = 6.0
