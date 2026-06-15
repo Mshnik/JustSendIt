@@ -125,3 +125,25 @@
     -fx-font-weight: bold;
     -fx-text-fill: #ffffff;
 }
+
+.header-panel {
+    -fx-background-color: #e0e0e0;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 10;
+}
+
+.pile-widget {
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 8, 0, 0, 0);
+}
+
+.discard-inspector-container {
+    -fx-background-color: #333333;
+    -fx-padding: 30;
+    -fx-background-radius: 15;
+}
+
+.discard-inspector-container .scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background: transparent;
+}

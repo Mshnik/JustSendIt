@@ -10,6 +10,8 @@ import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecisi
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.view.GuiState
 import com.redpup.justsendit.view.skill.CardWidget
+import com.redpup.justsendit.view.skill.DeckPile
+import com.redpup.justsendit.view.skill.DiscardPile
 import javafx.application.Platform
 import javafx.geometry.Pos
 import javafx.scene.control.Button
@@ -21,9 +23,9 @@ import kotlinx.coroutines.CompletableDeferred
 
 /**
  * Bottom region of the GUI.
- * - Left: Active Player Card & Visual Wobble Node Counter Grid
- * - Center: Phase Chooser Block ---> Active Hand Buffered Row
- * - Right: Card Count Badges for Draw Deck & Discard Piles
+ * - Left: Active Player Card, Wobbles, and Deck
+ * - Center: In-Play Area, Phase Chooser Block, and Active Hand
+ * - Right: Discard Pile
  */
 class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
 
@@ -31,6 +33,9 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
   private val centerSection = VBox()
   private val rightSection = VBox()
 
+  private val deckPile = DeckPile()
+  private val discardPile = DiscardPile()
+  private val inPlayRow = HBox()
   private val phaseChooser = HBox()
   private val handRow = HBox()
 
@@ -46,7 +51,7 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     this.styleClass.add("active-player-area")
     this.alignment = Pos.CENTER
     this.spacing = 20.0
-    this.prefHeight = 200.0
+    this.prefHeight = 350.0 // Increased for in-play row
 
     setupLeft()
     setupCenter()
@@ -65,13 +70,23 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
 
   private fun setupLeft() {
     leftSection.prefWidth = 200.0
-    leftSection.alignment = Pos.CENTER_LEFT
-    leftSection.children.add(Label("Player Card & Wobbles"))
+    leftSection.alignment = Pos.CENTER
+    leftSection.spacing = 10.0
+
+    val labels = VBox(Label("Player Card"), Label("Wobbles: 0"))
+    labels.alignment = Pos.CENTER
+
+    leftSection.children.addAll(deckPile, labels)
   }
 
   private fun setupCenter() {
     centerSection.alignment = Pos.CENTER
-    centerSection.spacing = 10.0
+    centerSection.spacing = 15.0
+
+    inPlayRow.alignment = Pos.CENTER
+    inPlayRow.spacing = 10.0
+    inPlayRow.prefHeight = 120.0
+    inPlayRow.styleClass.add("in-play-row")
 
     phaseChooser.alignment = Pos.CENTER
     phaseChooser.spacing = 15.0
@@ -93,7 +108,13 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
     handRow.prefHeight = 120.0
     handRow.styleClass.add("hand-row")
 
-    centerSection.children.addAll(phaseChooser, handRow)
+    centerSection.children.addAll(inPlayRow, phaseChooser, handRow)
+  }
+
+  private fun setupRight() {
+    rightSection.prefWidth = 200.0
+    rightSection.alignment = Pos.CENTER
+    rightSection.children.add(discardPile)
   }
 
   private fun completeDecision(decision: MountainDecision) {
@@ -131,6 +152,21 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
   }
 
   fun update(player: Player) {
+    // Update labels
+    val labels = (leftSection.children[1] as VBox)
+    (labels.children[1] as Label).text = "Wobbles: ${player.wobbles}"
+
+    // Update piles
+    deckPile.update(player)
+    discardPile.update(player)
+
+    // Update in-play
+    inPlayRow.children.clear()
+    player.inPlay.forEach { skill ->
+      val cardWidget = CardWidget(skill)
+      inPlayRow.children.add(cardWidget)
+    }
+
     // Update hand
     handRow.children.clear()
     player.hand.forEach { skill ->
@@ -141,10 +177,4 @@ class ActivePlayerArea(private val guiState: GuiState) : HBox(), Logger {
 
   /** Returns all card widgets in hand. */
   fun getHandWidgets(): List<CardWidget> = handRow.children.filterIsInstance<CardWidget>()
-
-  private fun setupRight() {
-    rightSection.prefWidth = 200.0
-    rightSection.alignment = Pos.CENTER_RIGHT
-    rightSection.children.add(Label("Decks Info"))
-  }
 }

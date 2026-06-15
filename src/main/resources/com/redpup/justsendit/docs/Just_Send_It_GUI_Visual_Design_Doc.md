@@ -117,6 +117,7 @@ When an active sequence requires selecting multiple cards, the client tracks sel
     - [x] Consolidate all CSS into external files (Removing inline styles)
     - [x] Light Theme Implementation
     - [x] Correct initial window sizing
+    - [x] Remove Left Debug Panel (Integrated content elsewhere)
     - [ ] Accordion View Fixes (Remove jitter, adjust collapsed height to ~25%)
     - [x] Fix accordion card swapping/flickering (Stable Z-order)
     - [x] Fix accordion alignment (Remove right-shift and white space)
@@ -125,10 +126,14 @@ When an active sequence requires selecting multiple cards, the client tracks sel
 
 - [ ] **Advanced Interactions**
     - [x] Player Card Selection Overlay (3 horizontal cards, clickable)
+    - [ ] Discard Pile Inspection Modal (Scrollable HD view)
 - [ ] **Asset Integration**
     - [x] Board Image Rendering (Background layer)
     - [x] Hex Grid Alignment with Board Image
     - [x] Image-Based Hex Tile Rendering (using `filename` from proto)
     - [x] Skill Card Image Rendering (using `filename` from proto)
     - [x] High-Resolution Inspection Modal (using full card images)
+    - [ ] Active Player Area: Deck Pile (with card back and count)
+    - [ ] Active Player Area: In-Play Area (Horizontal row)
+    - [ ] Active Player Area: Discard Pile (Top card and count)
 

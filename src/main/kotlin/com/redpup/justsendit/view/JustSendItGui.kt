@@ -18,6 +18,7 @@ import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.OpponentPanel
 import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.SidebarHub
+import com.redpup.justsendit.view.skill.DiscardInspector
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.layout.BorderPane
@@ -102,24 +103,23 @@ class JustSendItGui : Application() {
     advanceButton.setupStart()
 
     opponentPanel = OpponentPanel(gameModel)
+    val headerPanel = HeaderPanel(gameInfoPanel, opponentPanel, advanceButton)
+    
     sidebarHub = SidebarHub(gameModel, logPanel)
     activePlayerArea = ActivePlayerArea(guiState)
     guiController.activePlayerArea = activePlayerArea
 
     val mainLayout = BorderPane()
-    mainLayout.top = opponentPanel
+    mainLayout.top = headerPanel
     mainLayout.center = hexGridViewer
     mainLayout.right = sidebarHub
     mainLayout.bottom = activePlayerArea
 
-    // Temporary: Add advance button to the top left or something
-    val debugBox = VBox(gameInfoPanel, advanceButton)
-    mainLayout.left = debugBox
-
     val root = StackPane(mainLayout)
     CardInspector.init(root)
+    DiscardInspector.init(root)
     PlayerCardChooser.init(root)
-    val scene = Scene(root, 1400.0, 900.0)
+    val scene = Scene(root, 1400.0, 1200.0)
     scene.stylesheets.add(
       javaClass.getResource("/com/redpup/justsendit/view/light-theme.css")!!.toExternalForm()
     )
