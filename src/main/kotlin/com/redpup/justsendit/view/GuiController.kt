@@ -1,7 +1,6 @@
 package com.redpup.justsendit.view
 
 import com.google.common.collect.Range
-import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
@@ -15,14 +14,11 @@ import com.redpup.justsendit.model.player.proto.SkiRideResolutionActionKt.playCa
 import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
 import com.redpup.justsendit.model.skill.Skill
-import com.redpup.justsendit.util.FunctionExtensions.orElse
-import com.redpup.justsendit.util.FunctionExtensions.thenNonNull
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.skill.CardInspector
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
+import com.redpup.justsendit.view.skill.CardInspector
 import javafx.application.Platform
-import javafx.scene.control.ChoiceDialog
 import javafx.scene.input.MouseButton
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -96,7 +92,10 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseMountainTile(player: Player, elements: List<HexPoint>): HexPoint {
+  override suspend fun chooseMountainTile(
+    player: Player,
+    elements: Collection<HexPoint>,
+  ): HexPoint {
     return suspendCancellableCoroutine { continuation ->
       Platform.runLater {
         hexGridViewer.highlightHexes(elements)
@@ -120,9 +119,13 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   ): MountainDecision {
     val decision = activePlayerArea.awaitMountainDecision()
 
-    // If it was ski/ride, we need to handle the direction selection
     if (decision.hasSkiRide()) {
-      return handleSkiRideSelection(player, gameModel)
+      val choices = gameModel.getAvailableMoves(player)
+      return chooseMountainTile(player, choices.keys)
+        .let {
+          val direction = choices[it] ?: throw IllegalStateException("Illegal point chosen: $it")
+          mountainDecision { skiRide = skiRideDecision { this.direction = direction } }
+        }
     }
 
     // For other decisions, they might be complete or need more info
@@ -133,82 +136,16 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
     return decision
   }
 
-  private suspend fun handleSkiRideSelection(
-    player: Player,
-    gameModel: GameModel,
-  ): MountainDecision {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val availableMoves = gameModel.getAvailableMoves(player)
-        hexGridViewer.highlightHexes(availableMoves.keys)
-
-        hexGridViewer.onHexClicked = { clickedHex: HexPoint ->
-          val direction = availableMoves[clickedHex]
-          val tile = gameModel.tileMap[clickedHex]
-          if (direction != null && tile != null) direction to tile else null
-        }.thenNonNull {
-          hexGridViewer.highlightHexes(emptySet())
-          hexGridViewer.onHexClicked = null
-          continuation.resume(
-            mountainDecision {
-              skiRide = skiRideDecision {
-                this.direction = it.first
-              }
-            })
-        }.orElse(Unit)
-      }
-    }
-  }
-
-  private suspend fun foo() {
-    // return suspendCancellableCoroutine { continuation ->
-    //   Platform.runLater {
-    //     val dialog = TextInputDialog()
-    //     // TODO: Metadata based on choose event.
-    //     // dialog.title = "Choose Cards to Remove"
-    //     // dialog.headerText = "Enter card indices to remove (comma-separated), max $maxToRemove"
-    //     // dialog.contentText =
-    //     //   "Your cards: ${cards.mapIndexed { idx, card -> "$idx: ${card.name}" }.joinToString()}"
-    //     val result = dialog.showAndWait()
-    //     if (result.isPresent) {
-    //       val indices = result.get().split(",").mapNotNull { it.trim().toIntOrNull() }
-    //       val selected = indices.filter { it in elements.indices }.map { elements[it] }
-    //         .take(count.lowerEndpoint())
-    //       continuation.resume(selected)
-    //     } else {
-    //       // TODO: bad selection
-    //       // continuation.resume(emptyList())
-    //     }
-    //   }
-    // }
-  }
-
   override suspend fun chooseSkiRideResolutionAction(
     player: Player,
     gameModel: GameModel,
   ): SkiRideResolutionAction {
-    return suspendCancellableCoroutine { continuation ->
-      Platform.runLater {
-        val choices = player.hand.map { it.name }.toMutableList()
-        choices.add("Stop")
-
-        val dialog = ChoiceDialog(choices[0], choices)
-        dialog.title = "Ski/Ride Resolution"
-        dialog.headerText = "Choose a card to play or Stop."
-        val result = dialog.showAndWait()
-
-        if (result.isPresent && result.get() != "Stop") {
-          continuation.resume(skiRideResolutionAction {
-            playCardAction {
-              cardName = result.get()
-            }
-          })
-        } else {
-          continuation.resume(skiRideResolutionAction {
-            stop = empty { }
-          })
-        }
-      }
-    }
+    // TODO: Handle stop case here.
+    return chooseSkillCards(
+      player,
+      player.hand,
+      Range.closed(1, 1),
+      PlayerController.SkillZone.HAND
+    ).let { skiRideResolutionAction { play = playCardAction { cardName = it.first().name } } }
   }
 }

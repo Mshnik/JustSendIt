@@ -41,7 +41,7 @@ interface PlayerController {
   /** Asks the player to choose a mountain tile from a list. */
   suspend fun chooseMountainTile(
     player: Player,
-    elements: List<HexPoint>,
+    elements: Collection<HexPoint>,
   ): HexPoint
 
   /** Asks the player to choose a player card from a list. */
@@ -79,7 +79,7 @@ class BasicPlayerController : PlayerController {
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseMountainTile(player: Player, elements: List<HexPoint>): HexPoint {
+  override suspend fun chooseMountainTile(player: Player, elements: Collection<HexPoint>): HexPoint {
     TODO("Not yet implemented")
   }
 
