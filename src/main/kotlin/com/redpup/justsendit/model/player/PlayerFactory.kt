@@ -1,10 +1,12 @@
 package com.redpup.justsendit.model.player
 
+import com.google.errorprone.annotations.DoNotMock
 import com.redpup.justsendit.model.player.cards.BasePlayerCard
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 import javax.inject.Inject
 
+@DoNotMock(value = "Use FakePlayerFactory instead.")
 interface PlayerFactory {
   /** Factories registered by name. */
   val factories: Map<String, (PlayerCardProto) -> PlayerCard>

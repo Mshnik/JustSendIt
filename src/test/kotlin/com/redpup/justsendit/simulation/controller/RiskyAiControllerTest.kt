@@ -7,6 +7,7 @@ import com.redpup.justsendit.control.player.PlayerController.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player
@@ -35,7 +36,7 @@ class RiskyAiControllerTest {
       on { hand } doReturn listOf(skill1, skill2)
       on { inPlay } doReturn emptyList<Skill>()
     }
-    val tileMap = mock<HexGrid<com.redpup.justsendit.model.board.tile.proto.MountainTile>> {
+    val tileMap = mock<HexGrid<MountainTile>> {
       on { get(location) } doReturn tile
     }
     val gameModel = mock<GameModel> {
@@ -69,9 +70,9 @@ class RiskyAiControllerTest {
     val player = mock<Player> {
       on { this.location } doReturn location
       on { hand } doReturn listOf(skill1, skill2)
-      on { inPlay } doReturn emptyList<Skill>()
+      on { inPlay } doReturn emptyList()
     }
-    val tileMap = mock<HexGrid<com.redpup.justsendit.model.board.tile.proto.MountainTile>> {
+    val tileMap = mock<HexGrid<MountainTile>> {
       on { get(location) } doReturn tile
     }
     val gameModel = mock<GameModel> {

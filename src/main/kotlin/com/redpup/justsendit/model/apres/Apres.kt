@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.apres
 
+import com.google.errorprone.annotations.DoNotMock
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.player.MutablePlayer
@@ -8,6 +9,7 @@ import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.supply.proto.SkillCard
 
 /** In-memory implementation of an apres card. */
+@DoNotMock(value = "Use FakeApres instead.")
 interface Apres {
   val apresCard: ApresCard
 

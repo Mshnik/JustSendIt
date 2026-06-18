@@ -1,9 +1,11 @@
 package com.redpup.justsendit.model.apres
 
+import com.google.errorprone.annotations.DoNotMock
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import javax.inject.Inject
 
+@DoNotMock(value = "Use FakeApresFactory instead.")
 interface ApresFactory {
   /** Factories registered by name. */
   val factories: Map<String, (ApresCard) -> Apres>

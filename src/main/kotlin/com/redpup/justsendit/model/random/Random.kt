@@ -1,9 +1,11 @@
 package com.redpup.justsendit.model.random
 
+import com.google.errorprone.annotations.DoNotMock
 import javax.inject.Inject
 import javax.inject.Singleton
 
 /** Wrapper on random operations in the game. */
+@DoNotMock(value = "Use FakeRandom instead.")
 interface Random {
   /** Returns a random value in range [0, bound). */
   fun nextInt(bound: Int): Int

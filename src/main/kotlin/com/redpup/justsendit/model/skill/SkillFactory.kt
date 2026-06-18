@@ -1,11 +1,13 @@
 package com.redpup.justsendit.model.skill
 
+import com.google.errorprone.annotations.DoNotMock
 import com.redpup.justsendit.model.apres.cards.*
 import com.redpup.justsendit.model.apres.proto.ApresCard
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.supply.proto.SkillCard
 import javax.inject.Inject
 
+@DoNotMock(value = "Use FakeSkillFactory instead.")
 interface SkillFactory {
   /** Factories registered by name. */
   val factories: Map<String, (SkillCard) -> Skill>
