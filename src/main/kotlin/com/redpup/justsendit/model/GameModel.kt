@@ -381,7 +381,7 @@ class MutableGameModel @Inject constructor(
     }
 
     clock.advanceDay()
-    startGame()
+    startDay()
     return true
   }
 
