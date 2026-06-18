@@ -2,11 +2,12 @@ package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.control.player.PlayerController.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.board.tile.proto.liftTile
+import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.skill.Skill
@@ -35,9 +36,9 @@ class SimpleAiControllerTest {
       on { this.tileMap } doReturn tileMap
     }
 
-    val decision = controller.makeMountainDecision(player, gameModel)
+    val decision = controller.makeMountainDecision(gameModel, player)
 
-    assertThat(decision.decisionCase).isEqualTo(MountainDecision.DecisionCase.EXIT)
+    assertThat(decision).isEqualTo(MountainDecision.DECISION_EXIT)
   }
 
   @Test
@@ -58,18 +59,28 @@ class SimpleAiControllerTest {
     }
     val gameModel = mock<GameModel> {
       on { this.tileMap } doReturn tileMap
+      on { getAvailableMoves(player) } doReturn emptyMap()
     }
 
-    val decision = controller.makeMountainDecision(player, gameModel)
+    val decision = controller.makeMountainDecision(gameModel, player)
 
-    assertThat(decision.decisionCase).isEqualTo(MountainDecision.DecisionCase.LIFT)
+    assertThat(decision).isEqualTo(MountainDecision.DECISION_LIFT)
   }
 
   @Test
   fun chooseSkillCards_returnsFirstN() = runBlocking {
     val skills = listOf(mock<Skill>(), mock<Skill>(), mock<Skill>())
-    val chosen = controller.chooseSkillCards(mock(), skills, Range.closed(1, 2))
-    
+    val gameModel = mock<GameModel> {
+      on { state } doReturn com.redpup.justsendit.model.proto.GameState.BETWEEN_TURNS
+    }
+    val chosen = controller.chooseSkillCards(
+      gameModel,
+      mock(),
+      SkillEvent.DISCARD_SKILL_FOR_LIFT,
+      skills,
+      Range.closed(1, 2)
+    )
+
     assertThat(chosen).hasSize(2)
     assertThat(chosen[0]).isEqualTo(skills[0])
     assertThat(chosen[1]).isEqualTo(skills[1])

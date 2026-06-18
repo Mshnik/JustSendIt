@@ -5,7 +5,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.protobuf.util.Timestamps
 import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.control.player.PlayerController.SkillZone
+import com.redpup.justsendit.control.player.PlayerController.*
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
@@ -23,7 +23,6 @@ import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.MountainDecision.SkiRideDecision
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
@@ -220,7 +219,15 @@ class MutableGameModel @Inject constructor(
   private suspend fun pickPlayerCards() {
     val cards = playerDeck.draw(clock.day, players.size + 2)
     for (player in players) {
-      with(player) { gainPlayerCard(controller.choosePlayerCard(player, cards)) }
+      with(player) {
+        gainPlayerCard(
+          controller.choosePlayerCard(
+            this@MutableGameModel,
+            player,
+            cards
+          )
+        )
+      }
     }
   }
 
@@ -273,7 +280,9 @@ class MutableGameModel @Inject constructor(
 
     for (player in players) {
       player.location = player.controller.chooseMountainTile(
+        this,
         player,
+        MountainTileEvent.CHOOSE_START_OF_DAY_LOCATION,
         tileMap.entries()
           .filter { it.value.hasLift() && it.value.lift.direction == LiftDirection.LIFT_DIRECTION_TOP }
           .map { it.key }
@@ -326,7 +335,7 @@ class MutableGameModel @Inject constructor(
 
     var continueTurn: Boolean
     do {
-      val decision = player.controller.makeMountainDecision(player, this).also { it.log() }
+      val decision = player.controller.makeMountainDecision(this, player).also { it.log() }
       continueTurn = executeDecision(player, decision)
       clock.advanceSubTurn()
     } while (continueTurn)
@@ -403,38 +412,45 @@ class MutableGameModel @Inject constructor(
     player: MutablePlayer,
     decision: MountainDecision,
   ): Boolean {
-    return when (decision.decisionCase) {
-      MountainDecision.DecisionCase.SKI_RIDE -> {
-        executeSkiRide(player, decision.skiRide)
+    return when (decision) {
+      MountainDecision.DECISION_SKI_RIDE -> {
+        executeSkiRide(player)
       }
 
-      MountainDecision.DecisionCase.LIFT -> {
-        executeLift(player, decision.lift)
+      MountainDecision.DECISION_LIFT -> {
+        executeLift(player)
         false
       }
 
-      MountainDecision.DecisionCase.PASS -> {
-        executePass(player, decision.pass)
+      MountainDecision.DECISION_PASS -> {
+        executePass(player)
         false
       }
 
-      MountainDecision.DecisionCase.EXIT -> {
+      MountainDecision.DECISION_EXIT -> {
         executeExit(player)
         false
       }
 
-      MountainDecision.DecisionCase.DECISION_NOT_SET, null -> throw IllegalArgumentException()
+      MountainDecision.DECISION_UNSET, MountainDecision.UNRECOGNIZED -> throw IllegalArgumentException()
     }
   }
 
   private suspend fun executeSkiRide(
     player: MutablePlayer,
-    skiRideDecision: SkiRideDecision,
   ): Boolean {
     val location = player.location
     check(location != null) { "Player is off-map." }
-    check(skiRideDecision.direction.isDownMountain) { "Can only ski/ride down mountain, found ${skiRideDecision.direction}" }
-    val destination = location + skiRideDecision.direction
+    val choices = getAvailableMoves(player)
+    val direction = player.controller.chooseMountainTile(
+      this, player,
+      MountainTileEvent.CHOOSE_SKI_RIDE_DESTINATION,
+      choices.keys
+    )
+      .let { choices[it] ?: throw IllegalStateException("Illegal point chosen: $it") }
+
+    check(direction.isDownMountain) { "Can only ski/ride down mountain, found ${direction}" }
+    val destination = location + direction
     playerMove {
       from = location
       to = destination
@@ -459,14 +475,21 @@ class MutableGameModel @Inject constructor(
     var succeeded = false
 
     while (!succeeded) {
-      val action = player.controller.chooseSkiRideResolutionAction(player, this)
-      if (action.hasStop()) {
+      val cards = player.controller.chooseSkillCards(
+        this,
+        player,
+        SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
+        player.hand,
+        Range.closed(0, 1),
+        SkillZone.HAND
+      )
+
+      if (cards.isEmpty()) {
         crash(player, SkiRideCrash.Cause.CAUSE_INTENTIONAL)
         break
       }
 
-      val card = checkNotNull(player.hand.find { it.name == action.play.cardName })
-
+      val card = cards.first()
       player.playCard(card)
 
       val resolution = resolveCard(player, card, slope)
@@ -506,7 +529,9 @@ class MutableGameModel @Inject constructor(
     if (player.hand.isNotEmpty()) {
       with(player) {
         controller.chooseSkillCards(
+          this@MutableGameModel,
           player,
+          SkillEvent.DISCARD_FOR_CRASH,
           player.hand,
           Range.closed(1, 1),
           SkillZone.HAND
@@ -521,7 +546,6 @@ class MutableGameModel @Inject constructor(
 
   private suspend fun executeLift(
     player: MutablePlayer,
-    liftDecision: MountainDecision.LiftDecision,
   ) {
     val location = player.location
     check(location != null) { "Player is off-map." }
@@ -530,7 +554,9 @@ class MutableGameModel @Inject constructor(
 
     // TODO: Don't discard for lift, play instead.
     val toDiscard = player.controller.chooseSkillCards(
+      this,
       player,
+      SkillEvent.DISCARD_SKILL_FOR_LIFT,
       player.hand,
       Range.closed(tile.lift.minCards, tile.lift.maxCards),
       SkillZone.HAND
@@ -541,7 +567,9 @@ class MutableGameModel @Inject constructor(
     // TODO: Add play, hand to trash candidates.
     val trashCandidates = player.skillDiscard.toList()
     val toTrash = player.controller.chooseSkillCards(
+      this,
       player,
+      SkillEvent.TRASH_SKILL,
       trashCandidates,
       Range.closed(0, toDiscard.size),
       SkillZone.PLAY, SkillZone.DISCARD,
@@ -569,17 +597,23 @@ class MutableGameModel @Inject constructor(
     lifts[color]!!.find { it.key != location }!!.key
 
   /** Ends the player's round and allows them to buy a card. */
-  private fun executePass(player: MutablePlayer, passDecision: MountainDecision.PassDecision) {
+  private suspend fun executePass(player: MutablePlayer) {
     val studyValue = calculateStudyValue(player)
-    val buyCardName = passDecision.buyCardName
-    if (buyCardName.isNotEmpty()) {
-      val card = shop.entries.find { it.key.name == buyCardName }
-      check(card != null) { "Card $buyCardName not in shop." }
-      val cost = (card.key.skillCard.cost - card.value).coerceAtLeast(0)
-      check(studyValue >= cost) { "Insufficient study value $studyValue for card $buyCardName (cost $cost)." }
+    val cards = player.controller.chooseSkillCards(
+      this,
+      player,
+      SkillEvent.CHOOSE_CARD_TO_BUY,
+      shop.keys.toList(),
+      Range.closed(0, 1),
+      SkillZone.SHOP
+    )
+    if (cards.isNotEmpty()) {
+      val card = cards.first()
+      val cost = (card.skillCard.cost - shop[card]!!).coerceAtLeast(0)
+      check(studyValue >= cost) { "Insufficient study value $studyValue for card ${card.name} (cost $cost)." }
 
-      shop.remove(card.key)
-      player.skillDiscard.add(card.key)
+      shop.remove(card)
+      player.skillDiscard.add(card)
     }
 
     player.discardInPlay()

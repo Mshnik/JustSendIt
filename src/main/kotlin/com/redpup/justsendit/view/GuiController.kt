@@ -8,16 +8,13 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
-import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
-import com.redpup.justsendit.model.player.proto.SkiRideResolutionActionKt.playCardAction
-import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.view.board.HexGridViewer
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
+import com.redpup.justsendit.view.sidebar.SidebarHub
 import com.redpup.justsendit.view.skill.CardInspector
+import com.redpup.justsendit.view.skill.CardWidget
 import javafx.application.Platform
 import javafx.scene.input.MouseButton
 import javax.inject.Inject
@@ -31,10 +28,13 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
 
   lateinit var hexGridViewer: HexGridViewer
   lateinit var activePlayerArea: ActivePlayerArea
+  lateinit var sidebarHub: SidebarHub
   override val name = "GuiController"
 
   override suspend fun chooseSkillCards(
+    gameModel: GameModel,
     player: Player,
+    event: PlayerController.SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
@@ -42,11 +42,18 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
     return suspendCancellableCoroutine { continuation ->
       Platform.runLater {
         val selected = mutableListOf<Skill>()
-        val widgets = activePlayerArea.getHandWidgets()
+        val widgets = mutableListOf<CardWidget>()
 
-        widgets.forEach { widget ->
-          widget.setOnMouseClicked { event ->
-            if (event.button == MouseButton.PRIMARY) {
+        if (zones.contains(PlayerController.SkillZone.HAND)) {
+          widgets.addAll(activePlayerArea.getHandWidgets())
+        }
+        if (zones.contains(PlayerController.SkillZone.SHOP)) {
+          widgets.addAll(sidebarHub.shopList.children.filterIsInstance<CardWidget>())
+        }
+
+        widgets.filter { it.skill in elements }.forEach { widget ->
+          widget.setOnMouseClicked { e ->
+            if (e.button == MouseButton.PRIMARY) {
               if (widget.isSelected) {
                 widget.isSelected = false
                 selected.remove(widget.skill)
@@ -64,7 +71,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
               }
 
               activePlayerArea.setConfirmEnabled(count.contains(selected.size))
-            } else if (event.button == MouseButton.SECONDARY) {
+            } else if (e.button == MouseButton.SECONDARY) {
               CardInspector.inspect(widget.skill)
             }
           }
@@ -85,6 +92,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   }
 
   override suspend fun chooseApresCard(
+    gameModel: GameModel,
     player: Player,
     elements: List<Apres>,
     count: Range<Int>,
@@ -93,7 +101,9 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   }
 
   override suspend fun chooseMountainTile(
+    gameModel: GameModel,
     player: Player,
+    event: PlayerController.MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
     return suspendCancellableCoroutine { continuation ->
@@ -109,43 +119,16 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
     }
   }
 
-  override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
+  override suspend fun choosePlayerCard(
+    gameModel: GameModel,
+    player: Player,
+    elements: List<PlayerCard>,
+  ): PlayerCard {
     return PlayerCardChooser.choose(elements)
   }
 
   override suspend fun makeMountainDecision(
-    player: Player,
     gameModel: GameModel,
-  ): MountainDecision {
-    val decision = activePlayerArea.awaitMountainDecision()
-
-    if (decision.hasSkiRide()) {
-      val choices = gameModel.getAvailableMoves(player)
-      return chooseMountainTile(player, choices.keys)
-        .let {
-          val direction = choices[it] ?: throw IllegalStateException("Illegal point chosen: $it")
-          mountainDecision { skiRide = skiRideDecision { this.direction = direction } }
-        }
-    }
-
-    // For other decisions, they might be complete or need more info
-    if (decision.hasPass()) {
-      // TODO: handle card buying in a non-native dialog way
-    }
-
-    return decision
-  }
-
-  override suspend fun chooseSkiRideResolutionAction(
     player: Player,
-    gameModel: GameModel,
-  ): SkiRideResolutionAction {
-    // TODO: Handle stop case here.
-    return chooseSkillCards(
-      player,
-      player.hand,
-      Range.closed(1, 1),
-      PlayerController.SkillZone.HAND
-    ).let { skiRideResolutionAction { play = playCardAction { cardName = it.first().name } } }
-  }
+  ): MountainDecision = activePlayerArea.awaitMountainDecision()
 }

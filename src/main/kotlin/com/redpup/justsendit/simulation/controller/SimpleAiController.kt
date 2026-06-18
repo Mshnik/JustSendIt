@@ -1,22 +1,14 @@
 package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
-import com.google.protobuf.empty
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
-import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
-import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
-import com.redpup.justsendit.model.player.proto.SkiRideResolutionActionKt.playCardAction
-import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.player.proto.skiRideResolutionAction
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.proto.SkillCard
 
@@ -24,16 +16,48 @@ import com.redpup.justsendit.model.supply.proto.SkillCard
 class SimpleAiController(override val name: String) : PlayerController {
 
   override suspend fun chooseSkillCards(
+    gameModel: GameModel,
     player: Player,
+    event: PlayerController.SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
-    // Just pick the first N elements.
-    return elements.take(count.upperEndpoint())
+    return when (event) {
+      PlayerController.SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT -> {
+        // Pick the card with the highest expected skill value if we need more skill.
+        val location = player.location!!
+        val tile = gameModel.tileMap[location]!!
+        val slope = tile.slope
+        val currentSkill = player.inPlay.sumOf { calculateExpectedValue(it.skillCard, slope).toInt() }
+        if (currentSkill < slope.difficulty) {
+          val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, slope) }
+          listOfNotNull(bestCard)
+        } else {
+          emptyList() // Stop playing cards.
+        }
+      }
+
+      PlayerController.SkillEvent.CHOOSE_CARD_TO_BUY -> {
+        val studyValue = calculateStudyValue(player, gameModel)
+        val affordable = elements
+          .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }
+          .sortedByDescending { it.skillCard.cost }
+        
+        affordable.take(count.upperEndpoint())
+      }
+
+      PlayerController.SkillEvent.DISCARD_SKILL_FOR_LIFT,
+      PlayerController.SkillEvent.TRASH_SKILL,
+      PlayerController.SkillEvent.DISCARD_FOR_CRASH -> {
+        // Just pick the first N elements.
+        elements.take(count.upperEndpoint())
+      }
+    }
   }
 
   override suspend fun chooseApresCard(
+    gameModel: GameModel,
     player: Player,
     elements: List<Apres>,
     count: Range<Int>,
@@ -42,76 +66,50 @@ class SimpleAiController(override val name: String) : PlayerController {
   }
 
   override suspend fun chooseMountainTile(
+    gameModel: GameModel,
     player: Player,
+    event: PlayerController.MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
-    return elements.first()
+    return when (event) {
+      PlayerController.MountainTileEvent.CHOOSE_START_OF_DAY_LOCATION -> elements.first()
+      PlayerController.MountainTileEvent.CHOOSE_SKI_RIDE_DESTINATION -> elements.first()
+    }
   }
 
-  override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
+  override suspend fun choosePlayerCard(
+    gameModel: GameModel,
+    player: Player,
+    elements: List<PlayerCard>,
+  ): PlayerCard {
     return elements.first()
   }
 
   override suspend fun makeMountainDecision(
-    player: Player,
     gameModel: GameModel,
+    player: Player,
   ): MountainDecision {
-    val location = player.location ?: return mountainDecision { pass = passDecision { } }
-    val tile = gameModel.tileMap[location] ?: return mountainDecision { pass = passDecision { } }
+    val location = player.location ?: return MountainDecision.DECISION_PASS
+    val tile = gameModel.tileMap[location] ?: return MountainDecision.DECISION_PASS
 
     // 1. If on an exit tile, EXIT.
     if (tile.apresLink > 0) {
-      return mountainDecision { exit = MountainDecision.ExitDecision.getDefaultInstance() }
+      return MountainDecision.DECISION_EXIT
     }
 
     // 2. If on a lift tile and has cards to discard, LIFT.
     if (tile.hasLift() && player.hand.size >= tile.lift.minCards) {
-      return mountainDecision { lift = MountainDecision.LiftDecision.getDefaultInstance() }
+      return MountainDecision.DECISION_LIFT
     }
 
     // 3. If there are available moves down, SKI_RIDE.
     val moves = gameModel.getAvailableMoves(player)
     if (moves.isNotEmpty()) {
-      // For now, just pick the first move.
-      return mountainDecision { 
-        skiRide = skiRideDecision { 
-          direction = moves.values.first() 
-        } 
-      }
+      return MountainDecision.DECISION_SKI_RIDE
     }
 
     // 4. Otherwise, PASS.
-    return mountainDecision { 
-      pass = passDecision { 
-        // Try to buy a card if possible.
-        val studyValue = calculateStudyValue(player, gameModel)
-        val affordable = gameModel.shop.entries
-          .filter { (it.key.skillCard.cost - it.value).coerceAtLeast(0) <= studyValue }
-          .sortedByDescending { it.key.skillCard.cost }
-        
-        if (affordable.isNotEmpty()) {
-          buyCardName = affordable.first().key.name
-        }
-      } 
-    }
-  }
-
-  override suspend fun chooseSkiRideResolutionAction(
-    player: Player,
-    gameModel: GameModel,
-  ): SkiRideResolutionAction {
-    // Pick the card with the highest expected skill value.
-    val location = player.location!!
-    val tile = gameModel.tileMap[location]!!
-    val slope = tile.slope
-
-    val bestCard = player.hand.maxByOrNull { calculateExpectedValue(it.skillCard, slope) }
-    return if (bestCard != null) {
-      skiRideResolutionAction { play = playCardAction { cardName = bestCard.name } }
-    } else {
-      // This shouldn't happen as GameModel handles empty hand, but for safety:
-      skiRideResolutionAction { stop = empty {} }
-    }
+    return MountainDecision.DECISION_PASS
   }
 
   private fun calculateExpectedValue(card: SkillCard, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): Double {

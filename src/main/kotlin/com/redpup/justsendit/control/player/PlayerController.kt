@@ -1,13 +1,13 @@
 package com.redpup.justsendit.control.player
 
 import com.google.common.collect.Range
+import com.redpup.justsendit.control.player.PlayerController.SkillZone
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.SkiRideResolutionAction
 import com.redpup.justsendit.model.skill.Skill
 
 /** Handler for players making decisions. */
@@ -23,9 +23,21 @@ interface PlayerController {
     SHOP
   }
 
+  // TODO: Make sealed data classes with info.
+  /** Reasons a player controller can be invoked to choose a skill card. */
+  enum class SkillEvent {
+    PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
+    DISCARD_SKILL_FOR_LIFT,
+    TRASH_SKILL,
+    CHOOSE_CARD_TO_BUY,
+    DISCARD_FOR_CRASH,
+  }
+
   /** Asks the player to choose some number of skill cards from a list. */
   suspend fun chooseSkillCards(
+    gameModel: GameModel,
     player: Player,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: SkillZone,
@@ -33,45 +45,52 @@ interface PlayerController {
 
   /** Asks the player to choose some number of Apres cards from a list. */
   suspend fun chooseApresCard(
+    gameModel: GameModel,
     player: Player,
     elements: List<Apres>,
     count: Range<Int>,
   ): List<Apres>
 
+  /** Reasons a player controller can be invoked to choose a mountain tile. */
+  enum class MountainTileEvent {
+    CHOOSE_START_OF_DAY_LOCATION,
+    CHOOSE_SKI_RIDE_DESTINATION,
+  }
+
   /** Asks the player to choose a mountain tile from a list. */
   suspend fun chooseMountainTile(
+    gameModel: GameModel,
     player: Player,
+    event: MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint
 
   /** Asks the player to choose a player card from a list. */
   suspend fun choosePlayerCard(
+    gameModel: GameModel,
     player: Player,
     elements: List<PlayerCard>,
   ): PlayerCard
 
   /** Queues the player to make a mountain decision at the start of their turn. */
-  suspend fun makeMountainDecision(player: Player, gameModel: GameModel): MountainDecision
-
-  /** Asks the player to choose a card to play or stop during ski/ride resolution. */
-  suspend fun chooseSkiRideResolutionAction(
-    player: Player,
-    gameModel: GameModel,
-  ): SkiRideResolutionAction
+  suspend fun makeMountainDecision(gameModel: GameModel, player: Player): MountainDecision
 }
 
 class BasicPlayerController : PlayerController {
   override val name = "BasicPlayerController-${System.identityHashCode(this)}"
   override suspend fun chooseSkillCards(
+    gameModel: GameModel,
     player: Player,
+    event: PlayerController.SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
-    vararg zones: PlayerController.SkillZone,
+    vararg zones: SkillZone,
   ): List<Skill> {
     TODO("Not yet implemented")
   }
 
   override suspend fun chooseApresCard(
+    gameModel: GameModel,
     player: Player,
     elements: List<Apres>,
     count: Range<Int>,
@@ -79,25 +98,27 @@ class BasicPlayerController : PlayerController {
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseMountainTile(player: Player, elements: Collection<HexPoint>): HexPoint {
+  override suspend fun chooseMountainTile(
+    gameModel: GameModel,
+    player: Player,
+    event: PlayerController.MountainTileEvent,
+    elements: Collection<HexPoint>,
+  ): HexPoint {
     TODO("Not yet implemented")
   }
 
-  override suspend fun choosePlayerCard(player: Player, elements: List<PlayerCard>): PlayerCard {
+  override suspend fun choosePlayerCard(
+    gameModel: GameModel,
+    player: Player,
+    elements: List<PlayerCard>,
+  ): PlayerCard {
     TODO("Not yet implemented")
   }
 
   override suspend fun makeMountainDecision(
-    player: Player,
     gameModel: GameModel,
+    player: Player,
   ): MountainDecision {
-    TODO("Not yet implemented")
-  }
-
-  override suspend fun chooseSkiRideResolutionAction(
-    player: Player,
-    gameModel: GameModel,
-  ): SkiRideResolutionAction {
     TODO("Not yet implemented")
   }
 }

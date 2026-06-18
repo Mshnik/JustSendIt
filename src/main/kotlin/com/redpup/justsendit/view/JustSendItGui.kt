@@ -100,6 +100,7 @@ class JustSendItGui : Application() {
     advanceButton.setupStart()
 
     sidebarHub = SidebarHub(gameModel, logPanel)
+    guiController.sidebarHub = sidebarHub
     activePlayerArea = ActivePlayerArea(guiState, advanceButton)
     guiController.activePlayerArea = activePlayerArea
 

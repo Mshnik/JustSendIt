@@ -13,6 +13,7 @@ import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 
 import com.redpup.justsendit.simulation.controller.RandomAiController
+import com.redpup.justsendit.simulation.controller.RiskyAiController
 import com.redpup.justsendit.simulation.controller.SimpleAiController
 
 /** Guice module for simulation mode. */
@@ -29,7 +30,10 @@ class SimulationModule : KtAbstractModule() {
   fun providePlayerControllers(): List<PlayerController> {
     return listOf(
       SimpleAiController("AI-Simple"),
-      RandomAiController("AI-Random")
+      RandomAiController("AI-Random"),
+      RiskyAiController("AI-Safe", 0.1),
+      RiskyAiController("AI-Balanced", 0.5),
+      RiskyAiController("AI-Risky", 0.9)
     )
   }
 }

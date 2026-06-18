@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.player
 import com.google.inject.Guice
 import com.google.inject.Inject
 import com.redpup.justsendit.control.player.BasicPlayerController
+import com.redpup.justsendit.control.player.PlayerController.MountainTileEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.skill.SkillFactory
@@ -34,7 +35,7 @@ class PlayerControllerTest {
 
     assertThrows<NotImplementedError> {
       runBlocking {
-        handler.choosePlayerCard(player, cards)
+        handler.choosePlayerCard(gameModel, player, cards)
       }
     }
   }
@@ -43,7 +44,7 @@ class PlayerControllerTest {
   fun `makeMountainDecision throws NotImplementedError`() {
     assertThrows<NotImplementedError> {
       runBlocking {
-        handler.makeMountainDecision(player, gameModel)
+        handler.makeMountainDecision(gameModel, player)
       }
     }
   }
@@ -52,7 +53,12 @@ class PlayerControllerTest {
   fun `getStartingLocation throws NotImplementedError`() {
     assertThrows<NotImplementedError> {
       runBlocking {
-        handler.chooseMountainTile(player, listOf())
+        handler.chooseMountainTile(
+          gameModel,
+          player,
+          MountainTileEvent.CHOOSE_START_OF_DAY_LOCATION,
+          listOf()
+        )
       }
     }
   }

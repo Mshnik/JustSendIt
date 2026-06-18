@@ -4,10 +4,6 @@ import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.liftDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.passDecision
-import com.redpup.justsendit.model.player.proto.MountainDecisionKt.skiRideDecision
-import com.redpup.justsendit.model.player.proto.mountainDecision
 import com.redpup.justsendit.view.AdvanceButton
 import com.redpup.justsendit.view.GuiState
 import com.redpup.justsendit.view.skill.CardWidget
@@ -46,6 +42,7 @@ class ActivePlayerArea(
   private val skiButton = Button("SKI / RIDE")
   private val liftButton = Button("TAKE LIFT")
   private val passButton = Button("PASS")
+  private val exitButton = Button("EXIT")
 
   private var decisionDeferred: CompletableDeferred<MountainDecision>? = null
 
@@ -95,12 +92,14 @@ class ActivePlayerArea(
     skiButton.styleClass.add("phase-button")
     liftButton.styleClass.add("phase-button")
     passButton.styleClass.add("phase-button")
+    exitButton.styleClass.add("phase-button")
 
-    skiButton.setOnAction { completeDecision(mountainDecision { skiRide = skiRideDecision {} }) }
-    liftButton.setOnAction { completeDecision(mountainDecision { lift = liftDecision {} }) }
-    passButton.setOnAction { completeDecision(mountainDecision { pass = passDecision {} }) }
+    skiButton.setOnAction { completeDecision(MountainDecision.DECISION_SKI_RIDE) }
+    liftButton.setOnAction { completeDecision(MountainDecision.DECISION_LIFT) }
+    passButton.setOnAction { completeDecision(MountainDecision.DECISION_PASS) }
+    exitButton.setOnAction { completeDecision(MountainDecision.DECISION_EXIT) }
 
-    phaseChooser.children.addAll(skiButton, liftButton, passButton, advanceButton)
+    phaseChooser.children.addAll(skiButton, liftButton, passButton, exitButton, advanceButton)
 
     handRow.alignment = Pos.CENTER
     handRow.spacing = 6.0
@@ -122,14 +121,19 @@ class ActivePlayerArea(
   }
 
   fun setButtonsEnabled(enabled: Boolean) {
-    skiButton.isDisable = !enabled
-    liftButton.isDisable = !enabled
+    val location = guiState.gameModel.currentPlayer.location
+    val tile = location?.let { guiState.gameModel.tileMap[it] }
+
+    skiButton.isDisable = !enabled || guiState.gameModel.getAvailableMoves(guiState.gameModel.currentPlayer).isEmpty()
+    liftButton.isDisable = !enabled || tile?.hasLift() != true
     passButton.isDisable = !enabled
+    exitButton.isDisable = !enabled || (tile?.apresLink ?: 0) == 0
 
     // Reset visual state
     skiButton.styleClass.remove("selected")
     liftButton.styleClass.remove("selected")
     passButton.styleClass.remove("selected")
+    exitButton.styleClass.remove("selected")
   }
 
   suspend fun awaitMountainDecision(): MountainDecision {

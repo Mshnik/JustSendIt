@@ -8,43 +8,10 @@ option java_package = "com.redpup.justsendit.model.player.proto";
 import "com/redpup/justsendit/model/board/hex/hex_point.proto";
 import "google/protobuf/empty.proto";
 
-/** Different decisions a player can make while on the mountain. */
-message MountainDecision {
-  oneof decision {
-    SkiRideDecision ski_ride = 1;
-    LiftDecision lift = 2;
-    PassDecision pass = 3;
-    ExitDecision exit = 5;
-  }
-
-  /** A decision to ski or ride in a given direction. */
-  message SkiRideDecision {
-    model.board.hex.HexDirection direction = 1;
-  }
-
-  /** A decision to ride a lift. */
-  message LiftDecision {}
-
-  /** A decision to pass. */
-  message PassDecision {
-    // The name of the card to buy from the shop. Empty if none.
-    string buy_card_name = 1;
-  }
-
-  /** A decision to exit the mountain. */
-  message ExitDecision {}
-}
-
-/** Actions a player can take during a ski/ride resolution. */
-message SkiRideResolutionAction {
-  oneof action {
-    PlayCardAction play = 1;
-    google.protobuf.Empty stop = 2;
-  }
-
-  /** Player choose to play a card during a ski/ride resolution. */
-  message PlayCardAction {
-    // The name of the card to play.
-    string card_name = 1;
-  }
+enum MountainDecision {
+  DECISION_UNSET = 0;
+  DECISION_SKI_RIDE = 1;
+  DECISION_LIFT = 2;
+  DECISION_PASS = 3;
+  DECISION_EXIT = 4;
 }

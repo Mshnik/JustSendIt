@@ -21,7 +21,7 @@ class SidebarHub(private val gameModel: GameModel, private val logPanel: LogPane
   private val logTab = Tab("LOG")
   private val trashTab = Tab("TRASH")
   
-  private val shopList = AccordionCardList()
+  val shopList = AccordionCardList()
   private val trashList = AccordionCardList()
   
   private val opponentTabs = mutableMapOf<Player, Tab>()

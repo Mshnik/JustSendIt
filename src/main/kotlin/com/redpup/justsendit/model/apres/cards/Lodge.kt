@@ -16,7 +16,7 @@ class Lodge(override val apresCard: ApresCard) : BaseApres(apresCard) {
   ) {
     val count = if (isFirstPlayerToArrive) 2 else 1
     val otherApres = gameModel.apres.filter { it != this }
-    player.controller.chooseApresCard(player, otherApres, Range.closed(count, count))
+    player.controller.chooseApresCard(gameModel, player, otherApres, Range.closed(count, count))
       .forEach { it.apply(player, false, gameModel, random) }
   }
 }

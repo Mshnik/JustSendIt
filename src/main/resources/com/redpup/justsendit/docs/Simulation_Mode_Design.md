@@ -17,10 +17,11 @@ Uses simple heuristics to make "safe" and "productive" decisions.
 - **makeMountainDecision**: Prioritizes EXIT, then LIFT (if cards available), then SKI_RIDE.
 - **chooseSkiRideResolutionAction**: Plays the card with the highest expected value.
 
-#### RandomAiController
-Makes stochastic decisions, useful for exploring the game space and testing edge cases.
-- Randomly chooses between valid actions.
-- Randomly plays cards from hand.
+#### RiskyAiController
+Takes a `risk` parameter in `[0, 1]`.
+- **risk = 0**: Very conservative, always picks the safest card and easiest tiles.
+- **risk = 1**: Highly aggressive, will attempt very difficult tiles even with a weak hand and play cards with low success probability to save better ones.
+- Uses statistical modeling (means and variances of dice) to estimate success probabilities.
 
 ### SimulationModule
 A Guice module that binds:

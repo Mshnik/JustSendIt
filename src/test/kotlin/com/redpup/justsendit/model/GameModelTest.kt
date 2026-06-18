@@ -14,8 +14,6 @@ import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
-import com.redpup.justsendit.model.player.proto.mountainDecision
-import com.redpup.justsendit.model.supply.proto.playerCard
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
@@ -27,6 +25,7 @@ import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.ShopDeck
 import com.redpup.justsendit.model.supply.SkillDeck
 import com.redpup.justsendit.model.supply.StarterDeck
+import com.redpup.justsendit.model.supply.proto.playerCard
 import com.redpup.justsendit.model.supply.proto.skillCard
 import com.redpup.justsendit.model.supply.testing.FakeApresDeck
 import com.redpup.justsendit.model.supply.testing.FakePlayerDeck
@@ -138,23 +137,27 @@ class GameModelTest {
 
   @Test
   fun `startDay initializes players and apres`() = runBlocking {
-    whenever(playerController1.chooseMountainTile(any(), any())).thenReturn(mock())
-    whenever(playerController2.chooseMountainTile(any(), any())).thenReturn(mock())
+    whenever(playerController1.chooseMountainTile(any(), any(), any(), any())).thenReturn(
+      createHexPoint(0, 0)
+    )
+    whenever(playerController2.chooseMountainTile(any(), any(), any(), any())).thenReturn(
+      createHexPoint(0, 0)
+    )
     wheneverBlocking {
-      playerController1.choosePlayerCard(any(), any())
-    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+      playerController1.choosePlayerCard(any(), any(), any())
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(2).first() }
     wheneverBlocking {
-      playerController2.choosePlayerCard(any(), any())
-    }.thenAnswer { it.getArgument<List<PlayerCard>>(1).first() }
+      playerController2.choosePlayerCard(any(), any(), any())
+    }.thenAnswer { it.getArgument<List<PlayerCard>>(2).first() }
 
     gameModel.startGame()
 
     assertThat(gameModel.apres).hasSize(MutableGameModel.APRES_SLOTS)
 
-    verify(playerController1).choosePlayerCard(any(), any())
-    verify(playerController2).choosePlayerCard(any(), any())
-    verify(playerController1).chooseMountainTile(any(), any())
-    verify(playerController2).chooseMountainTile(any(), any())
+    verify(playerController1).choosePlayerCard(any(), any(), any())
+    verify(playerController2).choosePlayerCard(any(), any(), any())
+    verify(playerController1).chooseMountainTile(any(), any(), any(), any())
+    verify(playerController2).chooseMountainTile(any(), any(), any(), any())
     Unit
   }
 
@@ -162,9 +165,23 @@ class GameModelTest {
   fun `turn advances player`() = runBlocking {
     gameModel.state = GameState.BETWEEN_TURNS
     player1.location = createHexPoint(0, 0)
-    whenever(playerController1.makeMountainDecision(any(), any())).thenReturn(mountainDecision {
-      pass = MountainDecision.PassDecision.getDefaultInstance()
-    })
+    whenever(
+      playerController1.makeMountainDecision(
+        any(),
+        any()
+      )
+    ).thenReturn(MountainDecision.DECISION_PASS)
+    whenever(
+      playerController1.chooseSkillCards(
+        any(),
+        any(),
+        any(),
+        any(),
+        any(),
+        anyVararg()
+      )
+    )
+      .thenReturn(listOf())
 
     assertThat(gameModel.currentPlayer).isEqualTo(player1)
     gameModel.turn()
@@ -184,10 +201,18 @@ class GameModelTest {
       playerController1.makeMountainDecision(
         any(), any()
       )
-    ).thenReturn(mountainDecision {
-      pass =
-        MountainDecision.PassDecision.getDefaultInstance()
-    })
+    ).thenReturn(MountainDecision.DECISION_PASS)
+    whenever(
+      playerController1.chooseSkillCards(
+        any(),
+        any(),
+        any(),
+        any(),
+        any(),
+        anyVararg()
+      )
+    )
+      .thenReturn(listOf())
     gameModel.turn()
     assertThat(player1.inPlay).isEmpty()
   }
