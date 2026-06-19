@@ -23,7 +23,7 @@ class RandomAiController(override val name: String) : PlayerController {
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlaySkillForSkiRideAttempt -> {
+      is PlaySkillForSkiRideAttempt -> {
         // Randomly decide whether to stop or play a card.
         if (elements.isNotEmpty() && (0..1).random() == 1) {
           listOf(elements.random())

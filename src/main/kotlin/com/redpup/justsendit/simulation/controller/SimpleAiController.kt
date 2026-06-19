@@ -24,15 +24,10 @@ class SimpleAiController(override val name: String) : PlayerController {
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlaySkillForSkiRideAttempt -> {
+      is PlaySkillForSkiRideAttempt -> {
         // Pick the card with the highest expected skill value if we need more skill.
-        val location = player.location!!
-        val tile = gameModel.tileMap[location]!!
-        val slope = tile.slope
-        val currentSkill =
-          player.inPlay.sumOf { calculateExpectedValue(it.skillCard, slope).toInt() }
-        if (currentSkill < slope.difficulty) {
-          val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, slope) }
+        if (event.cumulativeSkill < event.slope.difficulty) {
+          val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, event.slope) }
           listOfNotNull(bestCard)
         } else {
           emptyList() // Stop playing cards.

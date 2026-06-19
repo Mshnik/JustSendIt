@@ -423,7 +423,7 @@ class MutableGameModel @Inject constructor(
       val cards = player.controller.chooseSkillCards(
         this,
         player,
-        PlaySkillForSkiRideAttempt,
+        PlaySkillForSkiRideAttempt(slope, cumulativeSkill, player.wobbles),
         player.hand,
         Range.closed(0, 1),
         SkillZone.HAND

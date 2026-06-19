@@ -29,22 +29,14 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlaySkillForSkiRideAttempt -> {
-        val location = player.location!!
-        val tile = gameModel.tileMap[location]!!
-        val slope = tile.slope
-        val needed = (slope.difficulty - player.inPlay.sumOf {
-          calculateExpectedValue(
-            it.skillCard,
-            slope
-          ).toInt()
-        }).coerceAtLeast(1)
+      is PlaySkillForSkiRideAttempt -> {
+        val needed = event.slope.difficulty - event.cumulativeSkill
 
         // Target success probability decreases as risk increases.
         val targetProb = 1.0 - (risk * 0.8) // Even at max risk, we want SOME chance.
 
         val candidates = elements.map {
-          val prob = estimateSuccessProbability(it.skillCard, slope, needed)
+          val prob = estimateSuccessProbability(it.skillCard, event.slope, needed)
           it to prob
         }
 
@@ -52,7 +44,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
         val choice = if (acceptable.isNotEmpty()) {
           // Pick the "weakest" acceptable card to save others.
-          acceptable.minByOrNull { calculateExpectedValue(it.first.skillCard, slope) }?.first
+          acceptable.minByOrNull { calculateExpectedValue(it.first.skillCard, event.slope) }?.first
         } else {
           // Pick the strongest card if none are safe enough.
           candidates.maxByOrNull { it.second }?.first

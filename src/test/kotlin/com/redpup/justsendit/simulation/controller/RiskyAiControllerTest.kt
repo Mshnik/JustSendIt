@@ -5,10 +5,7 @@ import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.control.player.PlaySkillForSkiRideAttempt
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.proto.MountainTile
-import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.skill.BaseSkill
@@ -26,7 +23,6 @@ class RiskyAiControllerTest {
     val controller = RiskyAiController("SafeAI", 0.0)
     val location = HexPoint.getDefaultInstance()
     val slope = slopeTile { difficulty = 5 }
-    val tile = mountainTile { this.slope = slope }
 
     val skill1 = BaseSkill(skillCard { name = "Weak"; greenDice = 1 }) // EV: 2.5
     val skill2 = BaseSkill(skillCard { name = "Strong"; blackDice = 2 }) // EV: 9.0
@@ -36,18 +32,12 @@ class RiskyAiControllerTest {
       on { hand } doReturn listOf(skill1, skill2)
       on { inPlay } doReturn emptyList<Skill>()
     }
-    val tileMap = mock<HexGrid<MountainTile>> {
-      on { get(location) } doReturn tile
-    }
-    val gameModel = mock<GameModel> {
-      on { this.tileMap } doReturn tileMap
-      on { state } doReturn com.redpup.justsendit.model.proto.GameState.TURN_IN_PROGRESS
-    }
+    val gameModel = mock<GameModel> {}
 
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      PlaySkillForSkiRideAttempt,
+      PlaySkillForSkiRideAttempt(slope, 0, 0),
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND
@@ -62,7 +52,6 @@ class RiskyAiControllerTest {
     val controller = RiskyAiController("RiskyAI", 1.0)
     val location = HexPoint.getDefaultInstance()
     val slope = slopeTile { difficulty = 2 }
-    val tile = mountainTile { this.slope = slope }
 
     val skill1 = BaseSkill(skillCard { name = "Weak"; greenDice = 1 }) // EV: 2.5
     val skill2 = BaseSkill(skillCard { name = "Strong"; blackDice = 2 }) // EV: 9.0
@@ -72,18 +61,12 @@ class RiskyAiControllerTest {
       on { hand } doReturn listOf(skill1, skill2)
       on { inPlay } doReturn emptyList()
     }
-    val tileMap = mock<HexGrid<MountainTile>> {
-      on { get(location) } doReturn tile
-    }
-    val gameModel = mock<GameModel> {
-      on { this.tileMap } doReturn tileMap
-      on { state } doReturn com.redpup.justsendit.model.proto.GameState.TURN_IN_PROGRESS
-    }
+    val gameModel = mock<GameModel> {}
 
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      PlaySkillForSkiRideAttempt,
+      PlaySkillForSkiRideAttempt(slope, 0, 0),
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND
