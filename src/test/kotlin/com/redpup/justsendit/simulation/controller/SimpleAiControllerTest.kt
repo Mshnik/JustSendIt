@@ -2,7 +2,7 @@ package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
-import com.redpup.justsendit.control.player.PlayerController.SkillEvent
+import com.redpup.justsendit.control.player.PlaySkillForLift
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -76,7 +76,7 @@ class SimpleAiControllerTest {
     val chosen = controller.chooseSkillCards(
       gameModel,
       mock(),
-      SkillEvent.PLAY_SKILL_FOR_LIFT,
+      PlaySkillForLift,
       skills,
       Range.closed(1, 2)
     )

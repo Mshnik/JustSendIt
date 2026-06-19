@@ -1,7 +1,10 @@
 package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
+import com.redpup.justsendit.control.player.ChooseCardToBuy
+import com.redpup.justsendit.control.player.PlaySkillForSkiRideAttempt
 import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -22,13 +25,13 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.SkillEvent,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlayerController.SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT -> {
+      PlaySkillForSkiRideAttempt -> {
         val location = player.location!!
         val tile = gameModel.tileMap[location]!!
         val slope = tile.slope
@@ -60,7 +63,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
         listOfNotNull(choice)
       }
 
-      PlayerController.SkillEvent.CHOOSE_CARD_TO_BUY -> {
+      ChooseCardToBuy -> {
         val studyValue = calculateStudyValue(player, gameModel)
         val affordable = elements
           .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }

@@ -1,7 +1,7 @@
 package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -18,13 +18,13 @@ class SimpleAiController(override val name: String) : PlayerController {
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.SkillEvent,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlayerController.SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT -> {
+      PlaySkillForSkiRideAttempt -> {
         // Pick the card with the highest expected skill value if we need more skill.
         val location = player.location!!
         val tile = gameModel.tileMap[location]!!
@@ -38,7 +38,7 @@ class SimpleAiController(override val name: String) : PlayerController {
         }
       }
 
-      PlayerController.SkillEvent.CHOOSE_CARD_TO_BUY -> {
+      ChooseCardToBuy -> {
         val studyValue = calculateStudyValue(player, gameModel)
         val affordable = elements
           .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }
@@ -47,9 +47,7 @@ class SimpleAiController(override val name: String) : PlayerController {
         affordable.take(count.upperEndpoint())
       }
 
-      PlayerController.SkillEvent.PLAY_SKILL_FOR_LIFT,
-      PlayerController.SkillEvent.TRASH_SKILL,
-      PlayerController.SkillEvent.DISCARD_FOR_CRASH -> {
+      PlaySkillForLift, TrashSkill, DiscardForCrash -> {
         // Just pick the first N elements.
         elements.take(count.upperEndpoint())
       }

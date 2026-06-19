@@ -23,16 +23,6 @@ interface PlayerController {
     SHOP
   }
 
-  // TODO: Make sealed data classes with info.
-  /** Reasons a player controller can be invoked to choose a skill card. */
-  enum class SkillEvent {
-    PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
-    PLAY_SKILL_FOR_LIFT,
-    TRASH_SKILL,
-    CHOOSE_CARD_TO_BUY,
-    DISCARD_FOR_CRASH,
-  }
-
   /** Asks the player to choose some number of skill cards from a list. */
   suspend fun chooseSkillCards(
     gameModel: GameModel,
@@ -81,7 +71,7 @@ class BasicPlayerController : PlayerController {
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.SkillEvent,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: SkillZone,

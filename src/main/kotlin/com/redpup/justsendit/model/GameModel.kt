@@ -4,7 +4,7 @@ import com.google.common.collect.Range
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.protobuf.util.Timestamps
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.*
 import com.redpup.justsendit.control.player.PlayerController.*
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
@@ -423,7 +423,7 @@ class MutableGameModel @Inject constructor(
       val cards = player.controller.chooseSkillCards(
         this,
         player,
-        SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
+        PlaySkillForSkiRideAttempt,
         player.hand,
         Range.closed(0, 1),
         SkillZone.HAND
@@ -476,7 +476,7 @@ class MutableGameModel @Inject constructor(
         controller.chooseSkillCards(
           this@MutableGameModel,
           player,
-          SkillEvent.DISCARD_FOR_CRASH,
+          DiscardForCrash,
           player.hand,
           Range.closed(1, 1),
           SkillZone.HAND
@@ -501,7 +501,7 @@ class MutableGameModel @Inject constructor(
     val toPlay = player.controller.chooseSkillCards(
       this,
       player,
-      SkillEvent.PLAY_SKILL_FOR_LIFT,
+      PlaySkillForLift,
       player.hand,
       Range.closed(tile.lift.minCards, tile.lift.maxCards),
       SkillZone.HAND
@@ -518,7 +518,7 @@ class MutableGameModel @Inject constructor(
     player.controller.chooseSkillCards(
       this,
       player,
-      SkillEvent.TRASH_SKILL,
+      TrashSkill,
       trashCandidates,
       Range.closed(0, toPlay.size),
       SkillZone.PLAY, SkillZone.DISCARD,
@@ -550,7 +550,7 @@ class MutableGameModel @Inject constructor(
     val cards = player.controller.chooseSkillCards(
       this,
       player,
-      SkillEvent.CHOOSE_CARD_TO_BUY,
+      ChooseCardToBuy,
       shop.keys.toList(),
       Range.closed(0, 1),
       SkillZone.SHOP

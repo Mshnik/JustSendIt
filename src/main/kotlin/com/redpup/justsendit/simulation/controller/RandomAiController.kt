@@ -1,7 +1,10 @@
 package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
+import com.redpup.justsendit.control.player.ChooseCardToBuy
+import com.redpup.justsendit.control.player.PlaySkillForSkiRideAttempt
 import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -17,13 +20,13 @@ class RandomAiController(override val name: String) : PlayerController {
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.SkillEvent,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,
   ): List<Skill> {
     return when (event) {
-      PlayerController.SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT -> {
+      PlaySkillForSkiRideAttempt -> {
         // Randomly decide whether to stop or play a card.
         if (elements.isNotEmpty() && (0..1).random() == 1) {
           listOf(elements.random())
@@ -32,7 +35,7 @@ class RandomAiController(override val name: String) : PlayerController {
         }
       }
 
-      PlayerController.SkillEvent.CHOOSE_CARD_TO_BUY -> {
+      ChooseCardToBuy -> {
         // Randomly pick an affordable card.
         val studyValue = calculateStudyValue(player, gameModel)
         val affordable = elements
@@ -45,7 +48,8 @@ class RandomAiController(override val name: String) : PlayerController {
         }
       }
 
-      else -> elements.shuffled().take(count.lowerEndpoint() + (0..count.upperEndpoint() - count.lowerEndpoint()).random())
+      else -> elements.shuffled()
+        .take(count.lowerEndpoint() + (0..count.upperEndpoint() - count.lowerEndpoint()).random())
     }
   }
 
@@ -55,7 +59,8 @@ class RandomAiController(override val name: String) : PlayerController {
     elements: List<Apres>,
     count: Range<Int>,
   ): List<Apres> {
-    return elements.shuffled().take(count.lowerEndpoint() + (0..count.upperEndpoint() - count.lowerEndpoint()).random())
+    return elements.shuffled()
+      .take(count.lowerEndpoint() + (0..count.upperEndpoint() - count.lowerEndpoint()).random())
   }
 
   override suspend fun chooseMountainTile(

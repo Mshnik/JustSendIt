@@ -2,6 +2,7 @@ package com.redpup.justsendit.view
 
 import com.google.common.collect.Range
 import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.player.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -34,7 +35,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.SkillEvent,
+    event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
     vararg zones: PlayerController.SkillZone,

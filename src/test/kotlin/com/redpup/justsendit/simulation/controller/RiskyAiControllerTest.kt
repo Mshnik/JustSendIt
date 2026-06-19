@@ -2,8 +2,8 @@ package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
+import com.redpup.justsendit.control.player.PlaySkillForSkiRideAttempt
 import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.control.player.PlayerController.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -47,7 +47,7 @@ class RiskyAiControllerTest {
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
+      PlaySkillForSkiRideAttempt,
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND
@@ -83,7 +83,7 @@ class RiskyAiControllerTest {
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      SkillEvent.PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
+      PlaySkillForSkiRideAttempt,
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND
