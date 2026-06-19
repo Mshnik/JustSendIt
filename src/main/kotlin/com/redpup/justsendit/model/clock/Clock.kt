@@ -24,6 +24,9 @@ interface Clock {
   /** What game of day it is. */
   val day: Day
 
+  /** Listeners for state changes. When invoked, called with (old, new) state. */
+  val onStateChanged: MutableList<(GameState, GameState) -> Unit>
+
   /** Updates this Clock's position to start of game. */
   fun startGame()
 

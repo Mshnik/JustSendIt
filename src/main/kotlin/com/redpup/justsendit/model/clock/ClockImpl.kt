@@ -14,14 +14,20 @@ class ClockImpl @Inject constructor(
   override var round: Int = 1
   override var turn: Int = 1
   override var subTurn: Int = 1
+  override val onStateChanged = mutableListOf<(GameState, GameState) -> Unit>()
 
   private fun checkState(expected: GameState) {
     check(state == expected) { "Expected $expected, found $state" }
   }
 
+  private fun changeState(from: GameState, to: GameState) {
+    checkState(from)
+    state = to
+    onStateChanged.forEach { it(from, to) }
+  }
+
   override fun startGame() {
-    checkState(GameState.BEFORE_START)
-    state = GameState.BETWEEN_DAYS
+    changeState(GameState.BEFORE_START, GameState.BETWEEN_DAYS)
 
     day = Day.DAY_FRIDAY
     round = 1
@@ -30,8 +36,7 @@ class ClockImpl @Inject constructor(
   }
 
   override fun startDay() {
-    checkState(GameState.BETWEEN_DAYS)
-    state = GameState.BETWEEN_ROUNDS
+    changeState(GameState.BETWEEN_DAYS, GameState.BETWEEN_ROUNDS)
 
     round = 1
     turn = 1
@@ -39,9 +44,8 @@ class ClockImpl @Inject constructor(
   }
 
   override fun endDay(): Boolean {
-    checkState(GameState.BETWEEN_ROUNDS)
+    changeState(GameState.BETWEEN_ROUNDS, GameState.BETWEEN_DAYS)
 
-    state = GameState.BETWEEN_DAYS
     round = 1
     turn = 1
     subTurn = 1
@@ -61,17 +65,14 @@ class ClockImpl @Inject constructor(
   }
 
   override fun startRound() {
-    checkState(GameState.BETWEEN_ROUNDS)
-    state = GameState.BETWEEN_TURNS
+    changeState(GameState.BETWEEN_ROUNDS, GameState.BETWEEN_TURNS)
 
     turn = 1
     subTurn = 1
   }
 
   override fun endRound() {
-    checkState(GameState.BETWEEN_TURNS)
-
-    state = GameState.BETWEEN_ROUNDS
+    changeState(GameState.BETWEEN_TURNS, GameState.BETWEEN_ROUNDS)
 
     round++
     turn = 1
@@ -79,15 +80,11 @@ class ClockImpl @Inject constructor(
   }
 
   override fun startTurn() {
-    checkState(GameState.BETWEEN_TURNS)
-
-    state = GameState.TURN_IN_PROGRESS
+    changeState(GameState.BETWEEN_TURNS, GameState.TURN_IN_PROGRESS)
   }
 
   override fun endTurn() {
-    checkState(GameState.TURN_IN_PROGRESS)
-
-    state = GameState.BETWEEN_TURNS
+    changeState(GameState.TURN_IN_PROGRESS, GameState.BETWEEN_TURNS)
 
     turn++
     subTurn = 1

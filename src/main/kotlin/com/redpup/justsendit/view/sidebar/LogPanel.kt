@@ -2,7 +2,6 @@ package com.redpup.justsendit.view.sidebar
 
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
-import com.redpup.justsendit.model.GameModel
 import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.layout.VBox
@@ -16,12 +15,12 @@ class LogPanel : ScrollPane(), Logger {
   }
 
   override fun log(log: Log) {
-    logContainer.children.add(Label(log.format()))
+    log.format()?.let { logContainer.children.add(Label(it)) }
   }
 
-  private fun Log.format(): String {
+  private fun Log.format(): String? {
     val event = when (eventCase) {
-      Log.EventCase.STATE_TRANSITION -> "State: $stateTransition"
+      Log.EventCase.STATE_TRANSITION -> null
       Log.EventCase.MOUNTAIN_DECISION -> "$playerName chose $mountainDecision"
       Log.EventCase.PLAYER_MOVE -> "$playerName moved from ${
         playerMove.from.toString().replace("\n", " ").trim()
@@ -39,6 +38,6 @@ class LogPanel : ScrollPane(), Logger {
 
       else -> "Unknown event"
     }
-    return "[$day/$turn/$subturn] $event"
+    return event?.let { "[$day/$round/$turn($subturn)] $it" }
   }
 }

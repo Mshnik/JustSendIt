@@ -105,6 +105,10 @@ class MutableGameModel @Inject constructor(
 
   override val shop = mutableMapOf<Skill, Int>()
 
+  init {
+    clock.onStateChanged.add { _, to -> to.log() }
+  }
+
   private data class CardResolution(
     val rolls: List<Int>,
     val skill: Int,
