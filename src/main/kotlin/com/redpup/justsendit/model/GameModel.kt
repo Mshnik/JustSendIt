@@ -17,6 +17,8 @@ import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.*
+import com.redpup.justsendit.model.clock.Clock
+import com.redpup.justsendit.model.clock.MaxRound
 import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
@@ -38,7 +40,7 @@ interface GameModel {
   fun mutate(fn: MutableGameModel.() -> Unit)
 
   /** The current state of the game. */
-  val state: GameState
+  val state: GameState get() = clock.state
 
   /** The mountain map. */
   val tileMap: HexGrid<MountainTile>
@@ -74,6 +76,8 @@ class MutableGameModel @Inject constructor(
   tileMapBuilder: TileMapBuilder,
   playerControllers: @JvmSuppressWildcards List<PlayerController>,
   playerFactory: PlayerFactory,
+  override val clock: Clock,
+  @MaxRound private val maxRound: Int,
   private val playerDeck: PlayerDeck,
   private val apresDeck: ApresDeck,
   @StarterDeck private val starterDeck: SkillDeck,
@@ -86,14 +90,6 @@ class MutableGameModel @Inject constructor(
   override fun mutate(fn: MutableGameModel.() -> Unit) {
     this.fn()
   }
-
-  override var state: GameState = GameState.BEFORE_START
-    set(state) {
-      if (field != state) {
-        field = state
-        state.log()
-      }
-    }
 
   override val tileMap: HexGrid<MountainTile> = tileMapBuilder.build()
   private val lifts =
@@ -108,8 +104,6 @@ class MutableGameModel @Inject constructor(
   override val currentPlayer get() = players[currentPlayerIndex]
 
   override val shop = mutableMapOf<Skill, Int>()
-
-  override val clock = MutableClock()
 
   private data class CardResolution(
     val rolls: List<Int>,
@@ -241,11 +235,7 @@ class MutableGameModel @Inject constructor(
 
   /** Starts the game. */
   suspend fun startGame() {
-    check(state == GameState.BEFORE_START) {
-      "State must be start of game"
-    }
-
-    state = GameState.BETWEEN_DAYS
+    clock.startGame()
     giveStartingPoints()
     giveStarterDecks()
     startDay()
@@ -270,9 +260,7 @@ class MutableGameModel @Inject constructor(
 
   /** Starts a new day. May be the first day of the game or a later day in the game. */
   private suspend fun startDay() {
-    check(state == GameState.BETWEEN_DAYS) {
-      "State must be between days"
-    }
+    clock.startDay()
 
     pickPlayerCards()
     populateApresSlots()
@@ -290,7 +278,6 @@ class MutableGameModel @Inject constructor(
       player.playerCards.forEach { it.startDay() }
     }
 
-    state = GameState.BETWEEN_ROUNDS
     startRound()
   }
 
@@ -313,23 +300,20 @@ class MutableGameModel @Inject constructor(
 
   /** Starts a round. */
   private fun startRound() {
-    check(state == GameState.BETWEEN_ROUNDS) { "State must be between rounds, found $state" }
+    clock.startRound()
 
     players.forEach {
       it.discardInPlay()
       it.discardHand()
       it.drawCards(INITIAL_HAND_SIZE, random)
     }
-
-    state = GameState.BETWEEN_TURNS
   }
 
   /** Executes one turn for the current player. */
   suspend fun turn() {
-    check(state == GameState.BETWEEN_TURNS) { "State must be between turns, found $state" }
+    clock.startTurn()
     check(!currentPlayer.isPassed) { "Player $currentPlayer has passed" }
 
-    state = GameState.TURN_IN_PROGRESS
     val player = currentPlayer
     player.playerCards.forEach { it.startTurn() }
 
@@ -337,26 +321,26 @@ class MutableGameModel @Inject constructor(
     do {
       val decision = player.controller.makeMountainDecision(this, player).also { it.log() }
       continueTurn = executeDecision(player, decision)
-      clock.advanceSubTurn()
+      clock.incrementSubTurn()
     } while (continueTurn)
+
+    clock.endTurn()
 
     // If not all players have passed, advance to the next non-passed player.
     if (players.all { it.isPassed }) {
-      // This ended the round; we are now between rounds.
-      state = GameState.BETWEEN_ROUNDS
+      clock.endRound()
+      if (clock.round >= maxRound) {
+        clock.endDay()
+      }
     } else {
       do {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size
       } while (currentPlayer.isPassed)
-      clock.advanceTurn()
-      state = GameState.BETWEEN_TURNS
     }
   }
 
   /** Concludes the round, resets passed players, and moves leader token. */
   suspend fun endRound() {
-    check(state == GameState.BETWEEN_ROUNDS) { "State must be between rounds, found $state" }
-
     replenishShop()
 
     // "Un-pass" each player.
@@ -367,14 +351,7 @@ class MutableGameModel @Inject constructor(
     // Reset current player to new leader.
     currentPlayerIndex = 0
 
-    if (clock.round < clock.maxRound) {
-      // This did not end the day - start a new round.
-      clock.advanceRound()
-      startRound()
-    } else {
-      // This ended the day - we are now between days.
-      state = GameState.BETWEEN_DAYS
-    }
+    clock.endRound()
   }
 
   /**
@@ -382,14 +359,13 @@ class MutableGameModel @Inject constructor(
    * Returns true if the game is over, false otherwise.
    */
   suspend fun advanceDay(): Boolean {
-    check(state == GameState.BETWEEN_DAYS) { "State must be between days, found $state" }
+    clock.endDay()
 
     // Update clock, advance to next day if there is one.
     if (clock.day == Day.DAY_SUNDAY) {
       return false
     }
 
-    clock.advanceDay()
     startDay()
     return true
   }

@@ -29,7 +29,7 @@ class AdvanceButton(
       GameState.BETWEEN_ROUNDS -> setupRound()
       GameState.BETWEEN_TURNS -> setupTurn()
       GameState.TURN_IN_PROGRESS -> disarm()
-      GameState.GAME_STATE_UNSET, GameState.UNRECOGNIZED, null -> {}
+      GameState.GAME_STATE_UNSET, GameState.UNRECOGNIZED, GameState.AFTER_END, null -> {}
     }
   }
 
@@ -39,7 +39,7 @@ class AdvanceButton(
       this.confirmDeferred = deferred
       text = "CONFIRM"
       isDisable = true // Start disabled until selection is made
-      setOnAction { 
+      setOnAction {
         deferred.complete(Unit)
         this.confirmDeferred = null
         // Restore last state if possible

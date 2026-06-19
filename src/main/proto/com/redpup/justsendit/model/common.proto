@@ -8,9 +8,11 @@ option java_package = "com.redpup.justsendit.model.proto";
 /** Days of the game. */
 enum Day {
   DAY_UNSET = 0;
-  DAY_FRIDAY = 1;
-  DAY_SATURDAY = 2;
-  DAY_SUNDAY = 3;
+  DAY_BEFORE_START = 1;
+  DAY_FRIDAY = 2;
+  DAY_SATURDAY = 3;
+  DAY_SUNDAY = 4;
+  DAY_GAME_OVER = 5;
 }
 
 /** States the game can be in.*/
@@ -21,6 +23,7 @@ enum GameState {
   BETWEEN_ROUNDS = 3;
   BETWEEN_TURNS = 4;
   TURN_IN_PROGRESS = 5;
+  AFTER_END = 6;
 }
 
 /** Types of dice. */

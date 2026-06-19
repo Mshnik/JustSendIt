@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.apres.testing.FakeApres
 import com.redpup.justsendit.model.apres.testing.FakeApresFactory
 import com.redpup.justsendit.model.apres.testing.FakeApresModule
 import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
+import com.redpup.justsendit.model.clock.ClockModule
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
@@ -61,6 +62,7 @@ class GameModelTest {
     whenever(playerController2.name).thenReturn("PlayerController2")
 
     Guice.createInjector(
+      ClockModule(),
       FakeTimeSourceModule(),
       FakeApresModule(),
       FakeSupplyModule(),
@@ -163,7 +165,10 @@ class GameModelTest {
 
   @Test
   fun `turn advances player`() = runBlocking {
-    gameModel.state = GameState.BETWEEN_TURNS
+    gameModel.clock.startGame()
+    gameModel.clock.startDay()
+    gameModel.clock.startRound()
+
     player1.location = createHexPoint(0, 0)
     whenever(
       playerController1.makeMountainDecision(
@@ -191,7 +196,10 @@ class GameModelTest {
 
   @Test
   fun `executePass discards in play cards`() = runBlocking {
-    gameModel.state = GameState.BETWEEN_TURNS
+    gameModel.clock.startGame()
+    gameModel.clock.startDay()
+    gameModel.clock.startRound()
+
     player1.location = createHexPoint(0, 0)
     repeat(2) { player1.gainSkill(skillFactory.create(skillCard { name = "Card $it" })) }
     player1.drawCards(2, random)

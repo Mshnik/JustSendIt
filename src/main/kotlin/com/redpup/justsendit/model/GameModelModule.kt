@@ -4,6 +4,7 @@ import com.redpup.justsendit.log.LoggerClass
 import com.redpup.justsendit.log.LoggerModule
 import com.redpup.justsendit.log.PrintlineLogger
 import com.redpup.justsendit.model.apres.ApresModule
+import com.redpup.justsendit.model.clock.ClockModule
 import com.redpup.justsendit.model.player.PlayerModule
 import com.redpup.justsendit.model.random.RandomModule
 import com.redpup.justsendit.model.skill.SkillModule
@@ -14,6 +15,7 @@ import com.redpup.justsendit.util.KtAbstractModule
 class GameModelModule : KtAbstractModule() {
   override fun configure() {
     install(ApresModule())
+    install(ClockModule())
     install(PlayerModule())
     install(RandomModule())
     install(SkillModule())

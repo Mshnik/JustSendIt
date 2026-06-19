@@ -30,25 +30,25 @@ class ApresDeckTest {
             # proto-message: ApresCardList
 
             apres {
-              name: "Day 1 Only"
-              available_days: 1
-            }
-            apres {
-              name: "Day 2 Only"
+              name: "Friday Only"
               available_days: 2
             }
             apres {
-              name: "Day 1 and 2"
-              available_days: 1
+              name: "Saturday Only"
+              available_days: 3
+            }
+            apres {
+              name: "Friday and Saturday"
               available_days: 2
+              available_days: 3
             }
         """.trimIndent()
     )
 
     factory = FakeApresFactory()
-    factory.register("Day 1 Only") { FakeApres(it) }
-    factory.register("Day 2 Only") { FakeApres(it) }
-    factory.register("Day 1 and 2") { FakeApres(it) }
+    factory.register("Friday Only") { FakeApres(it) }
+    factory.register("Saturday Only") { FakeApres(it) }
+    factory.register("Friday and Saturday") { FakeApres(it) }
   }
 
 
@@ -59,15 +59,15 @@ class ApresDeckTest {
 
     assertThat(deck.getCards()).containsExactly(
       apresCard {
-        name = "Day 1 Only"
+        name = "Friday Only"
         availableDays += Day.DAY_FRIDAY
       },
       apresCard {
-        name = "Day 2 Only"
+        name = "Saturday Only"
         availableDays += Day.DAY_SATURDAY
       },
       apresCard {
-        name = "Day 1 and 2"
+        name = "Friday and Saturday"
         availableDays += Day.DAY_FRIDAY
         availableDays += Day.DAY_SATURDAY
       }
@@ -107,10 +107,10 @@ class ApresDeckTest {
     deck.reset()
 
     val day1Card = deck.drawForDay(Day.DAY_FRIDAY)
-    assertThat(day1Card.apresCard.name).contains("1")
+    assertThat(day1Card.apresCard.name).contains("Friday")
 
     val day2Card = deck.drawForDay(Day.DAY_SATURDAY)
-    assertThat(day2Card.apresCard.name).contains("2")
+    assertThat(day2Card.apresCard.name).contains("Saturday")
 
     assertThat(deck.getCards()).hasSize(1)
   }
