@@ -13,7 +13,6 @@ import com.redpup.justsendit.view.controller.GuiController
 import com.redpup.justsendit.view.controller.GuiControllerModule
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
-import com.redpup.justsendit.view.sidebar.GameInfoPanel
 import com.redpup.justsendit.view.sidebar.InfoPanel
 import com.redpup.justsendit.view.sidebar.LogPanel
 import com.redpup.justsendit.view.sidebar.SidebarHub
@@ -25,6 +24,10 @@ import javafx.scene.control.ScrollPane
 import javafx.scene.layout.BorderPane
 import javafx.scene.layout.StackPane
 import javafx.stage.Stage
+
+fun main() {
+  Application.launch(JustSendItGui::class.java)
+}
 
 /** A top level JavaFX application for JustSendIt. */
 class JustSendItGui : Application() {
@@ -66,7 +69,6 @@ class JustSendItGui : Application() {
       GuiControllerModule(),
       SystemTimeSourceModule(),
       LoggerModule(
-        LoggerInstance(LazyForwardingLogger { logPanel }),
         LoggerInstance(LazyForwardingLogger { advanceButton }),
         LoggerInstance(LazyForwardingLogger { sidebarHub }),
         LoggerInstance(LazyForwardingLogger { activePlayerArea })
@@ -80,9 +82,8 @@ class JustSendItGui : Application() {
     val gameModel = guiState.gameModel
     val hexGridViewer = HexGridViewer(gameModel)
     guiController.hexGridViewer = hexGridViewer
-    val infoPanel = InfoPanel(gameModel)
-    val gameInfoPanel = GameInfoPanel(gameModel)
-    logPanel = LogPanel(gameModel)
+    val infoPanel = InfoPanel()
+    logPanel = LogPanel()
 
     hexGridViewer.setOnMouseMoved { event ->
       val hex = hexGridViewer.hexFromPixel(event.x, event.y)
@@ -97,10 +98,11 @@ class JustSendItGui : Application() {
       infoPanel.updatePlayersInfo(playersOnHex)
     }
 
-    advanceButton = AdvanceButton(guiState, gameInfoPanel)
+    advanceButton = AdvanceButton(guiState)
+    advanceButton.listeners.add { update() }
     advanceButton.setupStart()
 
-    sidebarHub = SidebarHub(gameModel, logPanel)
+    sidebarHub = SidebarHub(gameModel, infoPanel, logPanel)
     guiController.sidebarHub = sidebarHub
     activePlayerArea = ActivePlayerArea(guiState, advanceButton)
     guiController.activePlayerArea = activePlayerArea
@@ -130,11 +132,12 @@ class JustSendItGui : Application() {
     stage.title = "Just Send It!"
     stage.show()
 
-    // Initial update
-    activePlayerArea.update(gameModel.currentPlayer)
+    update()
   }
-}
 
-fun main() {
-  Application.launch(JustSendItGui::class.java)
+  /** Updates all visual content after some game model change. */
+  private fun update() {
+    activePlayerArea.update(guiState.gameModel.currentPlayer)
+    sidebarHub.update()
+  }
 }

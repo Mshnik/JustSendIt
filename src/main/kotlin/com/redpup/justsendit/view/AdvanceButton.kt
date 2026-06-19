@@ -3,7 +3,6 @@ package com.redpup.justsendit.view
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.Log
 import com.redpup.justsendit.model.proto.GameState
-import com.redpup.justsendit.view.sidebar.GameInfoPanel
 import javafx.application.Platform
 import javafx.scene.control.Button
 import kotlinx.coroutines.CompletableDeferred
@@ -13,11 +12,14 @@ import kotlinx.coroutines.launch
 /** Main button that advances game state, as needed in certain states. */
 class AdvanceButton(
   private val guiState: GuiState,
-  private val gameInfoPanel: GameInfoPanel,
 ) : Button(), Logger {
-
+  internal val listeners = mutableListOf<() -> Unit>()
   private var confirmDeferred: CompletableDeferred<Unit>? = null
   private var lastLog: Log? = null
+
+  init {
+    styleClass.add("phase-button")
+  }
 
   override fun log(log: Log) {
     lastLog = log
@@ -67,7 +69,7 @@ class AdvanceButton(
   fun setupStart() {
     setup("Start Game") {
       guiState.gameModel.startGame()
-      gameInfoPanel.update()
+      listeners.forEach { it() }
     }
   }
 
@@ -75,7 +77,7 @@ class AdvanceButton(
   fun setupTurn() {
     setup("Next Turn") {
       guiState.gameModel.turn()
-      gameInfoPanel.update()
+      listeners.forEach { it() }
     }
   }
 
@@ -83,7 +85,7 @@ class AdvanceButton(
   fun setupRound() {
     setup("Next Round") {
       guiState.gameModel.endRound()
-      gameInfoPanel.update()
+      listeners.forEach { it() }
     }
   }
 
@@ -91,7 +93,7 @@ class AdvanceButton(
   fun setupDay() {
     setup("Next Day") {
       guiState.gameModel.advanceDay()
-      gameInfoPanel.update()
+      listeners.forEach { it() }
     }
   }
 }

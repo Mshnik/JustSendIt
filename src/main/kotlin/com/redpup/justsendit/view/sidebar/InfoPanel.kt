@@ -9,7 +9,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.Separator
 import javafx.scene.layout.VBox
 
-class InfoPanel(private val gameModel: GameModel) : VBox() {
+class InfoPanel() : VBox() {
 
   private val hexInfoVBox = VBox()
   private val playersInfoVBox = VBox()

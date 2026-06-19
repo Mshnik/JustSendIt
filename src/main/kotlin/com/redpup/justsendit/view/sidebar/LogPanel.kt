@@ -7,7 +7,7 @@ import javafx.scene.control.Label
 import javafx.scene.control.ScrollPane
 import javafx.scene.layout.VBox
 
-class LogPanel(private val gameModel: GameModel) : ScrollPane(), Logger {
+class LogPanel : ScrollPane(), Logger {
   private val logContainer = VBox()
 
   init {
