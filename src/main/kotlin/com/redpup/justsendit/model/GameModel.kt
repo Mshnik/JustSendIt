@@ -270,7 +270,7 @@ class MutableGameModel @Inject constructor(
       player.location = player.controller.chooseMountainTile(
         this,
         player,
-        MountainTileEvent.CHOOSE_START_OF_DAY_LOCATION,
+        ChooseStartOfDayLocation,
         tileMap.entries()
           .filter { it.value.hasLift() && it.value.lift.direction == LiftDirection.LIFT_DIRECTION_TOP }
           .map { it.key }
@@ -389,7 +389,7 @@ class MutableGameModel @Inject constructor(
     val choices = getAvailableMoves(player)
     val direction = player.controller.chooseMountainTile(
       this, player,
-      MountainTileEvent.CHOOSE_SKI_RIDE_DESTINATION,
+      ChooseSkiRideDestination,
       choices.keys
     )
       .let { choices[it] ?: throw IllegalStateException("Illegal point chosen: $it") }

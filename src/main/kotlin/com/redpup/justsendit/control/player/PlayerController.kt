@@ -41,12 +41,6 @@ interface PlayerController {
     count: Range<Int>,
   ): List<Apres>
 
-  /** Reasons a player controller can be invoked to choose a mountain tile. */
-  enum class MountainTileEvent {
-    CHOOSE_START_OF_DAY_LOCATION,
-    CHOOSE_SKI_RIDE_DESTINATION,
-  }
-
   /** Asks the player to choose a mountain tile from a list. */
   suspend fun chooseMountainTile(
     gameModel: GameModel,
@@ -91,7 +85,7 @@ class BasicPlayerController : PlayerController {
   override suspend fun chooseMountainTile(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.MountainTileEvent,
+    event: MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
     TODO("Not yet implemented")

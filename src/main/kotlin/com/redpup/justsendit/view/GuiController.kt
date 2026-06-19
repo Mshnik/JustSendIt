@@ -1,6 +1,7 @@
 package com.redpup.justsendit.view
 
 import com.google.common.collect.Range
+import com.redpup.justsendit.control.player.MountainTileEvent
 import com.redpup.justsendit.control.player.PlayerController
 import com.redpup.justsendit.control.player.SkillEvent
 import com.redpup.justsendit.model.GameModel
@@ -104,7 +105,7 @@ class GuiController @Inject constructor(private val guiState: GuiState) : Player
   override suspend fun chooseMountainTile(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.MountainTileEvent,
+    event: MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
     return suspendCancellableCoroutine { continuation ->

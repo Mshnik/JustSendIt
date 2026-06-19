@@ -29,7 +29,8 @@ class SimpleAiController(override val name: String) : PlayerController {
         val location = player.location!!
         val tile = gameModel.tileMap[location]!!
         val slope = tile.slope
-        val currentSkill = player.inPlay.sumOf { calculateExpectedValue(it.skillCard, slope).toInt() }
+        val currentSkill =
+          player.inPlay.sumOf { calculateExpectedValue(it.skillCard, slope).toInt() }
         if (currentSkill < slope.difficulty) {
           val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, slope) }
           listOfNotNull(bestCard)
@@ -43,7 +44,7 @@ class SimpleAiController(override val name: String) : PlayerController {
         val affordable = elements
           .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }
           .sortedByDescending { it.skillCard.cost }
-        
+
         affordable.take(count.upperEndpoint())
       }
 
@@ -66,12 +67,12 @@ class SimpleAiController(override val name: String) : PlayerController {
   override suspend fun chooseMountainTile(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.MountainTileEvent,
+    event: MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
     return when (event) {
-      PlayerController.MountainTileEvent.CHOOSE_START_OF_DAY_LOCATION -> elements.first()
-      PlayerController.MountainTileEvent.CHOOSE_SKI_RIDE_DESTINATION -> elements.first()
+      ChooseStartOfDayLocation -> elements.first()
+      ChooseSkiRideDestination -> elements.first()
     }
   }
 
@@ -110,7 +111,10 @@ class SimpleAiController(override val name: String) : PlayerController {
     return MountainDecision.DECISION_PASS
   }
 
-  private fun calculateExpectedValue(card: SkillCard, slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile): Double {
+  private fun calculateExpectedValue(
+    card: SkillCard,
+    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+  ): Double {
     val diceValue = (card.greenDice * 3.5) + (card.blueDice * 3.5) + (card.blackDice * 3.5)
     val iconValue = card.iconsList.count { it.matches(slope) }.toDouble()
     return diceValue + iconValue

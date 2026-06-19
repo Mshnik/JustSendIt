@@ -1,10 +1,7 @@
 package com.redpup.justsendit.simulation.controller
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.ChooseCardToBuy
-import com.redpup.justsendit.control.player.PlaySkillForSkiRideAttempt
-import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.control.player.SkillEvent
+import com.redpup.justsendit.control.player.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -66,7 +63,7 @@ class RandomAiController(override val name: String) : PlayerController {
   override suspend fun chooseMountainTile(
     gameModel: GameModel,
     player: Player,
-    event: PlayerController.MountainTileEvent,
+    event: MountainTileEvent,
     elements: Collection<HexPoint>,
   ): HexPoint {
     return elements.shuffled().first()
