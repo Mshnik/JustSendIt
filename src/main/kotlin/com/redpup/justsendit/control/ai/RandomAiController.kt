@@ -1,7 +1,7 @@
-package com.redpup.justsendit.simulation.controller
+package com.redpup.justsendit.control.ai
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.*
+import com.redpup.justsendit.control.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint

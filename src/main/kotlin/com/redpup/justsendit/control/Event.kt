@@ -1,4 +1,4 @@
-package com.redpup.justsendit.control.player
+package com.redpup.justsendit.control
 
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 

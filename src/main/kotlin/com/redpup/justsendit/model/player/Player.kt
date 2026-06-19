@@ -1,6 +1,6 @@
 package com.redpup.justsendit.model.player
 
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.random.Random

@@ -2,8 +2,8 @@ package com.redpup.justsendit.model.player
 
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.redpup.justsendit.control.player.BasicPlayerController
-import com.redpup.justsendit.control.player.ChooseStartOfDayLocation
+import com.redpup.justsendit.control.BasicPlayerController
+import com.redpup.justsendit.control.ChooseStartOfDayLocation
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.skill.SkillFactory

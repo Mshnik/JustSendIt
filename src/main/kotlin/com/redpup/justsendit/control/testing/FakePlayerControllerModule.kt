@@ -1,8 +1,8 @@
-package com.redpup.justsendit.control.player.testing
+package com.redpup.justsendit.control.testing
 
 import com.google.common.annotations.VisibleForTesting
 import com.google.inject.Provides
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.util.KtAbstractModule
 import javax.inject.Singleton
 

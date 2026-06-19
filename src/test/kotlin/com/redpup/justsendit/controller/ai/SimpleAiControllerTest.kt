@@ -1,8 +1,9 @@
-package com.redpup.justsendit.simulation.controller
+package com.redpup.justsendit.controller.ai
 
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
-import com.redpup.justsendit.control.player.PlaySkillForLift
+import com.redpup.justsendit.control.PlaySkillForLift
+import com.redpup.justsendit.control.ai.SimpleAiController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint

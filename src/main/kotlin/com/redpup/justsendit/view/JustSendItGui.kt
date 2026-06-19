@@ -2,7 +2,6 @@ package com.redpup.justsendit.view
 
 import com.google.inject.Guice
 import com.google.inject.Provides
-import com.redpup.justsendit.control.ControllerModule
 import com.redpup.justsendit.log.LazyForwardingLogger
 import com.redpup.justsendit.log.LoggerInstance
 import com.redpup.justsendit.log.LoggerModule
@@ -10,6 +9,8 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
+import com.redpup.justsendit.view.controller.GuiController
+import com.redpup.justsendit.view.controller.GuiControllerModule
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.GameInfoPanel
@@ -62,7 +63,7 @@ class JustSendItGui : Application() {
       JustSendItGuiModule(this),
       GameModelModule(),
       GuiCoroutineModule(),
-      ControllerModule(),
+      GuiControllerModule(),
       SystemTimeSourceModule(),
       LoggerModule(
         LoggerInstance(LazyForwardingLogger { logPanel }),

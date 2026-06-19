@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.apres.cards
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.proto.apresCard

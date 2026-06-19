@@ -2,8 +2,8 @@ package com.redpup.justsendit.model
 
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
-import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.control.player.testing.FakePlayerControllerModule
+import com.redpup.justsendit.control.PlayerController
+import com.redpup.justsendit.control.testing.FakePlayerControllerModule
 import com.redpup.justsendit.log.LoggerModule
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.apres.testing.FakeApres
@@ -18,7 +18,6 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
-import com.redpup.justsendit.model.proto.GameState
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory

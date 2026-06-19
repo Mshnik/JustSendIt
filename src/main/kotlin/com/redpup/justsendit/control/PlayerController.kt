@@ -1,7 +1,7 @@
-package com.redpup.justsendit.control.player
+package com.redpup.justsendit.control
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.PlayerController.SkillZone
+import com.redpup.justsendit.control.PlayerController.SkillZone
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint

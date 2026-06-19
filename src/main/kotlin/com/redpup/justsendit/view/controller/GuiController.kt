@@ -1,9 +1,9 @@
-package com.redpup.justsendit.view
+package com.redpup.justsendit.view.controller
 
 import com.google.common.collect.Range
-import com.redpup.justsendit.control.player.MountainTileEvent
-import com.redpup.justsendit.control.player.PlayerController
-import com.redpup.justsendit.control.player.SkillEvent
+import com.redpup.justsendit.control.MountainTileEvent
+import com.redpup.justsendit.control.PlayerController
+import com.redpup.justsendit.control.SkillEvent
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
@@ -11,6 +11,7 @@ import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.skill.Skill
+import com.redpup.justsendit.view.GuiState
 import com.redpup.justsendit.view.board.HexGridViewer
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser

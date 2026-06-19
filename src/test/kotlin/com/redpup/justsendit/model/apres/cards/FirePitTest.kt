@@ -3,7 +3,7 @@ package com.redpup.justsendit.model.apres.cards
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer

@@ -3,7 +3,7 @@ package com.redpup.justsendit.model.player
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.google.inject.Inject
-import com.redpup.justsendit.control.player.PlayerController
+import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.model.board.grid.HexExtensions
 import com.redpup.justsendit.model.player.cards.testing.FakePlayerCard
 import com.redpup.justsendit.model.random.Random

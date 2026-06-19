@@ -4,8 +4,8 @@ import com.google.common.collect.Range
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.protobuf.util.Timestamps
-import com.redpup.justsendit.control.player.*
-import com.redpup.justsendit.control.player.PlayerController.*
+import com.redpup.justsendit.control.*
+import com.redpup.justsendit.control.PlayerController.*
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
 import com.redpup.justsendit.model.apres.Apres
