@@ -339,37 +339,6 @@ class MutableGameModel @Inject constructor(
     }
   }
 
-  /** Concludes the round, resets passed players, and moves leader token. */
-  suspend fun endRound() {
-    replenishShop()
-
-    // "Un-pass" each player.
-    players.forEach { it.isPassed = false }
-    // Move leader to back of line.
-    val first = players.removeFirst()
-    players.add(first)
-    // Reset current player to new leader.
-    currentPlayerIndex = 0
-
-    clock.endRound()
-  }
-
-  /**
-   * Concludes the day, ingesting points and updating state.
-   * Returns true if the game is over, false otherwise.
-   */
-  suspend fun advanceDay(): Boolean {
-    clock.endDay()
-
-    // Update clock, advance to next day if there is one.
-    if (clock.day == Day.DAY_SUNDAY) {
-      return false
-    }
-
-    startDay()
-    return true
-  }
-
   /** Broadcasts this [ApresGameEvent] to every [Apres] card. */
   private fun ApresGameEvent.broadcast() {
     apres.forEach { it.handleGameEvent(this@broadcast, this@MutableGameModel) }
@@ -529,28 +498,31 @@ class MutableGameModel @Inject constructor(
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
     // TODO: Don't discard for lift, play instead.
-    val toDiscard = player.controller.chooseSkillCards(
+    val toPlay = player.controller.chooseSkillCards(
       this,
       player,
-      SkillEvent.DISCARD_SKILL_FOR_LIFT,
+      SkillEvent.PLAY_SKILL_FOR_LIFT,
       player.hand,
       Range.closed(tile.lift.minCards, tile.lift.maxCards),
       SkillZone.HAND
     )
 
-    toDiscard.forEach { player.discardFromHand(it) }
+    toPlay.forEach { player.playCard(it) }
 
     // TODO: Add play, hand to trash candidates.
-    val trashCandidates = player.skillDiscard.toList()
-    val toTrash = player.controller.chooseSkillCards(
+    val trashCandidates = buildList {
+      addAll(player.skillDiscard)
+      addAll(player.inPlay)
+      addAll(player.hand)
+    }
+    player.controller.chooseSkillCards(
       this,
       player,
       SkillEvent.TRASH_SKILL,
       trashCandidates,
-      Range.closed(0, toDiscard.size),
+      Range.closed(0, toPlay.size),
       SkillZone.PLAY, SkillZone.DISCARD,
-    )
-    toTrash.forEach {
+    ).forEach {
       player.skillDiscard.remove(it)
     }
 
@@ -627,6 +599,37 @@ class MutableGameModel @Inject constructor(
     player.location = null
     player.apresLink = link
     apres[link - 1].apply(player, players.count { it.apresLink == link } == 1, this, random)
+  }
+
+  /** Concludes the round, resets passed players, and moves leader token. */
+  suspend fun endRound() {
+    replenishShop()
+
+    // "Un-pass" each player.
+    players.forEach { it.isPassed = false }
+    // Move leader to back of line.
+    val first = players.removeFirst()
+    players.add(first)
+    // Reset current player to new leader.
+    currentPlayerIndex = 0
+
+    clock.endRound()
+  }
+
+  /**
+   * Concludes the day, ingesting points and updating state.
+   * Returns true if the game is over, false otherwise.
+   */
+  suspend fun advanceDay(): Boolean {
+    clock.endDay()
+
+    // Update clock, advance to next day if there is one.
+    if (clock.day == Day.DAY_SUNDAY) {
+      return false
+    }
+
+    startDay()
+    return true
   }
 
   companion object {

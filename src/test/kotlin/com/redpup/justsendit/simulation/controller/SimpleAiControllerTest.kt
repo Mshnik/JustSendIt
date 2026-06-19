@@ -76,7 +76,7 @@ class SimpleAiControllerTest {
     val chosen = controller.chooseSkillCards(
       gameModel,
       mock(),
-      SkillEvent.DISCARD_SKILL_FOR_LIFT,
+      SkillEvent.PLAY_SKILL_FOR_LIFT,
       skills,
       Range.closed(1, 2)
     )

@@ -47,7 +47,7 @@ class SimpleAiController(override val name: String) : PlayerController {
         affordable.take(count.upperEndpoint())
       }
 
-      PlayerController.SkillEvent.DISCARD_SKILL_FOR_LIFT,
+      PlayerController.SkillEvent.PLAY_SKILL_FOR_LIFT,
       PlayerController.SkillEvent.TRASH_SKILL,
       PlayerController.SkillEvent.DISCARD_FOR_CRASH -> {
         // Just pick the first N elements.

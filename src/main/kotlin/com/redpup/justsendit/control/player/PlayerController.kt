@@ -27,7 +27,7 @@ interface PlayerController {
   /** Reasons a player controller can be invoked to choose a skill card. */
   enum class SkillEvent {
     PLAY_SKILL_FOR_SKI_RIDE_ATTEMPT,
-    DISCARD_SKILL_FOR_LIFT,
+    PLAY_SKILL_FOR_LIFT,
     TRASH_SKILL,
     CHOOSE_CARD_TO_BUY,
     DISCARD_FOR_CRASH,
