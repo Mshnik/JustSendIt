@@ -5,6 +5,7 @@ import com.redpup.justsendit.control.player.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
@@ -60,10 +61,11 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
         listOfNotNull(choice)
       }
 
-      ChooseCardToBuy -> {
-        val studyValue = calculateStudyValue(player, gameModel)
+      is ChooseCardToBuy -> {
         val affordable = elements
-          .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }
+          .filter {
+            (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= event.studyValue
+          }
           .sortedByDescending { it.skillCard.cost }
 
         affordable.take(count.upperEndpoint())
@@ -156,8 +158,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   }
 
   private fun calculateExpectedValue(
-    card: SkillCard,
-    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+    card: SkillCard, slope: SlopeTile,
   ): Double {
     return (card.greenDice * 2.5) + (card.blueDice * 3.5) + (card.blackDice * 4.5) + card.iconsList.count {
       it.matches(
@@ -168,7 +169,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
   private fun estimateSuccessProbability(
     card: SkillCard,
-    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+    slope: SlopeTile,
     needed: Int,
   ): Double {
     val mean = calculateExpectedValue(card, slope)
@@ -186,24 +187,5 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
       z < 2.0 -> 0.16 - ((z - 1.0) * 0.14)
       else -> 0.02
     }
-  }
-
-  private fun calculateStudyValue(player: Player, gameModel: GameModel): Int {
-    var total = player.hand.size
-    val currentLocation = player.location ?: return total
-    val tile = gameModel.tileMap[currentLocation] ?: return total
-
-    if (tile.hasSlope()) {
-      val slope = tile.slope
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.matches(slope) }
-      }
-    } else if (tile.hasLift()) {
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.hasWild() && it.wild }
-      }
-    }
-
-    return total
   }
 }

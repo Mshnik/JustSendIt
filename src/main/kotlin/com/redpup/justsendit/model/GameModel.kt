@@ -550,7 +550,7 @@ class MutableGameModel @Inject constructor(
     val cards = player.controller.chooseSkillCards(
       this,
       player,
-      ChooseCardToBuy,
+      ChooseCardToBuy(studyValue),
       shop.keys.toList(),
       Range.closed(0, 1),
       SkillZone.SHOP

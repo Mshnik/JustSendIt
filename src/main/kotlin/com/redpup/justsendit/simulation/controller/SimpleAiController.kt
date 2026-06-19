@@ -39,10 +39,11 @@ class SimpleAiController(override val name: String) : PlayerController {
         }
       }
 
-      ChooseCardToBuy -> {
-        val studyValue = calculateStudyValue(player, gameModel)
+      is ChooseCardToBuy -> {
         val affordable = elements
-          .filter { (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= studyValue }
+          .filter {
+            (it.skillCard.cost - (gameModel.shop[it] ?: 0)).coerceAtLeast(0) <= event.studyValue
+          }
           .sortedByDescending { it.skillCard.cost }
 
         affordable.take(count.upperEndpoint())
@@ -118,24 +119,5 @@ class SimpleAiController(override val name: String) : PlayerController {
     val diceValue = (card.greenDice * 3.5) + (card.blueDice * 3.5) + (card.blackDice * 3.5)
     val iconValue = card.iconsList.count { it.matches(slope) }.toDouble()
     return diceValue + iconValue
-  }
-
-  private fun calculateStudyValue(player: Player, gameModel: GameModel): Int {
-    var total = player.hand.size
-    val currentLocation = player.location ?: return total
-    val tile = gameModel.tileMap[currentLocation] ?: return total
-
-    if (tile.hasSlope()) {
-      val slope = tile.slope
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.matches(slope) }
-      }
-    } else if (tile.hasLift()) {
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.hasWild() && it.wild }
-      }
-    }
-
-    return total
   }
 }

@@ -32,7 +32,7 @@ class RandomAiController(override val name: String) : PlayerController {
         }
       }
 
-      ChooseCardToBuy -> {
+      is ChooseCardToBuy -> {
         // Randomly pick an affordable card.
         val studyValue = calculateStudyValue(player, gameModel)
         val affordable = elements
