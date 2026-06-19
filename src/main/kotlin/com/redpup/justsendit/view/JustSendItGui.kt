@@ -9,7 +9,7 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.controller.GuiController
+import com.redpup.justsendit.view.controller.GuiPlayerController
 import com.redpup.justsendit.view.controller.GuiControllerModule
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
@@ -33,7 +33,7 @@ fun main() {
 class JustSendItGui : Application() {
   private lateinit var logPanel: LogPanel
   private lateinit var guiState: GuiState
-  private lateinit var guiController: GuiController
+  private lateinit var guiPlayerController: GuiPlayerController
   private lateinit var advanceButton: AdvanceButton
   private lateinit var sidebarHub: SidebarHub
   private lateinit var activePlayerArea: ActivePlayerArea
@@ -75,13 +75,13 @@ class JustSendItGui : Application() {
       )
     )
     guiState = injector.getInstance(GuiState::class.java)
-    guiController = injector.getInstance(GuiController::class.java)
+    guiPlayerController = injector.getInstance(GuiPlayerController::class.java)
   }
 
   override fun start(stage: Stage) {
     val gameModel = guiState.gameModel
     val hexGridViewer = HexGridViewer(gameModel)
-    guiController.hexGridViewer = hexGridViewer
+    guiPlayerController.hexGridViewer = hexGridViewer
     val infoPanel = InfoPanel()
     logPanel = LogPanel()
 
@@ -103,9 +103,9 @@ class JustSendItGui : Application() {
     advanceButton.setupStart()
 
     sidebarHub = SidebarHub(gameModel, infoPanel, logPanel)
-    guiController.sidebarHub = sidebarHub
+    guiPlayerController.sidebarHub = sidebarHub
     activePlayerArea = ActivePlayerArea(guiState, advanceButton)
-    guiController.activePlayerArea = activePlayerArea
+    guiPlayerController.activePlayerArea = activePlayerArea
 
     val mainLayout = BorderPane()
     mainLayout.center = hexGridViewer

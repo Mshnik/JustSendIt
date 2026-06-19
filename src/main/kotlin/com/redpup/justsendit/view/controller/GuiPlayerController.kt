@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 @Singleton
-class GuiController @Inject constructor(private val guiState: GuiState) : PlayerController {
+class GuiPlayerController @Inject constructor(private val guiState: GuiState) : PlayerController {
 
   lateinit var hexGridViewer: HexGridViewer
   lateinit var activePlayerArea: ActivePlayerArea
