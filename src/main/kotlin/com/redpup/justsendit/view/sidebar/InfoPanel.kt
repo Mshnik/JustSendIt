@@ -1,16 +1,18 @@
 package com.redpup.justsendit.view.sidebar
 
-import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.util.toTitleCase
+import com.redpup.justsendit.view.GuiExt.withStyle
+import com.redpup.justsendit.view.GuiState
 import javafx.geometry.Insets
 import javafx.scene.control.Label
 import javafx.scene.control.Separator
 import javafx.scene.layout.VBox
 
-class InfoPanel() : VBox() {
+class InfoPanel(private val guiState: GuiState) : VBox() {
 
+  private val gameInfoVBox = VBox()
   private val hexInfoVBox = VBox()
   private val playersInfoVBox = VBox()
 
@@ -23,14 +25,38 @@ class InfoPanel() : VBox() {
     stylesheets.add(
       javaClass.getResource("/com/redpup/justsendit/view/info/style.css")!!.toExternalForm()
     )
-    children.addAll(hexInfoVBox, Separator(), playersInfoVBox)
+    children.addAll(
+      Label("Game Info").withStyle("section-title"),
+      gameInfoVBox,
+      Separator(),
+      Label("Hex Info").withStyle("section-title"),
+      hexInfoVBox,
+      Separator(),
+      Label("Players on Hex").withStyle("section-title"),
+      playersInfoVBox
+    )
   }
 
-  fun updateHexInfo(tile: MountainTile) {
+  /** Updates the game info from [guiState]. */
+  fun updateGameInfo() {
+    gameInfoVBox.children.clear()
+
+    val clock = guiState.gameModel.clock
+    addInfoLabel("State: ${clock.state}", gameInfoVBox)
+    addInfoLabel("Day: ${clock.day}", gameInfoVBox)
+    addInfoLabel("Round: ${clock.round}", gameInfoVBox)
+    addInfoLabel("Turn: ${clock.turn}", gameInfoVBox)
+    addInfoLabel("Subturn: ${clock.subTurn}", gameInfoVBox)
+  }
+
+  /** Updates the [hexInfoVBox] for the given [tile] info. */
+  fun updateHexInfo(tile: MountainTile?) {
+    if (tile == null) {
+      hexInfoVBox.children.clear()
+      return
+    }
+
     hexInfoVBox.children.clear()
-    val title = Label("Hex Info")
-    title.styleClass.add("section-title")
-    hexInfoVBox.children.add(title)
 
     if (tile.hasSlope()) {
       val info = StringBuilder()
@@ -66,26 +92,16 @@ class InfoPanel() : VBox() {
 
   fun updatePlayersInfo(players: List<Player>) {
     playersInfoVBox.children.clear()
-    if (players.isNotEmpty()) {
-      val title = Label("Players on Hex")
-      title.styleClass.add("section-title")
-      playersInfoVBox.children.add(title)
-      players.forEach { player ->
-        val info = StringBuilder()
-        info.append("Name: ${player.name}\n")
-        info.append("Points: ${player.points}\n")
-        info.append("Wobbles: ${player.wobbles}\n")
-        val playerBox = VBox()
-        playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
-        addInfoLabel(info.toString(), playerBox)
-        playersInfoVBox.children.add(playerBox)
-      }
+    players.forEach { player ->
+      val info = StringBuilder()
+      info.append("Name: ${player.name}\n")
+      info.append("Points: ${player.points}\n")
+      info.append("Wobbles: ${player.wobbles}\n")
+      val playerBox = VBox()
+      playerBox.padding = Insets(5.0, 0.0, 5.0, 10.0)
+      addInfoLabel(info.toString(), playerBox)
+      playersInfoVBox.children.add(playerBox)
     }
-  }
-
-  fun clear() {
-    hexInfoVBox.children.clear()
-    playersInfoVBox.children.clear()
   }
 
   private fun addInfoLabel(text: String, parent: VBox) {

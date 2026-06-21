@@ -5,6 +5,7 @@ import com.redpup.justsendit.control.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.LiftDirection
 import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
@@ -92,8 +93,11 @@ class SimpleAiController(override val name: String) : PlayerController {
       return MountainDecision.DECISION_EXIT
     }
 
-    // 2. If on a lift tile and has cards to discard, LIFT.
-    if (tile.hasLift() && player.hand.size >= tile.lift.minCards) {
+    // 2. If on a bottom lift tile and has cards to discard, LIFT.
+    if (tile.hasLift()
+      && tile.lift.direction == LiftDirection.LIFT_DIRECTION_BOTTOM
+      && player.hand.size >= tile.lift.minCards
+    ) {
       return MountainDecision.DECISION_LIFT
     }
 

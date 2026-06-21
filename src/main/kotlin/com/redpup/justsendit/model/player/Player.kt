@@ -61,7 +61,8 @@ interface AbilityHandler {}
 class MutablePlayer(override val controller: PlayerController) : Player {
   override val playerCards = mutableListOf<PlayerCard>()
   override val name: String
-    get() = playerCards.firstOrNull()?.name ?: controller.name
+    get() = playerCards.map { it.name }.firstOrNull { it.isNotBlank() && it != "No Name" }
+      ?: controller.name
   override var points = 0
     set(points) {
       field = points

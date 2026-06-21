@@ -9,7 +9,7 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.controller.GuiPlayerController
+import com.redpup.justsendit.view.controller.GuiHumanController
 import com.redpup.justsendit.view.controller.GuiControllerModule
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
@@ -33,7 +33,7 @@ fun main() {
 class JustSendItGui : Application() {
   private lateinit var logPanel: LogPanel
   private lateinit var guiState: GuiState
-  private lateinit var guiPlayerController: GuiPlayerController
+  private lateinit var guiPlayerController: GuiHumanController
   private lateinit var advanceButton: AdvanceButton
   private lateinit var sidebarHub: SidebarHub
   private lateinit var activePlayerArea: ActivePlayerArea
@@ -74,24 +74,20 @@ class JustSendItGui : Application() {
       )
     )
     guiState = injector.getInstance(GuiState::class.java)
-    guiPlayerController = injector.getInstance(GuiPlayerController::class.java)
+    guiPlayerController = injector.getInstance(GuiHumanController::class.java)
   }
 
   override fun start(stage: Stage) {
     val gameModel = guiState.gameModel
     val hexGridViewer = HexGridViewer(gameModel)
     guiPlayerController.hexGridViewer = hexGridViewer
-    val infoPanel = InfoPanel()
+    val infoPanel = InfoPanel(guiState)
     logPanel = LogPanel()
 
     hexGridViewer.setOnMouseMoved { event ->
       val hex = hexGridViewer.hexFromPixel(event.x, event.y)
       val tile = gameModel.tileMap[hex]
-      if (tile != null) {
-        infoPanel.updateHexInfo(tile)
-      } else {
-        infoPanel.clear()
-      }
+      infoPanel.updateHexInfo(tile)
 
       val playersOnHex = gameModel.players.filter { it.location == hex }
       infoPanel.updatePlayersInfo(playersOnHex)

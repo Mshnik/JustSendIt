@@ -14,7 +14,7 @@ import javafx.scene.control.TabPane
  */
 class SidebarHub(
   private val gameModel: GameModel,
-  infoPanel: InfoPanel,
+  private val infoPanel: InfoPanel,
   private val logPanel: LogPanel,
 ) : TabPane(), Logger {
 
@@ -47,7 +47,10 @@ class SidebarHub(
     logPanel.log(log)
   }
 
+  /** Updates all content in the [SidebarHub] based on game state changes. */
   fun update() {
+    infoPanel.updateGameInfo()
+
     shopList.setCards(gameModel.shop.keys.toList())
     val currentPlayer = gameModel.currentPlayer
     trashList.setCards(currentPlayer.skillDiscard.toList())
