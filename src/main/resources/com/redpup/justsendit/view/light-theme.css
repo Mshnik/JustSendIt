@@ -97,7 +97,9 @@
     -fx-background-color: #ffd700; /* Gold */
     -fx-text-fill: #000000;
     -fx-font-weight: bold;
-    -fx-padding: 2;
+    -fx-padding: 10;
+    -fx-background-insets: 5;
+    -fx-border-insets: 5;
     -fx-background-radius: 10;
 }
 

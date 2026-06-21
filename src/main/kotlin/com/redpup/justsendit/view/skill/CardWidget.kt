@@ -23,7 +23,8 @@ import javafx.util.Duration
 class CardWidget(
   val skill: Skill,
   val isAccordion: Boolean = false,
-  val isInPlay: Boolean = false
+  val isInPlay: Boolean = false,
+  // TODO: Add highlighting here.
 ) : VBox() {
 
   private val badge = Label()

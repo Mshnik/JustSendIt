@@ -395,7 +395,7 @@ class MutableGameModel @Inject constructor(
     )
       .let { choices[it] ?: throw IllegalStateException("Illegal point chosen: $it") }
 
-    check(direction.isDownMountain) { "Can only ski/ride down mountain, found ${direction}" }
+    check(direction.isDownMountain) { "Can only ski/ride down mountain, found $direction" }
     val destination = location + direction
     playerMove {
       from = location
