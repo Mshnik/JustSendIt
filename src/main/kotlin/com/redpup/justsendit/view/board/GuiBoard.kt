@@ -28,7 +28,7 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
     X_NUDGE,
     Y_NUDGE
   )
-  private val pointsRenderer = PointsRenderer(BOARD_WIDTH, BOARD_HEIGHT)
+  private val pointsRenderer = PointsRenderer(BOARD_WIDTH)
 
   private val boardImage =
     Image(javaClass.getResource("/com/redpup/justsendit/img/Board.png")!!.toExternalForm())
