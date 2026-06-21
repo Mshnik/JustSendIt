@@ -263,7 +263,7 @@ class MutableGameModel @Inject constructor(
   }
 
   /** Starts a new day. May be the first day of the game or a later day in the game. */
-  private suspend fun startDay() {
+  suspend fun startDay() {
     clock.startDay()
 
     pickPlayerCards()
@@ -303,7 +303,7 @@ class MutableGameModel @Inject constructor(
   }
 
   /** Starts a round. */
-  private fun startRound() {
+  fun startRound() {
     clock.startRound()
 
     players.forEach {
@@ -613,23 +613,16 @@ class MutableGameModel @Inject constructor(
     // Reset current player to new leader.
     currentPlayerIndex = 0
 
-    clock.endRound()
+    clock.endRound(maxRound)
   }
 
   /**
    * Concludes the day, ingesting points and updating state.
-   * Returns true if the game is over, false otherwise.
+   * Returns true if there is another day of the game or false if the game is over.
    */
-  suspend fun advanceDay(): Boolean {
+  suspend fun endDay(): Boolean {
     clock.endDay()
-
-    // Update clock, advance to next day if there is one.
-    if (clock.day == Day.DAY_SUNDAY) {
-      return false
-    }
-
-    startDay()
-    return true
+    return clock.day != Day.DAY_GAME_OVER
   }
 
   companion object {

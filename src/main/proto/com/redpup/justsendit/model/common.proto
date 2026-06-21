@@ -15,7 +15,19 @@ enum Day {
   DAY_GAME_OVER = 5;
 }
 
-/** States the game can be in.*/
+/**
+ * States the game can be in.
+ *
+ * Flow chart of acceptable transitions:
+ *
+ * BEFORE_START -> BETWEEN_DAYS -> BETWEEN_ROUNDS -> BETWEEN_TURNS <-> TURN_IN_PROGRESS
+ *                       |               |                                    |
+ *                       |               + <---------------------- AFTER_LAST_TURN_OF_ROUND
+ *                       |               |
+ *                       + <-- AFTER_LAST_ROUND_OF_DAY
+ *                       |
+ *                 AFTER_LAST_DAY
+ */
 enum GameState {
   GAME_STATE_UNSET = 0;
   BEFORE_START = 1;
@@ -23,8 +35,9 @@ enum GameState {
   BETWEEN_ROUNDS = 3;
   BETWEEN_TURNS = 4;
   TURN_IN_PROGRESS = 5;
-  AFTER_LAST_TURN = 6;
-  AFTER_END = 7;
+  AFTER_LAST_TURN_OF_ROUND = 6;
+  AFTER_LAST_ROUND_OF_DAY = 7;
+  AFTER_LAST_DAY = 8;
 }
 
 /** Types of dice. */

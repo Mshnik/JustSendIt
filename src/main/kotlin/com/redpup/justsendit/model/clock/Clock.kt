@@ -40,7 +40,7 @@ interface Clock {
   fun startRound()
 
   /** Ends the current round. */
-  fun endRound()
+  fun endRound(maxRound: Int)
 
   /** Starts the next turn of the game. */
   fun startTurn()

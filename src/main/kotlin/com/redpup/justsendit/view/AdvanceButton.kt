@@ -45,12 +45,14 @@ class AdvanceButton(
         listeners.forEach { it() }
       }.invokeOnCompletion {
         when (guiState.gameModel.state) {
-          GameState.BEFORE_START -> setupStart()
-          GameState.BETWEEN_DAYS -> setupDay()
-          GameState.AFTER_LAST_TURN, GameState.BETWEEN_ROUNDS -> setupRound()
-          GameState.TURN_IN_PROGRESS, GameState.BETWEEN_TURNS -> setupTurn()
-          GameState.AFTER_END -> setupEnd()
           GameState.GAME_STATE_UNSET, GameState.UNRECOGNIZED -> throw IllegalStateException()
+          GameState.BEFORE_START -> setupStartGame()
+          GameState.BETWEEN_DAYS -> setupStartDay()
+          GameState.BETWEEN_ROUNDS -> setupStartRound()
+          GameState.BETWEEN_TURNS, GameState.TURN_IN_PROGRESS -> setupTurn()
+          GameState.AFTER_LAST_TURN_OF_ROUND -> setupEndRound()
+          GameState.AFTER_LAST_ROUND_OF_DAY -> setupEndDay()
+          GameState.AFTER_LAST_DAY -> setupEndGame()
         }
       }
     }
@@ -62,7 +64,7 @@ class AdvanceButton(
   }
 
   /** Sets up the AdvanceButton to be a "Start Game" button. */
-  fun setupStart() {
+  fun setupStartGame() {
     setup("Start Game") {
       guiState.gameModel.startGame()
     }
@@ -75,22 +77,36 @@ class AdvanceButton(
     }
   }
 
-  /** Sets up the AdvanceButton to be a "Next Round" button. */
-  private fun setupRound() {
-    setup("Next Round") {
+  /** Sets up the AdvanceButton to be a "Start Round" button. */
+  private fun setupStartRound() {
+    setup("Start Round") {
+      guiState.gameModel.startRound()
+    }
+  }
+
+  /** Sets up the AdvanceButton to be a "End Round" button. */
+  private fun setupEndRound() {
+    setup("End Round") {
       guiState.gameModel.endRound()
     }
   }
 
-  /** Sets up the AdvanceButton to be a "Next Day" button. */
-  private fun setupDay() {
-    setup("Next Day") {
-      guiState.gameModel.advanceDay()
+  /** Sets up the AdvanceButton to be a "Start Day" button. */
+  private fun setupStartDay() {
+    setup("Start Day") {
+      guiState.gameModel.startDay()
+    }
+  }
+
+  /** Sets up the AdvanceButton to be a "End Day" button. */
+  private fun setupEndDay() {
+    setup("End Day") {
+      guiState.gameModel.endDay()
     }
   }
 
   /** Sets up the end of game. */
-  private fun setupEnd() {
+  private fun setupEndGame() {
     text = "Game Over"
     disarm()
   }

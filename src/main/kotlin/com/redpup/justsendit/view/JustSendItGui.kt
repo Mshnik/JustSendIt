@@ -95,7 +95,7 @@ class JustSendItGui : Application() {
 
     advanceButton = AdvanceButton(guiState)
     advanceButton.listeners.add { update() }
-    advanceButton.setupStart()
+    advanceButton.setupStartGame()
 
     sidebarHub = SidebarHub(gameModel, infoPanel, logPanel)
     guiPlayerController.sidebarHub = sidebarHub

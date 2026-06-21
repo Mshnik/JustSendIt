@@ -44,7 +44,10 @@ class ClockImpl @Inject constructor(
   }
 
   override fun endDay(): Boolean {
-    changeState(GameState.BETWEEN_ROUNDS, GameState.BETWEEN_DAYS)
+    changeState(
+      GameState.AFTER_LAST_ROUND_OF_DAY,
+      if (day == Day.DAY_SUNDAY) GameState.AFTER_LAST_DAY else GameState.BETWEEN_DAYS
+    )
 
     round = 1
     turn = 1
@@ -53,11 +56,7 @@ class ClockImpl @Inject constructor(
     day = when (day) {
       Day.DAY_FRIDAY -> Day.DAY_SATURDAY
       Day.DAY_SATURDAY -> Day.DAY_SUNDAY
-      Day.DAY_SUNDAY -> {
-        state = GameState.AFTER_END
-        Day.DAY_GAME_OVER
-      }
-
+      Day.DAY_SUNDAY -> Day.DAY_GAME_OVER
       Day.DAY_BEFORE_START, Day.DAY_GAME_OVER, Day.DAY_UNSET, Day.UNRECOGNIZED -> throw IllegalStateException()
     }
 
@@ -71,8 +70,11 @@ class ClockImpl @Inject constructor(
     subTurn = 1
   }
 
-  override fun endRound() {
-    changeState(GameState.AFTER_LAST_TURN, GameState.BETWEEN_ROUNDS)
+  override fun endRound(maxRound: Int) {
+    changeState(
+      GameState.AFTER_LAST_TURN_OF_ROUND,
+      if (round + 1 < maxRound) GameState.BETWEEN_ROUNDS else GameState.AFTER_LAST_ROUND_OF_DAY
+    )
 
     round++
     turn = 1
@@ -86,7 +88,7 @@ class ClockImpl @Inject constructor(
   override fun endTurn(turnsRemain: Boolean) {
     changeState(
       GameState.TURN_IN_PROGRESS,
-      if (turnsRemain) GameState.BETWEEN_TURNS else GameState.AFTER_LAST_TURN
+      if (turnsRemain) GameState.BETWEEN_TURNS else GameState.AFTER_LAST_TURN_OF_ROUND
     )
 
     turn++
