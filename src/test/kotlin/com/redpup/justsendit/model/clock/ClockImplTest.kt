@@ -29,8 +29,8 @@ class ClockImplTest {
     PROGRESSION.forEachIndexed { index, progression ->
       try {
         progression.first(clock)
-      } catch(e : Throwable) {
-        throw AssertionError("Progression $index", e)
+      } catch (e: Throwable) {
+        throw AssertionError("State failure during progression $index", e)
       }
       clock.assertExpected(progression.second, index)
     }
@@ -58,7 +58,8 @@ class ClockImplTest {
     val startDay: Clock.() -> Unit = { startDay() }
     val endDay: Clock.() -> Unit = { endDay() }
     val startRound: Clock.() -> Unit = { startRound() }
-    val endRound: Clock.() -> Unit = { endRound() }
+    val endRound: Clock.() -> Unit = { endRound(999) }
+    val endLastRoundOfDay: Clock.() -> Unit = { endRound(0) }
     val startTurn: Clock.() -> Unit = { startTurn() }
     val endTurn: Clock.() -> Unit = { endTurn(true) }
     val endLastTurnOfRound: Clock.() -> Unit = { endTurn(false) }
@@ -74,17 +75,49 @@ class ClockImplTest {
       endTurn to Expectation(GameState.BETWEEN_TURNS, Day.DAY_FRIDAY, 1, 2, 1),
       startTurn to Expectation(GameState.TURN_IN_PROGRESS, Day.DAY_FRIDAY, 1, 2, 1),
       incrementSubTurn to Expectation(GameState.TURN_IN_PROGRESS, Day.DAY_FRIDAY, 1, 2, 2),
-      endLastTurnOfRound to Expectation(GameState.AFTER_LAST_TURN, Day.DAY_FRIDAY, 1, 3, 1),
+      endLastTurnOfRound to Expectation(
+        GameState.AFTER_LAST_TURN_OF_ROUND,
+        Day.DAY_FRIDAY,
+        1,
+        3,
+        1
+      ),
       endRound to Expectation(GameState.BETWEEN_ROUNDS, Day.DAY_FRIDAY, 2, 1, 1),
       startRound to Expectation(GameState.BETWEEN_TURNS, Day.DAY_FRIDAY, 2, 1, 1),
       startTurn to Expectation(GameState.TURN_IN_PROGRESS, Day.DAY_FRIDAY, 2, 1, 1),
-      endLastTurnOfRound to Expectation(GameState.AFTER_LAST_TURN, Day.DAY_FRIDAY, 2, 2, 1),
-      endRound to Expectation(GameState.BETWEEN_ROUNDS, Day.DAY_FRIDAY, 3, 1, 1),
+      endLastTurnOfRound to Expectation(
+        GameState.AFTER_LAST_TURN_OF_ROUND,
+        Day.DAY_FRIDAY,
+        2,
+        2,
+        1
+      ),
+      endLastRoundOfDay to Expectation(GameState.AFTER_LAST_ROUND_OF_DAY, Day.DAY_FRIDAY, 3, 1, 1),
       endDay to Expectation(GameState.BETWEEN_DAYS, Day.DAY_SATURDAY, 1, 1, 1),
       startDay to Expectation(GameState.BETWEEN_ROUNDS, Day.DAY_SATURDAY, 1, 1, 1),
+      startRound to Expectation(GameState.BETWEEN_TURNS, Day.DAY_SATURDAY, 1, 1, 1),
+      startTurn to Expectation(GameState.TURN_IN_PROGRESS, Day.DAY_SATURDAY, 1, 1, 1),
+      endLastTurnOfRound to Expectation(
+        GameState.AFTER_LAST_TURN_OF_ROUND,
+        Day.DAY_SATURDAY,
+        1,
+        2,
+        1
+      ),
+      endLastRoundOfDay to Expectation(GameState.AFTER_LAST_ROUND_OF_DAY, Day.DAY_SATURDAY, 2, 1, 1),
       endDay to Expectation(GameState.BETWEEN_DAYS, Day.DAY_SUNDAY, 1, 1, 1),
       startDay to Expectation(GameState.BETWEEN_ROUNDS, Day.DAY_SUNDAY, 1, 1, 1),
-      endDay to Expectation(GameState.AFTER_END, Day.DAY_GAME_OVER, 1, 1, 1),
+      startRound to Expectation(GameState.BETWEEN_TURNS, Day.DAY_SUNDAY, 1, 1, 1),
+      startTurn to Expectation(GameState.TURN_IN_PROGRESS, Day.DAY_SUNDAY, 1, 1, 1),
+      endLastTurnOfRound to Expectation(
+        GameState.AFTER_LAST_TURN_OF_ROUND,
+        Day.DAY_SUNDAY,
+        1,
+        2,
+        1
+      ),
+      endLastRoundOfDay to Expectation(GameState.AFTER_LAST_ROUND_OF_DAY, Day.DAY_SUNDAY, 2, 1, 1),
+      endDay to Expectation(GameState.AFTER_LAST_DAY, Day.DAY_GAME_OVER, 1, 1, 1),
     )
   }
 }

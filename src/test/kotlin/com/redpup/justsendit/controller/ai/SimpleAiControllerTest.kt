@@ -7,6 +7,7 @@ import com.redpup.justsendit.control.ai.SimpleAiController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.proto.LiftDirection
 import com.redpup.justsendit.model.board.tile.proto.liftTile
 import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.player.Player
@@ -53,6 +54,7 @@ class SimpleAiControllerTest {
       apresLink = 0
       lift = liftTile {
         minCards = 1
+        direction = LiftDirection.LIFT_DIRECTION_BOTTOM
       }
     }
     val tileMap = mock<HexGrid<com.redpup.justsendit.model.board.tile.proto.MountainTile>> {
