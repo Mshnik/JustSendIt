@@ -28,6 +28,7 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
     X_NUDGE,
     Y_NUDGE
   )
+  private val pointsRenderer = PointsRenderer(BOARD_WIDTH, BOARD_HEIGHT)
 
   private val boardImage =
     Image(javaClass.getResource("/com/redpup/justsendit/img/Board.png")!!.toExternalForm())
@@ -48,10 +49,9 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
   private fun draw(gc: GraphicsContext) {
     gc.clearRect(0.0, 0.0, width, height)
 
-    // Draw background board image
     gc.drawImage(boardImage, 0.0, 0.0, width, height)
-
     hexGridViewer.draw(gc)
     playerRenderer.render(gameModel)
+    pointsRenderer.draw(gc)
   }
 }
