@@ -8,7 +8,7 @@ import com.redpup.justsendit.log.LoggerModule
 import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
-import com.redpup.justsendit.view.board.HexGridViewer
+import com.redpup.justsendit.view.board.GuiBoard
 import com.redpup.justsendit.view.controller.GuiControllerModule
 import com.redpup.justsendit.view.controller.GuiHumanController
 import com.redpup.justsendit.view.player.ActivePlayerArea
@@ -62,7 +62,7 @@ class JustSendItGui : Application() {
   }
 
   override fun init() {
-    var injector = Guice.createInjector(
+    val injector = Guice.createInjector(
       JustSendItGuiModule(this),
       GameModelModule(),
       GuiCoroutineModule(),
@@ -79,7 +79,8 @@ class JustSendItGui : Application() {
 
   override fun start(stage: Stage) {
     val gameModel = guiState.gameModel
-    val hexGridViewer = HexGridViewer(gameModel)
+    val guiBoard = GuiBoard(gameModel)
+    val hexGridViewer = guiBoard.hexGridViewer
     guiPlayerController.hexGridViewer = hexGridViewer
     val infoPanel = InfoPanel(guiState)
     logPanel = LogPanel()
@@ -103,7 +104,7 @@ class JustSendItGui : Application() {
     guiPlayerController.activePlayerArea = activePlayerArea
 
     val mainLayout = BorderPane()
-    mainLayout.center = hexGridViewer
+    mainLayout.center = guiBoard
     mainLayout.right = sidebarHub
     mainLayout.bottom = activePlayerArea
 
