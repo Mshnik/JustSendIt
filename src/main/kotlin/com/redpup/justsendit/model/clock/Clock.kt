@@ -46,7 +46,7 @@ interface Clock {
   fun startTurn()
 
   /** Ends the current turn. */
-  fun endTurn()
+  fun endTurn(turnsRemain: Boolean)
 
   /** Increases the sub turn of the clock. */
   fun incrementSubTurn()

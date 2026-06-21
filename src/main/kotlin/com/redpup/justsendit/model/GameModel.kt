@@ -328,15 +328,11 @@ class MutableGameModel @Inject constructor(
       clock.incrementSubTurn()
     } while (continueTurn)
 
-    clock.endTurn()
+    val turnsRemain = !players.all { it.isPassed }
+    clock.endTurn(turnsRemain)
 
     // If not all players have passed, advance to the next non-passed player.
-    if (players.all { it.isPassed }) {
-      clock.endRound()
-      if (clock.round >= maxRound) {
-        clock.endDay()
-      }
-    } else {
+    if (turnsRemain) {
       do {
         currentPlayerIndex = (currentPlayerIndex + 1) % players.size
       } while (currentPlayer.isPassed)

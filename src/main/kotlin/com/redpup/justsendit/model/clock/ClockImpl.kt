@@ -72,7 +72,7 @@ class ClockImpl @Inject constructor(
   }
 
   override fun endRound() {
-    changeState(GameState.BETWEEN_TURNS, GameState.BETWEEN_ROUNDS)
+    changeState(GameState.AFTER_LAST_TURN, GameState.BETWEEN_ROUNDS)
 
     round++
     turn = 1
@@ -83,8 +83,11 @@ class ClockImpl @Inject constructor(
     changeState(GameState.BETWEEN_TURNS, GameState.TURN_IN_PROGRESS)
   }
 
-  override fun endTurn() {
-    changeState(GameState.TURN_IN_PROGRESS, GameState.BETWEEN_TURNS)
+  override fun endTurn(turnsRemain: Boolean) {
+    changeState(
+      GameState.TURN_IN_PROGRESS,
+      if (turnsRemain) GameState.BETWEEN_TURNS else GameState.AFTER_LAST_TURN
+    )
 
     turn++
     subTurn = 1

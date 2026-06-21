@@ -69,7 +69,6 @@ class JustSendItGui : Application() {
       GuiControllerModule(),
       SystemTimeSourceModule(),
       LoggerModule(
-        LoggerInstance(LazyForwardingLogger { advanceButton }),
         LoggerInstance(LazyForwardingLogger { sidebarHub }),
         LoggerInstance(LazyForwardingLogger { activePlayerArea })
       )

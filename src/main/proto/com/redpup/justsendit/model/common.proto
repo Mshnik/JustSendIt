@@ -23,7 +23,8 @@ enum GameState {
   BETWEEN_ROUNDS = 3;
   BETWEEN_TURNS = 4;
   TURN_IN_PROGRESS = 5;
-  AFTER_END = 6;
+  AFTER_LAST_TURN = 6;
+  AFTER_END = 7;
 }
 
 /** Types of dice. */
