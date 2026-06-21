@@ -201,6 +201,7 @@ class MutableGameModel @Inject constructor(
         is MountainDecision -> mountainDecision = value
         is PlayerMove -> playerMove = value
         is SkiRideAttempt -> skiRideAttempt = value
+        is SkiRideCrash -> skiRideCrash = value
         else -> throw IllegalArgumentException("Unsupported log $value")
       }
     }.let { log -> loggers.forEach { it.log(log) } }

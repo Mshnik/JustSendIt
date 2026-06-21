@@ -19,11 +19,11 @@ class AdvanceButton(
   }
 
   /** Sets up the button for confirmation. */
-  fun setupConfirm(deferred: CompletableDeferred<Unit>) {
+  fun setupConfirm(deferred: CompletableDeferred<Unit>, isEmptyAcceptable: Boolean) {
     Platform.runLater {
       this.confirmDeferred = deferred
       text = "CONFIRM"
-      isDisable = true // Start disabled until selection is made
+      isDisable = !isEmptyAcceptable
       setOnAction {
         deferred.complete(Unit)
         this.confirmDeferred = null

@@ -54,6 +54,8 @@ class GuiHumanController @Inject constructor(private val guiState: GuiState) : P
           widgets.addAll(sidebarHub.shopList.children.filterIsInstance<CardWidget>())
         }
 
+        // TODO: add PLAY, DISCARD zones.
+
         widgets.filter { it.skill in elements }.forEach { widget ->
           widget.setOnMouseClicked { e ->
             if (e.button == MouseButton.PRIMARY) {
@@ -81,7 +83,7 @@ class GuiHumanController @Inject constructor(private val guiState: GuiState) : P
         }
 
         guiState.coroutineScope.launch {
-          activePlayerArea.awaitConfirm()
+          activePlayerArea.awaitConfirm(isEmptyAcceptable = 0 in count)
           // Cleanup
           widgets.forEach {
             it.isSelected = false

@@ -33,12 +33,12 @@ class SidebarHub(
     this.tabClosingPolicy = TabClosingPolicy.UNAVAILABLE
     this.prefWidth = 300.0
 
-    shopTab.content = shopList
     infoTab.content = infoPanel
-    logTab.content = logPanel
+    shopTab.content = shopList
     trashTab.content = trashList
+    logTab.content = logPanel
 
-    tabs.addAll(shopTab, infoTab, logTab, trashTab)
+    tabs.addAll(infoTab, shopTab, trashTab, logTab)
 
     update()
   }

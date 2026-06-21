@@ -120,7 +120,7 @@ class ActivePlayerArea(
     setButtonsEnabled(false)
   }
 
-  fun setButtonsEnabled(enabled: Boolean) {
+  private fun setButtonsEnabled(enabled: Boolean) {
     val location = guiState.gameModel.currentPlayer.location
     val tile = location?.let { guiState.gameModel.tileMap[it] }
 
@@ -142,9 +142,9 @@ class ActivePlayerArea(
     return decisionDeferred!!.await()
   }
 
-  suspend fun awaitConfirm() {
+  suspend fun awaitConfirm(isEmptyAcceptable: Boolean) {
     val deferred = CompletableDeferred<Unit>()
-    advanceButton.setupConfirm(deferred)
+    advanceButton.setupConfirm(deferred, isEmptyAcceptable)
     deferred.await()
   }
 
