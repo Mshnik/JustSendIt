@@ -34,22 +34,24 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
     for (value in MIN_POINTS..MAX_POINTS) {
       val position = getPointPosition(value)
       gc.fill = Color.GOLD
-      gc.fillOval(
+      gc.stroke = Color.GREY
+      gc.lineWidth = 5.0
+      gc.fillDisc(
         position.first + pointSpacing / 2,
         position.second,
         pointSize,
-        pointSize
       )
     }
 
     for (value in MIN_BONUS_POINTS..MAX_BONUS_POINTS step 100) {
       val position = getBonusPointPosition(value)
       gc.fill = Color.GOLD
-      gc.fillOval(
+      gc.stroke = Color.GREY
+      gc.lineWidth = 5.0
+      gc.fillDisc(
         position.first,
         position.second,
         bonusPointSize,
-        bonusPointSize
       )
     }
   }
@@ -86,5 +88,13 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
         getPointPosition(50).second
 
     return x to y
+  }
+
+  /** Draws a disc on a spot. */
+  private fun GraphicsContext.fillDisc(x: Double, y: Double, width: Double) {
+    strokeOval(x, y, width, width)
+    fillOval(x, y, width, width)
+
+    // TODO: Make 3d cylinder rendering.
   }
 }
