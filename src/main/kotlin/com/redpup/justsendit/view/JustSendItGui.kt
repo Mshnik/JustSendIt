@@ -9,8 +9,8 @@ import com.redpup.justsendit.model.GameModelModule
 import com.redpup.justsendit.util.KtAbstractModule
 import com.redpup.justsendit.util.SystemTimeSourceModule
 import com.redpup.justsendit.view.board.HexGridViewer
-import com.redpup.justsendit.view.controller.GuiHumanController
 import com.redpup.justsendit.view.controller.GuiControllerModule
+import com.redpup.justsendit.view.controller.GuiHumanController
 import com.redpup.justsendit.view.player.ActivePlayerArea
 import com.redpup.justsendit.view.player.PlayerCardChooser
 import com.redpup.justsendit.view.sidebar.InfoPanel
@@ -127,6 +127,7 @@ class JustSendItGui : Application() {
     stage.title = "Just Send It!"
     stage.show()
 
+    guiState.gameModel.clock.onStateChanged.add { _, _ -> update() }
     update()
   }
 
