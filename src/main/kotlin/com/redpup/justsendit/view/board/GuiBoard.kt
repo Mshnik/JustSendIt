@@ -21,13 +21,7 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
   }
 
   private val playerRenderer: PlayerRenderer
-  val hexGridViewer = HexGridViewer(
-    gameModel,
-    HEX_SIZE,
-    MARGIN,
-    X_NUDGE,
-    Y_NUDGE
-  )
+  val hexGridViewer: HexGridViewer
   private val pointsRenderer = PointsRenderer(BOARD_WIDTH)
 
   private val boardImage =
@@ -36,6 +30,7 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
   init {
     width = BOARD_WIDTH
     height = BOARD_HEIGHT
+    hexGridViewer = HexGridViewer(gameModel, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
     playerRenderer = PlayerRenderer(graphicsContext2D, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
 
     val timer = object : AnimationTimer() {
@@ -44,6 +39,10 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
       }
     }
     timer.start()
+
+    setOnMouseClicked { event ->
+      hexGridViewer.fireEvent(event)
+    }
   }
 
   private fun draw(gc: GraphicsContext) {

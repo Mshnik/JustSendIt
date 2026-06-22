@@ -69,6 +69,7 @@ class PlayerRenderer(
 
     // Draw colored oval border
     gc.stroke = color
+    gc.lineWidth = 2.0
     gc.strokeOval(playerX, playerY, ovalWidth, playerOvalHeight)
 
     // Draw player name
