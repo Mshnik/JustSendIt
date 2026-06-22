@@ -50,8 +50,8 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
     gc.clearRect(0.0, 0.0, width, height)
 
     gc.drawImage(boardImage, 0.0, 0.0, width, height)
+    pointsRenderer.draw(gc, gameModel)
     hexGridViewer.draw(gc)
     playerRenderer.render(gameModel)
-    pointsRenderer.draw(gc)
   }
 }

@@ -4,6 +4,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.view.player.PlayerColors.getPlayerColor
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
@@ -15,12 +16,8 @@ class PlayerRenderer(
   private val hexSize: Double,
   private val margin: Double,
   private val xNudge: Double,
-  private val yNudge: Double
+  private val yNudge: Double,
 ) {
-  private val playerColors = listOf(
-    Color.RED, Color.BLUE, Color.GREEN, Color.PURPLE,
-    Color.ORANGE, Color.CYAN, Color.MAGENTA, Color.YELLOW
-  )
   private val playerOnHexVerticalSpacing = 15.0
   private val playerOvalWidthPadding = 10.0
   private val playerOvalHeight = 14.0
@@ -38,10 +35,10 @@ class PlayerRenderer(
       val totalPlayersOnHex = players.size
       val totalHeight = totalPlayersOnHex * playerOnHexVerticalSpacing
 
-      players.forEachIndexed { i, (player, playerIndex) ->
+      players.forEachIndexed { i, (player, _) ->
         renderPlayer(
+          gameModel,
           player,
-          playerIndex,
           x,
           y,
           totalHeight,
@@ -53,14 +50,15 @@ class PlayerRenderer(
 
   /** Renders [player] at [x], [y]. */
   private fun renderPlayer(
-    player: Player, playerIndex: Int, x: Double, y: Double,
+    gameModel: GameModel,
+    player: Player, x: Double, y: Double,
     totalHeight: Double,
     i: Int,
   ) {
     val name = player.name
     val nameWidth = name.length * 6.5
     val ovalWidth = nameWidth + playerOvalWidthPadding
-    val color = playerColors[playerIndex % playerColors.size]
+    val color = gameModel.getPlayerColor(player)
 
     val playerX = x - ovalWidth / 2
     val playerY = y - totalHeight / 2 + i * playerOnHexVerticalSpacing

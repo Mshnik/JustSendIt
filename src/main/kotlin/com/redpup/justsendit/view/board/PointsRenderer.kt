@@ -1,5 +1,7 @@
 package com.redpup.justsendit.view.board
 
+import com.redpup.justsendit.model.GameModel
+import com.redpup.justsendit.view.player.PlayerColors.getPlayerColor
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
@@ -30,29 +32,27 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
   private val bonusPointSize = pointSize * 1.5
   private val bonusPointSpacing = bonusPointSize * 275 / 300
 
-  fun draw(gc: GraphicsContext) {
-    for (value in MIN_POINTS..MAX_POINTS) {
-      val position = getPointPosition(value)
-      gc.fill = Color.GOLD
+  fun draw(gc: GraphicsContext, gameModel: GameModel) {
+    for (player in gameModel.players) {
+      gc.fill = gameModel.getPlayerColor(player)
       gc.stroke = Color.GREY
       gc.lineWidth = 5.0
-      gc.fillDisc(
-        position.first + pointSpacing / 2,
-        position.second,
-        pointSize,
-      )
-    }
 
-    for (value in MIN_BONUS_POINTS..MAX_BONUS_POINTS step 100) {
-      val position = getBonusPointPosition(value)
-      gc.fill = Color.GOLD
-      gc.stroke = Color.GREY
-      gc.lineWidth = 5.0
-      gc.fillDisc(
-        position.first,
-        position.second,
-        bonusPointSize,
-      )
+      getPointPosition(player.points).let {
+        gc.fillDisc(
+          it.first + pointSpacing / 2,
+          it.second,
+          pointSize * 0.9,
+        )
+      }
+
+      getBonusPointPosition(player.points)?.let {
+        gc.fillDisc(
+          it.first,
+          it.second,
+          bonusPointSize * 0.9,
+        )
+      }
     }
   }
 
@@ -74,8 +74,10 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
   private fun Int.toPointPosition() = this * (pointSize + pointSpacing) + boardMargin
 
   /** Returns the (x, y) position of the given bonus point value. */
-  private fun getBonusPointPosition(value: Int): Pair<Double, Double> {
-    check(value % 100 == 0) { "Expected increment of 100, found $value" }
+  private fun getBonusPointPosition(value: Int): Pair<Double, Double>? {
+    if (value < MIN_BONUS_POINTS) {
+      return null
+    }
     check(value in MIN_BONUS_POINTS..MAX_BONUS_POINTS) {
       "Expected value in range [$MIN_BONUS_POINTS,$MAX_BONUS_POINTS], found $value"
     }
@@ -92,9 +94,15 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
 
   /** Draws a disc on a spot. */
   private fun GraphicsContext.fillDisc(x: Double, y: Double, width: Double) {
-    strokeOval(x, y, width, width)
-    fillOval(x, y, width, width)
+    val height = width * 0.2
+    val squish = width * 0.6
+    val skew = width * 0.05
+    val shift = width * 0.1
 
-    // TODO: Make 3d cylinder rendering.
+    strokeOval(x, y - squish + width - shift, width, squish)
+    fillOval(x, y - squish + width - shift, width, squish)
+
+    strokeOval(x - skew, y - squish + width - height - shift, width, squish)
+    fillOval(x - skew, y - squish + width - height - shift, width, squish)
   }
 }
