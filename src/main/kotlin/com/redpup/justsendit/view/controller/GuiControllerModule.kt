@@ -11,5 +11,5 @@ class GuiControllerModule : KtAbstractModule() {
   @Provides
   @Singleton
   fun playerControllers(guiPlayerController: GuiHumanController): List<@JvmSuppressWildcards PlayerController> =
-    listOf(guiPlayerController) // , GuiAIController(SimpleAiController("SimpleAI-1"))
+    listOf(guiPlayerController, GuiAIController(SimpleAiController("SimpleAI-1")))
 }

@@ -33,26 +33,28 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
   private val bonusPointSpacing = bonusPointSize * 275 / 300
 
   fun draw(gc: GraphicsContext, gameModel: GameModel) {
+    gc.stroke = Color.GREY
+    gc.lineWidth = 5.0
+    val pointValues = mutableListOf<Int>()
+
     for (player in gameModel.players) {
       gc.fill = gameModel.getPlayerColor(player)
-      gc.stroke = Color.GREY
-      gc.lineWidth = 5.0
+
+      val similarCount = pointValues.count { it == player.points }
 
       getPointPosition(player.points).let {
         gc.fillDisc(
-          it.first + pointSpacing / 2,
-          it.second,
-          pointSize * 0.9,
+          it.first + pointSpacing / 2, it.second, pointSize * 0.9, similarCount
         )
       }
 
       getBonusPointPosition(player.points)?.let {
         gc.fillDisc(
-          it.first,
-          it.second,
-          bonusPointSize * 0.9,
+          it.first, it.second, bonusPointSize * 0.9, similarCount
         )
       }
+
+      pointValues.add(player.points)
     }
   }
 
@@ -63,10 +65,9 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
     }
 
     val x = (value - TOP_LEFT_POINTS).coerceIn(0, COLUMNS - 1)
-    val y =
-      if (value <= TOP_LEFT_POINTS) TOP_LEFT_POINTS - value
-      else if (value >= TOP_RIGHT_POINTS) value - TOP_RIGHT_POINTS
-      else 0
+    val y = if (value <= TOP_LEFT_POINTS) TOP_LEFT_POINTS - value
+    else if (value >= TOP_RIGHT_POINTS) value - TOP_RIGHT_POINTS
+    else 0
 
     return x.toPointPosition() to y.toPointPosition()
   }
@@ -85,24 +86,24 @@ class PointsRenderer(private val boardWidth: Double) : Canvas() {
     val x = boardWidth - bonusPointSize - boardMargin
     val index = (value / 100) - 1
     val y =
-      index * (bonusPointSize + bonusPointSpacing) +
-        bonusPointSize * 1.4 +
-        getPointPosition(50).second
+      index * (bonusPointSize + bonusPointSpacing) + bonusPointSize * 1.4 + getPointPosition(50).second
 
     return x to y
   }
 
   /** Draws a disc on a spot. */
-  private fun GraphicsContext.fillDisc(x: Double, y: Double, width: Double) {
-    val height = width * 0.2
+  private fun GraphicsContext.fillDisc(x: Double, y: Double, width: Double, similarCount: Int) {
+    val height = width * 0.25
     val squish = width * 0.6
-    val skew = width * 0.05
+    val skew = width * 0.025
     val shift = width * 0.1
 
-    strokeOval(x, y - squish + width - shift, width, squish)
-    fillOval(x, y - squish + width - shift, width, squish)
+    val yUpdated = y - squish + width - shift
 
-    strokeOval(x - skew, y - squish + width - height - shift, width, squish)
-    fillOval(x - skew, y - squish + width - height - shift, width, squish)
+    strokeOval(x - skew * similarCount, yUpdated - height * similarCount, width, squish)
+    fillOval(x - skew * similarCount, yUpdated - height * similarCount, width, squish)
+
+    strokeOval(x - skew * (1 + similarCount), yUpdated - height * (1 + similarCount), width, squish)
+    fillOval(x - skew * (1 + similarCount), yUpdated - height * (1 + similarCount), width, squish)
   }
 }
