@@ -2,12 +2,13 @@ package com.redpup.justsendit.view.board
 
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.view.player.PlayerRenderer
+import com.redpup.justsendit.view.sidebar.InfoPanel
 import javafx.animation.AnimationTimer
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.image.Image
 
-class GuiBoard(private val gameModel: GameModel) : Canvas() {
+class GuiBoard(private val gameModel: GameModel, infoPanel: InfoPanel) : Canvas() {
 
   companion object {
     private const val SCALE = 0.15
@@ -30,7 +31,7 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
   init {
     width = BOARD_WIDTH
     height = BOARD_HEIGHT
-    hexGridViewer = HexGridViewer(gameModel, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
+    hexGridViewer = HexGridViewer(gameModel, infoPanel, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
     playerRenderer = PlayerRenderer(graphicsContext2D, HEX_SIZE, MARGIN, X_NUDGE, Y_NUDGE)
 
     val timer = object : AnimationTimer() {
@@ -40,8 +41,11 @@ class GuiBoard(private val gameModel: GameModel) : Canvas() {
     }
     timer.start()
 
-    setOnMouseClicked { event ->
-      hexGridViewer.fireEvent(event)
+    setOnMouseClicked {
+      hexGridViewer.fireEvent(it)
+    }
+    setOnMouseMoved {
+      hexGridViewer.fireEvent(it)
     }
   }
 

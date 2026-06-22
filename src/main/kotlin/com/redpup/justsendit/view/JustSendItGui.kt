@@ -78,21 +78,12 @@ class JustSendItGui : Application() {
   }
 
   override fun start(stage: Stage) {
+    val infoPanel = InfoPanel(guiState)
     val gameModel = guiState.gameModel
-    val guiBoard = GuiBoard(gameModel)
+    val guiBoard = GuiBoard(gameModel, infoPanel)
     val hexGridViewer = guiBoard.hexGridViewer
     guiPlayerController.hexGridViewer = hexGridViewer
-    val infoPanel = InfoPanel(guiState)
     logPanel = LogPanel()
-
-    hexGridViewer.setOnMouseMoved { event ->
-      val hex = hexGridViewer.hexFromPixel(event.x, event.y)
-      val tile = gameModel.tileMap[hex]
-      infoPanel.updateHexInfo(tile)
-
-      val playersOnHex = gameModel.players.filter { it.location == hex }
-      infoPanel.updatePlayersInfo(playersOnHex)
-    }
 
     advanceButton = AdvanceButton(guiState)
     advanceButton.listeners.add { update() }

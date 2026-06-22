@@ -6,6 +6,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.toX
 import com.redpup.justsendit.model.board.grid.HexExtensions.toY
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.hex.proto.hexPoint
+import com.redpup.justsendit.view.sidebar.InfoPanel
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.image.Image
@@ -18,6 +19,7 @@ import kotlin.math.sin
 /** Renderer class for drawing the mountain board of hexes. */
 class HexGridViewer(
   private val gameModel: GameModel,
+  infoPanel: InfoPanel,
   private val hexSize: Double,
   private val margin: Double,
   private val xNudge: Double,
@@ -33,6 +35,17 @@ class HexGridViewer(
     setOnMouseClicked { event ->
       val hex = hexFromPixel(event.x, event.y)
       onHexClicked?.invoke(hex)
+    }
+    setOnMouseMoved { event ->
+      val hex = hexFromPixel(event.x, event.y)
+      val tile = gameModel.tileMap[hex]
+      infoPanel.updateHexInfo(tile)
+
+      val playersOnHex = gameModel.players.filter { it.location == hex }
+      infoPanel.updatePlayersInfo(playersOnHex)
+
+      // Uncomment for debugging help with mouse location to hex location.
+      // highlightedHexes = listOf(hex)
     }
   }
 
@@ -63,9 +76,10 @@ class HexGridViewer(
     }
   }
 
-  fun hexFromPixel(x: Double, y: Double): HexPoint {
-    val q = ((x - margin - xNudge) / hexSize + bounds.minX) / 1.5
-    val r = ((y - margin - yNudge) / hexSize + bounds.minY) / 1.732 - q / 2
+  private fun hexFromPixel(x: Double, y: Double): HexPoint {
+    // TODO: No idea why nudges are multiplied by 7..
+    val q = ((x - xNudge * 7 - margin) / hexSize + bounds.minX) / 1.5
+    val r = ((y - yNudge * 7 - margin) / hexSize + bounds.minY) / 1.732 - q / 2
     return hexRound(q, r)
   }
 
