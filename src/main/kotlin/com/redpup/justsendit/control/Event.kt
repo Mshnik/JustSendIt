@@ -7,7 +7,6 @@ sealed interface SkillEvent
 
 data class PlaySkillForSkiRideAttempt(
   val slope: SlopeTile,
-  val cumulativeSkill: Int,
   val totalWobbles: Int,
 ) : SkillEvent
 

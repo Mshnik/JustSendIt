@@ -6,6 +6,9 @@ option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
 import "com/redpup/justsendit/model/board/hex/hex_point.proto";
+import "com/redpup/justsendit/model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/common.proto";
+import "com/redpup/justsendit/model/supply/skill.proto";
 import "google/protobuf/empty.proto";
 
 enum MountainDecision {
@@ -14,4 +17,32 @@ enum MountainDecision {
   DECISION_LIFT = 2;
   DECISION_PASS = 3;
   DECISION_EXIT = 4;
+}
+
+// A result of a player attempting to ski/ride a tile.
+message SkiRideAttempt {
+  // The tile being skied/ridden.
+  model.board.tile.SlopeTile slope_tile = 1;
+  // The cards the player played.
+  repeated model.supply.SkillCard cards = 2;
+
+  // The dice the player rolled and the values they got.
+  message DieRoll {
+    // The type of die rolled.
+    Die die = 1;
+    // The results of the roll; more than one element if rerolled.
+    repeated int32 roll = 2;
+  }
+  repeated DieRoll rolls = 3;
+
+  // Resulting state derived from the above and other state.
+  message Computed {
+    // Whether the player successfully skied/rode.
+    bool success = 1;
+    // Total number of applicable icons on the first card.
+    int32 icon_value = 2;
+    // Number of wobbles the player gained.
+    int32 wobbles = 3;
+  }
+  Computed computed = 4;
 }

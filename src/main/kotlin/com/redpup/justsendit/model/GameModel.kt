@@ -8,7 +8,6 @@ import com.redpup.justsendit.control.*
 import com.redpup.justsendit.control.PlayerController.*
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
-import com.redpup.justsendit.log.proto.SkiRideAttemptKt.skiRideRoll
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
@@ -28,6 +27,10 @@ import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.player.proto.SkiRideAttempt
+import com.redpup.justsendit.model.player.proto.SkiRideAttemptKt.computed
+import com.redpup.justsendit.model.player.proto.SkiRideAttemptKt.dieRoll
+import com.redpup.justsendit.model.player.proto.skiRideAttempt
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
@@ -114,26 +117,17 @@ class MutableGameModel @Inject constructor(
     clock.onStateChanged.add { _, to -> to.log() }
   }
 
-  private data class CardResolution(
-    val rolls: List<Pair<Die, Int>>,
-    val skill: Int,
-    val iconBonus: Int,
-    val wobbles: Int,
-  )
-
-  private fun resolveCard(
+  private fun resolveCards(
     player: MutablePlayer,
-    skill: Skill,
+    skills: List<Skill>,
     slope: SlopeTile,
-  ): CardResolution {
-    val green = skill.skillCard.greenDice
-    val blue = skill.skillCard.blueDice
-    val black = skill.skillCard.blackDice
-
+  ): SkiRideAttempt {
     val dice = buildList {
-      repeat(green) { add(Die.DIE_GREEN) }
-      repeat(blue) { add(Die.DIE_BLUE) }
-      repeat(black) { add(Die.DIE_BLACK) }
+      skills.forEach {
+        repeat(it.skillCard.greenDice) { add(Die.DIE_GREEN) }
+        repeat(it.skillCard.blueDice) { add(Die.DIE_BLUE) }
+        repeat(it.skillCard.blackDice) { add(Die.DIE_BLACK) }
+      }
     }
 
     // Step 2: Roll dice
@@ -150,10 +144,28 @@ class MutableGameModel @Inject constructor(
       if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.second }.countDuplicates() else 0
     ).sum()
 
-    val iconSkill = skill.skillCard.iconsList.count { it.matches(slope) }
-    val skillSum = rolls.sumOf { it.second.applyHazards(slope.hazardsList) } + iconSkill
+    player.wobbles += wobbles
 
-    return CardResolution(rolls, skillSum, iconSkill, wobbles)
+    val iconValue = skills.first().skillCard.iconsList.count { it.matches(slope) }
+    val skillSum = rolls.sumOf { it.second.applyHazards(slope.hazardsList) } + iconValue
+
+    val success = skillSum >= slope.difficulty && player.wobbles < CRASH_WOBBLES
+
+    return skiRideAttempt {
+      this.slopeTile = slope
+      this.cards += skills.map { it.skillCard }
+      this.rolls += rolls.map {
+        dieRoll {
+          die = it.first
+          roll += it.second
+        }
+      }
+      computed = computed {
+        this.success = success
+        this.iconValue = iconValue
+        this.wobbles = wobbles
+      }
+    }
   }
 
   /** Adds this message as a log to this game model. */
@@ -297,12 +309,9 @@ class MutableGameModel @Inject constructor(
     val player = currentPlayer
     player.playerCards.forEach { it.startTurn() }
 
-    var continueTurn: Boolean
-    do {
-      val decision = player.controller.makeMountainDecision(this, player).also { it.log() }
-      continueTurn = executeDecision(player, decision)
-      clock.incrementSubTurn()
-    } while (continueTurn)
+    val decision = player.controller.makeMountainDecision(this, player)
+    decision.log()
+    decision.execute(player)
 
     val turnsRemain = !players.all { it.isPassed }
     clock.endTurn(turnsRemain)
@@ -326,40 +335,21 @@ class MutableGameModel @Inject constructor(
   }
 
   /**
-   * Executes the given [decision] for [player]. Returns true iff the player's turn continues
-   * or false if it is now over.
+   * Executes the given [MountainDecision] for [player].
    */
-  private suspend fun executeDecision(
+  private suspend fun MountainDecision.execute(
     player: MutablePlayer,
-    decision: MountainDecision,
-  ): Boolean {
-    return when (decision) {
-      MountainDecision.DECISION_SKI_RIDE -> {
-        executeSkiRide(player)
-      }
-
-      MountainDecision.DECISION_LIFT -> {
-        executeLift(player)
-        false
-      }
-
-      MountainDecision.DECISION_PASS -> {
-        executePass(player)
-        false
-      }
-
-      MountainDecision.DECISION_EXIT -> {
-        executeExit(player)
-        false
-      }
-
-      MountainDecision.DECISION_UNSET, MountainDecision.UNRECOGNIZED -> throw IllegalArgumentException()
-    }
+  ): Unit = when (this) {
+    MountainDecision.DECISION_SKI_RIDE -> executeSkiRide(player)
+    MountainDecision.DECISION_LIFT -> executeLift(player)
+    MountainDecision.DECISION_PASS -> executePass(player)
+    MountainDecision.DECISION_EXIT -> executeExit(player)
+    MountainDecision.DECISION_UNSET, MountainDecision.UNRECOGNIZED -> throw IllegalArgumentException()
   }
 
   private suspend fun executeSkiRide(
     player: MutablePlayer,
-  ): Boolean {
+  ) {
     val location = player.location
     check(location != null) { "Player is off-map." }
     val choices = getAvailableMoves(player)
@@ -381,9 +371,10 @@ class MutableGameModel @Inject constructor(
 
     if (destinationTile.hasLift()) {
       player.location = destination
-      return true
+      return
     }
 
+    // TODO: Reconsider slow effect in new rules.
     val slope = destinationTile.slope
     // Slow check: can only enter if 2 or fewer skill cards in play.
     if (slope.slow) {
@@ -392,62 +383,30 @@ class MutableGameModel @Inject constructor(
 
     player.location = destination
 
-    var cumulativeSkill = 0
-    var succeeded = false
+    val cards = player.controller.chooseSkillCards(
+      this,
+      player,
+      PlaySkillForSkiRideAttempt(slope, player.wobbles),
+      player.hand,
+      Range.closed(0, player.hand.size),
+      SkillZone.HAND
+    )
 
-    while (!succeeded) {
-      val cards = player.controller.chooseSkillCards(
-        this,
-        player,
-        PlaySkillForSkiRideAttempt(slope, cumulativeSkill, player.wobbles),
-        player.hand,
-        Range.closed(0, 1),
-        SkillZone.HAND
-      )
-
-      if (cards.isEmpty()) {
-        crash(player, SkiRideCrash.Cause.CAUSE_INTENTIONAL)
-        break
-      }
-
-      val card = cards.first()
-      player.playCard(card)
-
-      val resolution = resolveCard(player, card, slope)
-      cumulativeSkill += resolution.skill
-      player.addWobbles(resolution.wobbles)
-
-      succeeded = cumulativeSkill >= slope.difficulty && player.wobbles < 3
-
-      skiRideAttempt {
-        this.totalTileDifficulty = slope.difficulty
-        this.cardName = card.name
-        this.rolls += resolution.rolls.map {
-          skiRideRoll {
-            die = it.first
-            roll = it.second
-          }
-        }
-        this.totalIconValue = resolution.iconBonus
-        this.cumulativeSkill = cumulativeSkill
-        this.cumulativeWobbles = player.wobbles
-        this.success = succeeded
-      }.log()
-
-      if (player.wobbles >= 3) {
-        crash(player, SkiRideCrash.Cause.CAUSE_WOBBLES)
-        break
-      }
-
-      if (succeeded) {
-        player.mutate { points += slope.difficulty }
-      } else if (player.hand.isEmpty()) {
-        crash(player, SkiRideCrash.Cause.CAUSE_NO_CARDS)
-        break
-      }
+    if (cards.isEmpty()) {
+      crash(player, SkiRideCrash.Cause.CAUSE_INTENTIONAL)
+      return
     }
 
-    return succeeded
+    cards.forEach { player.playCard(it) }
+    val result = resolveCards(player, cards, slope).also { it.log() }
+
+    if (player.wobbles >= CRASH_WOBBLES) {
+      crash(player, SkiRideCrash.Cause.CAUSE_WOBBLES)
+    } else if (!result.computed.success) {
+      crash(player, SkiRideCrash.Cause.CAUSE_INSUFFICIENT_SKILL)
+    } else {
+      player.mutate { points += slope.difficulty }
+    }
   }
 
   /** Called when [player] crashes. */
@@ -466,7 +425,8 @@ class MutableGameModel @Inject constructor(
     } else {
       player.points -= WIPEOUT_PENALTY
     }
-    player.resetWobbles()
+
+    player.wobbles = 0
     skiRideCrash { this.cause = cause }.log()
   }
 
@@ -611,6 +571,7 @@ class MutableGameModel @Inject constructor(
     const val INITIAL_HAND_SIZE = 5
     const val SHOP_SIZE = 5
 
+    const val CRASH_WOBBLES = 3
     const val WIPEOUT_PENALTY = 10
   }
 }

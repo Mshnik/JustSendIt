@@ -103,16 +103,6 @@ class MutablePlayer(override val controller: PlayerController) : Player {
     return card
   }
 
-  /** Adds [count] wobbles to this player. */
-  fun addWobbles(count: Int) {
-    wobbles += count
-  }
-
-  /** Resets wobbles to 0. */
-  fun resetWobbles() {
-    wobbles = 0
-  }
-
   /** Draws [count] cards from the deck into hand. */
   fun drawCards(count: Int, random: Random) {
     for (i in 1..count) {

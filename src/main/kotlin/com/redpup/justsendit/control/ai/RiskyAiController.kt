@@ -30,7 +30,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   ): List<Skill> {
     return when (event) {
       is PlaySkillForSkiRideAttempt -> {
-        val needed = event.slope.difficulty - event.cumulativeSkill
+        val needed = event.slope.difficulty
 
         // Target success probability decreases as risk increases.
         val targetProb = 1.0 - (risk * 0.8) // Even at max risk, we want SOME chance.
@@ -124,7 +124,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
       // Choose whether to ski/ride or pass based on risk vs hand strength.
       val handStrength = calculateHandStrength(player)
 
-      val moveEvaluations = moves.map { (point, direction) ->
+      val moveEvaluations = moves.map { (point, _) ->
         val destTile = gameModel.tileMap[point]!!
         val difficulty = if (destTile.hasSlope()) destTile.slope.difficulty else 0
         // Score: higher difficulty is "better" for risky players, but only if they can handle it.

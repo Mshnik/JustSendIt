@@ -26,13 +26,14 @@ class LogPanel : ScrollPane(), Logger {
         playerMove.from.toString().replace("\n", " ").trim()
       } to ${playerMove.to.toString().replace("\n", " ").trim()}"
 
-      Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName played ${skiRideAttempt.cardName}\n" +
-        "  Total Difficulty: ${skiRideAttempt.totalTileDifficulty}\n" +
-        "  Rolls: ${skiRideAttempt.rollsList.map { it.roll }}\n" +
-        "  Bonus: ${skiRideAttempt.totalIconValue}\n" +
-        "  Total Skill (Cumulative): ${skiRideAttempt.cumulativeSkill}\n" +
-        "  Total Wobbles (Cumulative): ${skiRideAttempt.cumulativeWobbles}\n" +
-        "  Success: ${skiRideAttempt.success}"
+      Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName played ${skiRideAttempt.cardsList.map { it.name }}\n" +
+        "  Difficulty: ${skiRideAttempt.slopeTile.difficulty}\n" +
+        "  Condition: ${skiRideAttempt.slopeTile.condition}\n" +
+        "  Hazards: ${skiRideAttempt.slopeTile.hazardsList}\n" +
+        "  Rolls: ${skiRideAttempt.rollsList.map { it.rollList }}\n" +
+        "  Bonus: ${skiRideAttempt.computed.iconValue}\n" +
+        "  Wobbles: ${skiRideAttempt.computed.wobbles}\n" +
+        "  Success: ${skiRideAttempt.computed.success}"
 
       Log.EventCase.SKI_RIDE_CRASH -> "$playerName crashed: ${skiRideCrash.cause}"
 

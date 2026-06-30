@@ -38,7 +38,7 @@ class RiskyAiControllerTest {
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      PlaySkillForSkiRideAttempt(slope, 0, 0),
+      PlaySkillForSkiRideAttempt(slope, 0),
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND
@@ -67,7 +67,7 @@ class RiskyAiControllerTest {
     val action = controller.chooseSkillCards(
       gameModel,
       player,
-      PlaySkillForSkiRideAttempt(slope, 0, 0),
+      PlaySkillForSkiRideAttempt(slope, 0),
       player.hand,
       Range.closed(0, 1),
       PlayerController.SkillZone.HAND

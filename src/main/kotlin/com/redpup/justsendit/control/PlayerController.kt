@@ -62,6 +62,7 @@ interface PlayerController {
 
 class BasicPlayerController : PlayerController {
   override val name = "BasicPlayerController-${System.identityHashCode(this)}"
+
   override suspend fun chooseSkillCards(
     gameModel: GameModel,
     player: Player,

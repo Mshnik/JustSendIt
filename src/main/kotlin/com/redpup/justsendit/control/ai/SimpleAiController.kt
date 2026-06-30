@@ -26,13 +26,9 @@ class SimpleAiController(override val name: String) : PlayerController {
   ): List<Skill> {
     return when (event) {
       is PlaySkillForSkiRideAttempt -> {
-        // Pick the card with the highest expected skill value if we need more skill.
-        if (event.cumulativeSkill < event.slope.difficulty) {
-          val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, event.slope) }
-          listOfNotNull(bestCard)
-        } else {
-          emptyList() // Stop playing cards.
-        }
+        // Pick the card with the highest expected skill value.
+        val bestCard = elements.maxByOrNull { calculateExpectedValue(it.skillCard, event.slope) }
+        listOfNotNull(bestCard)
       }
 
       is ChooseCardToBuy -> {

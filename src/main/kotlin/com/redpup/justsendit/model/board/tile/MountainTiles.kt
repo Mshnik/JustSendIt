@@ -31,6 +31,12 @@ object MountainTiles {
   }
 
   /** Applies [hazards] to a given skill roll in order, returning the updated value. */
-  fun Int.applyHazards(hazards: List<Hazard>): Int = if (hazards.isEmpty()) this else
-    applyHazard(hazards.first()).applyHazards(hazards.subList(1, hazards.size))
+  fun Int.applyHazards(hazards: List<Hazard>): Int = if (hazards.isEmpty()) this else {
+    var value = this
+    for (hazard in hazards) {
+      value = value.applyHazard(hazard)
+    }
+    value
+  }
+
 }
