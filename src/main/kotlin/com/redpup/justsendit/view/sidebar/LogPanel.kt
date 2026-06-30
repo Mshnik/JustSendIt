@@ -28,7 +28,7 @@ class LogPanel : ScrollPane(), Logger {
 
       Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName played ${skiRideAttempt.cardName}\n" +
         "  Total Difficulty: ${skiRideAttempt.totalTileDifficulty}\n" +
-        "  Rolls: ${skiRideAttempt.rolledValuesList}\n" +
+        "  Rolls: ${skiRideAttempt.rollsList.map { it.roll }}\n" +
         "  Bonus: ${skiRideAttempt.totalIconValue}\n" +
         "  Total Skill (Cumulative): ${skiRideAttempt.cumulativeSkill}\n" +
         "  Total Wobbles (Cumulative): ${skiRideAttempt.cumulativeWobbles}\n" +

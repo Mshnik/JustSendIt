@@ -45,7 +45,13 @@ message PlayerMove {
 message SkiRideAttempt {
   int32 total_tile_difficulty = 1;
   string card_name = 2;
-  repeated int32 rolled_values = 3;
+
+  message SkiRideRoll {
+    model.Die die = 1;
+    int32 roll = 2;
+  }
+
+  repeated SkiRideRoll rolls = 3;
   int32 total_icon_value = 4;
   int32 cumulative_skill = 5;
   int32 cumulative_wobbles = 6;

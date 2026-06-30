@@ -6,13 +6,17 @@ import com.redpup.justsendit.model.proto.Die
 /** Utilities for operating on [Die]. */
 object Dice {
 
+  /** Returns the maximum value of [this]. */
+  val Die.maxValue: Int
+    get() = when (this) {
+      Die.DIE_GREEN -> 4
+      Die.DIE_BLUE -> 6
+      Die.DIE_BLACK -> 8
+      Die.DIE_UNSET, Die.UNRECOGNIZED -> throw IllegalArgumentException("No max value for $this")
+    }
+
   /** Rolls this die using the given [random]. */
-  fun Die.roll(random: Random) = when (this) {
-    Die.DIE_GREEN -> random.nextInt(4) + 1
-    Die.DIE_BLUE -> random.nextInt(6) + 1
-    Die.DIE_BLACK -> random.nextInt(8) + 1
-    Die.DIE_UNSET, Die.UNRECOGNIZED -> throw IllegalArgumentException("Cannot roll die $this")
-  }
+  fun Die.roll(random: Random) = random.nextInt(maxValue) + 1
 
   /** Upgrades this to the next best die. */
   fun Die.upgrade() = when (this) {

@@ -64,15 +64,15 @@ Some cards and effects may add, remove, upgrade, or downgrade dice counts. Apply
 Each snow conditions and hazard has an associated effect on the card played
 
 * Groomed: Nothing  
-* Ice: \[After roll\] Gain an additional wobble for each 1 rolled.  
-* Powder: \[Before roll\] First card only: Remove your lowest die.  
-* Moguls: \[Before roll\] Downgrade your highest die.  
-* Trees: \[After roll\] All rolled 5s score 0 skill.  
-* Cliffs: \[After roll\] All rolled 2s and 3s score 0 skill.
+* Powder: Nothing (tile difficulties already increased)
+* Ice: Gain a wobble for each 1 rolled.  
+* Moguls: Gain a wobble for each matching pair.  
+* Trees: All rolled 5s score 0 skill.  
+* Cliffs: All rolled 2s and 3s score 0 skill.
 
 ### Wobbles
 
-For each 1 rolled, a player gains a wobble token. If they then have 3 or more wobbles, they crash\!
+For each maximum value rolled, a player gains a wobble token. If they then have 3 or more wobbles, they crash\!
 
 ### Crash & Wipeout
 

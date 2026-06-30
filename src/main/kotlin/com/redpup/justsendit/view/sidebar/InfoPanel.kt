@@ -76,6 +76,9 @@ class InfoPanel(private val guiState: GuiState) : VBox() {
           }\n"
         )
       }
+      if (tile.slope.slow) {
+        info.append("Slow\n")
+      }
       addInfoLabel(info.toString(), hexInfoVBox)
     }
     if (tile.hasLift()) {

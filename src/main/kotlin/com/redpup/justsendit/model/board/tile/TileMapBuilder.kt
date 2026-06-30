@@ -32,7 +32,7 @@ class TileMapBuilder @Inject constructor(private val tileSupply: TileSupply) {
       )
         ?: throw IllegalArgumentException("No lift tile found with parameters ${location.lift} in $liftsByColorAndDirection")
 
-      MountainTileLocation.ContentCase.CONTENT_NOT_SET -> throw IllegalArgumentException()
+      MountainTileLocation.ContentCase.CONTENT_NOT_SET, null -> throw IllegalArgumentException()
     }
 
     for (location in tileSupply.locations) {

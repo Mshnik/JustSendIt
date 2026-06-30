@@ -8,6 +8,7 @@ import com.redpup.justsendit.control.*
 import com.redpup.justsendit.control.PlayerController.*
 import com.redpup.justsendit.log.Logger
 import com.redpup.justsendit.log.proto.*
+import com.redpup.justsendit.log.proto.SkiRideAttemptKt.skiRideRoll
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.board.grid.HexExtensions.isDownMountain
@@ -15,11 +16,13 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.MountainTiles.applyHazards
+import com.redpup.justsendit.model.board.tile.MountainTiles.has
+import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.clock.Clock
 import com.redpup.justsendit.model.clock.MaxRound
-import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
@@ -28,11 +31,13 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
+import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.justsendit.model.random.Dice.roll
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
 import com.redpup.justsendit.util.TimeSource
+import com.redpup.justsendit.util.countDuplicates
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -110,7 +115,7 @@ class MutableGameModel @Inject constructor(
   }
 
   private data class CardResolution(
-    val rolls: List<Int>,
+    val rolls: List<Pair<Die, Int>>,
     val skill: Int,
     val iconBonus: Int,
     val wobbles: Int,
@@ -121,28 +126,9 @@ class MutableGameModel @Inject constructor(
     skill: Skill,
     slope: SlopeTile,
   ): CardResolution {
-    var green = skill.skillCard.greenDice
-    var blue = skill.skillCard.blueDice
-    var black = skill.skillCard.blackDice
-
-    // Step 1: Terrain and effects that change dice
-    // Powder: [Before roll] First card only: Remove your lowest die.
-    if (slope.condition == Condition.CONDITION_POWDER && player.inPlay.size == 1) {
-      if (green > 0) green--
-      else if (blue > 0) blue--
-      else if (black > 0) black--
-    }
-
-    // Moguls: [Before roll] Downgrade your highest die.
-    if (slope.hazardsList.contains(Hazard.HAZARD_MOGULS)) {
-      if (black > 0) {
-        black--
-        blue++
-      } else if (blue > 0) {
-        blue--
-        green++
-      }
-    }
+    val green = skill.skillCard.greenDice
+    val blue = skill.skillCard.blueDice
+    val black = skill.skillCard.blackDice
 
     val dice = buildList {
       repeat(green) { add(Die.DIE_GREEN) }
@@ -151,34 +137,23 @@ class MutableGameModel @Inject constructor(
     }
 
     // Step 2: Roll dice
-    val rolls = dice.map { it.roll(random) }
+    val rolls = dice.map { it to it.roll(random) }
 
     // Step 3: All other terrain and effects (including rerolls) - TODO
 
-    // Step 4: Check for and gain wobbles
-    var wobbles = rolls.count { it == 1 }
-    // Ice: [After roll] Gain an additional wobble for each 1 rolled.
-    if (slope.condition == Condition.CONDITION_ICE) {
-      wobbles += rolls.count { it == 1 }
-    }
+    val wobbles = listOf(
+      // Base wobbles
+      rolls.count { it.second == it.first.maxValue },
+      // Ice wobbles.
+      if (slope has Condition.CONDITION_ICE) rolls.count { it.second == 1 } else 0,
+      // Mogul wobbles.
+      if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.second }.countDuplicates() else 0
+    ).sum()
 
-    // Step 6: Sum skill
-    var sum = rolls.sum()
-    // Trees: [After roll] All rolled 5s score 0 skill.
-    if (slope.hazardsList.contains(Hazard.HAZARD_TREES)) {
-      sum -= rolls.count { it == 5 } * 5
-    }
-    // Cliffs: [After roll] All rolled 2s and 3s score 0 skill.
-    if (slope.hazardsList.contains(Hazard.HAZARD_CLIFFS)) {
-      sum -= rolls.count { it == 2 } * 2
-      sum -= rolls.count { it == 3 } * 3
-    }
+    val iconSkill = skill.skillCard.iconsList.count { it.matches(slope) }
+    val skillSum = rolls.sumOf { it.second.applyHazards(slope.hazardsList) } + iconSkill
 
-    // Matching icons (+1 each)
-    val matchingIcons = skill.skillCard.iconsList.count { it.matches(slope) }
-    sum += matchingIcons
-
-    return CardResolution(rolls, sum, matchingIcons, wobbles)
+    return CardResolution(rolls, skillSum, iconSkill, wobbles)
   }
 
   /** Adds this message as a log to this game model. */
@@ -447,7 +422,12 @@ class MutableGameModel @Inject constructor(
       skiRideAttempt {
         this.totalTileDifficulty = slope.difficulty
         this.cardName = card.name
-        this.rolledValues += resolution.rolls
+        this.rolls += resolution.rolls.map {
+          skiRideRoll {
+            die = it.first
+            roll = it.second
+          }
+        }
         this.totalIconValue = resolution.iconBonus
         this.cumulativeSkill = cumulativeSkill
         this.cumulativeWobbles = player.wobbles
@@ -484,7 +464,7 @@ class MutableGameModel @Inject constructor(
         ).forEach { discardFromHand(it) }
       }
     } else {
-      player.points -= 10
+      player.points -= WIPEOUT_PENALTY
     }
     player.resetWobbles()
     skiRideCrash { this.cause = cause }.log()
@@ -498,7 +478,6 @@ class MutableGameModel @Inject constructor(
     val tile = tileMap[location]!!
     check(tile.hasLift()) { "Location $location does not have a lift" }
 
-    // TODO: Don't discard for lift, play instead.
     val toPlay = player.controller.chooseSkillCards(
       this,
       player,
@@ -510,7 +489,6 @@ class MutableGameModel @Inject constructor(
 
     toPlay.forEach { player.playCard(it) }
 
-    // TODO: Add play, hand to trash candidates.
     val trashCandidates = buildList {
       addAll(player.skillDiscard)
       addAll(player.inPlay)
@@ -632,5 +610,7 @@ class MutableGameModel @Inject constructor(
 
     const val INITIAL_HAND_SIZE = 5
     const val SHOP_SIZE = 5
+
+    const val WIPEOUT_PENALTY = 10
   }
 }

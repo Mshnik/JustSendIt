@@ -5,8 +5,8 @@ import com.redpup.justsendit.control.*
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
+import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
-import com.redpup.justsendit.model.player.Icons.matches
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.MountainDecision

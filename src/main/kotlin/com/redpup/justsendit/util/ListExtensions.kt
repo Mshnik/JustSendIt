@@ -8,3 +8,11 @@ fun <T> MutableList<T>.pop(name: String = "List") =
 fun <T, I : Iterable<T>> I.peek(fn: (T) -> Unit): I {
   return also { forEach(fn) }
 }
+
+/** Counts the number of duplicates in [this]. */
+fun <T, I : Iterable<T>> I.countDuplicates(): Int {
+  return groupingBy { it }.eachCount()
+    .filter { it.value > 1 }
+    .map { it.value * (it.value - 1) / 2 }
+    .sum()
+}
