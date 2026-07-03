@@ -312,6 +312,7 @@ class MutableGameModel @Inject constructor(
     val decision = player.controller.makeMountainDecision(this, player)
     decision.log()
     decision.execute(player)
+    player.discardInPlay()
 
     val turnsRemain = !players.all { it.isPassed }
     clock.endTurn(turnsRemain)

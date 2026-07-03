@@ -7,6 +7,8 @@ option java_package = "com.redpup.justsendit.model.supply.proto";
 
 import "com/redpup/justsendit/model/supply/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
+import "com/redpup/matchers/matcher.proto";
+import "google/protobuf/empty.proto";
 
 /** A skill card in a player's deck, discard, hand, play, or the shop. */
 message SkillCard {
@@ -23,6 +25,17 @@ message SkillCard {
   model.EffectCategory category = 8;
   string text = 9;
   string flavor_text = 10;
+}
+
+message DiceAlterEffect {
+  matchers.Matcher matcher = 1;
+
+  oneof effect {
+    // Rerolls the selected die.
+    google.protobuf.Empty reroll = 2;
+    // Alters the selected die by the given value, clamped on valid values.
+    int32 alter = 3;
+  }
 }
 
 /** A list of skill cards. */
