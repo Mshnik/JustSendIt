@@ -39,8 +39,12 @@ Each mountain tile is either a slope or a lift.
 ## Round & Turn Structure
 
 Each round consists of players taking turns and continues until everyone has
-passed. Play starts with the leader and goes clockwise. At the end of the round,
-the leader token moves clockwise for the next round.
+passed. Play starts with the leader and goes clockwise. At the start of each
+round, players draw cards based on the day:
+
+* **Friday:** 4 cards
+* **Saturday:** 5 cards
+* **Sunday:** 6 cards
 
 Starting with the leader, each player chooses one of the following actions on
 their turn:
@@ -54,7 +58,10 @@ their turn:
 * **Exit:** End their day and leave the mountain to enjoy an Apres Ski bonus.
 
 Once a player chooses to pass or exit, their turn is skipped for the rest of
-this round. The round ends after all players have passed or exited.
+this round. The round ends after all players have passed or exited. At the end
+of the round, the leader token moves clockwise for the next round. If all
+players have exited the mountain or there are no more rounds left in the day,
+the day ends, otherwise play continues with the next round.
 
 ## Ski/Ride
 
@@ -163,16 +170,12 @@ in turn order. Finally, reveal three new Apres cards for the next day.
 * **Bonus Icons:** Zero to two icons matching any Grade, Snow Condition, Hazard,
   or Wild.
 * **Text Categories:**
-    * **Play:** Takes effect immediately when played during a ski/ride. Dice
-      modifications happen before rolling; other text triggers immediately after
-      rolling but before wobbles or skill are scored. No effect during a lift or
-      pass.
-    * **Next:** Takes effect when you play your next card this round during a
-      ski/ride. Unresolved Next effects are lost at the end of the round.
+    * **Play:** Takes effect immediately when played during a ski/ride. Occurs
+      immediately after rolling but before wobbles or skill are scored. No
+      effect during a lift or pass.
     * **Pass:** Takes effect when you reveal your remaining hand during a pass
       action.
-    * **Lift:** Takes effect only when explicitly discarded during a lift
-      action.
+    * **Lift:** Takes effect only when played during a lift action.
 
 ### Player Cards
 
