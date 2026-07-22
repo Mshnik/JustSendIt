@@ -25,8 +25,9 @@ generation.
    qualifies as both `FIRST` and `LAST`.
 4. **Action Restrictions**:
     - `PLAY`, `FIRST`, `LAST`: Resolved sequentially during a Ski/Ride attempt
-      based on played card order. Effects referencing dice can **only** occur
-      on `PLAY`, `FIRST`, and `LAST`.
+      based on played card order. 
+      - Effects referencing dice can **only** occur on `PLAY`, `FIRST`, and `LAST`.
+      - Effects referencing rolled dice values can **only** occur on `LAST`. 
     - `PASS`: Used during a Pass action. `+buy` and any effect modifying or
       interacting with the shop can **only** occur on `PASS`.
     - `LIFT`: Used strictly during a Lift action.
