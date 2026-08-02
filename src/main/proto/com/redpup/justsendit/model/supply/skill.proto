@@ -47,6 +47,8 @@ message SkillEffect {
     CardEffect card_effect = 6;
     google.protobuf.Empty reactivate_following = 7;
     google.protobuf.Empty filter_hand = 8;
+    google.protobuf.Empty replenish_shop = 9;
+    google.protobuf.Empty extra_turn = 10;
   }
 }
 

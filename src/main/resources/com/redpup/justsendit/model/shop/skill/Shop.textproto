@@ -2,11 +2,1287 @@
 # proto-message: SkillCardList
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-7.png"
-  name: "Speed Check"
-  cost: 0
+  name: "Day Tripper"
+  cost: 5
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  flavor_text: "Rental gear, borrowed confidence"
+}
+
+cards {
+  name: "Weekend Warrior"
+  cost: 6
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  flavor_text: "For two days a month, this is home"
+}
+
+cards {
+  name: "Pass Holder"
+  cost: 7
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  flavor_text: "You know the shortest lines and the slickest runs"
+}
+
+cards {
+  name: "Mountain Local"
+  cost: 8
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 2
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  flavor_text: "You're as ever-present as the snow"
+}
+
+cards {
+  name: "Combo Starter"
+  cost: 6
+  green_dice: 2
+  blue_dice: 1
+  black_dice: 0
+  flavor_text: "Linking two moves without thinking twice..."
+}
+
+cards {
+  name: "Combo Builder"
+  cost: 7
+  green_dice: 1
+  blue_dice: 2
+  black_dice: 0
+  flavor_text: "... adding one more, just to see if you can ..."
+}
+
+cards {
+  name: "Full Combo"
+  cost: 8
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 1
+  flavor_text: "... until it's everything you know, all at once"
+}
+
+cards {
+  name: "Beginner Lesson"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Baby steps on the bunny hill"
+}
+
+cards {
+  name: "Intermediate Lesson"
+  cost: 2
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Getting comfortable with a little speed"
+}
+
+cards {
+  name: "Advanced Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Time to trust your instincts"
+}
+
+cards {
+  name: "Expert Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "There's nothing left to teach you"
+}
+
+cards {
+  name: "Groomer Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Corduroy makes everyone look good"
+}
+
+cards {
+  name: "Powder Lesson"
+  cost: 4
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Float, don't fight it"
+}
+
+cards {
+  name: "Ice Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Edges are your best friend today"
+}
+
+cards {
+  name: "Moguls Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Less bracing, more bouncing"
+}
+
+cards {
+  name: "Trees Lesson"
+  cost: 3
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Aim for the gaps, avoid the trunks"
+}
+
+cards {
+  name: "Cliffs Lesson"
+  cost: 4
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      nudge: 1
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "The first 90% is skill, the second 90% is nerve"
+}
+
+cards {
+  name: "Private Lesson"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  icons {
+    wild: true
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "One-on-one, no distractions"
+}
+
+cards {
+  name: "Gut Feeling"
+  cost: 5
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 1 }
+      }
+    }
+  }
+  flavor_text: "Something felt right about that one"
+}
+
+cards {
+  name: "Reading the Snow"
+  cost: 6
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 2 }
+      }
+    }
+  }
+  flavor_text: "You can tell just by looking now"
+}
+
+cards {
+  name: "Trust the Line"
+  cost: 6
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 3 }
+      }
+    }
+  }
+  flavor_text: "No second-guessing where you're headed"
+}
+
+cards {
+  name: "Second Nature"
+  cost: 7
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 4 }
+      }
+    }
+  }
+  flavor_text: "You don't think about it anymore"
+}
+
+cards {
+  name: "Muscle Memory"
+  cost: 7
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 5 }
+      }
+    }
+  }
+  flavor_text: "Your body knows before your brain does"
+}
+
+cards {
+  name: "Feel It Coming"
+  cost: 8
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 6 }
+      }
+    }
+  }
+  flavor_text: "You know what's next before it happens"
+}
+
+cards {
+  name: "Pure Instinct"
+  cost: 8
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 7 }
+      }
+    }
+  }
+  flavor_text: "No thought. Just reaction."
+}
+
+cards {
+  name: "In Your Bones"
+  cost: 9
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 2
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      matching_die {
+        value_matcher { int32_value: 8 }
+      }
+    }
+  }
+  flavor_text: "This mountain is part of you now"
+}
+
+cards {
+  name: "Cascade"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      skill_card_above {}
+    }
+  }
+  flavor_text: "Small at first, bigger by the bottom"
+}
+
+cards {
+  name: "Avalanche"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    gain {
+      skill: 2
+      skill_card_above {}
+    }
+  }
+  flavor_text: "What started small is now unstoppable"
+}
+
+cards {
+  name: "Head Start"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      skill: 2
+      skill_card_below {}
+    }
+  }
+  flavor_text: "Getting ahead of the pack early"
+}
+
+cards {
+  name: "First Tracks"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      skill: 2
+      skill_card_below {}
+    }
+  }
+  flavor_text: "Signing your name on untouched canvas"
+}
+
+cards {
+  name: "Point Man"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      skill: 2
+      skill_card_below {}
+    }
+  }
+  flavor_text: "Leading the way, come what may"
+}
+
+cards {
+  name: "Second Chances"
+  cost: 8
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "One do-over? Take two"
+}
+
+cards {
+  name: "No Regrets"
+  cost: 9
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Every attempt deserves one more shot"
+}
+
+cards {
+  name: "Steady Nerves"
+  cost: 4
   green_dice: 1
   blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "A little shake never stopped anyone"
+}
+
+cards {
+  name: "Soft Landing"
+  cost: 4
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Right when you need it, the snow forgives"
+}
+
+cards {
+  name: "Rock Solid"
+  cost: 8
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Nothing shakes this stance"
+}
+
+cards {
+  name: "Stone Cold"
+  cost: 9
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Cool and calm, even on the sketchy stuff"
+}
+
+cards {
+  name: "Catch Your Balance"
+  cost: 5
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "A shaky moment, quickly corrected"
+}
+
+cards {
+  name: "Find Your Footing"
+  cost: 6
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Recover before anyone notices"
+}
+
+cards {
+  name: "Shake It Off"
+  cost: 7
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "That one absolutely should not have worked"
+}
+
+cards {
+  name: "Steady on the Edge"
+  cost: 6
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Ice can't take you down today"
+}
+
+cards {
+  name: "Unshakeable"
+  cost: 7
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    ignore_wobble {}
+  }
+  flavor_text: "Nothing rattles you"
+}
+
+cards {
+  name: "Just for Fun"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      fun: 3
+      skill_card_below {}
+    }
+  }
+  flavor_text: "Who cares about the score"
+}
+
+cards {
+  name: "Thrill Seeker"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      fun: 3
+      skill_card_below {}
+    }
+  }
+  flavor_text: "The more, the merrier"
+}
+
+cards {
+  name: "Powder Day Grin"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    gain {
+      fun: 3
+      skill_card_below {}
+    }
+  }
+  flavor_text: "You can't stop smiling"
+}
+
+cards {
+  name: "Peak Experience"
+  cost: 7
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    success {}
+    gain {
+      fun: 9
+    }
+  }
+  flavor_text: "This is exactly why you do this"
+}
+
+cards {
+  name: "Best Day Ever"
+  cost: 8
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    success {}
+    gain {
+      fun: 9
+    }
+  }
+  flavor_text: "Nothing tops a day like this"
+}
+
+cards {
+  name: "Momentum"
+  cost: 6
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    success {}
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "Success breeds more success"
+}
+
+cards {
+  name: "On a Roll"
+  cost: 7
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  category: EFFECT_CATEGORY_LAST
+  effects {
+    success {}
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "One good run leads to another"
+}
+
+cards {
+  name: "Trade Up"
+  cost: 5
+  green_dice: 2
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    gain {
+      skill: 5
+    }
+  }
+  flavor_text: "Ditch the dead weight"
+}
+
+cards {
+  name: "Lighten the Load"
+  cost: 6
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    gain {
+      skill: 5
+    }
+  }
+  flavor_text: "Less baggage, more speed"
+}
+
+cards {
+  name: "Cut Your Losses"
+  cost: 7
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    gain {
+      skill: 5
+    }
+  }
+  flavor_text: "Sometimes less is more"
+}
+
+cards {
+  name: "All In"
+  cost: 8
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    gain {
+      skill: 5
+    }
+  }
+  flavor_text: "No plan B. There never was"
+}
+
+cards {
+  name: "New Perspective"
+  cost: 7
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "Out with the old, in with the new"
+}
+
+cards {
+  name: "Fresh Start"
+  cost: 8
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 1
+  category: EFFECT_CATEGORY_FIRST
+  effects {
+    discard_card {}
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "The whole mountain, wide open again"
+}
+
+cards {
+  name: "Whoops"
+  cost: 3
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "That definitely didn't go as planned"
+}
+
+cards {
+  name: "Take Two"
+  cost: 4
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "The second attempt usually goes better"
+}
+
+cards {
+  name: "Nailed It"
+  cost: 5
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Eventually, everyone gets it right"
+}
+
+cards {
+  name: "Recalculate"
+  cost: 5
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Trust the new plan, not the old one"
+}
+
+cards {
+  name: "Clean Break"
+  cost: 4
+  green_dice: 0
+  blue_dice: 1
   black_dice: 0
   icons {
     grade: GRADE_GREEN
@@ -15,712 +1291,506 @@ cards {
     condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "You may discard a card to remove all of your wobbles."
-  flavor_text: "Drop the speed, save the run"
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Whatever just happened, forget it"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-8.png"
-  name: "Centrifugal Force"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
+  name: "No Looking Back"
+  cost: 5
+  green_dice: 0
+  blue_dice: 1
   black_dice: 0
   icons {
     grade: GRADE_BLUE
   }
   icons {
-    condition: CONDITION_ICE
+    condition: CONDITION_POWDER
   }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Upgrade 1 die for each wobble you have."
-  flavor_text: "Catapulted straight out of your comfort zone"
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Once you commit, that's the only way now"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-9.png"
-  name: "Tireless Training"
-  cost: 0
+  name: "Gut Check"
+  cost: 6
   green_dice: 0
   blue_dice: 1
   black_dice: 0
   icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Increase any number of dice showing 2 or higher 1"
-  flavor_text: "All that hard work just paid off"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-10.png"
-  name: "Pushed to the Limit"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "At the end of your turn, trash the next card played."
-  flavor_text: "That old board saved you, one last time"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-11.png"
-  name: "Local's Discount"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
     grade: GRADE_BLACK
   }
-  text: "Use the [Play] or [Next] effect of a card in the shop"
-  flavor_text: "The ultimate passholder perk is knowing which line moves fastest."
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "That wasn't your best, and you know it"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-12.png"
-  name: "Brand New Boots"
-  cost: 0
+  name: "Prove It"
+  cost: 6
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Talk is cheap. Show them instead."
+}
+
+cards {
+  name: "No Excuses"
+  cost: 5
   green_dice: 0
   blue_dice: 0
   black_dice: 1
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "This time, nothing but results"
+}
+
+cards {
+  name: "Leap of Faith"
+  cost: 6
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLUE
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "No guarantees. Just hope, and a shove."
+}
+
+cards {
+  name: "High Stakes"
+  cost: 7
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Everything comes down to this one shot"
+}
+
+cards {
+  name: "Against the Odds"
+  cost: 7
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        constant_matcher: true
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Somehow, against everything, it works"
+}
+
+cards {
+  name: "Light Touch"
+  cost: 3
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Barely touching the snow"
+}
+
+cards {
+  name: "Gentle Nudge"
+  cost: 3
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "A small push in the right direction"
+}
+
+cards {
+  name: "Steady Push"
+  cost: 3
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
   icons {
     condition: CONDITION_POWDER
   }
   icons {
     hazard: HAZARD_CLIFFS
   }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Discard a card. Gain a black die and upgrade a die."
-  flavor_text: "They're stiff now, but you'll thank them later"
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Adjusting your line mid-run"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-13.png"
-  name: "Purge the Pack"
-  cost: 0
+  name: "Smooth Correction"
+  cost: 5
   green_dice: 0
   blue_dice: 1
   black_dice: 0
   icons {
-    grade: GRADE_BLUE
+    condition: CONDITION_GROOMED
   }
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_LIFT
-  text: "You may trash an additional card."
-  flavor_text: "The lighter the pack, the faster you'll go"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-14.png"
-  name: "Demo Fleet"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
   icons {
     hazard: HAZARD_MOGULS
   }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Gain 1 green die."
-  flavor_text: "Demos are built for things you'd never do to your own."
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Just a little correction"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-15.png"
-  name: "Tuck and Hold"
-  cost: 0
-  green_dice: 1
+  name: "Fine Tune"
+  cost: 5
+  green_dice: 0
   blue_dice: 1
   black_dice: 0
   icons {
-    grade: GRADE_BLUE
+    condition: CONDITION_ICE
   }
   icons {
-    condition: CONDITION_GROOMED
+    hazard: HAZARD_CLIFFS
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "You may discard 2 cards. If you do, at the start of the next round, draw 2 cards."
-  flavor_text: "Once you can hear your jacket flapping, you're halfway there"
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Dialing it in on the fly"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-16.png"
-  name: "Helmet Headphones"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
+  name: "Course Correct"
+  cost: 5
+  green_dice: 0
+  blue_dice: 1
   black_dice: 0
   icons {
-    hazard: HAZARD_MOGULS
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_TREES
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "Discard the top card of your deck: Gain fun equal to its cost."
-  flavor_text: "Music so loud you can't hear your own thoughts"
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Adjusting before it's too late"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-17.png"
-  name: "Hot Lap"
-  cost: 0
+  name: "Total Control"
+  cost: 6
   green_dice: 0
   blue_dice: 0
   black_dice: 1
   icons {
-    grade: GRADE_BLACK
+    condition: CONDITION_GROOMED
   }
-  category: EFFECT_CATEGORY_LIFT
-  text: "After taking the lift, immediately take another turn."
-  flavor_text: "Straight out of the chair and down the mountain"
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Small tweaks, big difference"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-18.png"
+  name: "Ricochet"
+  cost: 6
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Change your line without losing speed"
+}
+
+cards {
+  name: "Big Push"
+  cost: 6
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Forcing your way to a better line"
+}
+
+cards {
   name: "Scope the Line"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Discard the top card of your deck. If its cost is equal to or greater than the card played, upgrade 2 dice."
-  flavor_text: "Looks entirely doable, from up here."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-19.png"
-  name: "Scout Run"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "Look at the top 3 cards of your deck. Put 1 card on top and discard the other 2."
-  flavor_text: "The shortest path down is rarely the safest one."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-20.png"
-  name: "Pre-Season Hype"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    condition: CONDITION_ICE
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "You may put cards you gain on top of your deck."
-  flavor_text: "The mountain is calling."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-21.png"
-  name: "Lost and Found"
-  cost: 0
+  cost: 7
   green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_LIFT
-  text: "You may gain a card from the trash to your hand."
-  flavor_text: "Nothing like finding a perfectly good energy bar in snow."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-22.png"
-  name: "Double Down"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Activate the next played card's effect an additional time."
-  flavor_text: "First run so good you gotta run it back"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-23.png"
-  name: "Bootleg Tune Up"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Before rolling, set one die to any value."
-  flavor_text: "Factory spec performance on a backyard budget"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-24.png"
-  name: "Single-Ski Style"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Before rolling, set one die to 1 and gain 10 fun."
-  flavor_text: "You bragged about it, so now you have to do it"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-25.png"
-  name: "Watch This"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    hazard: HAZARD_CLIFFS
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Gain fun equal to highest value rolled"
-  flavor_text: "The cameras are rolling. Don't fall now!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-26.png"
-  name: "Forever Four"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each die showing 4."
-  flavor_text: "Friends carving their stories in the snow"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-27.png"
-  name: "Clean Edge"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you have no wobbles, you get +3 skill"
-  flavor_text: "A sharp crescent drawn along a clean canvas"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-28.png"
-  name: "Butt Pads"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you crash this turn, do not discard a card."
-  flavor_text: "So good you'll want to fall down!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-29.png"
-  name: "Crowdpleaser"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain 5 additional fun when you succeed this turn."
-  flavor_text: "The whole lift line is watching!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-30.png"
-  name: "Roof Rack"
-  cost: 0
-  green_dice: 0
   blue_dice: 1
   black_dice: 0
   icons {
     grade: GRADE_BLUE
   }
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "You may purchase an additional card this turn (you must pay both costs)"
-  flavor_text: "For the very, very well prepared"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-31.png"
-  name: "Snow Report"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  icons {
-    hazard: HAZARD_CLIFFS
-  }
-  category: EFFECT_CATEGORY_LIFT
-  text: "You may put your deck into your discard pile. If you do, put one card from your discard on top of your deck."
-  flavor_text: "The lifties always know the best lines"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-32.png"
-  name: "Lens Swap"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_LIFT
-  text: "Discard any number of cards: Draw that many cards."
-  flavor_text: "Yellow lens for flat light, dark tint for the glory days."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-33.png"
-  name: "Mountain Run"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "Gain +Study equal to your run length this round."
-  flavor_text: "From peak to parking lot"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-34.png"
-  name: "Summer Sun Run"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    condition: CONDITION_ICE
-  }
   category: EFFECT_CATEGORY_PLAY
-  text: "Discard a card to gain 8 fun."
-  flavor_text: "Just skiis, snow, and skin"
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 2
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_TOPDECK
+      count: 2
+    }
+  }
+  flavor_text: "See what's coming before you commit"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-35.png"
-  name: "Second Chance"
-  cost: 0
-  green_dice: 1
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may reroll any dice showing 2, once each."
-  flavor_text: "The mountain always provides a solid shot at redemption."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-36.png"
-  name: "TImeless Three"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +3 skill for each die showing 3."
-  flavor_text: "A long weekend of incredible adventure"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-37.png"
-  name: "Lean Into It"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may gain 1 wobble to draw a card."
-  flavor_text: "Leaning back means the mountain wins"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-38.png"
-  name: "Stacking the Deck"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Put up to 2 cards from your discard pile on top of your deck."
-  flavor_text: "Ride a setup that feels technically illegal."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-39.png"
-  name: "Complementary Tuning"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "Gain fun equal to the value of the cards you buy"
-  flavor_text: "Nothing sharper than never-used edges"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-40.png"
-  name: "Conditioning"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    condition: CONDITION_ICE
-  }
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "After buying cards, put any number of cards from your hand on top of your deck"
-  flavor_text: "Slow and steady, sun-up to sun-down"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-41.png"
-  name: "Peripheral Vision"
-  cost: 0
-  green_dice: 1
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    condition: CONDITION_ICE
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Look at the top 2 cards of your deck. Put 1 on top and discard the other."
-  flavor_text: "Keep the eyes wide. The mountain moves fast."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-42.png"
-  name: "Spring Cleaning"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "After buying cards, you may trash a card from your hand."
-  flavor_text: "Keep the best, lose the rest"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-43.png"
-  name: "Lone Wolf"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    condition: CONDITION_ICE
-  }
-  icons {
-    hazard: HAZARD_CLIFFS
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "If this is the only card you reveal, +4 study"
-  flavor_text: "Amidst a cloud of snow, you're still on your feet"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-44.png"
-  name: "Spot the Danger"
-  cost: 0
-  green_dice: 1
-  blue_dice: 1
-  black_dice: 0
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you have 1 or more wobbles, you may reroll one die showing 1."
-  flavor_text: "Can't fool me twice"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-45.png"
-  name: "Wild Ride"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each wobble you have"
-  flavor_text: "Barely under control is still under control"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-46.png"
-  name: "Shop Connections"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLUE
-  }
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "Clear up to one card from the shop, then replenish the shop"
-  flavor_text: "Need new gear? You know a guy"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-47.png"
-  name: "Deep Breath"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Draw 2 cards, then put 2 cards on top of your deck."
-  flavor_text: "One last pause before the plunge"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-48.png"
-  name: "Edge Control"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    condition: CONDITION_ICE
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "After rolling, change one 1 to a 2."
-  flavor_text: "Hold the angle and trust your gear!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-49.png"
-  name: "Tunnel Vision"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "Before rolling, set one die to 6"
-  flavor_text: "Amidst the chaos, you see the line"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-50.png"
-  name: "True Two"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +4 skill for each die showing 2."
-  flavor_text: "Just you and the mountain"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-51.png"
-  name: "Straight Line"
-  cost: 0
+  name: "Read the Mountain"
+  cost: 8
   green_dice: 0
   blue_dice: 2
   black_dice: 0
@@ -728,269 +1798,53 @@ cards {
     grade: GRADE_BLACK
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "You may gain 1 wobble to set one die instead of rolling."
-  flavor_text: "The faster you go, the easier it is! Right?"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-52.png"
-  name: "Fifth Finger"
-  cost: 0
-  green_dice: 0
-  blue_dice: 2
-  black_dice: 0
-  icons {
-    hazard: HAZARD_TREES
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 2
+    }
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may reroll any dice showing 5, once each."
-  flavor_text: "Wooden hands grasp, but you're just out of reach"
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_TOPDECK
+      count: 2
+    }
+  }
+  flavor_text: "Know your run before you drop in"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-53.png"
-  name: "Steady Rhythm"
-  cost: 0
+  name: "Plan the Descent"
+  cost: 9
   green_dice: 0
   blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLUE
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "If you have 1 or fewer wobbles, gain 1 blue die."
-  flavor_text: "Smooth and clean"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-54.png"
-  name: "Glove Warmers"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    grade: GRADE_BLUE
-  }
-  category: EFFECT_CATEGORY_LIFT
-  text: "Gain 10 fun."
-  flavor_text: "Warm hands, warm heart"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-55.png"
-  name: "Third Strike"
-  cost: 0
-  green_dice: 0
-  blue_dice: 2
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may reroll any dice showing 3, once each."
-  flavor_text: "You're not out yet"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-56.png"
-  name: "Feelin Five"
-  cost: 0
-  green_dice: 0
-  blue_dice: 2
-  black_dice: 0
-  icons {
-    grade: GRADE_GREEN
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each die showing 5."
-  flavor_text: "Hands grip poles, feet stomp boards"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-57.png"
-  name: "Super Six"
-  cost: 0
-  green_dice: 0
-  blue_dice: 2
-  black_dice: 0
-  icons {
-    grade: GRADE_BLUE
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each die showing 6."
-  flavor_text: "We were up at dawn for this"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-58.png"
-  name: "Only One"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    wild: true
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +5 skill for each die showing 1. (You still gain wobbles)"
-  flavor_text: "It's now or never"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-59.png"
-  name: "Hail Mary"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
   black_dice: 1
   icons {
-    hazard: HAZARD_CLIFFS
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "If your hand is empty, upgrde all dice twice, then gain a green die."
-  flavor_text: "Just crazy enough to work"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-60.png"
-  name: "Full Quiver"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    wild: true
+    grade: GRADE_DOUBLE_BLACK
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "Gain +1 skill for each card in your hand"
-  flavor_text: "New snow? New ski."
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 2
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_TOPDECK
+      count: 2
+    }
+  }
+  flavor_text: "Every good run starts with a good look"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-61.png"
-  name: "Dual Calibration"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    hazard: HAZARD_TREES
-  }
-  icons {
-    condition: CONDITION_ICE
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Discard the top two cards of your deck. If they have at least one matching symbol, put one into your hand."
-  flavor_text: "A final failsafe before a sudden fall"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-62.png"
-  name: "Stomp the Landing"
-  cost: 0
-  green_dice: 3
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain 3 fun for each maximum die value rolled."
-  flavor_text: "Cleanest landing of the entire weekend. No hands down!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-63.png"
-  name: "Pocket Snack"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    condition: CONDITION_POWDER
-  }
-  icons {
-    hazard: HAZARD_MOGULS
-  }
-  category: EFFECT_CATEGORY_NEXT
-  text: "When you pass, return the next card played to your hand."
-  flavor_text: "Food tastes better at ten thousand feet."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-64.png"
-  name: "Seat-of-the-pants"
-  cost: 0
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    grade: GRADE_BLUE
-  }
-  icons {
-    condition: CONDITION_ICE
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you have exactly 2 wobbles, gain 8 fun."
-  flavor_text: "Weight shifted back, arms flailing, still upright!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-65.png"
-  name: "Split Second"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    hazard: HAZARD_CLIFFS
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may switch your deck and discard. If you do, shuffle your deck."
-  flavor_text: "A final decision changes the entire line down."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-66.png"
-  name: "Ski Delivery"
-  cost: 0
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_PASS
-  text: "When you gain a card this turn that matches your current tile, set it aside and put it into your hand at the start of the next round."
-  flavor_text: "Fresh gear, straight to your doorstep"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-67.png"
-  name: "Deep Carve"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may gain 1 wobble to gain 7 fun"
-  flavor_text: "Low enough to kiss the slope"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-68.png"
-  name: "Memory Lane"
-  cost: 0
+  name: "Second Act"
+  cost: 4
   green_dice: 1
   blue_dice: 0
   black_dice: 0
@@ -998,114 +1852,129 @@ cards {
     condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "Draw a card from your discard pile that matches your current tile."
-  flavor_text: "The classics never go out of style."
+  effects {
+    reactivate_following {}
+  }
+  flavor_text: "Do it again, just because you can"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-69.png"
-  name: "Flawless Line"
-  cost: 0
-  green_dice: 2
-  blue_dice: 1
-  black_dice: 0
-  icons {
-    grade: GRADE_BLACK
-  }
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If all of your dice show different values, gain +2 skill for each die rolled"
-  flavor_text: "A line so clean it belongs in a museum"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-70.png"
-  name: "Instant Reflex"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 0
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you have 2 or fewer cards in your hand, draw a card."
-  flavor_text: "Empty minds come up with more ideas"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-71.png"
-  name: "Into the Abyss"
-  cost: 0
+  name: "Encore"
+  cost: 5
   green_dice: 0
   blue_dice: 1
   black_dice: 0
+  icons {
+    condition: CONDITION_ICE
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    reactivate_following {}
+  }
+  flavor_text: "They just keep wanting more"
+}
+
+cards {
+  name: "Rerun"
+  cost: 6
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
   icons {
     condition: CONDITION_POWDER
   }
   category: EFFECT_CATEGORY_PLAY
-  text: "Discard the top card of your deck. If it has a symbol matching your current tile, play it."
-  flavor_text: "A pure leap of faith into a massive cloud of white."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-72.png"
-  name: "Fluid Motion"
-  cost: 0
-  green_dice: 1
-  blue_dice: 1
-  black_dice: 0
-  category: EFFECT_CATEGORY_PLAY
-  text: "If you have played 3 or more cards this turn, draw a card."
-  flavor_text: "One long endless run"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-73.png"
-  name: "Huck and Pray"
-  cost: 0
-  green_dice: 1
-  blue_dice: 2
-  black_dice: 0
-  flavor_text: "You'll get down the mountain, one way or another."
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-74.png"
-  name: "Windstorm"
-  cost: 0
-  green_dice: 1
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    grade: GRADE_BLUE
+  effects {
+    reactivate_following {}
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "You may discard your hand and draw that many cards."
-  flavor_text: "The snow's flying, and so are you"
+  flavor_text: "You could go all day like this"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-75.png"
-  name: "Nostalgia Run"
-  cost: 0
-  green_dice: 0
-  blue_dice: 0
-  black_dice: 1
-  icons {
-    grade: GRADE_BLUE
-  }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain 1 fun for each card in your discard"
-  flavor_text: "You've run it so many times your name should be on it"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-76.png"
   name: "Brief Respite"
-  cost: 0
+  cost: 5
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "A moment to reset before the next run"
+}
+
+cards {
+  name: "Deep Breath"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_HAND
+      count: 1
+    }
+  }
+  flavor_text: "In... and out. You've got this"
+}
+
+cards {
+  name: "Two for One"
+  cost: 3
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  icons {
+    hazard: HAZARD_MOGULS
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    gain {
+      buys: 1
+    }
+  }
+  flavor_text: "Gotta buy one to get the free one"
+}
+
+cards {
+  name: "Treat Yourself"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_POWDER
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    gain {
+      buys: 1
+    }
+  }
+  flavor_text: "You've earned a little something extra"
+}
+
+cards {
+  name: "Close Call"
+  cost: 3
   green_dice: 0
   blue_dice: 1
   black_dice: 0
@@ -1113,117 +1982,273 @@ cards {
     grade: GRADE_BLUE
   }
   icons {
-    hazard: HAZARD_TREES
+    grade: GRADE_BLACK
   }
   category: EFFECT_CATEGORY_PASS
-  text: "Draw a card."
-  flavor_text: "A pause to consider just exactly how that all happened"
+  effects {
+    gain {
+      skill: 2
+      wobble {}
+    }
+  }
+  flavor_text: "Thankfully more near than miss"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-77.png"
-  name: "Quick Pivot"
-  cost: 0
+  name: "Nail Biter"
+  cost: 5
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    condition: CONDITION_ICE
+  }
+  icons {
+    hazard: HAZARD_CLIFFS
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    gain {
+      skill: 2
+      wobble {}
+    }
+  }
+  flavor_text: "Just a bit touch and just enough go"
+}
+
+cards {
+  name: "Trail Map"
+  cost: 3
   green_dice: 0
   blue_dice: 1
   black_dice: 0
   icons {
-    wild: true
+    grade: GRADE_BLUE
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Discard a card, then draw a card. If you discarded one with cost greater than 0, draw 2 cards instead."
-  flavor_text: "If it's not working, try something new!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-78.png"
-  name: "Zero-G"
-  cost: 0
-  green_dice: 0
-  blue_dice: 2
-  black_dice: 0
   icons {
     grade: GRADE_BLACK
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "If your hand is empty, gain +5 skill."
-  flavor_text: "Weightless across the crest as the world holds its breath"
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      count: 3
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 2
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_TOPDECK
+      count: 1
+    }
+  }
+  flavor_text: "Studying every route before you pick one"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-79.png"
-  name: "Punch Through"
-  cost: 0
+  name: "Pick Your Line"
+  cost: 5
   green_dice: 0
-  blue_dice: 1
-  black_dice: 0
+  blue_dice: 0
+  black_dice: 1
   icons {
     hazard: HAZARD_MOGULS
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Draw a card for each wobble you have"
-  flavor_text: "You're down, but you're not out"
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      count: 3
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 2
+    }
+  }
+  effects {
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_REVEALED_TOPDECK
+      destination_zone: SKILL_CARD_ZONE_TOPDECK
+      count: 1
+    }
+  }
+  flavor_text: "Three routes, one choice, no do-overs"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-80.png"
-  name: "Oh So Seven"
-  cost: 0
+  name: "Fresh Inventory"
+  cost: 3
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    replenish_shop {}
+  }
+  flavor_text: "New gear just dropped, and yes, you need it"
+}
+
+cards {
+  name: "Grand Reopening"
+  cost: 5
   green_dice: 0
   blue_dice: 0
-  black_dice: 2
+  black_dice: 1
   icons {
     grade: GRADE_BLACK
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each die showing 7."
-  flavor_text: "Counting down to the weekend"
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  category: EFFECT_CATEGORY_PASS
+  effects {
+    replenish_shop {}
+  }
+  flavor_text: "The whole shop, better than before"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-81.png"
-  name: "Extreme Eight"
-  cost: 0
+  name: "Keep Riding"
+  cost: 3
   green_dice: 0
-  blue_dice: 0
-  black_dice: 2
-  category: EFFECT_CATEGORY_PLAY
-  text: "Gain +2 skill for each die showing 8."
-  flavor_text: "Green light - let's go!"
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-82.png"
-  name: "In the Zone"
-  cost: 0
-  green_dice: 2
   blue_dice: 1
   black_dice: 0
   icons {
-    condition: CONDITION_POWDER
+    grade: GRADE_BLACK
   }
-  category: EFFECT_CATEGORY_PLAY
-  text: "Draw a card for each maximum die roll"
-  flavor_text: "Maximum effort, zero thought"
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    extra_turn {}
+  }
+  flavor_text: "Why stop when you're on a roll"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-83.png"
-  name: "Rail-to-Rail"
-  cost: 0
+  name: "No Stopping Now"
+  cost: 4
   green_dice: 0
-  blue_dice: 3
-  black_dice: 0
-  flavor_text: "Daring in, expertise out"
+  blue_dice: 0
+  black_dice: 1
+  icons {
+    grade: GRADE_DOUBLE_BLACK
+  }
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    extra_turn {}
+  }
+  flavor_text: "One run just wasn't enough"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-84.png"
-  name: "Absolute Send"
-  cost: 0
+  name: "Gear Check"
+  cost: 5
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    filter_hand {}
+  }
+  flavor_text: "Swap out what isn't working before the next run"
+}
+
+cards {
+  name: "Fresh Legs"
+  cost: 7
+  green_dice: 0
+  blue_dice: 2
+  black_dice: 0
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    filter_hand {}
+  }
+  flavor_text: "A few minutes on the chair resets everything"
+}
+
+cards {
+  name: "Take It All In"
+  cost: 6
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    gain {
+      fun: 9
+    }
+  }
+  flavor_text: "The view alone is worth the ticket"
+}
+
+cards {
+  name: "Heart to Heart"
+  cost: 6
   green_dice: 0
   blue_dice: 1
-  black_dice: 2
-  flavor_text: "No time left for second-guessing."
+  black_dice: 0
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    gain {
+      fun: 9
+    }
+  }
+  flavor_text: "A warm conversation against the chilling air"
+}
+
+cards {
+  name: "Spring Cleaning"
+  cost: 5
+  green_dice: 1
+  blue_dice: 1
+  black_dice: 0
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    gain {
+      trashes: 1
+    }
+  }
+  flavor_text: "Time to lighten your pack"
+}
+
+cards {
+  name: "Pack Light"
+  cost: 6
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 1
+  category: EFFECT_CATEGORY_LIFT
+  effects {
+    gain {
+      trashes: 1
+    }
+  }
+  flavor_text: "Extra layers you'll never wear, gone"
 }
 

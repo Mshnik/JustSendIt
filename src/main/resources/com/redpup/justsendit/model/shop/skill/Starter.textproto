@@ -2,8 +2,7 @@
 # proto-message: SkillCardList
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex.png"
-  name: "Falling Leaves"
+  name: "Pizza Party"
   cost: 1
   green_dice: 1
   blue_dice: 0
@@ -11,11 +10,11 @@ cards {
   icons {
     grade: GRADE_GREEN
   }
+  flavor_text: "Slow and wide, easy-cheesy"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex.png"
-  name: "Falling Leaves"
+  name: "Pizza Party"
   cost: 1
   green_dice: 1
   blue_dice: 0
@@ -23,11 +22,11 @@ cards {
   icons {
     grade: GRADE_GREEN
   }
+  flavor_text: "Slow and wide, easy-cheesy"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-1.png"
-  name: "Pizza Party"
+  name: "Falling Leaf"
   cost: 1
   green_dice: 1
   blue_dice: 0
@@ -35,11 +34,11 @@ cards {
   icons {
     condition: CONDITION_GROOMED
   }
+  flavor_text: "Heel side, so you can enjoy the view"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-1.png"
-  name: "Pizza Party"
+  name: "Falling Leaf"
   cost: 1
   green_dice: 1
   blue_dice: 0
@@ -47,47 +46,11 @@ cards {
   icons {
     condition: CONDITION_GROOMED
   }
+  flavor_text: "Heel side, so you can enjoy the view"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-2.png"
-  name: "Bold Beginnings"
-  cost: 1
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-2.png"
-  name: "Bold Beginnings"
-  cost: 1
-  green_dice: 2
-  blue_dice: 0
-  black_dice: 0
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-3.png"
-  name: "Skill Up"
-  cost: 1
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-3.png"
-  name: "Skill Up"
-  cost: 1
-  green_dice: 0
-  blue_dice: 1
-  black_dice: 0
-}
-
-cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-4.png"
-  name: "Signature Style"
+  name: "Wild Ride"
   cost: 1
   green_dice: 1
   blue_dice: 0
@@ -95,15 +58,79 @@ cards {
   icons {
     wild: true
   }
-  text: "use [Fri] effect"
+  flavor_text: "You'll never believe how far you'll go"
 }
 
 cards {
-  filename: "src/main/resources/com/redpup/justsendit/img/skill_cards/Skill Card Front Complex-5.png"
   name: "Just Send It"
   cost: 1
   green_dice: 3
   blue_dice: 0
   black_dice: 0
+  flavor_text: "If you don't know..."
+}
+
+cards {
+  name: "Bold Beginnings"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Lean forward and let the adventure begin"
+}
+
+cards {
+  name: "Still Standing"
+  cost: 1
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Standing still never felt so good"
+}
+
+cards {
+  name: "Skill Up"
+  cost: 1
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  flavor_text: "Every run teaches you something new"
+}
+
+cards {
+  name: "Stroke of Genius"
+  cost: 1
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  flavor_text: "Practice, meet perfect"
 }
 
