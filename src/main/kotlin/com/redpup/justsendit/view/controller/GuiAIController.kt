@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRoll
+import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
@@ -70,7 +71,7 @@ class GuiAIController(
   override suspend fun activateEffects(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
+    dice: List<DieRollOrBuilder>,
     effects: List<SkillEffect>,
   ): Boolean {
     delay(delay)

@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRoll
+import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
@@ -111,7 +112,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   override suspend fun activateEffects(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
+    dice: List<DieRollOrBuilder>,
     effects: List<SkillEffect>,
   ): Boolean {
     TODO("Not yet implemented")

@@ -15,8 +15,6 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.plus
 import com.redpup.justsendit.model.board.grid.HexGrid
 import com.redpup.justsendit.model.board.hex.proto.HexDirection
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.MountainTiles.applyHazards
-import com.redpup.justsendit.model.board.tile.MountainTiles.has
 import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.TileMapBuilder
 import com.redpup.justsendit.model.board.tile.proto.*
@@ -26,22 +24,19 @@ import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.PlayerFactory
 import com.redpup.justsendit.model.player.cards.PlayerGameEvent
+import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.SkiRideAttempt
-import com.redpup.justsendit.model.player.proto.SkiRideAttemptKt.computed
-import com.redpup.justsendit.model.player.proto.dieRoll
-import com.redpup.justsendit.model.player.proto.skiRideAttempt
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
 import com.redpup.justsendit.model.proto.SkillCardZone
-import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.justsendit.model.random.Dice.roll
 import com.redpup.justsendit.model.random.Random
+import com.redpup.justsendit.model.skill.SkiRideResolution
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.*
 import com.redpup.justsendit.util.TimeSource
-import com.redpup.justsendit.util.countDuplicates
 
 /** Immutable access to game model. */
 interface GameModel {
@@ -118,7 +113,7 @@ class MutableGameModel @Inject constructor(
     clock.onStateChanged.add { _, to -> to.log() }
   }
 
-  private fun resolveCards(
+  private suspend fun resolveCards(
     player: MutablePlayer,
     skills: List<Skill>,
     slope: SlopeTile,
@@ -129,42 +124,23 @@ class MutableGameModel @Inject constructor(
         repeat(it.skillCard.blueDice) { add(Die.DIE_BLUE) }
         repeat(it.skillCard.blackDice) { add(Die.DIE_BLACK) }
       }
+    }.map {
+      DieRoll.newBuilder().setDie(it).addRoll(it.roll(random))
     }
 
-    // Step 2: Roll dice
-    val rolls = dice.map { it to it.roll(random) }
+    val resolution = SkiRideResolution(player, skills, slope, dice)
 
-    // Step 3: All other terrain and effects (including rerolls) - TODO
-
-    val wobbles = listOf(
-      // Base wobbles
-      rolls.count { it.second == it.first.maxValue },
-      // Ice wobbles.
-      if (slope has Condition.CONDITION_ICE) rolls.count { it.second == 1 } else 0,
-      // Mogul wobbles.
-      if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.second }.countDuplicates() else 0
-    ).sum()
-
-    player.wobbles += wobbles
-
-    val iconValue = skills.first().skillCard.iconsList.count { it.matches(slope) }
-    val skillSum = rolls.sumOf { it.second.applyHazards(slope.hazardsList) } + iconValue
-
-    val success = skillSum >= slope.difficulty && player.wobbles < CRASH_WOBBLES
-
-    return skiRideAttempt {
-      this.slopeTile = slope
-      this.cards += skills.map { it.skillCard }
-      this.rolls += rolls.map {
-        dieRoll {
-          die = it.first
-          roll += it.second
-        }
+    for (skill in skills) {
+      if (player.controller.activateEffects(this, player, dice, skill.skillCard.effectsList)) {
+        skill.applyEffects(this, player, resolution)
       }
-      computed = computed {
-        this.success = success
-        this.iconValue = iconValue
-        this.wobbles = wobbles
+    }
+
+    return resolution.resolve().apply {
+      if (computed.success) {
+        player.wobbles += computed.wobbles
+      } else {
+        player.wobbles = 0
       }
     }
   }
@@ -209,9 +185,7 @@ class MutableGameModel @Inject constructor(
       with(player) {
         gainPlayerCard(
           controller.choosePlayerCard(
-            this@MutableGameModel,
-            player,
-            cards
+            this@MutableGameModel, player, cards
           )
         )
       }
@@ -260,14 +234,14 @@ class MutableGameModel @Inject constructor(
     replenishShop()
 
     for (player in players) {
-      player.location = player.controller.chooseMountainTile(
-        this,
-        player,
-        ChooseStartOfDayLocation,
-        tileMap.entries()
-          .filter { it.value.hasLift() && it.value.lift.direction == LiftDirection.LIFT_DIRECTION_TOP }
-          .map { it.key }
-      )
+      player.location = player.controller
+        .chooseMountainTile(
+          this,
+          player,
+          ChooseStartOfDayLocation,
+          tileMap.entries()
+            .filter { it.value.hasLift() && it.value.lift.direction == LiftDirection.LIFT_DIRECTION_TOP }
+            .map { it.key })
       player.playerCards.forEach { it.startDay() }
     }
 
@@ -356,11 +330,8 @@ class MutableGameModel @Inject constructor(
     check(location != null) { "Player is off-map." }
     val choices = getAvailableMoves(player)
     val direction = player.controller.chooseMountainTile(
-      this, player,
-      ChooseSkiRideDestination,
-      choices.keys
-    )
-      .let { choices[it] ?: throw IllegalStateException("Illegal point chosen: $it") }
+      this, player, ChooseSkiRideDestination, choices.keys
+    ).let { choices[it] ?: throw IllegalStateException("Illegal point chosen: $it") }
 
     check(direction.isDownMountain) { "Can only ski/ride down mountain, found $direction" }
     val destination = location + direction
