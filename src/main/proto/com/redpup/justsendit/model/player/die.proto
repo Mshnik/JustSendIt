@@ -1,0 +1,17 @@
+edition = "2023";
+
+package com.redpup.justsendit.model.player;
+
+option java_multiple_files = true;
+option java_package = "com.redpup.justsendit.model.player.proto";
+
+import "com/redpup/justsendit/model/common.proto";
+
+// The dice the player rolled and the values they got.
+message DieRoll {
+  // The type of die rolled.
+  Die die = 1;
+  // The results of the roll; more than one element if rerolled. The
+  // last element of the list is the current value.
+  repeated int32 roll = 2;
+}

@@ -3,12 +3,12 @@ package com.redpup.justsendit.controller.ai
 import com.google.common.collect.Range
 import com.google.common.truth.Truth.assertThat
 import com.redpup.justsendit.control.PlaySkillForSkiRideAttempt
-import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.control.ai.RiskyAiController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.BaseSkill
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.proto.skillCard
@@ -41,7 +41,7 @@ class RiskyAiControllerTest {
       PlaySkillForSkiRideAttempt(slope, 0),
       player.hand,
       Range.closed(0, 1),
-      PlayerController.SkillZone.HAND
+      SkillCardZone.SKILL_CARD_ZONE_HAND
     )
 
     // Low risk should pick the strong card to ensure success (needed 5, EV 9.0 vs 2.5)
@@ -70,7 +70,7 @@ class RiskyAiControllerTest {
       PlaySkillForSkiRideAttempt(slope, 0),
       player.hand,
       Range.closed(0, 1),
-      PlayerController.SkillZone.HAND
+      SkillCardZone.SKILL_CARD_ZONE_HAND
     )
 
     // High risk should pick the weak card because its EV (2.5) is enough for the difficulty (2)

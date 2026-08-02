@@ -9,9 +9,13 @@ import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.proto.LiftDirection
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.MountainDecision
+import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.supply.proto.SkillCard
+import com.redpup.justsendit.model.supply.proto.SkillEffect
+import com.redpup.matchers.KMatcher
 
 /** A simple AI player controller for simulation. */
 class SimpleAiController(override val name: String) : PlayerController {
@@ -22,7 +26,7 @@ class SimpleAiController(override val name: String) : PlayerController {
     event: SkillEvent,
     elements: List<Skill>,
     count: Range<Int>,
-    vararg zones: PlayerController.SkillZone,
+    vararg zones: SkillCardZone,
   ): List<Skill> {
     return when (event) {
       is PlaySkillForSkiRideAttempt -> {
@@ -75,6 +79,25 @@ class SimpleAiController(override val name: String) : PlayerController {
     elements: List<PlayerCard>,
   ): PlayerCard {
     return elements.first()
+  }
+
+  override suspend fun activateEffects(
+    gameModel: GameModel,
+    player: Player,
+    dice: List<DieRoll>,
+    effects: List<SkillEffect>,
+  ): Boolean {
+    TODO("Not yet implemented")
+  }
+
+  override suspend fun chooseDice(
+    gameModel: GameModel,
+    player: Player,
+    dice: List<DieRoll>,
+    matcher: KMatcher<DieRoll>,
+    count: Range<Int>,
+  ): List<DieRoll> {
+    TODO("Not yet implemented")
   }
 
   override suspend fun makeMountainDecision(

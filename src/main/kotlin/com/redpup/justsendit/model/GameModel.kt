@@ -29,11 +29,12 @@ import com.redpup.justsendit.model.player.cards.PlayerGameEvent
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.proto.SkiRideAttempt
 import com.redpup.justsendit.model.player.proto.SkiRideAttemptKt.computed
-import com.redpup.justsendit.model.player.proto.SkiRideAttemptKt.dieRoll
+import com.redpup.justsendit.model.player.proto.dieRoll
 import com.redpup.justsendit.model.player.proto.skiRideAttempt
 import com.redpup.justsendit.model.proto.Day
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.GameState
+import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.justsendit.model.random.Dice.roll
 import com.redpup.justsendit.model.random.Random
@@ -390,7 +391,7 @@ class MutableGameModel @Inject constructor(
       PlaySkillForSkiRideAttempt(slope, player.wobbles),
       player.hand,
       Range.closed(0, player.hand.size),
-      SkillZone.HAND
+      SkillCardZone.SKILL_CARD_ZONE_HAND
     )
 
     if (cards.isEmpty()) {
@@ -420,7 +421,7 @@ class MutableGameModel @Inject constructor(
           DiscardForCrash,
           player.hand,
           Range.closed(1, 1),
-          SkillZone.HAND
+          SkillCardZone.SKILL_CARD_ZONE_HAND
         ).forEach { discardFromHand(it) }
       }
     } else {
@@ -445,7 +446,7 @@ class MutableGameModel @Inject constructor(
       PlaySkillForLift,
       player.hand,
       Range.closed(tile.lift.minCards, tile.lift.maxCards),
-      SkillZone.HAND
+      SkillCardZone.SKILL_CARD_ZONE_HAND
     )
 
     toPlay.forEach { player.playCard(it) }
@@ -461,7 +462,8 @@ class MutableGameModel @Inject constructor(
       TrashSkill,
       trashCandidates,
       Range.closed(0, toPlay.size),
-      SkillZone.PLAY, SkillZone.DISCARD,
+      SkillCardZone.SKILL_CARD_ZONE_PLAY,
+      SkillCardZone.SKILL_CARD_ZONE_DISCARD
     ).forEach {
       player.skillDiscard.remove(it)
     }
@@ -493,7 +495,7 @@ class MutableGameModel @Inject constructor(
       ChooseCardToBuy(studyValue),
       shop.keys.toList(),
       Range.closed(0, 1),
-      SkillZone.SHOP
+      SkillCardZone.SKILL_CARD_ZONE_SHOP
     )
     if (cards.isNotEmpty()) {
       val card = cards.first()
@@ -567,7 +569,6 @@ class MutableGameModel @Inject constructor(
 
   companion object {
     const val APRES_SLOTS = 3
-    const val MOUNTAIN_POINTS = 5
 
     const val INITIAL_HAND_SIZE = 5
     const val SHOP_SIZE = 5
