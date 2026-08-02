@@ -10,35 +10,79 @@ import "com/redpup/justsendit/model/common.proto";
 import "com/redpup/matchers/matcher.proto";
 import "google/protobuf/empty.proto";
 
+/** A list of skill cards. */
+message SkillCardList {
+  repeated SkillCard cards = 1;
+}
+
 /** A skill card in a player's deck, discard, hand, play, or the shop. */
 message SkillCard {
   string filename = 1;
   string name = 2;
-  int32 cost = 3;
+  uint32 cost = 3;
 
-  int32 green_dice = 4;
-  int32 blue_dice = 5;
-  int32 black_dice = 6;
+  uint32 green_dice = 4;
+  uint32 blue_dice = 5;
+  uint32 black_dice = 6;
 
   repeated Icon icons = 7;
 
-  model.EffectCategory category = 8;
-  string text = 9;
+  EffectCategory category = 8;
+  repeated SkillEffect effects = 9;
+
   string flavor_text = 10;
 }
 
-message DiceAlterEffect {
-  matchers.Matcher matcher = 1;
+/** One of the effects on a skill card. */
+message SkillEffect {
+  oneof condition {
+    google.protobuf.Empty success = 1;
+    google.protobuf.Empty discard_card = 2;
+  }
+
+  oneof effect {
+    AlterDieEffect alter_die = 3;
+    GainEffect gain = 4;
+    google.protobuf.Empty ignore_wobble = 5;
+    CardEffect card_effect = 6;
+    google.protobuf.Empty reactivate_following = 7;
+    google.protobuf.Empty filter_hand = 8;
+  }
+}
+
+/** An effect that alters a die. */
+message AlterDieEffect {
+  // Matcher for dice that are allowed to be selected for this altering.
+  matchers.Matcher die_matcher = 1;
 
   oneof effect {
     // Rerolls the selected die.
     google.protobuf.Empty reroll = 2;
-    // Alters the selected die by the given value, clamped on valid values.
-    int32 alter = 3;
+    // Nudge the selected die by the given value, clamped on valid values.
+    uint32 nudge = 3;
   }
 }
 
-/** A list of skill cards. */
-message SkillCardList {
-  repeated SkillCard cards = 1;
+/** An effect that causes gaining some value. */
+message GainEffect {
+  oneof gain {
+    uint32 skill = 1;
+    uint32 fun = 2;
+    uint32 buys = 3;
+    uint32 trashes = 4;
+  }
+
+  oneof repeat {
+    google.protobuf.Empty skill_card_below = 5;
+    google.protobuf.Empty skill_card_above = 6;
+    google.protobuf.Empty wobble = 7;
+    redpup.matchers.Matcher matching_die = 8;
+  }
+}
+
+/** An effect that moves skill cards between zones. */
+message CardEffect {
+  SkillCardZone source_zone = 1;
+  SkillCardZone destination_zone = 2;
+  uint32 count = 3;
 }
