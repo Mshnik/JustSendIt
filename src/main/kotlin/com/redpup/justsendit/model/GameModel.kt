@@ -131,8 +131,8 @@ class MutableGameModel @Inject constructor(
     val resolution = SkiRideResolution(player, skills, slope, dice)
 
     for (skill in skills) {
-      if (player.controller.activateEffects(this, player, dice, skill.skillCard.effectsList)) {
-        skill.applyEffects(this, player, resolution)
+      if (player.controller.activateEffects(this, player, dice, skill.skillEffects)) {
+        skill.applySkiRideEffects(this, player, resolution)
       }
     }
 

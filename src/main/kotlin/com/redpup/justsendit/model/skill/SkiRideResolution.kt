@@ -19,10 +19,10 @@ import com.redpup.justsendit.util.countDuplicates
  * A wrapper on the resolution of [player] playing [skills] on [slope], after rolling dice.
  */
 class SkiRideResolution(
-  private val player: Player,
-  private val skills: List<Skill>,
-  private val slope: SlopeTile,
-  private val rolls: List<DieRoll.Builder>,
+  val player: Player,
+  val skills: List<Skill>,
+  val slope: SlopeTile,
+  val rolls: List<DieRoll.Builder>,
 ) {
   /** The number of wobbles represented by [rolls] on [slope]. */
   private val wobbles: Int

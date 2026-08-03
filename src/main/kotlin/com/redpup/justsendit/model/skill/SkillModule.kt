@@ -6,5 +6,6 @@ import com.redpup.justsendit.util.KtAbstractModule
 class SkillModule : KtAbstractModule() {
   override fun configure() {
     bind<SkillFactory>().to<SkillFactoryImpl>()
+    bind<SkillEffectFactory>().to<SkillEffectFactoryImpl>()
   }
 }

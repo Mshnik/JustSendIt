@@ -14,7 +14,7 @@ import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
-import com.redpup.justsendit.model.supply.proto.SkillEffect
+import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.justsendit.view.GuiState
 import com.redpup.justsendit.view.board.HexGridViewer
 import com.redpup.justsendit.view.player.ActivePlayerArea
@@ -146,13 +146,13 @@ class GuiHumanController @Inject constructor(private val guiState: GuiState) : P
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseDice(
+  override suspend fun <D : DieRollOrBuilder> chooseDice(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
-    matcher: KMatcher<DieRoll>,
-    count: Range<Int>,
-  ): List<DieRoll> {
+    dice: List<D>,
+    matcher: KMatcher<D>,
+    count: Range<Int>
+  ): List<D> {
     TODO("Not yet implemented")
   }
 

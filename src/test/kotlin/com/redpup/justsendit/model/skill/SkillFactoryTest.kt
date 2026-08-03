@@ -1,15 +1,23 @@
 package com.redpup.justsendit.model.skill
 
 import com.google.common.truth.Truth.assertThat
+import com.google.inject.Guice
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.supply.proto.skillCard
+import javax.inject.Inject
 import kotlin.test.Ignore
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class SkillFactoryTest {
 
-  private val factory = SkillFactoryImpl()
+  @Inject private lateinit var factory: SkillFactory
+
+  @BeforeEach
+  fun setup() {
+    Guice.createInjector(SkillModule()).injectMembers(this)
+  }
 
   @Test
   fun `creates base skill for card with no effect`() {

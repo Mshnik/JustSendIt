@@ -28,13 +28,13 @@ message SkillCard {
   repeated Icon icons = 7;
 
   EffectCategory category = 8;
-  repeated SkillEffect effects = 9;
+  repeated SkillCardEffect effects = 9;
 
   string flavor_text = 10;
 }
 
 /** One of the effects on a skill card. */
-message SkillEffect {
+message SkillCardEffect {
   oneof condition {
     google.protobuf.Empty success = 1;
     google.protobuf.Empty discard_card = 2;

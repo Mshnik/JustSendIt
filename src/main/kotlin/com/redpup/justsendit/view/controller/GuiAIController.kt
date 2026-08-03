@@ -9,12 +9,11 @@ import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
-import com.redpup.justsendit.model.supply.proto.SkillEffect
+import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.matchers.KMatcher
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
@@ -78,13 +77,13 @@ class GuiAIController(
     return delegate.activateEffects(gameModel, player, dice, effects)
   }
 
-  override suspend fun chooseDice(
+  override suspend fun <D : DieRollOrBuilder> chooseDice(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
-    matcher: KMatcher<DieRoll>,
+    dice: List<D>,
+    matcher: KMatcher<D>,
     count: Range<Int>,
-  ): List<DieRoll> {
+  ): List<D> {
     delay(delay)
     return delegate.chooseDice(gameModel, player, dice, matcher, count)
   }

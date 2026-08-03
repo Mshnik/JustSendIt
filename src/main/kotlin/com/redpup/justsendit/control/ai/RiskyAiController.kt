@@ -9,13 +9,12 @@ import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.proto.SlopeTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
+import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.justsendit.model.supply.proto.SkillCard
-import com.redpup.justsendit.model.supply.proto.SkillEffect
 import com.redpup.matchers.KMatcher
 import kotlin.math.sqrt
 
@@ -118,13 +117,13 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseDice(
+  override suspend fun <D : DieRollOrBuilder> chooseDice(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
-    matcher: KMatcher<DieRoll>,
+    dice: List<D>,
+    matcher: KMatcher<D>,
     count: Range<Int>,
-  ) : List<DieRoll> {
+  ): List<D> {
     TODO("Not yet implemented")
   }
 

@@ -14,17 +14,21 @@ interface Skill {
   /** The name of this [Skill]. */
   val name: String get() = skillCard.name
 
-  /** Applies the effects of this [Skill] to [SkiRideResolution]. */
-  fun applyEffects(mutableGameModel: GameModel, player: Player, resolution: SkiRideResolution)
-}
+  /** The effects of this [Skill]. */
+  val skillEffects: List<SkillEffect>
 
-/** Base implementation of a Skill card with no effect. */
-open class BaseSkill(override val skillCard: SkillCard) : Skill {
-  override fun applyEffects(
-    mutableGameModel: GameModel,
+  /** Applies the effects of this [Skill] to [SkiRideResolution]. */
+  suspend fun applySkiRideEffects(
+    gameModel: GameModel,
     player: Player,
     resolution: SkiRideResolution,
   ) {
-    TODO("Not yet implemented")
+    skillEffects.forEach { it.applySkiRideEffects(gameModel, player, resolution) }
   }
 }
+
+/** Base implementation of a Skill card with no effect. */
+open class BaseSkill(
+  override val skillCard: SkillCard,
+  override val skillEffects: List<SkillEffect> = listOf(),
+) : Skill

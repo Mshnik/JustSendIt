@@ -8,12 +8,11 @@ import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
-import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.Skill
-import com.redpup.justsendit.model.supply.proto.SkillEffect
+import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.matchers.KMatcher
 
 /** An AI controller that makes random choices. */
@@ -91,13 +90,13 @@ class RandomAiController(override val name: String) : PlayerController {
     TODO("Not yet implemented")
   }
 
-  override suspend fun chooseDice(
+  override suspend fun <D : DieRollOrBuilder> chooseDice(
     gameModel: GameModel,
     player: Player,
-    dice: List<DieRoll>,
-    matcher: KMatcher<DieRoll>,
+    dice: List<D>,
+    matcher: KMatcher<D>,
     count: Range<Int>,
-  ) : List<DieRoll> {
+  ): List<D> {
     TODO("Not yet implemented")
   }
 

@@ -1,36 +1,21 @@
 package com.redpup.justsendit.model.skill
 
-import com.google.errorprone.annotations.DoNotMock
-import com.redpup.justsendit.model.apres.cards.*
-import com.redpup.justsendit.model.apres.proto.ApresCard
-import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.supply.proto.SkillCard
 import javax.inject.Inject
 
-@DoNotMock(value = "Use FakeSkillFactory instead.")
+/** Builder factory converting proto [SkillCard] into in-memory [Skill]s. */
 interface SkillFactory {
-  /** Factories registered by name. */
-  val factories: Map<String, (SkillCard) -> Skill>
-
   /**
    * Creates a [Skill] from an [SkillCard] using this factory.
    *
    * If the SkillCard is not registered but has no effect, we can return a [BaseSkill].
    */
-  fun create(card: SkillCard): Skill {
-    val factory = factories[card.name]
-    return if (factory != null) {
-      factory(card)
-    } else if (card.category == EffectCategory.EFFECT_CATEGORY_UNSET) {
-      BaseSkill(card)
-    } else {
-      println("No card found for ${card.name} in $factories; falling back to BaseSkill.")
-      BaseSkill(card)
-    }
-  }
+  fun create(card: SkillCard): Skill
 }
 
-/** Factory for creating [Apres] objects from [ApresCard]s. */
-class SkillFactoryImpl @Inject constructor() : SkillFactory {
-  override val factories: Map<String, (SkillCard) -> Skill> = mapOf()
+/** Factory for creating [Skill] objects from [SkillCard]s. */
+class SkillFactoryImpl @Inject constructor(private val skillEffectFactory: SkillEffectFactory) :
+  SkillFactory {
+  override fun create(card: SkillCard): Skill =
+    BaseSkill(card, card.effectsList.map { skillEffectFactory.create(it) })
 }
