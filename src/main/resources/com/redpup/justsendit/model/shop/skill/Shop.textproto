@@ -1,6 +1,3 @@
-# proto-file: com/redpup/justsendit/model/supply/skill.proto
-# proto-message: SkillCardList
-
 cards {
   name: "Day Tripper"
   cost: 5
@@ -11,8 +8,10 @@ cards {
     grade: GRADE_GREEN
   }
   flavor_text: "Rental gear, borrowed confidence"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Weekend Warrior"
   cost: 6
@@ -23,8 +22,10 @@ cards {
     grade: GRADE_BLUE
   }
   flavor_text: "For two days a month, this is home"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Pass Holder"
   cost: 7
@@ -35,8 +36,10 @@ cards {
     grade: GRADE_BLACK
   }
   flavor_text: "You know the shortest lines and the slickest runs"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Mountain Local"
   cost: 8
@@ -46,9 +49,11 @@ cards {
   icons {
     grade: GRADE_DOUBLE_BLACK
   }
-  flavor_text: "You're as ever-present as the snow"
+  flavor_text: "You\'re as ever-present as the snow"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Combo Starter"
   cost: 6
@@ -56,8 +61,10 @@ cards {
   blue_dice: 1
   black_dice: 0
   flavor_text: "Linking two moves without thinking twice..."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Combo Builder"
   cost: 7
@@ -65,17 +72,21 @@ cards {
   blue_dice: 2
   black_dice: 0
   flavor_text: "... adding one more, just to see if you can ..."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Full Combo"
   cost: 8
   green_dice: 1
   blue_dice: 1
   black_dice: 1
-  flavor_text: "... until it's everything you know, all at once"
+  flavor_text: "... until it\'s everything you know, all at once"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Beginner Lesson"
   cost: 1
@@ -95,16 +106,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Baby steps on the bunny hill"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Intermediate Lesson"
   cost: 2
@@ -124,16 +140,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Getting comfortable with a little speed"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Advanced Lesson"
   cost: 3
@@ -153,16 +174,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Time to trust your instincts"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Expert Lesson"
   cost: 3
@@ -181,12 +207,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "There's nothing left to teach you"
+  flavor_text: "There\'s nothing left to teach you"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Groomer Lesson"
   cost: 3
@@ -206,11 +235,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -219,7 +251,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -227,8 +261,10 @@ cards {
     }
   }
   flavor_text: "Corduroy makes everyone look good"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Powder Lesson"
   cost: 4
@@ -248,11 +284,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -261,16 +300,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
       nudge: 1
     }
   }
-  flavor_text: "Float, don't fight it"
+  flavor_text: "Float, don\'t fight it"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Ice Lesson"
   cost: 3
@@ -290,7 +333,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -303,7 +348,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -311,8 +358,10 @@ cards {
     }
   }
   flavor_text: "Edges are your best friend today"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Moguls Lesson"
   cost: 3
@@ -332,7 +381,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
@@ -345,7 +396,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
@@ -353,8 +406,10 @@ cards {
     }
   }
   flavor_text: "Less bracing, more bouncing"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Trees Lesson"
   cost: 3
@@ -374,7 +429,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
@@ -387,7 +444,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
@@ -395,8 +454,10 @@ cards {
     }
   }
   flavor_text: "Aim for the gaps, avoid the trunks"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Cliffs Lesson"
   cost: 4
@@ -427,8 +488,10 @@ cards {
     }
   }
   flavor_text: "The first 90% is skill, the second 90% is nerve"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Private Lesson"
   cost: 5
@@ -448,11 +511,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -461,7 +527,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
@@ -469,8 +537,10 @@ cards {
     }
   }
   flavor_text: "One-on-one, no distractions"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Gut Feeling"
   cost: 5
@@ -482,13 +552,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 1 }
+        value_matcher {
+          int32_value: 1
+        }
       }
     }
   }
   flavor_text: "Something felt right about that one"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Reading the Snow"
   cost: 6
@@ -500,13 +574,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 2 }
+        value_matcher {
+          int32_value: 2
+        }
       }
     }
   }
   flavor_text: "You can tell just by looking now"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Trust the Line"
   cost: 6
@@ -521,13 +599,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 3 }
+        value_matcher {
+          int32_value: 3
+        }
       }
     }
   }
-  flavor_text: "No second-guessing where you're headed"
+  flavor_text: "No second-guessing where you\'re headed"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Second Nature"
   cost: 7
@@ -542,13 +624,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 4 }
+        value_matcher {
+          int32_value: 4
+        }
       }
     }
   }
-  flavor_text: "You don't think about it anymore"
+  flavor_text: "You don\'t think about it anymore"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Muscle Memory"
   cost: 7
@@ -563,13 +649,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 5 }
+        value_matcher {
+          int32_value: 5
+        }
       }
     }
   }
   flavor_text: "Your body knows before your brain does"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Feel It Coming"
   cost: 8
@@ -584,13 +674,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 6 }
+        value_matcher {
+          int32_value: 6
+        }
       }
     }
   }
-  flavor_text: "You know what's next before it happens"
+  flavor_text: "You know what\'s next before it happens"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Pure Instinct"
   cost: 8
@@ -605,13 +699,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 7 }
+        value_matcher {
+          int32_value: 7
+        }
       }
     }
   }
   flavor_text: "No thought. Just reaction."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "In Your Bones"
   cost: 9
@@ -626,13 +724,17 @@ cards {
     gain {
       skill: 2
       matching_die {
-        value_matcher { int32_value: 8 }
+        value_matcher {
+          int32_value: 8
+        }
       }
     }
   }
   flavor_text: "This mountain is part of you now"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Cascade"
   cost: 4
@@ -646,12 +748,15 @@ cards {
   effects {
     gain {
       skill: 2
-      skill_card_above {}
+      skill_card_above {
+      }
     }
   }
   flavor_text: "Small at first, bigger by the bottom"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Avalanche"
   cost: 5
@@ -665,12 +770,15 @@ cards {
   effects {
     gain {
       skill: 2
-      skill_card_above {}
+      skill_card_above {
+      }
     }
   }
   flavor_text: "What started small is now unstoppable"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Head Start"
   cost: 4
@@ -684,12 +792,15 @@ cards {
   effects {
     gain {
       skill: 2
-      skill_card_below {}
+      skill_card_below {
+      }
     }
   }
   flavor_text: "Getting ahead of the pack early"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "First Tracks"
   cost: 4
@@ -703,12 +814,15 @@ cards {
   effects {
     gain {
       skill: 2
-      skill_card_below {}
+      skill_card_below {
+      }
     }
   }
   flavor_text: "Signing your name on untouched canvas"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Point Man"
   cost: 5
@@ -722,12 +836,15 @@ cards {
   effects {
     gain {
       skill: 2
-      skill_card_below {}
+      skill_card_below {
+      }
     }
   }
   flavor_text: "Leading the way, come what may"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Second Chances"
   cost: 8
@@ -740,7 +857,8 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -748,12 +866,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "One do-over? Take two"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "No Regrets"
   cost: 9
@@ -766,7 +887,8 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -774,12 +896,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Every attempt deserves one more shot"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Steady Nerves"
   cost: 4
@@ -794,11 +919,14 @@ cards {
   }
   category: EFFECT_CATEGORY_LAST
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "A little shake never stopped anyone"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Soft Landing"
   cost: 4
@@ -813,11 +941,14 @@ cards {
   }
   category: EFFECT_CATEGORY_LAST
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "Right when you need it, the snow forgives"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Rock Solid"
   cost: 8
@@ -826,11 +957,14 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_FIRST
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "Nothing shakes this stance"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Stone Cold"
   cost: 9
@@ -839,11 +973,14 @@ cards {
   black_dice: 1
   category: EFFECT_CATEGORY_FIRST
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "Cool and calm, even on the sketchy stuff"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Catch Your Balance"
   cost: 5
@@ -855,11 +992,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "A shaky moment, quickly corrected"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Find Your Footing"
   cost: 6
@@ -871,11 +1011,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "Recover before anyone notices"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Shake It Off"
   cost: 7
@@ -887,11 +1030,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "That one absolutely should not have worked"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Steady on the Edge"
   cost: 6
@@ -906,11 +1052,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
-  flavor_text: "Ice can't take you down today"
+  flavor_text: "Ice can\'t take you down today"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Unshakeable"
   cost: 7
@@ -925,11 +1074,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    ignore_wobble {}
+    ignore_wobble {
+    }
   }
   flavor_text: "Nothing rattles you"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Just for Fun"
   cost: 4
@@ -942,13 +1094,16 @@ cards {
   category: EFFECT_CATEGORY_FIRST
   effects {
     gain {
-      fun: 3
-      skill_card_below {}
+      points: 3
+      skill_card_below {
+      }
     }
   }
   flavor_text: "Who cares about the score"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Thrill Seeker"
   cost: 4
@@ -961,13 +1116,16 @@ cards {
   category: EFFECT_CATEGORY_FIRST
   effects {
     gain {
-      fun: 3
-      skill_card_below {}
+      points: 3
+      skill_card_below {
+      }
     }
   }
   flavor_text: "The more, the merrier"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Powder Day Grin"
   cost: 4
@@ -980,13 +1138,16 @@ cards {
   category: EFFECT_CATEGORY_FIRST
   effects {
     gain {
-      fun: 3
-      skill_card_below {}
+      points: 3
+      skill_card_below {
+      }
     }
   }
-  flavor_text: "You can't stop smiling"
+  flavor_text: "You can\'t stop smiling"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Peak Experience"
   cost: 7
@@ -995,14 +1156,17 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_LAST
   effects {
-    success {}
+    success {
+    }
     gain {
-      fun: 9
+      points: 9
     }
   }
   flavor_text: "This is exactly why you do this"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Best Day Ever"
   cost: 8
@@ -1011,14 +1175,17 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_LAST
   effects {
-    success {}
+    success {
+    }
     gain {
-      fun: 9
+      points: 9
     }
   }
   flavor_text: "Nothing tops a day like this"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Momentum"
   cost: 6
@@ -1027,7 +1194,8 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_LAST
   effects {
-    success {}
+    success {
+    }
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
@@ -1035,8 +1203,10 @@ cards {
     }
   }
   flavor_text: "Success breeds more success"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "On a Roll"
   cost: 7
@@ -1045,7 +1215,8 @@ cards {
   black_dice: 1
   category: EFFECT_CATEGORY_LAST
   effects {
-    success {}
+    success {
+    }
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
@@ -1053,8 +1224,10 @@ cards {
     }
   }
   flavor_text: "One good run leads to another"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Trade Up"
   cost: 5
@@ -1066,14 +1239,17 @@ cards {
   }
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     gain {
       skill: 5
     }
   }
   flavor_text: "Ditch the dead weight"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Lighten the Load"
   cost: 6
@@ -1085,14 +1261,17 @@ cards {
   }
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     gain {
       skill: 5
     }
   }
   flavor_text: "Less baggage, more speed"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Cut Your Losses"
   cost: 7
@@ -1104,14 +1283,17 @@ cards {
   }
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     gain {
       skill: 5
     }
   }
   flavor_text: "Sometimes less is more"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "All In"
   cost: 8
@@ -1123,14 +1305,17 @@ cards {
   }
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     gain {
       skill: 5
     }
   }
   flavor_text: "No plan B. There never was"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "New Perspective"
   cost: 7
@@ -1139,7 +1324,8 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
@@ -1147,8 +1333,10 @@ cards {
     }
   }
   flavor_text: "Out with the old, in with the new"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Fresh Start"
   cost: 8
@@ -1157,7 +1345,8 @@ cards {
   black_dice: 1
   category: EFFECT_CATEGORY_FIRST
   effects {
-    discard_card {}
+    discard_card {
+    }
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
@@ -1165,8 +1354,10 @@ cards {
     }
   }
   flavor_text: "The whole mountain, wide open again"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Whoops"
   cost: 3
@@ -1186,16 +1377,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "That definitely didn't go as planned"
+  flavor_text: "That definitely didn\'t go as planned"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Take Two"
   cost: 4
@@ -1215,16 +1411,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "The second attempt usually goes better"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Nailed It"
   cost: 5
@@ -1244,16 +1445,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Eventually, everyone gets it right"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Recalculate"
   cost: 5
@@ -1272,12 +1478,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Trust the new plan, not the old one"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Clean Break"
   cost: 4
@@ -1297,16 +1506,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Whatever just happened, forget it"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "No Looking Back"
   cost: 5
@@ -1326,16 +1540,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "Once you commit, that's the only way now"
+  flavor_text: "Once you commit, that\'s the only way now"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Gut Check"
   cost: 6
@@ -1355,16 +1574,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "That wasn't your best, and you know it"
+  flavor_text: "That wasn\'t your best, and you know it"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Prove It"
   cost: 6
@@ -1383,12 +1607,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Talk is cheap. Show them instead."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "No Excuses"
   cost: 5
@@ -1408,16 +1635,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "This time, nothing but results"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Leap of Faith"
   cost: 6
@@ -1437,16 +1669,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "No guarantees. Just hope, and a shove."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "High Stakes"
   cost: 7
@@ -1466,16 +1703,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Everything comes down to this one shot"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Against the Odds"
   cost: 7
@@ -1494,12 +1736,15 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Somehow, against everything, it works"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Light Touch"
   cost: 3
@@ -1519,7 +1764,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -1527,8 +1774,10 @@ cards {
     }
   }
   flavor_text: "Barely touching the snow"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Gentle Nudge"
   cost: 3
@@ -1548,7 +1797,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
@@ -1556,8 +1807,10 @@ cards {
     }
   }
   flavor_text: "A small push in the right direction"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Steady Push"
   cost: 3
@@ -1577,7 +1830,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
@@ -1585,8 +1840,10 @@ cards {
     }
   }
   flavor_text: "Adjusting your line mid-run"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Smooth Correction"
   cost: 5
@@ -1606,7 +1863,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -1614,8 +1873,10 @@ cards {
     }
   }
   flavor_text: "Just a little correction"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Fine Tune"
   cost: 5
@@ -1635,7 +1896,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
@@ -1643,8 +1906,10 @@ cards {
     }
   }
   flavor_text: "Dialing it in on the fly"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Course Correct"
   cost: 5
@@ -1664,16 +1929,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
       nudge: 1
     }
   }
-  flavor_text: "Adjusting before it's too late"
+  flavor_text: "Adjusting before it\'s too late"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Total Control"
   cost: 6
@@ -1693,7 +1962,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -1701,8 +1972,10 @@ cards {
     }
   }
   flavor_text: "Small tweaks, big difference"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Ricochet"
   cost: 6
@@ -1722,7 +1995,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
@@ -1730,8 +2005,10 @@ cards {
     }
   }
   flavor_text: "Change your line without losing speed"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Big Push"
   cost: 6
@@ -1751,7 +2028,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
@@ -1759,8 +2038,10 @@ cards {
     }
   }
   flavor_text: "Forcing your way to a better line"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Scope the Line"
   cost: 7
@@ -1785,9 +2066,11 @@ cards {
       count: 2
     }
   }
-  flavor_text: "See what's coming before you commit"
+  flavor_text: "See what\'s coming before you commit"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Read the Mountain"
   cost: 8
@@ -1813,8 +2096,10 @@ cards {
     }
   }
   flavor_text: "Know your run before you drop in"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Plan the Descent"
   cost: 9
@@ -1840,8 +2125,10 @@ cards {
     }
   }
   flavor_text: "Every good run starts with a good look"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Second Act"
   cost: 4
@@ -1853,11 +2140,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "Do it again, just because you can"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Encore"
   cost: 5
@@ -1869,11 +2159,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "They just keep wanting more"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Rerun"
   cost: 6
@@ -1885,11 +2178,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "You could go all day like this"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Brief Respite"
   cost: 5
@@ -1908,8 +2204,10 @@ cards {
     }
   }
   flavor_text: "A moment to reset before the next run"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Deep Breath"
   cost: 5
@@ -1927,9 +2225,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "In... and out. You've got this"
+  flavor_text: "In... and out. You\'ve got this"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Two for One"
   cost: 3
@@ -1949,8 +2249,10 @@ cards {
     }
   }
   flavor_text: "Gotta buy one to get the free one"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Treat Yourself"
   cost: 5
@@ -1969,9 +2271,11 @@ cards {
       buys: 1
     }
   }
-  flavor_text: "You've earned a little something extra"
+  flavor_text: "You\'ve earned a little something extra"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Close Call"
   cost: 3
@@ -1988,12 +2292,15 @@ cards {
   effects {
     gain {
       skill: 2
-      wobble {}
+      wobble {
+      }
     }
   }
   flavor_text: "Thankfully more near than miss"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Nail Biter"
   cost: 5
@@ -2010,12 +2317,15 @@ cards {
   effects {
     gain {
       skill: 2
-      wobble {}
+      wobble {
+      }
     }
   }
   flavor_text: "Just a bit touch and just enough go"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Trail Map"
   cost: 3
@@ -2051,8 +2361,10 @@ cards {
     }
   }
   flavor_text: "Studying every route before you pick one"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Pick Your Line"
   cost: 5
@@ -2088,8 +2400,10 @@ cards {
     }
   }
   flavor_text: "Three routes, one choice, no do-overs"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Fresh Inventory"
   cost: 3
@@ -2104,11 +2418,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PASS
   effects {
-    replenish_shop {}
+    replenish_shop {
+    }
   }
   flavor_text: "New gear just dropped, and yes, you need it"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Grand Reopening"
   cost: 5
@@ -2123,11 +2440,14 @@ cards {
   }
   category: EFFECT_CATEGORY_PASS
   effects {
-    replenish_shop {}
+    replenish_shop {
+    }
   }
   flavor_text: "The whole shop, better than before"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Keep Riding"
   cost: 3
@@ -2139,11 +2459,14 @@ cards {
   }
   category: EFFECT_CATEGORY_LIFT
   effects {
-    extra_turn {}
+    extra_turn {
+    }
   }
-  flavor_text: "Why stop when you're on a roll"
+  flavor_text: "Why stop when you\'re on a roll"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "No Stopping Now"
   cost: 4
@@ -2155,11 +2478,14 @@ cards {
   }
   category: EFFECT_CATEGORY_LIFT
   effects {
-    extra_turn {}
+    extra_turn {
+    }
   }
-  flavor_text: "One run just wasn't enough"
+  flavor_text: "One run just wasn\'t enough"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Gear Check"
   cost: 5
@@ -2168,11 +2494,14 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_LIFT
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
-  flavor_text: "Swap out what isn't working before the next run"
+  flavor_text: "Swap out what isn\'t working before the next run"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Fresh Legs"
   cost: 7
@@ -2181,11 +2510,14 @@ cards {
   black_dice: 0
   category: EFFECT_CATEGORY_LIFT
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
   flavor_text: "A few minutes on the chair resets everything"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Take It All In"
   cost: 6
@@ -2198,12 +2530,14 @@ cards {
   category: EFFECT_CATEGORY_LIFT
   effects {
     gain {
-      fun: 9
+      points: 9
     }
   }
   flavor_text: "The view alone is worth the ticket"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Heart to Heart"
   cost: 6
@@ -2216,12 +2550,14 @@ cards {
   category: EFFECT_CATEGORY_LIFT
   effects {
     gain {
-      fun: 9
+      points: 9
     }
   }
   flavor_text: "A warm conversation against the chilling air"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Spring Cleaning"
   cost: 5
@@ -2235,8 +2571,10 @@ cards {
     }
   }
   flavor_text: "Time to lighten your pack"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Pack Light"
   cost: 6
@@ -2249,6 +2587,8 @@ cards {
       trashes: 1
     }
   }
-  flavor_text: "Extra layers you'll never wear, gone"
+  flavor_text: "Extra layers you\'ll never wear, gone"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-

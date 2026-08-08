@@ -31,3 +31,10 @@ class RandomImpl @Inject constructor(private val random: java.util.Random) : Ran
   }
 }
 
+/** A [Random] that does nothing. */
+object NoOpRandom : Random {
+  override fun nextInt(bound: Int): Int = 0
+
+  override fun shuffle(iterable: Iterable<*>) {}
+}
+

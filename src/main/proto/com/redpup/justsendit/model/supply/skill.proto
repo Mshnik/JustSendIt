@@ -17,20 +17,45 @@ message SkillCardList {
 
 /** A skill card in a player's deck, discard, hand, play, or the shop. */
 message SkillCard {
+  // Name of the image file of this card.
   string filename = 1;
+  // Name of this card.
   string name = 2;
+  // Cost of this card.
   uint32 cost = 3;
 
+  // Number of dice on this card, by color.
   uint32 green_dice = 4;
   uint32 blue_dice = 5;
   uint32 black_dice = 6;
 
+  // Icons on this card, if any.
   repeated Icon icons = 7;
 
+  // When this card's effects occur and effects, in order. If none, category
+  // is unset.
   EffectCategory category = 8;
   repeated SkillCardEffect effects = 9;
 
+  // Flavor text of this card.
   string flavor_text = 10;
+
+  // Computed attributes of this card.
+  message Computed {
+    // Expected value of dice.
+    double dice_expected_value = 1;
+    // Expected value of icons.
+    double icon_expected_value = 2;
+    // Expected value of effects. If no effects, this is 0.
+    double effect_expected_value = 3;
+    // Total expected value. Note that this is not necessarily the sum of the
+    // above for some effect categories.
+    double total_expected_value = 4;
+    // Suggested cost based on the total_expected_value and relative to other
+    // cards
+    uint32 suggested_cost = 5;
+  }
+  Computed computed = 11;
 }
 
 /** One of the effects on a skill card. */

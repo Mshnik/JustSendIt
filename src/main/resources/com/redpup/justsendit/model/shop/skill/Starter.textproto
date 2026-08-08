@@ -1,6 +1,3 @@
-# proto-file: com/redpup/justsendit/model/supply/skill.proto
-# proto-message: SkillCardList
-
 cards {
   name: "Pizza Party"
   cost: 1
@@ -11,8 +8,10 @@ cards {
     grade: GRADE_GREEN
   }
   flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Pizza Party"
   cost: 1
@@ -23,8 +22,10 @@ cards {
     grade: GRADE_GREEN
   }
   flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Falling Leaf"
   cost: 1
@@ -35,8 +36,10 @@ cards {
     condition: CONDITION_GROOMED
   }
   flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Falling Leaf"
   cost: 1
@@ -47,8 +50,10 @@ cards {
     condition: CONDITION_GROOMED
   }
   flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Wild Ride"
   cost: 1
@@ -58,18 +63,22 @@ cards {
   icons {
     wild: true
   }
-  flavor_text: "You'll never believe how far you'll go"
+  flavor_text: "You\'ll never believe how far you\'ll go"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Just Send It"
   cost: 1
   green_dice: 3
   blue_dice: 0
   black_dice: 0
-  flavor_text: "If you don't know..."
+  flavor_text: "If you don\'t know..."
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Bold Beginnings"
   cost: 1
@@ -83,16 +92,21 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Lean forward and let the adventure begin"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Still Standing"
   cost: 1
@@ -106,7 +120,9 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
@@ -114,8 +130,10 @@ cards {
     }
   }
   flavor_text: "Standing still never felt so good"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Skill Up"
   cost: 1
@@ -123,8 +141,10 @@ cards {
   blue_dice: 1
   black_dice: 0
   flavor_text: "Every run teaches you something new"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-
 cards {
   name: "Stroke of Genius"
   cost: 1
@@ -132,5 +152,7 @@ cards {
   blue_dice: 0
   black_dice: 1
   flavor_text: "Practice, meet perfect"
+  computed {
+    dice_expected_value: 1.0
+  }
 }
-

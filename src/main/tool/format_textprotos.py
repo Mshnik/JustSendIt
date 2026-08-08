@@ -238,7 +238,7 @@ def build_effect_blocks(effect_text: str, card_name: str) -> list:
   m = _PER_CARD_RE.match(text)
   if m:
     value, kind, position = m.groups()
-    field = "skill" if kind == "Skill" else "fun"
+    field = "skill" if kind == "Skill" else "points"
     repeat = "skill_card_above" if position == "above" else "skill_card_below"
     return [
       "  effects {\n"
@@ -267,7 +267,7 @@ def build_effect_blocks(effect_text: str, card_name: str) -> list:
       "  effects {\n"
       "    success {}\n"
       "    gain {\n"
-      "      fun: 9\n"
+      "      points: 9\n"
       "    }\n"
       "  }\n"
     ]
@@ -311,7 +311,7 @@ def build_effect_blocks(effect_text: str, card_name: str) -> list:
   m = _FLAT_GAIN_RE.match(text)
   if m:
     value, kind = m.groups()
-    field = "skill" if kind == "Skill" else "fun"
+    field = "skill" if kind == "Skill" else "points"
     return [
       "  effects {\n"
       "    gain {\n"
