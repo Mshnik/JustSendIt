@@ -33,6 +33,7 @@ class SkillCalculator(private val path: String) {
     SkillCardList.Builder::getCardsList,
     SkillCardList.Builder::addAllCards,
   )
+  private val resolvedValues = SkillCardEvResolvedValues()
 
   /** TODO: Description. */
   fun updateComputedFields() {
@@ -127,8 +128,8 @@ class SkillCalculator(private val path: String) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(effect.alterDie)
     SkillCardEffect.EffectCase.GAIN -> gainValue(effect.gain)
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> SkillCardEvConstants.PREVENT_WOBBLE
-    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> SkillCardEvResolvedValues.REACTIVATE_FOLLOWING
-    SkillCardEffect.EffectCase.FILTER_HAND -> SkillCardEvResolvedValues.FILTER_HAND
+    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues.reactivateFollowing
+    SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues.filterHand
     SkillCardEffect.EffectCase.REPLENISH_SHOP -> SkillCardEvConstants.REFRESH_SHOP
     SkillCardEffect.EffectCase.EXTRA_TURN -> SkillCardEvConstants.ADDITIONAL_TURN
     // Only reached for a `card_effect` entry that wasn't consumed by findCardEffectGroups,
@@ -153,81 +154,77 @@ class SkillCalculator(private val path: String) {
     GainEffect.GainCase.SKILL -> gain.skill.toDouble()
     GainEffect.GainCase.POINTS -> gain.points.toDouble() * SkillCardEvConstants.POINTS
     GainEffect.GainCase.BUYS -> gain.buys.toDouble() * SkillCardEvConstants.BUY
-    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * SkillCardEvResolvedValues.TRASH_CARD_DECK_DISCARD
+    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues.trashCard
     else -> 0.0
   } * gain.EFFECT_REPEAT_FACTOR
-}
 
-private fun singleCardEffectValue(cardEffect: CardEffect): Double =
-  if (cardEffect.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
-    cardEffect.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
-    cardEffect.count == 1
-  ) {
-    SkillCardEvResolvedValues.CARD_DRAW
-  } else {
-    0.0
-  }
 
-// ---- Multi-entry `card_effect` combo recognition ----
-
-private class CardEffectGroupMatch(val value: Double, val consumedIndices: Set<Int>)
-
-/**
- * Scans [effects] for the two known multi-step `card_effect` combos (see the doc comments
- * on [SkillCardEvConstants.LOOK_AT_TOP_3_KEEP_1] and [SkillCardEvConstants.DRAW_2_TOPDECK_2]),
- * each spread across consecutive, condition-free `card_effect` entries in the list.
- */
-private fun findCardEffectGroups(effects: List<SkillCardEffect>): List<CardEffectGroupMatch> {
-  fun cardEffectAt(index: Int): CardEffect? {
-    val entry = effects.getOrNull(index) ?: return null
-    if (entry.effectCase != SkillCardEffect.EffectCase.CARD_EFFECT) return null
-    if (entry.conditionCase != SkillCardEffect.ConditionCase.CONDITION_NOT_SET) return null
-    return entry.cardEffect
-  }
-
-  val groups = mutableListOf<CardEffectGroupMatch>()
-  var i = 0
-  while (i < effects.size) {
-    val a = cardEffectAt(i)
-    if (a == null) {
-      i++
-      continue
+  private fun singleCardEffectValue(cardEffect: CardEffect): Double =
+    if (cardEffect.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
+      cardEffect.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND
+    ) {
+      resolvedValues.cardDraw * cardEffect.count
+    } else {
+      0.0
     }
 
-    val b = cardEffectAt(i + 1)
-    val c = cardEffectAt(i + 2)
-    if (b != null && c != null &&
-      a.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
-      a.destinationZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK && a.count == 3 &&
-      b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK &&
-      b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_DISCARD && b.count == 2 &&
-      c.sourceZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK &&
-      c.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && c.count == 1
-    ) {
-      groups.add(
-        CardEffectGroupMatch(
-          SkillCardEvResolvedValues.LOOK_AT_TOP_3_KEEP_1,
-          setOf(i, i + 1, i + 2)
+  private class CardEffectGroupMatch(val value: Double, val consumedIndices: Set<Int>)
+
+
+  /**
+   * Scans [effects] for the two known multi-step `card_effect` combos (see the doc comments
+   * on [SkillCardEvResolvedValues.lookAtTop3Keep1] and [SkillCardEvResolvedValues.draw2Topdeck2]),
+   * each spread across consecutive, condition-free `card_effect` entries in the list.
+   */
+  private fun findCardEffectGroups(effects: List<SkillCardEffect>): List<CardEffectGroupMatch> {
+    fun cardEffectAt(index: Int): CardEffect? {
+      val entry = effects.getOrNull(index) ?: return null
+      if (entry.effectCase != SkillCardEffect.EffectCase.CARD_EFFECT) return null
+      if (entry.conditionCase != SkillCardEffect.ConditionCase.CONDITION_NOT_SET) return null
+      return entry.cardEffect
+    }
+
+    val groups = mutableListOf<CardEffectGroupMatch>()
+    var i = 0
+    while (i < effects.size) {
+      val a = cardEffectAt(i)
+      if (a == null) {
+        i++
+        continue
+      }
+
+      val b = cardEffectAt(i + 1)
+      val c = cardEffectAt(i + 2)
+      if (b != null && c != null &&
+        a.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
+        a.destinationZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK && a.count == 3 &&
+        b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK &&
+        b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_DISCARD && b.count == 2 &&
+        c.sourceZone == SkillCardZone.SKILL_CARD_ZONE_REVEALED_TOPDECK &&
+        c.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && c.count == 1
+      ) {
+        groups.add(
+          CardEffectGroupMatch(
+            resolvedValues.lookAtTop3Keep1, setOf(i, i + 1, i + 2)
+          )
         )
-      )
-      i += 3
-      continue
-    }
+        i += 3
+        continue
+      }
 
-    if (b != null &&
-      a.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
-      a.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND && a.count == 2 &&
-      b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
-      b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && b.count == 2
-    ) {
-      groups.add(CardEffectGroupMatch(SkillCardEvResolvedValues.DRAW_2_TOPDECK_2, setOf(i, i + 1)))
-      i += 2
-      continue
-    }
+      if (b != null &&
+        a.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
+        a.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND && a.count == 2 &&
+        b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
+        b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && b.count == 2
+      ) {
+        groups.add(CardEffectGroupMatch(resolvedValues.draw2Topdeck2, setOf(i, i + 1)))
+        i += 2
+        continue
+      }
 
-    i++
+      i++
+    }
+    return groups
   }
-  return groups
 }
-
-// ---- Die-matcher color resolution ----
