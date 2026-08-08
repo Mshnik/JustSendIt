@@ -9,7 +9,7 @@ cards {
   }
   flavor_text: "Rental gear, borrowed confidence"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -23,7 +23,7 @@ cards {
   }
   flavor_text: "For two days a month, this is home"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -37,7 +37,7 @@ cards {
   }
   flavor_text: "You know the shortest lines and the slickest runs"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -51,7 +51,7 @@ cards {
   }
   flavor_text: "You\'re as ever-present as the snow"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -62,7 +62,7 @@ cards {
   black_dice: 0
   flavor_text: "Linking two moves without thinking twice..."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -73,7 +73,7 @@ cards {
   black_dice: 0
   flavor_text: "... adding one more, just to see if you can ..."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -84,7 +84,7 @@ cards {
   black_dice: 1
   flavor_text: "... until it\'s everything you know, all at once"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -118,7 +118,7 @@ cards {
   }
   flavor_text: "Baby steps on the bunny hill"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -152,7 +152,7 @@ cards {
   }
   flavor_text: "Getting comfortable with a little speed"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -186,7 +186,7 @@ cards {
   }
   flavor_text: "Time to trust your instincts"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -213,7 +213,7 @@ cards {
   }
   flavor_text: "There\'s nothing left to teach you"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -262,7 +262,7 @@ cards {
   }
   flavor_text: "Corduroy makes everyone look good"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -311,7 +311,7 @@ cards {
   }
   flavor_text: "Float, don\'t fight it"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -359,7 +359,7 @@ cards {
   }
   flavor_text: "Edges are your best friend today"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -407,7 +407,7 @@ cards {
   }
   flavor_text: "Less bracing, more bouncing"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -455,7 +455,7 @@ cards {
   }
   flavor_text: "Aim for the gaps, avoid the trunks"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -489,7 +489,7 @@ cards {
   }
   flavor_text: "The first 90% is skill, the second 90% is nerve"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -538,7 +538,7 @@ cards {
   }
   flavor_text: "One-on-one, no distractions"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -560,7 +560,7 @@ cards {
   }
   flavor_text: "Something felt right about that one"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -582,7 +582,7 @@ cards {
   }
   flavor_text: "You can tell just by looking now"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -607,7 +607,7 @@ cards {
   }
   flavor_text: "No second-guessing where you\'re headed"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -632,7 +632,7 @@ cards {
   }
   flavor_text: "You don\'t think about it anymore"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -657,7 +657,7 @@ cards {
   }
   flavor_text: "Your body knows before your brain does"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -682,7 +682,7 @@ cards {
   }
   flavor_text: "You know what\'s next before it happens"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -707,7 +707,7 @@ cards {
   }
   flavor_text: "No thought. Just reaction."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -732,7 +732,7 @@ cards {
   }
   flavor_text: "This mountain is part of you now"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -754,7 +754,7 @@ cards {
   }
   flavor_text: "Small at first, bigger by the bottom"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -776,7 +776,7 @@ cards {
   }
   flavor_text: "What started small is now unstoppable"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -798,7 +798,7 @@ cards {
   }
   flavor_text: "Getting ahead of the pack early"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -820,7 +820,7 @@ cards {
   }
   flavor_text: "Signing your name on untouched canvas"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -842,7 +842,7 @@ cards {
   }
   flavor_text: "Leading the way, come what may"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -872,7 +872,7 @@ cards {
   }
   flavor_text: "One do-over? Take two"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -902,7 +902,7 @@ cards {
   }
   flavor_text: "Every attempt deserves one more shot"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -924,7 +924,7 @@ cards {
   }
   flavor_text: "A little shake never stopped anyone"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -946,7 +946,7 @@ cards {
   }
   flavor_text: "Right when you need it, the snow forgives"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -962,7 +962,7 @@ cards {
   }
   flavor_text: "Nothing shakes this stance"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -978,7 +978,7 @@ cards {
   }
   flavor_text: "Cool and calm, even on the sketchy stuff"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -997,7 +997,7 @@ cards {
   }
   flavor_text: "A shaky moment, quickly corrected"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1016,7 +1016,7 @@ cards {
   }
   flavor_text: "Recover before anyone notices"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1035,7 +1035,7 @@ cards {
   }
   flavor_text: "That one absolutely should not have worked"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1057,7 +1057,7 @@ cards {
   }
   flavor_text: "Ice can\'t take you down today"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1079,7 +1079,7 @@ cards {
   }
   flavor_text: "Nothing rattles you"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1101,7 +1101,7 @@ cards {
   }
   flavor_text: "Who cares about the score"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1123,7 +1123,7 @@ cards {
   }
   flavor_text: "The more, the merrier"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1145,7 +1145,7 @@ cards {
   }
   flavor_text: "You can\'t stop smiling"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1164,7 +1164,7 @@ cards {
   }
   flavor_text: "This is exactly why you do this"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1183,7 +1183,7 @@ cards {
   }
   flavor_text: "Nothing tops a day like this"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1204,7 +1204,7 @@ cards {
   }
   flavor_text: "Success breeds more success"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1225,7 +1225,7 @@ cards {
   }
   flavor_text: "One good run leads to another"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1247,7 +1247,7 @@ cards {
   }
   flavor_text: "Ditch the dead weight"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1269,7 +1269,7 @@ cards {
   }
   flavor_text: "Less baggage, more speed"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1291,7 +1291,7 @@ cards {
   }
   flavor_text: "Sometimes less is more"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1313,7 +1313,7 @@ cards {
   }
   flavor_text: "No plan B. There never was"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1334,7 +1334,7 @@ cards {
   }
   flavor_text: "Out with the old, in with the new"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1355,7 +1355,7 @@ cards {
   }
   flavor_text: "The whole mountain, wide open again"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1389,7 +1389,7 @@ cards {
   }
   flavor_text: "That definitely didn\'t go as planned"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1423,7 +1423,7 @@ cards {
   }
   flavor_text: "The second attempt usually goes better"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1457,7 +1457,7 @@ cards {
   }
   flavor_text: "Eventually, everyone gets it right"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1484,7 +1484,7 @@ cards {
   }
   flavor_text: "Trust the new plan, not the old one"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1518,7 +1518,7 @@ cards {
   }
   flavor_text: "Whatever just happened, forget it"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1552,7 +1552,7 @@ cards {
   }
   flavor_text: "Once you commit, that\'s the only way now"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1586,7 +1586,7 @@ cards {
   }
   flavor_text: "That wasn\'t your best, and you know it"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1613,7 +1613,7 @@ cards {
   }
   flavor_text: "Talk is cheap. Show them instead."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1647,7 +1647,7 @@ cards {
   }
   flavor_text: "This time, nothing but results"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1681,7 +1681,7 @@ cards {
   }
   flavor_text: "No guarantees. Just hope, and a shove."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1715,7 +1715,7 @@ cards {
   }
   flavor_text: "Everything comes down to this one shot"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1742,7 +1742,7 @@ cards {
   }
   flavor_text: "Somehow, against everything, it works"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1775,7 +1775,7 @@ cards {
   }
   flavor_text: "Barely touching the snow"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1808,7 +1808,7 @@ cards {
   }
   flavor_text: "A small push in the right direction"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1841,7 +1841,7 @@ cards {
   }
   flavor_text: "Adjusting your line mid-run"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1874,7 +1874,7 @@ cards {
   }
   flavor_text: "Just a little correction"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1907,7 +1907,7 @@ cards {
   }
   flavor_text: "Dialing it in on the fly"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1940,7 +1940,7 @@ cards {
   }
   flavor_text: "Adjusting before it\'s too late"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -1973,7 +1973,7 @@ cards {
   }
   flavor_text: "Small tweaks, big difference"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2006,7 +2006,7 @@ cards {
   }
   flavor_text: "Change your line without losing speed"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2039,7 +2039,7 @@ cards {
   }
   flavor_text: "Forcing your way to a better line"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2068,7 +2068,7 @@ cards {
   }
   flavor_text: "See what\'s coming before you commit"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2097,7 +2097,7 @@ cards {
   }
   flavor_text: "Know your run before you drop in"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2126,7 +2126,7 @@ cards {
   }
   flavor_text: "Every good run starts with a good look"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2145,7 +2145,7 @@ cards {
   }
   flavor_text: "Do it again, just because you can"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2164,7 +2164,7 @@ cards {
   }
   flavor_text: "They just keep wanting more"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2183,7 +2183,7 @@ cards {
   }
   flavor_text: "You could go all day like this"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2205,7 +2205,7 @@ cards {
   }
   flavor_text: "A moment to reset before the next run"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2227,7 +2227,7 @@ cards {
   }
   flavor_text: "In... and out. You\'ve got this"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2250,7 +2250,7 @@ cards {
   }
   flavor_text: "Gotta buy one to get the free one"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2273,7 +2273,7 @@ cards {
   }
   flavor_text: "You\'ve earned a little something extra"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2298,7 +2298,7 @@ cards {
   }
   flavor_text: "Thankfully more near than miss"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2323,7 +2323,7 @@ cards {
   }
   flavor_text: "Just a bit touch and just enough go"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2362,7 +2362,7 @@ cards {
   }
   flavor_text: "Studying every route before you pick one"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2401,7 +2401,7 @@ cards {
   }
   flavor_text: "Three routes, one choice, no do-overs"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2423,7 +2423,7 @@ cards {
   }
   flavor_text: "New gear just dropped, and yes, you need it"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2445,7 +2445,7 @@ cards {
   }
   flavor_text: "The whole shop, better than before"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2464,7 +2464,7 @@ cards {
   }
   flavor_text: "Why stop when you\'re on a roll"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2483,7 +2483,7 @@ cards {
   }
   flavor_text: "One run just wasn\'t enough"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2499,7 +2499,7 @@ cards {
   }
   flavor_text: "Swap out what isn\'t working before the next run"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2515,7 +2515,7 @@ cards {
   }
   flavor_text: "A few minutes on the chair resets everything"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2535,7 +2535,7 @@ cards {
   }
   flavor_text: "The view alone is worth the ticket"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2555,7 +2555,7 @@ cards {
   }
   flavor_text: "A warm conversation against the chilling air"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2572,7 +2572,7 @@ cards {
   }
   flavor_text: "Time to lighten your pack"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -2589,6 +2589,6 @@ cards {
   }
   flavor_text: "Extra layers you\'ll never wear, gone"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }

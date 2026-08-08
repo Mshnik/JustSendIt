@@ -9,7 +9,7 @@ cards {
   }
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -23,7 +23,7 @@ cards {
   }
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -37,7 +37,7 @@ cards {
   }
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -51,7 +51,7 @@ cards {
   }
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -65,7 +65,7 @@ cards {
   }
   flavor_text: "You\'ll never believe how far you\'ll go"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -76,7 +76,7 @@ cards {
   black_dice: 0
   flavor_text: "If you don\'t know..."
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -104,7 +104,7 @@ cards {
   }
   flavor_text: "Lean forward and let the adventure begin"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -131,7 +131,7 @@ cards {
   }
   flavor_text: "Standing still never felt so good"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -142,7 +142,7 @@ cards {
   black_dice: 0
   flavor_text: "Every run teaches you something new"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
 cards {
@@ -153,6 +153,6 @@ cards {
   black_dice: 1
   flavor_text: "Practice, meet perfect"
   computed {
-    dice_expected_value: 1.0
+    dice_expected_value: 2.0
   }
 }
