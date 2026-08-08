@@ -9,7 +9,10 @@ cards {
   }
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
   }
 }
 cards {
@@ -23,7 +26,10 @@ cards {
   }
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
   }
 }
 cards {
@@ -37,7 +43,10 @@ cards {
   }
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
   }
 }
 cards {
@@ -51,7 +60,10 @@ cards {
   }
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
   }
 }
 cards {
@@ -65,7 +77,10 @@ cards {
   }
   flavor_text: "You\'ll never believe how far you\'ll go"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.5
   }
 }
 cards {
@@ -76,7 +91,10 @@ cards {
   black_dice: 0
   flavor_text: "If you don\'t know..."
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 7.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 7.5
   }
 }
 cards {
@@ -104,7 +122,10 @@ cards {
   }
   flavor_text: "Lean forward and let the adventure begin"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 1.333333333
+    total_expected_value: 3.8333333329999997
   }
 }
 cards {
@@ -131,7 +152,10 @@ cards {
   }
   flavor_text: "Standing still never felt so good"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 1.5
+    total_expected_value: 4.0
   }
 }
 cards {
@@ -142,7 +166,10 @@ cards {
   black_dice: 0
   flavor_text: "Every run teaches you something new"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 3.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.5
   }
 }
 cards {
@@ -153,6 +180,9 @@ cards {
   black_dice: 1
   flavor_text: "Practice, meet perfect"
   computed {
-    dice_expected_value: 2.0
+    dice_expected_value: 4.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 4.5
   }
 }
