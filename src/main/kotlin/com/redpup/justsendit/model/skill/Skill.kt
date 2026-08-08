@@ -2,7 +2,7 @@ package com.redpup.justsendit.model.skill
 
 import com.google.errorprone.annotations.DoNotMock
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.supply.proto.SkillCard
 
 /** In-memory implementation of a skill card. */
@@ -20,7 +20,7 @@ interface Skill {
   /** Applies the effects of this [Skill] to [SkiRideResolution]. */
   suspend fun applySkiRideEffects(
     gameModel: GameModel,
-    player: Player,
+    player: MutablePlayer,
     resolution: SkiRideResolution,
   ) {
     skillEffects.forEach { it.applySkiRideEffects(gameModel, player, resolution) }

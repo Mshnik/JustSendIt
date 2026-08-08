@@ -3,6 +3,7 @@ package com.redpup.justsendit.model.skill
 import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.redpup.justsendit.model.proto.EffectCategory
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.supply.proto.skillCard
 import javax.inject.Inject
 import kotlin.test.Ignore
@@ -16,7 +17,7 @@ class SkillFactoryTest {
 
   @BeforeEach
   fun setup() {
-    Guice.createInjector(SkillModule()).injectMembers(this)
+    Guice.createInjector(SkillModule(), FakeRandomModule()).injectMembers(this)
   }
 
   @Test

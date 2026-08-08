@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.board.grid.HexExtensions.createHexPoint
 import com.redpup.justsendit.model.board.tile.proto.*
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Grade
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.testing.FakeSupplyModule
 import com.redpup.justsendit.model.supply.testing.FakeTileSupply
@@ -28,6 +29,7 @@ class TileMapBuilderTest {
       FakeApresModule(),
       FakeSupplyModule(),
       FakePlayerModule(),
+      FakeRandomModule(),
       FakeSkillModule()
     ).injectMembers(this)
     fakeTileSupply.tiles = tiles()

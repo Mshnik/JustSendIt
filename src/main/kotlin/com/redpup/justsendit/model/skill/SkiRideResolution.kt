@@ -23,6 +23,8 @@ class SkiRideResolution(
   val skills: List<Skill>,
   val slope: SlopeTile,
   val rolls: List<DieRoll.Builder>,
+  var bonus: Int = 0,
+  var ignoreWobbles: Int = 0,
 ) {
   /** The number of wobbles represented by [rolls] on [slope]. */
   private val wobbles: Int
@@ -32,14 +34,17 @@ class SkiRideResolution(
       // Ice wobbles.
       if (slope has Condition.CONDITION_ICE) rolls.count { it.rollList.last() == 1 } else 0,
       // Mogul wobbles.
-      if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.rollList.last() }.countDuplicates() else 0
-    ).sum()
+      if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.rollList.last() }.countDuplicates() else 0,
+      // Ignore wobbles
+      -ignoreWobbles
+    ).sum().coerceAtLeast(0)
 
   /** Resolves this into a [SkiRideAttempt]. */
   fun resolve(): SkiRideAttempt {
     val wobbles = this.wobbles
     val iconValue = skills.first().skillCard.iconsList.count { it.matches(slope) }
-    val skillSum = rolls.sumOf { it.rollList.last().applyHazards(slope.hazardsList) } + iconValue
+    val skillSum =
+      rolls.sumOf { it.rollList.last().applyHazards(slope.hazardsList) } + iconValue + bonus
 
     val success = skillSum >= slope.difficulty && (player.wobbles + wobbles) < CRASH_WOBBLES
 
@@ -50,6 +55,7 @@ class SkiRideResolution(
       computed = computed {
         this.success = success
         this.iconValue = iconValue
+        this.bonusSkill = bonus
         this.wobbles = wobbles
       }
     }

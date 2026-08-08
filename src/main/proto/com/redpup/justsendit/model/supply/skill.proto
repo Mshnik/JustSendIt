@@ -69,7 +69,7 @@ message AlterDieEffect {
 message GainEffect {
   oneof gain {
     uint32 skill = 1;
-    uint32 fun = 2;
+    uint32 points = 2;
     uint32 buys = 3;
     uint32 trashes = 4;
   }

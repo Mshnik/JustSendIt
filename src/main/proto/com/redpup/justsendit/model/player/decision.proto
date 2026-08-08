@@ -33,10 +33,12 @@ message SkiRideAttempt {
   message Computed {
     // Whether the player successfully skied/rode.
     bool success = 1;
+    // Total bonus skill applied from cards.
+    int32 bonus_skill = 2;
     // Total number of applicable icons on the first card.
-    int32 icon_value = 2;
+    int32 icon_value = 3;
     // Number of wobbles the player gained.
-    int32 wobbles = 3;
+    int32 wobbles = 4;
   }
   Computed computed = 4;
 }

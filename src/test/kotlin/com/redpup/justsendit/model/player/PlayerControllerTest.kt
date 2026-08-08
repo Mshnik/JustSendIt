@@ -6,6 +6,7 @@ import com.redpup.justsendit.control.BasicPlayerController
 import com.redpup.justsendit.control.ChooseStartOfDayLocation
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.player.cards.PlayerCard
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import kotlinx.coroutines.runBlocking
@@ -24,7 +25,7 @@ class PlayerControllerTest {
 
   @BeforeEach
   fun setup() {
-    Guice.createInjector(FakeSkillModule()).injectMembers(this)
+    Guice.createInjector(FakeSkillModule(), FakeRandomModule()).injectMembers(this)
   }
 
   @Test

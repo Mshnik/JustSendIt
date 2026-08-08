@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.google.inject.Guice
 import com.redpup.justsendit.model.apres.testing.FakeApresModule
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
+import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.testing.FakeSkillModule
 import com.redpup.justsendit.model.supply.proto.skillCard
 import com.redpup.justsendit.model.supply.testing.FakeSkillDeck
@@ -23,6 +24,7 @@ class SkillDeckTest {
       FakeSupplyModule(),
       FakeApresModule(),
       FakePlayerModule(),
+      FakeRandomModule(),
       FakeSkillModule()
     ).injectMembers(this)
     starterDeck.reset()
