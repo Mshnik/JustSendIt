@@ -1,0 +1,10 @@
+# proto-file: com/redpup/justsendit/model/supply/skill.proto
+# proto-message: SkillCardComputationValuesList
+
+values {
+  cardDraw: 4.723558411
+  cardFilter2: 0.956443446
+  cardFilter3: 1.434665169
+  trashCard: 1.972240652
+  reactivate: 2.200542645
+}

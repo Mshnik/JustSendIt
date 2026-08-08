@@ -1,4 +1,192 @@
 cards {
+  name: "Pizza Party"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
+  }
+}
+cards {
+  name: "Pizza Party"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    grade: GRADE_GREEN
+  }
+  flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
+  }
+}
+cards {
+  name: "Falling Leaf"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
+  }
+}
+cards {
+  name: "Falling Leaf"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 2.75
+  }
+}
+cards {
+  name: "Wild Ride"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  icons {
+    wild: true
+  }
+  flavor_text: "You\'ll never believe how far you\'ll go"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.5
+  }
+}
+cards {
+  name: "Just Send It"
+  cost: 0
+  green_dice: 3
+  blue_dice: 0
+  black_dice: 0
+  flavor_text: "If you don\'t know..."
+  computed {
+    dice_expected_value: 7.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 7.5
+  }
+}
+cards {
+  name: "Bold Beginnings"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher {
+              value: "DIE_GREEN"
+            }
+          }
+        }
+      }
+      reroll {
+      }
+    }
+  }
+  flavor_text: "Lean forward and let the adventure begin"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 1.333333333
+    total_expected_value: 3.8333333329999997
+  }
+}
+cards {
+  name: "Still Standing"
+  cost: 0
+  green_dice: 1
+  blue_dice: 0
+  black_dice: 0
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher {
+              value: "DIE_GREEN"
+            }
+          }
+        }
+      }
+      nudge: 1
+    }
+  }
+  flavor_text: "Standing still never felt so good"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 1.5
+    total_expected_value: 4.0
+  }
+}
+cards {
+  name: "Skill Up"
+  cost: 0
+  green_dice: 0
+  blue_dice: 1
+  black_dice: 0
+  flavor_text: "Every run teaches you something new"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.5
+  }
+}
+cards {
+  name: "Stroke of Genius"
+  cost: 0
+  green_dice: 0
+  blue_dice: 0
+  black_dice: 1
+  flavor_text: "Practice, meet perfect"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 4.5
+  }
+}
+cards {
   name: "Day Tripper"
   cost: 5
   green_dice: 1

@@ -113,3 +113,22 @@ message CardEffect {
   SkillCardZone destination_zone = 2;
   uint32 count = 3;
 }
+
+/** Parameters used to compute skill card values. */
+message SkillCardComputationValues {
+  // Value of drawing a card.
+  double cardDraw = 1;
+  // Value of picking the best of two cards.
+  double cardFilter2 = 2;
+  // Value of picking the best of three cards.
+  double cardFilter3 = 3;
+  // Value of trashing a card.
+  double trashCard = 4;
+  // Value of activating an effect again.
+  double reactivate = 5;
+}
+
+/** List of SkillCardComputationValues for library interop. */
+message SkillCardComputationValuesList {
+  repeated SkillCardComputationValues values = 1;
+}

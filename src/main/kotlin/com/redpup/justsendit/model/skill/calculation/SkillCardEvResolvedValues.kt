@@ -1,25 +1,55 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.supply.proto.SkillCardComputationValues
+import com.redpup.justsendit.model.supply.proto.SkillCardComputationValuesList
+import com.redpup.justsendit.util.TextProtoReaderWriterImpl
+
 // TODO: Make class with resolution.
 class SkillCardEvResolvedValues {
-  /** C15 "Card Draw": value of drawing a card. */
-  var cardDraw = 4.723558411
+  private val parametersList =
+    TextProtoReaderWriterImpl<SkillCardComputationValues, SkillCardComputationValuesList.Builder>(
+      "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_card_computation_values.textproto",
+      SkillCardComputationValuesList::newBuilder,
+      SkillCardComputationValuesList.Builder::getValuesList,
+      SkillCardComputationValuesList.Builder::addAllValues,
+    )
 
-  /** C16 "Card Filter (2)": value of replacing the worst of two cards with another. */
-  var cardFilter2 = 0.956443446
+  private var parameters: SkillCardComputationValues.Builder = parametersList().first().toBuilder()
 
-  /** C17 "Card Filter (3)": value of replacing the worst of three cards with another. */
-  var cardFilter3 = 1.434665169
+  /** Value of drawing a card. */
+  var cardDraw: Double
+    get() = parameters.cardDraw;
+    set(value) {
+      parameters.cardDraw = value
+    }
 
-  /** C66 "Trash card (Deck/Discard)": value of one point of `GainEffect.trashes`. */
-  var trashCard = 1.972240652
+  /** Value of activating an effect again. */
+  var reactivate: Double
+    get() = parameters.reactivate;
+    set(value) {
+      parameters.reactivate = value
+    }
 
-  /**
-   * C4 "Effect EV": AVERAGE(Cards!S2:S1036), the average effect EV across every card in the
-   * sheet. Used as the flat value for `reactivate_following` ("activate the effect of the
-   * card below an additional time"), per your direction to hardcode this constant.
-   */
-  var reactivateFollowing = 2.200542645
+  /** Value of choosing the best of two cards. */
+  var cardFilter2: Double
+    get() = parameters.cardFilter2;
+    set(value) {
+      parameters.cardFilter2 = value
+    }
+
+  /** Value of choosing the best of three cards. */
+  var cardFilter3: Double
+    get() = parameters.cardFilter3;
+    set(value) {
+      parameters.cardFilter3 = value
+    }
+
+  /** Value of trashing a card. */
+  var trashCard: Double
+    get() = parameters.trashCard;
+    set(value) {
+      parameters.trashCard = value
+    }
 
   /**
    * "Look at the top 3 cards of your deck, put 1 on top, discard the others" combo value

@@ -19,14 +19,12 @@ import com.redpup.justsendit.util.TextProtoReaderWriterImpl
 
 /** TODO: Description. */
 fun main() {
-  SkillCalculator("src/main/resources/com/redpup/justsendit/model/shop/skill/Shop.textproto")
-    .updateComputedFields()
-  SkillCalculator("src/main/resources/com/redpup/justsendit/model/shop/skill/Starter.textproto")
+  SkillCalculator("src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards.textproto")
     .updateComputedFields()
 }
 
 /** TODO: Description */
-class SkillCalculator(private val path: String) {
+class SkillCalculator(private val path: String, private val resolutionIterations: Int = 50) {
   private val readerWriter = TextProtoReaderWriterImpl(
     path,
     SkillCardList::newBuilder,
@@ -128,7 +126,7 @@ class SkillCalculator(private val path: String) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(effect.alterDie)
     SkillCardEffect.EffectCase.GAIN -> gainValue(effect.gain)
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> SkillCardEvConstants.PREVENT_WOBBLE
-    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues.reactivateFollowing
+    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues.reactivate
     SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues.filterHand
     SkillCardEffect.EffectCase.REPLENISH_SHOP -> SkillCardEvConstants.REFRESH_SHOP
     SkillCardEffect.EffectCase.EXTRA_TURN -> SkillCardEvConstants.ADDITIONAL_TURN
