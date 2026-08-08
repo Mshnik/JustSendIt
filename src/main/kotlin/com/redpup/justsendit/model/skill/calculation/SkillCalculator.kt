@@ -3,18 +3,19 @@ package com.redpup.justsendit.model.skill.calculation
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
+import com.redpup.justsendit.model.random.Dice.maxValue
+import com.redpup.justsendit.model.skill.calculation.SkillCalculationUtilities.dieColorOrWild
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_COST
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_FACTOR
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_REPEAT_FACTOR
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EV
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.LIFT_PASS_COMPARISON_FACTOR
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.cost
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.factor
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.nudgeValue
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.repeatFactor
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.rerollValue
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.timingFactor
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.NUDGE_VALUE
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.REROLL_VALUE
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.TIMING_FACTOR
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardKt.computed
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
-import com.redpup.matchers.proto.Matcher
 
 /** TODO: Description. */
 fun main() {
@@ -35,7 +36,9 @@ class SkillCalculator(private val path: String) {
 
   /** TODO: Description. */
   fun updateComputedFields() {
+    println("Processing: $path")
     readerWriter.update { it.copy { computed = compute(it) } }
+    println("Done.")
   }
 
   /**
@@ -78,10 +81,10 @@ class SkillCalculator(private val path: String) {
    * (sides+1)/2 per die, and the combined value is expectedValue * (3 - expectedWobbles) / 3.
    */
   private fun diceExpectedValue(card: SkillCard): Double = buildList {
-    repeat(card.greenDice) { add(SkillCardEvConstants.GREEN_DIE_SIDES) }
-    repeat(card.blueDice) { add(SkillCardEvConstants.BLUE_DIE_SIDES) }
-    repeat(card.blackDice) { add(SkillCardEvConstants.BLACK_DIE_SIDES) }
-  }.sumOf { (it + 1.0) / 2.0 }
+    repeat(card.greenDice) { add(Die.DIE_GREEN) }
+    repeat(card.blueDice) { add(Die.DIE_BLUE) }
+    repeat(card.blackDice) { add(Die.DIE_BLACK) }
+  }.sumOf { (it.maxValue + 1.0) / 2.0 }
 
   /** Sum of values of icons on [card]. */
   private fun iconExpectedValue(card: SkillCard): Double =
@@ -100,7 +103,7 @@ class SkillCalculator(private val path: String) {
       .filter { (index, _) -> index !in consumedIndices }
       .sumOf { (_, effect) -> singleEffectValue(effect) }
 
-    return card.timingFactor * (perEntryTotal + groupTotal)
+    return card.TIMING_FACTOR * (perEntryTotal + groupTotal)
   }
 
   /** Total expected value of [card]. Note that this is not just the sum. */
@@ -128,14 +131,14 @@ class SkillCalculator(private val path: String) {
 
   /** Computes the value of a single [effect]. */
   private fun singleEffectValue(effect: SkillCardEffect): Double =
-    baseEffectValue(effect) * effect.factor + effect.cost
+    baseEffectValue(effect) * effect.EFFECT_FACTOR + effect.EFFECT_COST
 
   private fun baseEffectValue(effect: SkillCardEffect): Double = when (effect.effectCase) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(effect.alterDie)
     SkillCardEffect.EffectCase.GAIN -> gainValue(effect.gain)
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> SkillCardEvConstants.PREVENT_WOBBLE
-    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> SkillCardEvConstants.REACTIVATE_FOLLOWING
-    SkillCardEffect.EffectCase.FILTER_HAND -> SkillCardEvConstants.FILTER_HAND
+    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> SkillCardEvResolvedValues.REACTIVATE_FOLLOWING
+    SkillCardEffect.EffectCase.FILTER_HAND -> SkillCardEvResolvedValues.FILTER_HAND
     SkillCardEffect.EffectCase.REPLENISH_SHOP -> SkillCardEvConstants.REFRESH_SHOP
     SkillCardEffect.EffectCase.EXTRA_TURN -> SkillCardEvConstants.ADDITIONAL_TURN
     // Only reached for a `card_effect` entry that wasn't consumed by findCardEffectGroups,
@@ -147,10 +150,10 @@ class SkillCalculator(private val path: String) {
 
   /** Returns the computed value of the given [AlterDieEffect]. */
   private fun alterDieValue(alterDie: AlterDieEffect): Double {
-    val color = dieColorOrWild(alterDie.dieMatcher)
+    val color = alterDie.dieMatcher.dieColorOrWild()
     return when (alterDie.effectCase) {
-      AlterDieEffect.EffectCase.REROLL -> color.rerollValue
-      AlterDieEffect.EffectCase.NUDGE -> color.nudgeValue
+      AlterDieEffect.EffectCase.REROLL -> color.REROLL_VALUE
+      AlterDieEffect.EffectCase.NUDGE -> color.NUDGE_VALUE
       else -> 0.0
     }
   }
@@ -158,40 +161,11 @@ class SkillCalculator(private val path: String) {
   /** Value of the given [gain] effect. */
   private fun gainValue(gain: GainEffect): Double = when (gain.gainCase) {
     GainEffect.GainCase.SKILL -> gain.skill.toDouble()
-    GainEffect.GainCase.POINTS -> gain.points.toDouble()
+    GainEffect.GainCase.POINTS -> gain.points.toDouble() * SkillCardEvConstants.POINTS
     GainEffect.GainCase.BUYS -> gain.buys.toDouble() * SkillCardEvConstants.BUY
-    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * SkillCardEvConstants.TRASH_CARD_DECK_DISCARD
+    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * SkillCardEvResolvedValues.TRASH_CARD_DECK_DISCARD
     else -> 0.0
-  } * gain.repeatFactor
-
-  /**
-   * Returns which die color a [matcher] targets, or `null` for "wild"/any (a `constant_matcher
-   * = true` matcher, e.g. "Reroll Wild" / "Slide Wild").
-   */
-  private fun dieColorOrWild(matcher: Matcher): Die? {
-    if (matcher.hasConstantMatcher() && matcher.constantMatcher) {
-      return null
-    } else if (!matcher.hasEnumMatcher()) {
-      return null
-    }
-
-    val enumMatcher = matcher.enumMatcher
-    if (enumMatcher.enumTypeName != Die.getDescriptor().fullName) {
-      return null
-    }
-
-    if (enumMatcher.nameMatcher.hasStringMatcher()) {
-      return runCatching {
-        Die.valueOf(enumMatcher.nameMatcher.stringMatcher.value)
-      }.getOrNull()
-    } else if (enumMatcher.numberMatcher.hasValueMatcher()) {
-      return runCatching {
-        Die.entries[enumMatcher.numberMatcher.valueMatcher.int32Value]
-      }.getOrNull()
-    }
-
-    return null
-  }
+  } * gain.EFFECT_REPEAT_FACTOR
 }
 
 private fun singleCardEffectValue(cardEffect: CardEffect): Double =
@@ -199,7 +173,7 @@ private fun singleCardEffectValue(cardEffect: CardEffect): Double =
     cardEffect.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
     cardEffect.count == 1
   ) {
-    SkillCardEvConstants.CARD_DRAW
+    SkillCardEvResolvedValues.CARD_DRAW
   } else {
     0.0
   }
@@ -242,7 +216,7 @@ private fun findCardEffectGroups(effects: List<SkillCardEffect>): List<CardEffec
     ) {
       groups.add(
         CardEffectGroupMatch(
-          SkillCardEvConstants.LOOK_AT_TOP_3_KEEP_1,
+          SkillCardEvResolvedValues.LOOK_AT_TOP_3_KEEP_1,
           setOf(i, i + 1, i + 2)
         )
       )
@@ -256,7 +230,7 @@ private fun findCardEffectGroups(effects: List<SkillCardEffect>): List<CardEffec
       b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
       b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && b.count == 2
     ) {
-      groups.add(CardEffectGroupMatch(SkillCardEvConstants.DRAW_2_TOPDECK_2, setOf(i, i + 1)))
+      groups.add(CardEffectGroupMatch(SkillCardEvResolvedValues.DRAW_2_TOPDECK_2, setOf(i, i + 1)))
       i += 2
       continue
     }
