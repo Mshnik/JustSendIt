@@ -48,16 +48,6 @@ class SkillCalculator(private val path: String) {
    * `suggested_cost` is intentionally left unset — it depends on the min/max EV across every
    * Shop card, not just this one, and per your direction will be computed by a separate
    * fleet-wide method.
-   *
-   * Known open issues / assumptions, see inline TODOs:
-   *  - The `matchers.Matcher` shape used by [dieColorOrWild] is inferred from example instances,
-   *    not from matcher.proto itself (not available at the time this was written). Verify the
-   *    accessor names against the real generated class.
-   *  - `GainEffect` is assumed to have a `fun` field (oneof `gain`) alongside `skill`/`points`/
-   *    `buys`/`trashes`, matching your sample data — this isn't present in the skill.proto
-   *    snippet you originally shared, so double check the proto has it.
-   *  - `card_effect` combos beyond the three patterns seen in your sample data (draw 1; draw 2 +
-   *    topdeck 2; look at top 3 + keep 1 + discard 2) aren't recognized and contribute 0 EV.
    */
   private fun compute(card: SkillCard): SkillCard.Computed {
     val diceExpectedValue = diceExpectedValue(card)
