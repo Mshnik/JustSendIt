@@ -36,6 +36,15 @@ class ResolvedValues {
     parametersList.write(listOf(parameters.build()))
   }
 
+  /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
+  val SkillCardEffectCost.effectCost: Double
+    get() =
+      when (costCase) {
+        SkillCardEffectCost.CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
+        SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
+        null -> throw IllegalStateException()
+      }
+
   companion object {
     /**
      * "Look at the top 3 cards of your deck, put 1 on top, discard the others" combo value
@@ -60,14 +69,6 @@ class ResolvedValues {
      * flat rather than becoming hand-size-aware.
      */
     val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter2 + cardFilter3
-
-    /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
-    fun SkillCardEffectCost.effectCost(resolvedValues: ResolvedValues): Double =
-      when (costCase) {
-        SkillCardEffectCost.CostCase.DISCARD_CARD -> -resolvedValues().cardDraw
-        SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
-        null -> throw IllegalStateException()
-      }
 
     /** Returns the difference between this and [other] as a [SkillCardComputationValues]. */
     operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {

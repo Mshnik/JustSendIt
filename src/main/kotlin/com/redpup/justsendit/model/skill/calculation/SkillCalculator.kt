@@ -11,7 +11,6 @@ import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
 import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
-import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.effectCost
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.filterHand
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.isZero
 import com.redpup.justsendit.model.supply.proto.*
@@ -143,7 +142,9 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     cost: SkillCardEffectCost,
     effect: SkillCardEffect,
   ): Double =
-    effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.effectCost(resolvedValues)
+    with(resolvedValues) {
+      effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.effectCost
+    }
 
   /** Computes the value of the effect alone (ignoring factor and cost). */
   private fun SkillCardEffect.baseEffectValue(): Double = when (effectCase) {
