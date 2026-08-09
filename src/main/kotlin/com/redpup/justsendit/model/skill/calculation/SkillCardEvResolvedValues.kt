@@ -1,10 +1,10 @@
 package com.redpup.justsendit.model.skill.calculation
 
-import com.redpup.justsendit.model.supply.proto.SkillCardComputationValues
-import com.redpup.justsendit.model.supply.proto.SkillCardComputationValuesList
+import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
+import com.redpup.justsendit.util.round
 
-// TODO: Make class with resolution.
+/** TODO: Description. */
 class SkillCardEvResolvedValues {
   private val parametersList =
     TextProtoReaderWriterImpl<SkillCardComputationValues, SkillCardComputationValuesList.Builder>(
@@ -14,64 +14,66 @@ class SkillCardEvResolvedValues {
       SkillCardComputationValuesList.Builder::addAllValues,
     )
 
-  private var parameters: SkillCardComputationValues.Builder = parametersList().first().toBuilder()
+  private val parameters = parametersList().first().toBuilder()
 
-  /** Value of drawing a card. */
-  var cardDraw: Double
-    get() = parameters.cardDraw;
-    set(value) {
-      parameters.cardDraw = value
+  operator fun invoke(): SkillCardComputationValuesOrBuilder = parameters
+
+  /** Updates the values in this based on [cards]. */
+  fun update(cards: List<SkillCard>): SkillCardComputationValues {
+    val computed = cards.map { it.computed }
+    val current = parameters.build()
+    with(parameters) {
+      cardDraw = computed.map { it.totalExpectedValue }.average()
+      reactivate = computed.map { it.effectExpectedValue }.average()
+      cardFilter2 = 0.564 * cardDraw
+      cardFilter3 = 0.846 * cardDraw
+    }
+    return parameters.build() - current
+  }
+
+  /** Writes the contents of [parameters] back to textproto file. */
+  fun write() {
+    parametersList.write(listOf(parameters.build()))
+  }
+
+  companion object {
+    /**
+     * "Look at the top 3 cards of your deck, put 1 on top, discard the others" combo value
+     * (C17). Recognized from three consecutive `card_effect` entries:
+     *   TOPDECK -> REVEALED_TOPDECK (count 3),
+     *   REVEALED_TOPDECK -> DISCARD (count 2),
+     *   REVEALED_TOPDECK -> TOPDECK (count 1).
+     */
+    val SkillCardComputationValuesOrBuilder.lookAtTop3Keep1: Double get() = cardFilter3
+
+    /**
+     * "Draw 2 cards, then put 2 cards on top of your deck" combo value (2 x C16). Recognized
+     * from two consecutive `card_effect` entries:
+     *   TOPDECK -> HAND (count 2),
+     *   HAND -> TOPDECK (count 2).
+     */
+    val SkillCardComputationValuesOrBuilder.draw2Topdeck2: Double get() = 2 * cardFilter2
+
+    /**
+     * Flat value for `filter_hand` ("discard any number of cards, then draw that many"). The
+     * sheet's version wasn't scaled by hand size (C16 + C17), and per your direction this stays
+     * flat rather than becoming hand-size-aware.
+     */
+    val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter2 + cardFilter3
+
+    /** Returns the difference between this and [other] as a [SkillCardComputationValues]. */
+    operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {
+      val self = this
+      return skillCardComputationValues {
+        this.cardDraw = (self.cardDraw - other.cardDraw).round(6)
+        this.reactivate = (self.reactivate - other.reactivate).round(6)
+        this.cardFilter2 = (self.cardFilter2 - other.cardFilter2).round(6)
+        this.cardFilter3 = (self.cardFilter3 - other.cardFilter3).round(6)
+      }
     }
 
-  /** Value of activating an effect again. */
-  var reactivate: Double
-    get() = parameters.reactivate;
-    set(value) {
-      parameters.reactivate = value
-    }
-
-  /** Value of choosing the best of two cards. */
-  var cardFilter2: Double
-    get() = parameters.cardFilter2;
-    set(value) {
-      parameters.cardFilter2 = value
-    }
-
-  /** Value of choosing the best of three cards. */
-  var cardFilter3: Double
-    get() = parameters.cardFilter3;
-    set(value) {
-      parameters.cardFilter3 = value
-    }
-
-  /** Value of trashing a card. */
-  var trashCard: Double
-    get() = parameters.trashCard;
-    set(value) {
-      parameters.trashCard = value
-    }
-
-  /**
-   * "Look at the top 3 cards of your deck, put 1 on top, discard the others" combo value
-   * (C17). Recognized from three consecutive `card_effect` entries:
-   *   TOPDECK -> REVEALED_TOPDECK (count 3),
-   *   REVEALED_TOPDECK -> DISCARD (count 2),
-   *   REVEALED_TOPDECK -> TOPDECK (count 1).
-   */
-  val lookAtTop3Keep1: Double get() = cardFilter3
-
-  /**
-   * "Draw 2 cards, then put 2 cards on top of your deck" combo value (2 x C16). Recognized
-   * from two consecutive `card_effect` entries:
-   *   TOPDECK -> HAND (count 2),
-   *   HAND -> TOPDECK (count 2).
-   */
-  val draw2Topdeck2: Double get() = 2 * cardFilter2
-
-  /**
-   * Flat value for `filter_hand` ("discard any number of cards, then draw that many"). The
-   * sheet's version wasn't scaled by hand size (C16 + C17), and per your direction this stays
-   * flat rather than becoming hand-size-aware.
-   */
-  val filterHand: Double get() = cardFilter2 + cardFilter3
+    /** Returns true if all values in this are 0. */
+    fun SkillCardComputationValues.isZero() =
+      cardDraw == 0.0 && reactivate == 0.0 && cardFilter2 == 0.0 && cardFilter3 == 0.0
+  }
 }

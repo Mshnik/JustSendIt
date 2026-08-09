@@ -19,6 +19,9 @@ interface TextProtoReaderWriter<T> {
   /** Returns the list of elements in the file. */
   operator fun invoke(): List<T>
 
+  /** Writes the list of elements to the file. */
+  fun write(values: List<T>)
+
   /** Updates the list of elements in the file (writes back). */
   fun update(transform: (T) -> T)
 
@@ -65,19 +68,15 @@ class TextProtoReaderWriterImpl<T, B : Message.Builder>(
 
   override fun invoke(): List<T> = reader()
 
+  override fun write(values: List<T>) {
+    builder().addAll(values).let { File(path).writeText(TextFormat.printer().printToString(it)) }
+  }
+
   override fun update(transform: (T) -> T) {
-    reader().map { transform(it) }
-      .let { builder().addAll(it) }
-      .let {
-        File(path).writeText(TextFormat.printer().printToString(it))
-      }
+    write(reader().map { transform(it) })
   }
 
   override fun updateAll(transform: (List<T>) -> List<T>) {
-    transform(reader())
-      .let { builder().addAll(it) }
-      .let {
-        File(path).writeText(TextFormat.printer().printToString(it))
-      }
+    write(transform(reader()))
   }
 }

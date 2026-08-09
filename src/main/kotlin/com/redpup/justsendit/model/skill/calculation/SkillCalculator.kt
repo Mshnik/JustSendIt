@@ -13,6 +13,10 @@ import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.LIFT_P
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.TIMING_FACTOR
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.draw2Topdeck2
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.filterHand
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.isZero
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.lookAtTop3Keep1
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardKt.computed
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
@@ -24,7 +28,7 @@ fun main() {
 }
 
 /** TODO: Description */
-class SkillCalculator(private val path: String, private val resolutionIterations: Int = 50) {
+class SkillCalculator(private val path: String, private val resolutionIterations: Int = 20) {
   private val readerWriter = TextProtoReaderWriterImpl(
     path,
     SkillCardList::newBuilder,
@@ -36,7 +40,18 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   /** TODO: Description. */
   fun updateComputedFields() {
     println("Processing: $path")
-    readerWriter.update { it.copy { computed = compute(it) } }
+    var cards = readerWriter()
+    for (iteration in 0 until resolutionIterations) {
+      println("  Iteration $iteration")
+      cards = cards.map { it.copy { computed = compute(it) } }
+      val delta = resolvedValues.update(cards)
+      println("  Delta: ${delta.toString().replace("\n", " ")}")
+      if (delta.isZero()) {
+        break
+      }
+    }
+    readerWriter.write(cards)
+    resolvedValues.write()
     println("Done.")
   }
 
@@ -126,8 +141,8 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(effect.alterDie)
     SkillCardEffect.EffectCase.GAIN -> gainValue(effect.gain)
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> SkillCardEvConstants.PREVENT_WOBBLE
-    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues.reactivate
-    SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues.filterHand
+    SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues().reactivate
+    SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues().filterHand
     SkillCardEffect.EffectCase.REPLENISH_SHOP -> SkillCardEvConstants.REFRESH_SHOP
     SkillCardEffect.EffectCase.EXTRA_TURN -> SkillCardEvConstants.ADDITIONAL_TURN
     // Only reached for a `card_effect` entry that wasn't consumed by findCardEffectGroups,
@@ -152,7 +167,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     GainEffect.GainCase.SKILL -> gain.skill.toDouble()
     GainEffect.GainCase.POINTS -> gain.points.toDouble() * SkillCardEvConstants.POINTS
     GainEffect.GainCase.BUYS -> gain.buys.toDouble() * SkillCardEvConstants.BUY
-    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues.trashCard
+    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues().trashCard
     else -> 0.0
   } * gain.EFFECT_REPEAT_FACTOR
 
@@ -161,7 +176,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     if (cardEffect.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK &&
       cardEffect.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND
     ) {
-      resolvedValues.cardDraw * cardEffect.count
+      resolvedValues().cardDraw * cardEffect.count
     } else {
       0.0
     }
@@ -203,7 +218,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
       ) {
         groups.add(
           CardEffectGroupMatch(
-            resolvedValues.lookAtTop3Keep1, setOf(i, i + 1, i + 2)
+            resolvedValues().lookAtTop3Keep1, setOf(i, i + 1, i + 2)
           )
         )
         i += 3
@@ -216,7 +231,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
         b.sourceZone == SkillCardZone.SKILL_CARD_ZONE_HAND &&
         b.destinationZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && b.count == 2
       ) {
-        groups.add(CardEffectGroupMatch(resolvedValues.draw2Topdeck2, setOf(i, i + 1)))
+        groups.add(CardEffectGroupMatch(resolvedValues().draw2Topdeck2, setOf(i, i + 1)))
         i += 2
         continue
       }
