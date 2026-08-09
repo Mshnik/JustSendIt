@@ -69,7 +69,19 @@ class TextProtoReaderWriterImpl<T, B : Message.Builder>(
   override fun invoke(): List<T> = reader()
 
   override fun write(values: List<T>) {
-    builder().addAll(values).let { File(path).writeText(TextFormat.printer().printToString(it)) }
+    val file = File(path)
+    val header = file.readLines().subList(0, 3).takeIf {
+      it[0].startsWith("# proto-file:")
+        && it[1].startsWith("# proto-message:")
+        && it[2].isBlank()
+    }
+    builder().addAll(values).let {
+      file.writeText(
+        (header?.joinToString("\n")
+          ?.let { h -> h + "\n" } ?: "")
+          + TextFormat.printer().printToString(it)
+      )
+    }
   }
 
   override fun update(transform: (T) -> T) {
