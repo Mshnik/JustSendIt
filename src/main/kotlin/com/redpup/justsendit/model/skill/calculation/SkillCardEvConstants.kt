@@ -3,10 +3,7 @@ package com.redpup.justsendit.model.skill.calculation
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.skill.calculation.SkillCalculationUtilities.dieColorOrWild
-import com.redpup.justsendit.model.supply.proto.GainEffect
-import com.redpup.justsendit.model.supply.proto.Icon
-import com.redpup.justsendit.model.supply.proto.SkillCard
-import com.redpup.justsendit.model.supply.proto.SkillCardEffect
+import com.redpup.justsendit.model.supply.proto.*
 
 /**
  * TODO: Description
@@ -55,17 +52,21 @@ object SkillCardEvConstants {
     }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
-  val SkillCardEffect.EFFECT_FACTOR: Double
+  val SkillCardEffectCondition.EFFECT_FACTOR: Double
     get() = when (conditionCase) {
-      SkillCardEffect.ConditionCase.SUCCESS -> 0.8
-      else -> 1.0
+      SkillCardEffectCondition.ConditionCase.SUCCESS -> 0.8
+      SkillCardEffectCondition.ConditionCase.FAILURE -> 0.2
+      SkillCardEffectCondition.ConditionCase.MATCHING_ICON -> TODO()
+      SkillCardEffectCondition.ConditionCase.CONDITION_NOT_SET -> 0.0
+      null -> throw IllegalStateException()
     }
 
   /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
-  val SkillCardEffect.EFFECT_COST: Double
-    get() = when (conditionCase) {
-      SkillCardEffect.ConditionCase.DISCARD_CARD -> -3.501888449
-      else -> 0.0
+  val SkillCardEffectCost.EFFECT_COST: Double
+    get() = when (costCase) {
+      SkillCardEffectCost.CostCase.DISCARD_CARD -> -3.501888449
+      SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
+      null -> throw IllegalStateException()
     }
 
   /** Factor applied to a [GainEffect]'s value based on its [EFFECT_REPEAT_FACTOR]. */

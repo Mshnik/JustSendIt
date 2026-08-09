@@ -7,6 +7,10 @@ import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.C
 import com.redpup.justsendit.model.supply.proto.CardEffect
 import com.redpup.justsendit.model.supply.proto.SkillCardEffect
 
+/**
+ * A matched set of indices referring to [CardEffect]s and its combined [value] from
+ * [SkillCardEvResolvedValues].
+ */
 class CardEffectGroupMatch(val value: Double, val consumedIndices: Set<Int>)
 
 /** Utilities for operating on [CardEffect]s in skill calculations.*/
@@ -48,7 +52,6 @@ class SkillCalculationCardEffects(private val resolvedValues: SkillCardEvResolve
   /** Returns the [CardEffect] at the given index, or null if it is not a [CardEffect]. */
   private fun List<SkillCardEffect>.cardEffectAt(index: Int): CardEffect? = getOrNull(index)
     ?.takeIf { it.effectCase == SkillCardEffect.EffectCase.CARD_EFFECT }
-    ?.takeIf { it.conditionCase == SkillCardEffect.ConditionCase.CONDITION_NOT_SET }
     ?.cardEffect
 
   /** Returns true iff [CardEffect] matches the given parameters. */

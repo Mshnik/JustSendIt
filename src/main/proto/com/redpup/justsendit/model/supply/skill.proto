@@ -33,12 +33,14 @@ message SkillCard {
   repeated Icon icons = 7;
 
   // When this card's effects occur and effects, in order. If none, category
-  // is unset.
+  // is unset. EffectCondition only set if there is a condition; unset otherwise.
   EffectCategory category = 8;
-  repeated SkillCardEffect effects = 9;
+  SkillCardEffectCondition effect_condition = 9;
+  SkillCardEffectCost effect_cost = 10;
+  repeated SkillCardEffect effects = 11;
 
   // Flavor text of this card.
-  string flavor_text = 10;
+  string flavor_text = 12;
 
   // Computed attributes of this card.
   message Computed {
@@ -55,25 +57,36 @@ message SkillCard {
     // cards
     uint32 suggested_cost = 5;
   }
-  Computed computed = 11;
+  Computed computed = 13;
+}
+
+/** Condition for skill card effects to activate. */
+message SkillCardEffectCondition {
+  oneof condition {
+    google.protobuf.Empty success = 1;
+    google.protobuf.Empty failure = 2;
+    Icon matching_icon = 3;
+  }
+}
+
+/** Cost for skill card effects to activate. */
+message SkillCardEffectCost {
+  oneof cost {
+    google.protobuf.Empty discard_card = 1;
+  }
 }
 
 /** One of the effects on a skill card. */
 message SkillCardEffect {
-  oneof condition {
-    google.protobuf.Empty success = 1;
-    google.protobuf.Empty discard_card = 2;
-  }
-
   oneof effect {
-    AlterDieEffect alter_die = 3;
-    GainEffect gain = 4;
-    google.protobuf.Empty ignore_wobble = 5;
-    CardEffect card_effect = 6;
-    google.protobuf.Empty reactivate_following = 7;
-    google.protobuf.Empty filter_hand = 8;
-    google.protobuf.Empty replenish_shop = 9;
-    google.protobuf.Empty extra_turn = 10;
+    AlterDieEffect alter_die = 1;
+    GainEffect gain = 2;
+    google.protobuf.Empty ignore_wobble = 3 [deprecated = true];
+    CardEffect card_effect = 4;
+    google.protobuf.Empty reactivate_following = 5;
+    google.protobuf.Empty filter_hand = 6;
+    google.protobuf.Empty replenish_shop = 7;
+    google.protobuf.Empty extra_turn = 8;
   }
 }
 
@@ -86,7 +99,7 @@ message AlterDieEffect {
     // Rerolls the selected die.
     google.protobuf.Empty reroll = 2;
     // Nudge the selected die by the given value, clamped on valid values.
-    uint32 nudge = 3;
+    uint32 nudge = 3 [deprecated = true];
   }
 }
 
@@ -102,7 +115,7 @@ message GainEffect {
   oneof repeat {
     google.protobuf.Empty skill_card_below = 5;
     google.protobuf.Empty skill_card_above = 6;
-    google.protobuf.Empty wobble = 7;
+    google.protobuf.Empty wobble = 7 [deprecated = true];
     redpup.matchers.Matcher matching_die = 8;
   }
 }

@@ -99,7 +99,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
 
     val perEntryTotal =
       card.effectsList.withIndex().filter { (index, _) -> index !in consumedIndices }
-        .sumOf { (_, effect) -> singleEffectValue(effect) }
+        .sumOf { (_, effect) -> singleEffectValue(card.effectCondition, card.effectCost, effect) }
 
     return card.TIMING_FACTOR * (perEntryTotal + groupTotal)
   }
@@ -131,13 +131,17 @@ class SkillCalculator(private val path: String, private val resolutionIterations
       EffectCategory.EFFECT_CATEGORY_UNSET,
       -> effectExpectedValue + nonTextEv
 
-      EffectCategory.UNRECOGNIZED -> throw IllegalStateException()
+      EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
   }
 
-  /** Computes the net value of a single [effect]. */
-  private fun singleEffectValue(effect: SkillCardEffect): Double =
-    effect.baseEffectValue() * effect.EFFECT_FACTOR + effect.EFFECT_COST
+  /** Computes the net value of a single [condition] and [effect]. */
+  private fun singleEffectValue(
+    condition: SkillCardEffectCondition,
+    cost: SkillCardEffectCost,
+    effect: SkillCardEffect,
+  ): Double =
+    effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.EFFECT_COST
 
   /** Computes the value of the effect alone (ignoring factor and cost). */
   private fun SkillCardEffect.baseEffectValue(): Double = when (effectCase) {
