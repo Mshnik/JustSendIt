@@ -4,17 +4,16 @@ import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.random.Dice.maxValue
-import com.redpup.justsendit.model.skill.calculation.SkillCalculationUtilities.dieColorOrWild
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_FACTOR
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_REPEAT_FACTOR
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EV
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.LIFT_PASS_COMPARISON_FACTOR
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.NUDGE_VALUE
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.REROLL_VALUE
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.TIMING_FACTOR
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.effectCost
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.filterHand
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.isZero
+import com.redpup.justsendit.model.skill.calculation.Constants.EFFECT_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.EFFECT_REPEAT_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.LIFT_PASS_COMPARISON_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
+import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
+import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
+import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
+import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.effectCost
+import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.filterHand
+import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.isZero
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardKt.computed
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
@@ -32,7 +31,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     SkillCardList.Builder::getCardsList,
     SkillCardList.Builder::addAllCards,
   )
-  private val resolvedValues = SkillCardEvResolvedValues()
+  private val resolvedValues = ResolvedValues()
   private val skillCalculationCardEffects = SkillCalculationCardEffects(resolvedValues)
 
   /** TODO: Description. */
@@ -85,7 +84,10 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   }.sumOf { (it.maxValue + 1.0) / 2.0 }
 
   /** Sum of values of icons on [card]. */
-  private fun iconExpectedValue(card: SkillCard): Double = card.iconsList.sumOf { it.EV }
+  private fun iconExpectedValue(card: SkillCard): Double =
+    with(Icons) {
+      card.iconsList.sumOf { it.frequency }
+    }
 
   /** Total value of [card] effects. 0 if there are no effects. */
   private fun effectExpectedValue(card: SkillCard): Double {
@@ -147,11 +149,11 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   private fun SkillCardEffect.baseEffectValue(): Double = when (effectCase) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(alterDie)
     SkillCardEffect.EffectCase.GAIN -> gainValue(gain)
-    SkillCardEffect.EffectCase.IGNORE_WOBBLE -> SkillCardEvConstants.PREVENT_WOBBLE
+    SkillCardEffect.EffectCase.IGNORE_WOBBLE -> Constants.PREVENT_WOBBLE
     SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues().reactivate
     SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues().filterHand
-    SkillCardEffect.EffectCase.REPLENISH_SHOP -> SkillCardEvConstants.REFRESH_SHOP
-    SkillCardEffect.EffectCase.EXTRA_TURN -> SkillCardEvConstants.ADDITIONAL_TURN
+    SkillCardEffect.EffectCase.REPLENISH_SHOP -> Constants.REFRESH_SHOP
+    SkillCardEffect.EffectCase.EXTRA_TURN -> Constants.ADDITIONAL_TURN
     SkillCardEffect.EffectCase.CARD_EFFECT -> singleCardEffectValue(cardEffect)
     SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
   }
@@ -169,8 +171,8 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   /** Value of the given [gain] effect. */
   private fun gainValue(gain: GainEffect): Double = when (gain.gainCase) {
     GainEffect.GainCase.SKILL -> gain.skill.toDouble()
-    GainEffect.GainCase.POINTS -> gain.points.toDouble() * SkillCardEvConstants.POINTS
-    GainEffect.GainCase.BUYS -> gain.buys.toDouble() * SkillCardEvConstants.BUY
+    GainEffect.GainCase.POINTS -> gain.points.toDouble() * Constants.POINTS
+    GainEffect.GainCase.BUYS -> gain.buys.toDouble() * Constants.BUY
     GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues().trashCard
     GainEffect.GainCase.GAIN_NOT_SET, null -> throw IllegalStateException()
   } * gain.EFFECT_REPEAT_FACTOR

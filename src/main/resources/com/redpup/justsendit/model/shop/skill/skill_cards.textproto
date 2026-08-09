@@ -13,9 +13,9 @@ cards {
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.8
   }
 }
 cards {
@@ -30,9 +30,9 @@ cards {
   flavor_text: "Slow and wide, easy-cheesy"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.8
   }
 }
 cards {
@@ -47,9 +47,9 @@ cards {
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.9
   }
 }
 cards {
@@ -64,9 +64,9 @@ cards {
   flavor_text: "Heel side, so you can enjoy the view"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.9
   }
 }
 cards {
@@ -201,9 +201,9 @@ cards {
   flavor_text: "Rental gear, borrowed confidence"
   computed {
     dice_expected_value: 6.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 6.25
+    total_expected_value: 6.3
   }
 }
 cards {
@@ -218,9 +218,9 @@ cards {
   flavor_text: "For two days a month, this is home"
   computed {
     dice_expected_value: 7.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 7.25
+    total_expected_value: 7.3
   }
 }
 cards {
@@ -235,9 +235,9 @@ cards {
   flavor_text: "You know the shortest lines and the slickest runs"
   computed {
     dice_expected_value: 8.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 8.25
+    total_expected_value: 8.3
   }
 }
 cards {
@@ -252,9 +252,9 @@ cards {
   flavor_text: "You\'re as ever-present as the snow"
   computed {
     dice_expected_value: 9.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.1
     effect_expected_value: 0.0
-    total_expected_value: 9.25
+    total_expected_value: 9.1
   }
 }
 cards {
@@ -331,9 +331,9 @@ cards {
   flavor_text: "Baby steps on the bunny hill"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.3
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.3
   }
 }
 cards {
@@ -368,9 +368,9 @@ cards {
   flavor_text: "Getting comfortable with a little speed"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.3
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.3
   }
 }
 cards {
@@ -405,9 +405,9 @@ cards {
   flavor_text: "Time to trust your instincts"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.3
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.3
   }
 }
 cards {
@@ -435,9 +435,9 @@ cards {
   flavor_text: "There\'s nothing left to teach you"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.1
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.1
   }
 }
 cards {
@@ -487,9 +487,9 @@ cards {
   flavor_text: "Corduroy makes everyone look good"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.4
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.4
   }
 }
 cards {
@@ -539,9 +539,9 @@ cards {
   flavor_text: "Float, don\'t fight it"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.35
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.35
   }
 }
 cards {
@@ -692,9 +692,9 @@ cards {
   flavor_text: "Aim for the gaps, avoid the trunks"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.15
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.15
   }
 }
 cards {
@@ -729,9 +729,9 @@ cards {
   flavor_text: "The first 90% is skill, the second 90% is nerve"
   computed {
     dice_expected_value: 0.0
-    icon_expected_value: 1.25
+    icon_expected_value: 1.05
     effect_expected_value: 0.0
-    total_expected_value: 1.25
+    total_expected_value: 1.05
   }
 }
 cards {
@@ -859,9 +859,9 @@ cards {
   flavor_text: "No second-guessing where you\'re headed"
   computed {
     dice_expected_value: 6.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 6.25
+    total_expected_value: 6.4
   }
 }
 cards {
@@ -915,9 +915,9 @@ cards {
   flavor_text: "Your body knows before your brain does"
   computed {
     dice_expected_value: 7.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.35
     effect_expected_value: 0.0
-    total_expected_value: 7.25
+    total_expected_value: 7.35
   }
 }
 cards {
@@ -971,9 +971,9 @@ cards {
   flavor_text: "No thought. Just reaction."
   computed {
     dice_expected_value: 8.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.15
     effect_expected_value: 0.0
-    total_expected_value: 8.25
+    total_expected_value: 8.15
   }
 }
 cards {
@@ -999,9 +999,9 @@ cards {
   flavor_text: "This mountain is part of you now"
   computed {
     dice_expected_value: 9.0
-    icon_expected_value: 0.25
+    icon_expected_value: 0.05
     effect_expected_value: 0.0
-    total_expected_value: 9.25
+    total_expected_value: 9.05
   }
 }
 cards {
@@ -1024,9 +1024,9 @@ cards {
   flavor_text: "Small at first, bigger by the bottom"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 3.75
+    total_expected_value: 3.8
   }
 }
 cards {
@@ -1049,9 +1049,9 @@ cards {
   flavor_text: "What started small is now unstoppable"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.1
     effect_expected_value: 0.0
-    total_expected_value: 4.75
+    total_expected_value: 4.6
   }
 }
 cards {
@@ -1099,9 +1099,9 @@ cards {
   flavor_text: "Signing your name on untouched canvas"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.15
     effect_expected_value: 0.0
-    total_expected_value: 3.75
+    total_expected_value: 3.65
   }
 }
 cards {
@@ -1124,9 +1124,9 @@ cards {
   flavor_text: "Leading the way, come what may"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.05
     effect_expected_value: 0.0
-    total_expected_value: 4.75
+    total_expected_value: 4.55
   }
 }
 cards {
@@ -1215,9 +1215,9 @@ cards {
   flavor_text: "A little shake never stopped anyone"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.1
   }
 }
 cards {
@@ -1240,9 +1240,9 @@ cards {
   flavor_text: "Right when you need it, the snow forgives"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.75
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.25
   }
 }
 cards {
@@ -1300,9 +1300,9 @@ cards {
   flavor_text: "A shaky moment, quickly corrected"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.8
   }
 }
 cards {
@@ -1322,9 +1322,9 @@ cards {
   flavor_text: "Recover before anyone notices"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 3.75
+    total_expected_value: 3.8
   }
 }
 cards {
@@ -1344,9 +1344,9 @@ cards {
   flavor_text: "That one absolutely should not have worked"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 4.75
+    total_expected_value: 4.8
   }
 }
 cards {
@@ -1369,9 +1369,9 @@ cards {
   flavor_text: "Ice can\'t take you down today"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.65
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 4.15
   }
 }
 cards {
@@ -1394,9 +1394,9 @@ cards {
   flavor_text: "Nothing rattles you"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 5.1
   }
 }
 cards {
@@ -1419,9 +1419,9 @@ cards {
   flavor_text: "Who cares about the score"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 3.75
+    total_expected_value: 3.9
   }
 }
 cards {
@@ -1469,9 +1469,9 @@ cards {
   flavor_text: "You can\'t stop smiling"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.35
     effect_expected_value: 0.0
-    total_expected_value: 3.75
+    total_expected_value: 3.85
   }
 }
 cards {
@@ -1494,8 +1494,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.0
-    effect_expected_value: 3.4559999999999995
-    total_expected_value: 8.456
+    effect_expected_value: 6.911999999999999
+    total_expected_value: 11.911999999999999
   }
 }
 cards {
@@ -1518,8 +1518,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.0
-    effect_expected_value: 3.4559999999999995
-    total_expected_value: 9.456
+    effect_expected_value: 6.911999999999999
+    total_expected_value: 12.911999999999999
   }
 }
 cards {
@@ -1544,8 +1544,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.0
-    effect_expected_value: 3.0660303270739795
-    total_expected_value: 6.56603032707398
+    effect_expected_value: 3.110968392413817
+    total_expected_value: 6.610968392413817
   }
 }
 cards {
@@ -1570,8 +1570,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.0
-    effect_expected_value: 3.0660303270739795
-    total_expected_value: 7.56603032707398
+    effect_expected_value: 3.110968392413817
+    total_expected_value: 7.610968392413817
   }
 }
 cards {
@@ -1596,9 +1596,9 @@ cards {
   flavor_text: "Ditch the dead weight"
   computed {
     dice_expected_value: 5.0
-    icon_expected_value: 0.25
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 1.417462091157526
+    icon_expected_value: 0.3
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 1.4112895094827285
   }
 }
 cards {
@@ -1623,9 +1623,9 @@ cards {
   flavor_text: "Less baggage, more speed"
   computed {
     dice_expected_value: 6.0
-    icon_expected_value: 0.25
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 2.417462091157526
+    icon_expected_value: 0.3
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 2.4112895094827285
   }
 }
 cards {
@@ -1650,9 +1650,9 @@ cards {
   flavor_text: "Sometimes less is more"
   computed {
     dice_expected_value: 7.0
-    icon_expected_value: 0.25
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 3.417462091157526
+    icon_expected_value: 0.3
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 3.4112895094827285
   }
 }
 cards {
@@ -1677,9 +1677,9 @@ cards {
   flavor_text: "No plan B. There never was"
   computed {
     dice_expected_value: 8.0
-    icon_expected_value: 0.25
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 4.417462091157526
+    icon_expected_value: 0.1
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 4.211289509482729
   }
 }
 cards {
@@ -1704,8 +1704,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.0
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 3.167462091157526
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 3.1112895094827286
   }
 }
 cards {
@@ -1730,8 +1730,8 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.0
-    effect_expected_value: -3.832537908842474
-    total_expected_value: 4.167462091157526
+    effect_expected_value: -3.8887104905172714
+    total_expected_value: 4.111289509482729
   }
 }
 cards {
@@ -1766,9 +1766,9 @@ cards {
   flavor_text: "That definitely didn\'t go as planned"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.55
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.05
   }
 }
 cards {
@@ -1803,9 +1803,9 @@ cards {
   flavor_text: "The second attempt usually goes better"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.7
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.2
   }
 }
 cards {
@@ -1840,9 +1840,9 @@ cards {
   flavor_text: "Eventually, everyone gets it right"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.55
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.05
   }
 }
 cards {
@@ -1870,9 +1870,9 @@ cards {
   flavor_text: "Trust the new plan, not the old one"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.25
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 2.75
   }
 }
 cards {
@@ -1907,9 +1907,9 @@ cards {
   flavor_text: "Whatever just happened, forget it"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.7
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 4.2
   }
 }
 cards {
@@ -1944,9 +1944,9 @@ cards {
   flavor_text: "Once you commit, that\'s the only way now"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6499999999999999
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 4.15
   }
 }
 cards {
@@ -1981,9 +1981,9 @@ cards {
   flavor_text: "That wasn\'t your best, and you know it"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.35
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 3.85
   }
 }
 cards {
@@ -2011,9 +2011,9 @@ cards {
   flavor_text: "Talk is cheap. Show them instead."
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.44999999999999996
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 3.95
   }
 }
 cards {
@@ -2048,9 +2048,9 @@ cards {
   flavor_text: "This time, nothing but results"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.44999999999999996
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 4.95
   }
 }
 cards {
@@ -2085,9 +2085,9 @@ cards {
   flavor_text: "No guarantees. Just hope, and a shove."
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.55
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 5.05
   }
 }
 cards {
@@ -2122,9 +2122,9 @@ cards {
   flavor_text: "Everything comes down to this one shot"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.55
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 5.05
   }
 }
 cards {
@@ -2152,9 +2152,9 @@ cards {
   flavor_text: "Somehow, against everything, it works"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.15000000000000002
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 4.65
   }
 }
 cards {
@@ -2188,9 +2188,9 @@ cards {
   flavor_text: "Barely touching the snow"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.55
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 3.05
   }
 }
 cards {
@@ -2260,9 +2260,9 @@ cards {
   flavor_text: "Adjusting your line mid-run"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.39999999999999997
     effect_expected_value: 0.0
-    total_expected_value: 3.0
+    total_expected_value: 2.9
   }
 }
 cards {
@@ -2296,9 +2296,9 @@ cards {
   flavor_text: "Just a little correction"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.65
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 4.15
   }
 }
 cards {
@@ -2332,9 +2332,9 @@ cards {
   flavor_text: "Dialing it in on the fly"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 4.0
+    total_expected_value: 3.8
   }
 }
 cards {
@@ -2404,9 +2404,9 @@ cards {
   flavor_text: "Small tweaks, big difference"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.45
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 4.95
   }
 }
 cards {
@@ -2440,9 +2440,9 @@ cards {
   flavor_text: "Change your line without losing speed"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 4.9
   }
 }
 cards {
@@ -2476,9 +2476,9 @@ cards {
   flavor_text: "Forcing your way to a better line"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6
     effect_expected_value: 0.0
-    total_expected_value: 5.0
+    total_expected_value: 5.1
   }
 }
 cards {
@@ -2508,9 +2508,9 @@ cards {
   flavor_text: "See what\'s coming before you commit"
   computed {
     dice_expected_value: 6.0
-    icon_expected_value: 0.25
-    effect_expected_value: 5.403878451467888
-    total_expected_value: 11.653878451467888
+    icon_expected_value: 0.3
+    effect_expected_value: 5.483081791629352
+    total_expected_value: 11.783081791629352
   }
 }
 cards {
@@ -2540,9 +2540,9 @@ cards {
   flavor_text: "Know your run before you drop in"
   computed {
     dice_expected_value: 7.0
-    icon_expected_value: 0.25
-    effect_expected_value: 5.403878451467888
-    total_expected_value: 12.653878451467888
+    icon_expected_value: 0.3
+    effect_expected_value: 5.483081791629352
+    total_expected_value: 12.783081791629352
   }
 }
 cards {
@@ -2572,9 +2572,9 @@ cards {
   flavor_text: "Every good run starts with a good look"
   computed {
     dice_expected_value: 8.0
-    icon_expected_value: 0.25
-    effect_expected_value: 5.403878451467888
-    total_expected_value: 13.653878451467888
+    icon_expected_value: 0.1
+    effect_expected_value: 5.483081791629352
+    total_expected_value: 13.58308179162935
   }
 }
 cards {
@@ -2594,9 +2594,9 @@ cards {
   flavor_text: "Do it again, just because you can"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 2.75
+    total_expected_value: 2.9
   }
 }
 cards {
@@ -2638,9 +2638,9 @@ cards {
   flavor_text: "You could go all day like this"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.35
     effect_expected_value: 0.0
-    total_expected_value: 4.75
+    total_expected_value: 4.85
   }
 }
 cards {
@@ -2663,9 +2663,9 @@ cards {
   flavor_text: "A moment to reset before the next run"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 4.1
+    total_expected_value: 4.15
   }
 }
 cards {
@@ -2688,9 +2688,9 @@ cards {
   flavor_text: "In... and out. You\'ve got this"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.05
     effect_expected_value: 0.0
-    total_expected_value: 5.2
+    total_expected_value: 5.0
   }
 }
 cards {
@@ -2714,9 +2714,9 @@ cards {
   flavor_text: "Gotta buy one to get the free one"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.65
     effect_expected_value: 0.0
-    total_expected_value: 4.35
+    total_expected_value: 4.5
   }
 }
 cards {
@@ -2768,9 +2768,9 @@ cards {
   flavor_text: "Thankfully more near than miss"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6
     effect_expected_value: 0.0
-    total_expected_value: 4.35
+    total_expected_value: 4.45
   }
 }
 cards {
@@ -2796,9 +2796,9 @@ cards {
   flavor_text: "Just a bit touch and just enough go"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 5.45
+    total_expected_value: 5.25
   }
 }
 cards {
@@ -2838,9 +2838,9 @@ cards {
   flavor_text: "Studying every route before you pick one"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
-    effect_expected_value: 4.052908838600916
-    total_expected_value: 5.308199722461008
+    icon_expected_value: 0.6
+    effect_expected_value: 4.1123113437220145
+    total_expected_value: 5.473542478094216
   }
 }
 cards {
@@ -2880,9 +2880,9 @@ cards {
   flavor_text: "Three routes, one choice, no do-overs"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
-    effect_expected_value: 4.052908838600916
-    total_expected_value: 5.855290883860092
+    icon_expected_value: 0.4
+    effect_expected_value: 4.1123113437220145
+    total_expected_value: 5.761231134372202
   }
 }
 cards {
@@ -2905,9 +2905,9 @@ cards {
   flavor_text: "New gear just dropped, and yes, you need it"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.6
     effect_expected_value: 0.0
-    total_expected_value: 4.35
+    total_expected_value: 4.45
   }
 }
 cards {
@@ -2930,9 +2930,9 @@ cards {
   flavor_text: "The whole shop, better than before"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.5
+    icon_expected_value: 0.4
     effect_expected_value: 0.0
-    total_expected_value: 5.45
+    total_expected_value: 5.3500000000000005
   }
 }
 cards {
@@ -2952,9 +2952,9 @@ cards {
   flavor_text: "Why stop when you\'re on a roll"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 4.125
+    total_expected_value: 4.18
   }
 }
 cards {
@@ -2974,9 +2974,9 @@ cards {
   flavor_text: "One run just wasn\'t enough"
   computed {
     dice_expected_value: 4.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.1
     effect_expected_value: 0.0
-    total_expected_value: 5.225
+    total_expected_value: 5.06
   }
 }
 cards {
@@ -3035,9 +3035,9 @@ cards {
   flavor_text: "The view alone is worth the ticket"
   computed {
     dice_expected_value: 2.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 3.025
+    total_expected_value: 3.0799999999999996
   }
 }
 cards {
@@ -3058,9 +3058,9 @@ cards {
   flavor_text: "A warm conversation against the chilling air"
   computed {
     dice_expected_value: 3.5
-    icon_expected_value: 0.25
+    icon_expected_value: 0.3
     effect_expected_value: 0.0
-    total_expected_value: 4.125
+    total_expected_value: 4.18
   }
 }
 cards {

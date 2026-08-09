@@ -3,8 +3,8 @@ package com.redpup.justsendit.model.skill.calculation
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.matchers.proto.Matcher
 
-/** Extra utilities for calculating skill card values. */
-internal object SkillCalculationUtilities {
+/** Extra [Matcher] utilities for calculating skill card values. */
+internal object MatcherUtilities {
 
   /**
    * Returns which die color a this targets, or `null` for "wild"/any (a `constant_matcher

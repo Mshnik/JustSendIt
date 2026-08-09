@@ -2,23 +2,23 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.proto.SkillCardZone.*
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.draw2Topdeck2
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.lookAtTop3Keep1
+import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.draw2Topdeck2
+import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.lookAtTop3Keep1
 import com.redpup.justsendit.model.supply.proto.CardEffect
 import com.redpup.justsendit.model.supply.proto.SkillCardEffect
 
 /**
  * A matched set of indices referring to [CardEffect]s and its combined [value] from
- * [SkillCardEvResolvedValues].
+ * [ResolvedValues].
  */
 class CardEffectGroupMatch(val value: Double, val consumedIndices: Set<Int>)
 
 /** Utilities for operating on [CardEffect]s in skill calculations.*/
-class SkillCalculationCardEffects(private val resolvedValues: SkillCardEvResolvedValues) {
+class SkillCalculationCardEffects(private val resolvedValues: ResolvedValues) {
 
   /**
    * Scans [effects] for the two known multi-step `card_effect` combos (see the doc comments
-   * on [SkillCardEvResolvedValues.lookAtTop3Keep1] and [SkillCardEvResolvedValues.draw2Topdeck2]),
+   * on [ResolvedValues.lookAtTop3Keep1] and [ResolvedValues.draw2Topdeck2]),
    * each spread across consecutive, condition-free `card_effect` entries in the list.
    */
   fun findCardEffectGroups(effects: List<SkillCardEffect>): List<CardEffectGroupMatch> {
@@ -66,7 +66,7 @@ class SkillCalculationCardEffects(private val resolvedValues: SkillCardEvResolve
       && this.count == count
 
   /**
-   * Returns a value from [SkillCardEvResolvedValues] matching the given three effects,
+   * Returns a value from [ResolvedValues] matching the given three effects,
    * or null if none.
    */
   private fun Triple<CardEffect?, CardEffect?, CardEffect?>.findMatchingEffect(): Double? {
@@ -84,7 +84,7 @@ class SkillCalculationCardEffects(private val resolvedValues: SkillCardEvResolve
   }
 
   /**
-   * Returns a value from [SkillCardEvResolvedValues] matching the given two effects,
+   * Returns a value from [ResolvedValues] matching the given two effects,
    * or null if none.
    */
   private fun Pair<CardEffect?, CardEffect?>.findMatchingEffect(): Double? {

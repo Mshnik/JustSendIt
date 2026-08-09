@@ -4,8 +4,8 @@ import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
 import com.redpup.justsendit.util.round
 
-/** TODO: Description. */
-class SkillCardEvResolvedValues {
+/** Like constants, but determined by the aggregated value of all cards. */
+class ResolvedValues {
   private val parametersList =
     TextProtoReaderWriterImpl<SkillCardComputationValues, SkillCardComputationValuesList.Builder>(
       "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_card_computation_values.textproto",
@@ -62,7 +62,7 @@ class SkillCardEvResolvedValues {
     val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter2 + cardFilter3
 
     /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
-    fun SkillCardEffectCost.effectCost(resolvedValues: SkillCardEvResolvedValues): Double =
+    fun SkillCardEffectCost.effectCost(resolvedValues: ResolvedValues): Double =
       when (costCase) {
         SkillCardEffectCost.CostCase.DISCARD_CARD -> -resolvedValues().cardDraw
         SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0

@@ -2,41 +2,30 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
-import com.redpup.justsendit.model.skill.calculation.SkillCalculationUtilities.dieColorOrWild
+import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.supply.proto.*
 
 /**
  * TODO: Description
  */
-object SkillCardEvConstants {
+object Constants {
   /** C98 "Lift/Pass Comparison Factor": used when combining dice/icon EV with effect EV. */
   const val LIFT_PASS_COMPARISON_FACTOR = 0.1
-
-  /** EV of an [Icon]. */
-  val Icon.EV: Double
-    get() = when (typeCase) {
-      Icon.TypeCase.WILD -> 1.0
-      Icon.TypeCase.TYPE_NOT_SET -> 0.0
-      // TODO: Change value based on icon.
-      else -> 0.25
-    }
-
-  // ---- Effect Calculations tab ----
 
   /** C51 "Prevent Wobble": value of `ignore_wobble`. */
   const val PREVENT_WOBBLE = 3.0
 
   /** C68 "Refresh Shop": value of `replenish_shop`. */
-  const val REFRESH_SHOP = 1.0
+  const val REFRESH_SHOP = 0.8
 
   /** C75 "Additional immediate turn": value of `extra_turn`. */
   const val ADDITIONAL_TURN = 1.5
 
   /** C47 "Buy": value of one point of `GainEffect.buys`. */
-  const val BUY = 2.0
+  const val BUY = 1.0
 
   /** C38 "Fun" (Points): value of one point of `GainEffect.fun`. */
-  const val POINTS = 0.6
+  const val POINTS = 1.2
 
   /** Factor to apply to [SkillCard] effect values based on [category]. */
   val SkillCard.TIMING_FACTOR: Double
@@ -46,9 +35,7 @@ object SkillCardEvConstants {
       EffectCategory.EFFECT_CATEGORY_LAST -> 0.8
       EffectCategory.EFFECT_CATEGORY_PASS -> 1.0
       EffectCategory.EFFECT_CATEGORY_LIFT -> 1.0
-      // A card with effects but no category is a data error in the source sheet too
-      // (its AG column would evaluate to the literal string "None"). Treat as 0 EV.
-      else -> 0.0
+      EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
