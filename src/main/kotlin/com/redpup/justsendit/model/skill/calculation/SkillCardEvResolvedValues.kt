@@ -61,6 +61,14 @@ class SkillCardEvResolvedValues {
      */
     val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter2 + cardFilter3
 
+    /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
+    fun SkillCardEffectCost.effectCost(resolvedValues: SkillCardEvResolvedValues): Double =
+      when (costCase) {
+        SkillCardEffectCost.CostCase.DISCARD_CARD -> -resolvedValues().cardDraw
+        SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
+        null -> throw IllegalStateException()
+      }
+
     /** Returns the difference between this and [other] as a [SkillCardComputationValues]. */
     operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {
       val self = this

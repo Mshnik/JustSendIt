@@ -5,7 +5,6 @@ import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.justsendit.model.skill.calculation.SkillCalculationUtilities.dieColorOrWild
-import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_COST
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_FACTOR
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EFFECT_REPEAT_FACTOR
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.EV
@@ -13,6 +12,7 @@ import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.LIFT_P
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvConstants.TIMING_FACTOR
+import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.effectCost
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.filterHand
 import com.redpup.justsendit.model.skill.calculation.SkillCardEvResolvedValues.Companion.isZero
 import com.redpup.justsendit.model.supply.proto.*
@@ -141,7 +141,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     cost: SkillCardEffectCost,
     effect: SkillCardEffect,
   ): Double =
-    effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.EFFECT_COST
+    effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.effectCost(resolvedValues)
 
   /** Computes the value of the effect alone (ignoring factor and cost). */
   private fun SkillCardEffect.baseEffectValue(): Double = when (effectCase) {

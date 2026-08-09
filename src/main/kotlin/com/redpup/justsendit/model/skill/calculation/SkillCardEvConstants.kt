@@ -61,14 +61,6 @@ object SkillCardEvConstants {
       null -> throw IllegalStateException()
     }
 
-  /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
-  val SkillCardEffectCost.EFFECT_COST: Double
-    get() = when (costCase) {
-      SkillCardEffectCost.CostCase.DISCARD_CARD -> -3.501888449
-      SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
-      null -> throw IllegalStateException()
-    }
-
   /** Factor applied to a [GainEffect]'s value based on its [EFFECT_REPEAT_FACTOR]. */
   val GainEffect.EFFECT_REPEAT_FACTOR: Double
     get() = when (repeatCase) {
