@@ -97,7 +97,15 @@ class SkillCalculator(private val path: String, private val resolutionIterations
 
     val perEntryTotal =
       effectsList.withIndex().filter { (index, _) -> index !in consumedIndices }
-        .sumOf { (_, effect) -> singleEffectValue(this, effectCondition, effectCost, effect) }
+        .sumOf { (_, effect) ->
+          singleEffectValue(
+            this,
+            effectCondition,
+            effectCost,
+            effect,
+            effectRepeat
+          )
+        }
 
     return TIMING_FACTOR * (perEntryTotal + groupTotal)
   }
@@ -138,9 +146,13 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     condition: SkillCardEffectCondition,
     cost: SkillCardEffectCost,
     effect: SkillCardEffect,
+    repeat: SkillCardEffectRepeat,
   ): Double =
     with(resolvedValues) {
-      effect.baseEffectValue(card) * condition.effectFactor(card) + cost.effectCost
+      (effect.baseEffectValue(card) *
+        condition.effectConditionFactor(card) *
+        repeat.effectRepeatFactor(card)) +
+        cost.effectCost
     }
 
   /** Computes the value of the effect alone (ignoring repeat factor and cost). */

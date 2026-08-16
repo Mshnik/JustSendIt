@@ -62,13 +62,26 @@ class ResolvedValues {
       }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
-  fun SkillCardEffectCondition.effectFactor(card: SkillCard): Double = when (conditionCase) {
+  fun SkillCardEffectCondition.effectConditionFactor(card: SkillCard): Double = when (conditionCase) {
     ConditionCase.CONDITION_NOT_SET -> 1.0 // No condition is always active.
     ConditionCase.SUCCESS -> 0.8
     ConditionCase.FAILURE -> 0.2
     ConditionCase.NEXT_CARD_COST ->
       cardCosts.entries.filter { it.key > card.computed.suggestedCost }
         .sumOf { it.value } / totalCards.toDouble()
+
+    null -> throw IllegalStateException()
+  }
+
+  /** Factor to apply to a [SkillCardEffect] value based on [repeatCase]. */
+  fun SkillCardEffectRepeat.effectRepeatFactor(card: SkillCard): Double = when (repeatCase) {
+    SkillCardEffectRepeat.RepeatCase.REPEAT_NOT_SET -> 1.0
+
+    SkillCardEffectRepeat.RepeatCase.SKILL_CARD_BELOW -> TODO()
+    SkillCardEffectRepeat.RepeatCase.SKILL_CARD_ABOVE -> TODO()
+    SkillCardEffectRepeat.RepeatCase.WOBBLE -> 1.0
+    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_CARD_ABOVE -> TODO()
+    SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> TODO()
 
     null -> throw IllegalStateException()
   }
