@@ -33,24 +33,22 @@ message SkillCard {
   // Cost of this card.
   uint32 cost = 4;
 
-  // Number of dice on this card, by color.
-  uint32 green_dice = 5;
-  uint32 blue_dice = 6;
-  uint32 black_dice = 7;
+  // Dice on this card, if any.
+  repeated Die dice = 5;
 
   // Icons on this card, if any.
-  repeated Icon icons = 8;
+  repeated Icon icons = 6;
 
   // When this card's effects occur and effects, in order. If none, category
   // is unset. EffectCondition only set if there is a condition; unset otherwise.
-  EffectCategory category = 9;
-  SkillCardEffectCondition effect_condition = 10;
-  SkillCardEffectCost effect_cost = 12;
-  repeated SkillCardEffect effects = 13;
-  SkillCardEffectRepeat effect_repeat = 14;
+  EffectCategory category = 7;
+  SkillCardEffectCondition effect_condition = 8;
+  SkillCardEffectCost effect_cost = 9;
+  repeated SkillCardEffect effects = 10;
+  SkillCardEffectRepeat effect_repeat = 11;
 
   // Flavor text of this card.
-  string flavor_text = 15;
+  string flavor_text = 12;
 
   // Computed attributes of this card.
   message Computed {
@@ -67,7 +65,7 @@ message SkillCard {
     // cards
     uint32 suggested_cost = 5;
   }
-  Computed computed = 16;
+  Computed computed = 13;
 }
 
 /** Condition for skill card effects to activate. */

@@ -9,6 +9,7 @@ import re
 SKILL_INPUT_CSV = \
   "../resources/com/redpup/justsendit/model/shop/skill/SkillCards.csv"
 SKILL_FILE_PREFIX = "../resources/com/redpup/justsendit/model/shop/skill/"
+SKILL_OUTPUT_FILENAME = "skill_cards.textproto"
 SKILL_IMG_FILEPATH = "src/main/resources/com/redpup/justsendit/img/skill_cards/"
 
 TILE_INPUT_CSV = "../resources/com/redpup/justsendit/model/board/tile/Tiles.csv"
@@ -156,14 +157,10 @@ DIE_ENUM_TYPE = "com.redpup.justsendit.model.Die"
 #   }
 #
 # To match both color and face value we use a message_matcher with two
-# FieldMatchers: one on `die` (color), one on `roll` (value). Because `roll`
-# is a repeated field, we can only match "does N appear anywhere in the
-# roll history" via a collection_matcher (any), not "is N the CURRENT
-# value" -- the Matcher framework has no way to select just the last
-# element of a repeated field. This is a slight semantic gap: if a die is
-# rerolled through a value it previously showed, this would still count as
-# a match even though that value isn't current. Flagging this in case the
-# engine needs a dedicated "current value" accessor instead.
+# FieldMatchers: one on `die` (color), one on `roll` (value). `roll` is a
+# repeated field, and we specifically want the CURRENT value (last element),
+# not any historical value -- so this uses collection_matcher's `last`
+# variant rather than `any`.
 DIE_ROLL_MESSAGE_TYPE = "com.redpup.justsendit.model.player.DieRoll"
 DIE_ROLL_COLOR_FIELD = "die"
 DIE_ROLL_VALUE_FIELD = "roll"
@@ -390,15 +387,14 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
 
 
 def _die_roll_value_field_block(value: str, indent: str) -> str:
-  """Body of a FieldMatcher on DieRoll.roll: matches if `value` appears
-  anywhere in the roll history (see the caveat on DIE_ROLL_VALUE_FIELD
-  above -- this can't restrict to just the current/last value)."""
+  """Body of a FieldMatcher on DieRoll.roll: matches if `value` equals the
+  current (last) rolled value."""
   return (
     f"{indent}fields {{\n"
     f"{indent}  field_name: \"{DIE_ROLL_VALUE_FIELD}\"\n"
     f"{indent}  matcher {{\n"
     f"{indent}    collection_matcher {{\n"
-    f"{indent}      any {{\n"
+    f"{indent}      last {{\n"
     f"{indent}        value_matcher {{ int32_value: {value} }}\n"
     f"{indent}      }}\n"
     f"{indent}    }}\n"
@@ -462,7 +458,16 @@ def process_skill_cards_pipeline():
     return
 
   ensure_directory_exists(SKILL_FILE_PREFIX)
-  initialized_files = set()
+  target_filepath = os.path.join(SKILL_FILE_PREFIX, SKILL_OUTPUT_FILENAME)
+
+  # Clean out ONLY this specific generated textproto file
+  safe_delete_file(target_filepath)
+
+  write_proto_file_header(
+    target_filepath,
+    "com/redpup/justsendit/model/supply/skill.proto",
+    "SkillCardList"
+  )
 
   with open(SKILL_INPUT_CSV, mode='r', newline='', encoding='utf-8') as csv_file:
     reader = csv.reader(csv_file)
@@ -474,16 +479,6 @@ def process_skill_cards_pipeline():
     header_map = generate_header_lookup_map(headers)
     rows = list(reader)
 
-    # 1. First Pass: Safely identify and delete only the specific files we will modify
-    for row in rows:
-      if not row or len(row) < len(header_map):
-        continue
-      file_target = get_safe_cell_value(row, header_map, "File")
-      if file_target or get_safe_cell_value(row, header_map, "Title"):
-        base_filename = f"{file_target if file_target else 'default'}.textproto"
-        safe_delete_file(os.path.join(SKILL_FILE_PREFIX, base_filename))
-
-    # 2. Second Pass: Process rows and write data
     for row in rows:
       if not row or len(row) < len(header_map):
         continue
@@ -494,19 +489,8 @@ def process_skill_cards_pipeline():
       if not name and not file_target:
         continue
 
-      base_filename = f"{file_target if file_target else 'default'}.textproto"
-      target_filepath = os.path.join(SKILL_FILE_PREFIX, base_filename)
-
       img_filename = get_safe_cell_value(row, header_map, "Img Filename")
       filename_field = f"{SKILL_IMG_FILEPATH.rstrip('/')}/{img_filename.lstrip('/')}" if img_filename else ""
-
-      if target_filepath not in initialized_files:
-        write_proto_file_header(
-          target_filepath,
-          "com/redpup/justsendit/model/supply/skill.proto",
-          "SkillCardList"
-        )
-        initialized_files.add(target_filepath)
 
       # Card type: "Starter" File -> starter deck card, "Shop" File -> a
       # purchasable upgrade card.
@@ -519,9 +503,14 @@ def process_skill_cards_pipeline():
         skill_card_type = "SKILL_CARD_TYPE_UNKNOWN"
 
       # Process dice
-      green_dice = sum(1 for i in range(1, 4) if get_safe_cell_value(row, header_map, f"Die {i}").lower() == "green")
-      blue_dice = sum(1 for i in range(1, 4) if get_safe_cell_value(row, header_map, f"Die {i}").lower() == "blue")
-      black_dice = sum(1 for i in range(1, 4) if get_safe_cell_value(row, header_map, f"Die {i}").lower() == "black")
+      dice_colors = [
+        get_safe_cell_value(row, header_map, f"Die {i}").lower()
+        for i in range(1, 4)
+      ]
+      dice_enum_values = [
+        f"DIE_{color.upper()}" for color in dice_colors
+        if color in ("green", "blue", "black")
+      ]
 
       # Process icons
       icon_blocks = []
@@ -566,9 +555,8 @@ def process_skill_cards_pipeline():
       if skill_card_type != "SKILL_CARD_TYPE_UNKNOWN":
         card_block += f'  type: {skill_card_type}\n'
       card_block += f'  cost: {cost}\n'
-      card_block += f'  green_dice: {green_dice}\n'
-      card_block += f'  blue_dice: {blue_dice}\n'
-      card_block += f'  black_dice: {black_dice}\n'
+      for die_value in dice_enum_values:
+        card_block += f'  dice: {die_value}\n'
 
       for icon in icon_blocks:
         card_block += icon + "\n"
