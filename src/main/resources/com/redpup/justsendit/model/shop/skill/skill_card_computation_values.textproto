@@ -2,9 +2,9 @@
 # proto-message: SkillCardComputationValuesList
 
 values {
-  cardDraw: 4.860888116655813
-  cardFilter2: 2.7415408977938784
-  cardFilter3: 4.112311346690817
+  cardDraw: 4.860888116656037
+  cardFilter2: 2.7415408977940046
+  cardFilter3: 4.1123113466910075
   trashCard: 1.972240652
-  reactivate: 0.19443219917702853
+  reactivate: 0.19443219917742538
 }

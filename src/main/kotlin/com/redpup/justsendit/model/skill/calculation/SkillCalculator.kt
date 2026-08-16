@@ -4,9 +4,10 @@ import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.random.Dice.maxValue
-import com.redpup.justsendit.model.skill.calculation.Constants.EFFECT_FACTOR
 import com.redpup.justsendit.model.skill.calculation.Constants.EFFECT_REPEAT_FACTOR
 import com.redpup.justsendit.model.skill.calculation.Constants.LIFT_PASS_COMPARISON_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.MAX_UPGRADE_COST
+import com.redpup.justsendit.model.skill.calculation.Constants.MIN_UPGRADE_COST
 import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
@@ -39,7 +40,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     var cards = readerWriter()
     for (iteration in 0 until resolutionIterations) {
       println("  Iteration $iteration")
-      cards = cards.map { it.copy { computed = compute(it) } }
+      cards = cards.map { it.copy { computed = compute(it) } }.let { computeCosts(it) }
       val delta = resolvedValues.update(cards)
       println("  Delta: ${delta.toString().replace("\n", " ")}")
       if (delta.isZero()) {
@@ -143,7 +144,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     effect: SkillCardEffect,
   ): Double =
     with(resolvedValues) {
-      effect.baseEffectValue() * condition.EFFECT_FACTOR + cost.effectCost
+      effect.baseEffectValue() * condition.effectFactor + cost.effectCost
     }
 
   /** Computes the value of the effect alone (ignoring factor and cost). */
@@ -185,4 +186,33 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     } else {
       throw IllegalArgumentException()
     }
+
+  /** Updates the costs in all [Computed] sections on all [SkillCard]s. */
+  private fun computeCosts(cards: List<SkillCard>): List<SkillCard> {
+    val minValue = cards
+      .filter { it.type == SkillCardType.SKILL_CARD_TYPE_UPGRADE }
+      .minOf { it.computed.totalExpectedValue }
+    val maxValue = cards.maxOf { it.computed.totalExpectedValue }
+
+    return cards.map { card ->
+      card.copy {
+        computed = card.computed.copy {
+          suggestedCost = computeCost(card, minValue, maxValue)
+        }
+      }
+    }
+  }
+
+  /** Computes the suggested cost given the inputs. */
+  private fun computeCost(
+    card: SkillCard,
+    minValue: Double,
+    maxValue: Double,
+  ): Int {
+    if (card.type == SkillCardType.SKILL_CARD_TYPE_STARTER) {
+      return 0
+    }
+    val percentile = (card.computed.totalExpectedValue - minValue) / (maxValue - minValue)
+    return (percentile * (MAX_UPGRADE_COST - MIN_UPGRADE_COST)).toInt() + MIN_UPGRADE_COST
+  }
 }

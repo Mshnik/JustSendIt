@@ -9,6 +9,12 @@ import com.redpup.justsendit.model.supply.proto.*
  * TODO: Description
  */
 object Constants {
+  /** Minimum value an upgrade card can cost. */
+  const val MIN_UPGRADE_COST = 2
+
+  /** Maximum value an upgrade card can cost. */
+  const val MAX_UPGRADE_COST = 7
+
   /** C98 "Lift/Pass Comparison Factor": used when combining dice/icon EV with effect EV. */
   const val LIFT_PASS_COMPARISON_FACTOR = 0.1
 
@@ -36,16 +42,6 @@ object Constants {
       EffectCategory.EFFECT_CATEGORY_PASS -> 1.0
       EffectCategory.EFFECT_CATEGORY_LIFT -> 1.0
       EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
-    }
-
-  /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
-  val SkillCardEffectCondition.EFFECT_FACTOR: Double
-    get() = when (conditionCase) {
-      SkillCardEffectCondition.ConditionCase.SUCCESS -> 0.8
-      SkillCardEffectCondition.ConditionCase.FAILURE -> 0.2
-      SkillCardEffectCondition.ConditionCase.MATCHING_ICON -> TODO()
-      SkillCardEffectCondition.ConditionCase.CONDITION_NOT_SET -> 0.0
-      null -> throw IllegalStateException()
     }
 
   /** Factor applied to a [GainEffect]'s value based on its [EFFECT_REPEAT_FACTOR]. */

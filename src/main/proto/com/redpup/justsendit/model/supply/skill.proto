@@ -15,32 +15,41 @@ message SkillCardList {
   repeated SkillCard cards = 1;
 }
 
+/** Types of skill cards. */
+enum SkillCardType {
+  SKILL_CARD_TYPE_UNKNOWN = 0;
+  SKILL_CARD_TYPE_STARTER = 1;
+  SKILL_CARD_TYPE_UPGRADE = 2;
+}
+
 /** A skill card in a player's deck, discard, hand, play, or the shop. */
 message SkillCard {
   // Name of the image file of this card.
   string filename = 1;
   // Name of this card.
   string name = 2;
+  // Type of this card.
+  SkillCardType type = 3;
   // Cost of this card.
-  uint32 cost = 3;
+  uint32 cost = 4;
 
   // Number of dice on this card, by color.
-  uint32 green_dice = 4;
-  uint32 blue_dice = 5;
-  uint32 black_dice = 6;
+  uint32 green_dice = 5;
+  uint32 blue_dice = 6;
+  uint32 black_dice = 7;
 
   // Icons on this card, if any.
-  repeated Icon icons = 7;
+  repeated Icon icons = 8;
 
   // When this card's effects occur and effects, in order. If none, category
   // is unset. EffectCondition only set if there is a condition; unset otherwise.
-  EffectCategory category = 8;
-  SkillCardEffectCondition effect_condition = 9;
-  SkillCardEffectCost effect_cost = 10;
-  repeated SkillCardEffect effects = 11;
+  EffectCategory category = 9;
+  SkillCardEffectCondition effect_condition = 10;
+  SkillCardEffectCost effect_cost = 12;
+  repeated SkillCardEffect effects = 13;
 
   // Flavor text of this card.
-  string flavor_text = 12;
+  string flavor_text = 14;
 
   // Computed attributes of this card.
   message Computed {
@@ -57,7 +66,7 @@ message SkillCard {
     // cards
     uint32 suggested_cost = 5;
   }
-  Computed computed = 13;
+  Computed computed = 15;
 }
 
 /** Condition for skill card effects to activate. */
@@ -66,6 +75,7 @@ message SkillCardEffectCondition {
     google.protobuf.Empty success = 1;
     google.protobuf.Empty failure = 2;
     Icon matching_icon = 3;
+    matchers.Matcher next_card_cost = 4;
   }
 }
 

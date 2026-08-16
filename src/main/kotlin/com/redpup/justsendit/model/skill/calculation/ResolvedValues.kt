@@ -1,6 +1,9 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.skill.calculation.Icons.frequency
 import com.redpup.justsendit.model.supply.proto.*
+import com.redpup.justsendit.model.supply.proto.SkillCardEffectCondition.ConditionCase
+import com.redpup.justsendit.model.supply.proto.SkillCardEffectCost.CostCase
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
 import com.redpup.justsendit.util.round
 
@@ -40,10 +43,21 @@ class ResolvedValues {
   val SkillCardEffectCost.effectCost: Double
     get() =
       when (costCase) {
-        SkillCardEffectCost.CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
-        SkillCardEffectCost.CostCase.COST_NOT_SET -> 0.0
+        CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
+        CostCase.COST_NOT_SET -> 0.0
         null -> throw IllegalStateException()
       }
+
+  /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
+  val SkillCardEffectCondition.effectFactor: Double
+    get() = when (conditionCase) {
+      ConditionCase.SUCCESS -> 0.8
+      ConditionCase.FAILURE -> 0.2
+      ConditionCase.MATCHING_ICON -> matchingIcon.frequency
+      ConditionCase.CONDITION_NOT_SET -> 0.0
+      ConditionCase.NEXT_CARD_COST -> TODO()
+      null -> throw IllegalStateException()
+    }
 
   companion object {
     /**
