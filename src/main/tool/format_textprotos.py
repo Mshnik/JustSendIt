@@ -129,196 +129,145 @@ def parse_lift_card_bounds(text_val: str) -> tuple:
 
 
 # =====================================================================
-# --- SKILL EFFECT TEXT -> STRUCTURED SkillEffect TRANSLATION ---
+# --- SKILL CARD TEXT -> STRUCTURED SkillCard TRANSLATION ---
 # =====================================================================
 #
-# The SkillCard.proto message used to have a flat `text` field holding a
-# human-readable effect description. It now has `repeated SkillEffect
-# effects`, a fully structured representation. The spreadsheet still only
-# gives us the human-readable "EffectText" column (plus a pile of derived
-# boolean/EV helper columns used for spreadsheet math, which are NOT
-# reliable indicators of effect *order* and are ignored here). Instead we
-# parse the small, closed vocabulary of EffectText phrases directly into
-# SkillEffect textproto blocks.
+# The spreadsheet now splits an effect's timing (EffectTiming), its
+# cost/condition (EffectCost/Condition), its action(s) (EffectValue), and
+# its repeat clause (EffectRepeat) into four separate columns. This maps
+# directly onto SkillCard's new shape: `effect_condition` and `effect_cost`
+# are single, card-level fields (shared by every entry in `effects`), as is
+# `effect_repeat`. Only `effects` itself is repeated, to allow a single card
+# to perform several actions in order (e.g. "Reroll Black, Reroll Blue", or
+# "Gain Green and +4 Fun" which becomes two separate gain effects).
 #
-# Any effect phrase that doesn't match a known pattern falls through to a
-# `# TODO(skill.proto)` comment (so the generated file still records author
-# intent instead of silently dropping game logic) and is collected into
-# UNSUPPORTED_EFFECTS so main() can print a summary at the end.
+# Everything to the right of column S (EffectRepeat) is ignored, per
+# instructions -- those are spreadsheet-only EV/helper columns.
 # =====================================================================
 
 DIE_ENUM_TYPE = "com.redpup.justsendit.model.Die"
 
-# Assumed nudge magnitude for "Slide <Color>" effects. The spreadsheet only
-# tracks *that* a slide happens, not by how much, so this is a design
-# placeholder -- adjust here if the game defines a different value.
-DEFAULT_NUDGE_VALUE = 1
+# SkillCardEffectRepeat.matching_die is a plain matchers.Matcher evaluated
+# against a rolled die, represented at runtime by:
+#
+#   message DieRoll {
+#     Die die = 1;
+#     repeated int32 roll = 2;  // last element is the current value
+#   }
+#
+# To match both color and face value we use a message_matcher with two
+# FieldMatchers: one on `die` (color), one on `roll` (value). Because `roll`
+# is a repeated field, we can only match "does N appear anywhere in the
+# roll history" via a collection_matcher (any), not "is N the CURRENT
+# value" -- the Matcher framework has no way to select just the last
+# element of a repeated field. This is a slight semantic gap: if a die is
+# rerolled through a value it previously showed, this would still count as
+# a match even though that value isn't current. Flagging this in case the
+# engine needs a dedicated "current value" accessor instead.
+DIE_ROLL_MESSAGE_TYPE = "com.redpup.justsendit.model.player.DieRoll"
+DIE_ROLL_COLOR_FIELD = "die"
+DIE_ROLL_VALUE_FIELD = "roll"
 
-UNSUPPORTED_EFFECTS = []  # (card_name, effect_text) pairs collected for the final summary.
+UNSUPPORTED_EFFECTS = []       # (card_name, EffectValue text)
+UNSUPPORTED_CONDITIONS = []    # (card_name, EffectCost/Condition text)
+UNSUPPORTED_REPEATS = []       # (card_name, EffectRepeat text)
 
-_SIMPLE_DIE_EFFECT_RE = re.compile(r'^(Reroll|Slide)\s+(Green|Blue|Black|Wild)$')
-_WILD_VALUE_RE = re.compile(r'^Wild (\d+) -> \+2 Skill$')
-_PER_CARD_RE = re.compile(r'^\+(\d+) (Skill|Fun) per card (above|below)$')
-_PER_WOBBLE_RE = re.compile(r'^\+(\d+) Skill per Wobble$')
-_FLAT_GAIN_RE = re.compile(r'^\+(\d+) (Skill|Fun)$')
+_SIMPLE_DIE_EFFECT_RE = re.compile(r'^Reroll\s+(Green|Blue|Black|Wild)$')
+_GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
+_GAIN_DIE_RE = re.compile(r'^Gain (Green|Blue|Black)$')
+_GAIN_DIE_AND_FUN_RE = re.compile(r'^Gain (Green|Blue|Black) and \+(\d+) Fun$')
+_REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)$')
+_REPEAT_DIE_VALUE_RE = re.compile(r'^(Green|Blue|Black|Wild) (\d+)$')
 
 
-def _die_matcher_block(color: str, indent: str) -> str:
-  """Builds a `die_matcher { ... }` block matching a specific die color, or
-  any die at all when color is WILD."""
+def _color_matcher_body(color: str, indent: str) -> str:
+  """Body of a Matcher matching a specific die color, or any die (Wild)."""
   if color == "WILD":
-    return f"{indent}die_matcher {{\n{indent}  constant_matcher: true\n{indent}}}\n"
+    return f"{indent}constant_matcher: true\n"
   return (
-    f"{indent}die_matcher {{\n"
-    f"{indent}  enum_matcher {{\n"
-    f"{indent}    enum_type_name: \"{DIE_ENUM_TYPE}\"\n"
-    f"{indent}    name_matcher {{\n"
-    f"{indent}      string_matcher {{ value: \"DIE_{color}\" }}\n"
-    f"{indent}    }}\n"
+    f"{indent}enum_matcher {{\n"
+    f"{indent}  enum_type_name: \"{DIE_ENUM_TYPE}\"\n"
+    f"{indent}  name_matcher {{\n"
+    f"{indent}    string_matcher {{ value: \"DIE_{color}\" }}\n"
     f"{indent}  }}\n"
     f"{indent}}}\n"
   )
 
 
-def _alter_die_effect_block(color: str, op: str) -> str:
-  """Builds one full `effects { alter_die { ... } }` block."""
-  action = "reroll {}" if op == "reroll" else f"nudge: {DEFAULT_NUDGE_VALUE}"
+def _alter_die_effect_block(color: str) -> str:
+  """Builds one full `effects { alter_die { ... reroll ... } }` block."""
   return (
       "  effects {\n"
       "    alter_die {\n"
-      + _die_matcher_block(color, "      ")
-      + f"      {action}\n"
+      "      die_matcher {\n"
+      + _color_matcher_body(color, "        ")
+      + "      }\n"
+        "      reroll {}\n"
         "    }\n"
         "  }\n"
   )
 
 
-def build_effect_blocks(effect_text: str, card_name: str) -> list:
-  """Converts one spreadsheet EffectText cell into a list of fully-formed
-  `effects { ... }` textproto blocks (2-space indented, ready to be
-  embedded directly inside a `cards { ... }` block)."""
-  text = effect_text.strip()
+def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
+  """Converts one spreadsheet EffectValue cell into a list of fully-formed
+  `effects { ... }` textproto blocks (2-space indented, ready to be embedded
+  directly inside a `cards { ... }` block). These blocks contain only the
+  action itself -- condition/cost/repeat are card-level and handled
+  separately by build_condition_and_cost_blocks() / build_repeat_block()."""
+  text = effect_value.strip()
   if not text:
     return []
 
-  # Multiple simple die effects joined with a comma, e.g.
-  # "Reroll Green, Slide Green" or "Reroll Wild, Reroll Wild" each become
-  # their own SkillEffect entry, in the order they're listed.
+  # Multiple simple reroll effects joined with a comma, e.g.
+  # "Reroll Black, Reroll Blue" each become their own entry, in order.
   parts = [p.strip() for p in text.split(",")]
   if len(parts) > 1 and all(_SIMPLE_DIE_EFFECT_RE.match(p) for p in parts):
-    blocks = []
-    for part in parts:
-      m = _SIMPLE_DIE_EFFECT_RE.match(part)
-      op = "reroll" if m.group(1) == "Reroll" else "nudge"
-      blocks.append(_alter_die_effect_block(m.group(2).upper(), op))
-    return blocks
+    return [_alter_die_effect_block(_SIMPLE_DIE_EFFECT_RE.match(p).group(1).upper())
+            for p in parts]
 
   m = _SIMPLE_DIE_EFFECT_RE.match(text)
   if m:
-    op = "reroll" if m.group(1) == "Reroll" else "nudge"
-    return [_alter_die_effect_block(m.group(2).upper(), op)]
+    return [_alter_die_effect_block(m.group(1).upper())]
 
-  # "Wild N -> +2 Skill": gain 2 skill once per die (any color) currently
-  # showing the face value N.
-  m = _WILD_VALUE_RE.match(text)
+  # "Gain <Color> and +N Fun" -- two independent gains, in order.
+  m = _GAIN_DIE_AND_FUN_RE.match(text)
   if m:
-    n = m.group(1)
+    color, value = m.group(1).upper(), m.group(2)
     return [
-      "  effects {\n"
-      "    gain {\n"
-      "      skill: 2\n"
-      "      matching_die {\n"
-      f"        value_matcher {{ int32_value: {n} }}\n"
-      "      }\n"
-      "    }\n"
-      "  }\n"
+      f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n",
+      f"  effects {{\n    gain {{\n      points: {value}\n    }}\n  }}\n",
     ]
 
-  # "+N Skill/Fun per card above/below"
-  m = _PER_CARD_RE.match(text)
+  # "Gain <Color>" -- gain a die of that color.
+  m = _GAIN_DIE_RE.match(text)
   if m:
-    value, kind, position = m.groups()
-    field = "skill" if kind == "Skill" else "points"
-    repeat = "skill_card_above" if position == "above" else "skill_card_below"
-    return [
-      "  effects {\n"
-      "    gain {\n"
-      f"      {field}: {value}\n"
-      f"      {repeat} {{}}\n"
-      "    }\n"
-      "  }\n"
-    ]
+    color = m.group(1).upper()
+    return [f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n"]
 
-  # "+N Skill per Wobble"
-  m = _PER_WOBBLE_RE.match(text)
-  if m:
-    value = m.group(1)
-    return [
-      "  effects {\n"
-      "    gain {\n"
-      f"      skill: {value}\n"
-      "      wobble {}\n"
-      "    }\n"
-      "  }\n"
-    ]
-
-  if text == "Success -> +9 Fun":
-    return [
-      "  effects {\n"
-      "    success {}\n"
-      "    gain {\n"
-      "      points: 9\n"
-      "    }\n"
-      "  }\n"
-    ]
-
-  if text == "Success -> Draw a card":
-    return [
-      "  effects {\n"
-      "    success {}\n"
-      "    card_effect {\n"
-      "      source_zone: SKILL_CARD_ZONE_TOPDECK\n"
-      "      destination_zone: SKILL_CARD_ZONE_HAND\n"
-      "      count: 1\n"
-      "    }\n"
-      "  }\n"
-    ]
-
-  if text == "Discard a card -> +5 Skill":
-    return [
-      "  effects {\n"
-      "    discard_card {}\n"
-      "    gain {\n"
-      "      skill: 5\n"
-      "    }\n"
-      "  }\n"
-    ]
-
-  if text == "Discard a card -> Draw a card":
-    return [
-      "  effects {\n"
-      "    discard_card {}\n"
-      "    card_effect {\n"
-      "      source_zone: SKILL_CARD_ZONE_TOPDECK\n"
-      "      destination_zone: SKILL_CARD_ZONE_HAND\n"
-      "      count: 1\n"
-      "    }\n"
-      "  }\n"
-    ]
-
-  # "+N Skill/Fun" flat, unconditional gain (must be checked after the
-  # "per card"/"per Wobble" variants above, since those also start with '+').
-  m = _FLAT_GAIN_RE.match(text)
+  # "Gain +N Skill/Fun"
+  m = _GAIN_STAT_RE.match(text)
   if m:
     value, kind = m.groups()
     field = "skill" if kind == "Skill" else "points"
-    return [
-      "  effects {\n"
-      "    gain {\n"
-      f"      {field}: {value}\n"
-      "    }\n"
-      "  }\n"
-    ]
+    return [f"  effects {{\n    gain {{\n      {field}: {value}\n    }}\n  }}\n"]
+
+  if text == "Gain Fun equal to next card's cost":
+    return ["  effects {\n    gain_fun_equal_to_next_card_cost {}\n  }\n"]
+
+  if text == "Gain Fun equal to value rolled":
+    return ["  effects {\n    gain_fun_equal_to_value_rolled {}\n  }\n"]
+
+  if text == "Gain tags of this card an additional time":
+    return ["  effects {\n    gain_own_tags {}\n  }\n"]
+
+  if text == "Gain tags of card below an additional time":
+    return ["  effects {\n    gain_tags_below {}\n  }\n"]
+
+  if text == "Activate the effect of the card below an additional time":
+    return ["  effects {\n    reactivate_following {}\n  }\n"]
+
+  if text == "Discard any number of cards, then draw that many cards.":
+    return ["  effects {\n    filter_hand {}\n  }\n"]
 
   if text == "Draw a card":
     return [
@@ -349,27 +298,6 @@ def build_effect_blocks(effect_text: str, card_name: str) -> list:
       "  }\n",
     ]
 
-  if text == "Ignore 1 Wobble":
-    return ["  effects {\n    ignore_wobble {}\n  }\n"]
-
-  if text == "Activate the effect of the card below an additional time.":
-    return ["  effects {\n    reactivate_following {}\n  }\n"]
-
-  if text == "Discard any number of cards, then draw that many cards.":
-    return ["  effects {\n    filter_hand {}\n  }\n"]
-
-  if text == "Trash an additional card.":
-    return ["  effects {\n    gain {\n      trashes: 1\n    }\n  }\n"]
-
-  if text == "You may buy an additional card this turn (you must pay both costs).":
-    return ["  effects {\n    gain {\n      buys: 1\n    }\n  }\n"]
-
-  if text == "Replenish the shop.":
-    return ["  effects {\n    replenish_shop {}\n  }\n"]
-
-  if text == "Take another turn after this one.":
-    return ["  effects {\n    extra_turn {}\n  }\n"]
-
   if text == "Look at the top 3 cards of your deck. Put 1 card on top and discard the others.":
     # Reveal the top 3, discard 2 of them, and return the 1 that's kept to
     # the top of the deck.
@@ -397,12 +325,130 @@ def build_effect_blocks(effect_text: str, card_name: str) -> list:
       "  }\n",
     ]
 
-  # Nothing matched: this EffectText has no representation in skill.proto
+  if text == "Trash an additional card":
+    return ["  effects {\n    gain {\n      trashes: 1\n    }\n  }\n"]
+
+  if text == "Replenish the shop. You may play additional cards below this.":
+    return ["  effects {\n    replenish_shop {}\n  }\n"]
+
+  if text == "At the end of your turn, draw another card from play.":
+    return ["  effects {\n    draw_from_play {}\n  }\n"]
+
+  if text == "Move one tile in any direction":
+    return ["  effects {\n    move_tile {}\n  }\n"]
+
+  # Nothing matched: this EffectValue has no representation in skill.proto
   # yet. Emit a comment so the generated file still records the intended
   # design, and surface it in the end-of-run summary instead of failing
   # silently.
   UNSUPPORTED_EFFECTS.append((card_name, text))
   return [f'  # TODO(skill.proto): no field represents this effect yet: "{text}"\n']
+
+
+def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
+    card_name: str) -> tuple:
+  """Converts the EffectCost/Condition cell into (effect_condition_block,
+  effect_cost_block); exactly one of the two (or neither) is non-None."""
+  text = cond_text.strip()
+  if not text:
+    return None, None
+
+  if text == "Success":
+    return "  effect_condition {\n    success {}\n  }\n", None
+
+  if text == "If card below costs greater":
+    # No explicit threshold is given in the sheet -- interpreted as "the
+    # card below costs more than THIS card's own cost", which we already
+    # know, so we bake it into the matcher as a literal comparison.
+    return (
+      "  effect_condition {\n"
+      "    next_card_cost {\n"
+      "      comparison_matcher {\n"
+      "        comparison: COMPARISON_GT\n"
+      f"        int32_value: {own_cost}\n"
+      "      }\n"
+      "    }\n"
+      "  }\n"
+    ), None
+
+  if text == "Discard a card":
+    return None, "  effect_cost {\n    discard_card {}\n  }\n"
+
+  m = _REMOVE_DIE_RE.match(text)
+  if m:
+    color = m.group(1).upper()
+    return None, (
+        "  effect_cost {\n"
+        "    remove_die {\n"
+        + _color_matcher_body(color, "      ")
+        + "    }\n"
+          "  }\n"
+    )
+
+  UNSUPPORTED_CONDITIONS.append((card_name, text))
+  return f'  # TODO(skill.proto): no condition/cost mapping for "{text}"\n', None
+
+
+def _die_roll_value_field_block(value: str, indent: str) -> str:
+  """Body of a FieldMatcher on DieRoll.roll: matches if `value` appears
+  anywhere in the roll history (see the caveat on DIE_ROLL_VALUE_FIELD
+  above -- this can't restrict to just the current/last value)."""
+  return (
+    f"{indent}fields {{\n"
+    f"{indent}  field_name: \"{DIE_ROLL_VALUE_FIELD}\"\n"
+    f"{indent}  matcher {{\n"
+    f"{indent}    collection_matcher {{\n"
+    f"{indent}      any {{\n"
+    f"{indent}        value_matcher {{ int32_value: {value} }}\n"
+    f"{indent}      }}\n"
+    f"{indent}    }}\n"
+    f"{indent}  }}\n"
+    f"{indent}}}\n"
+  )
+
+
+def build_repeat_block(repeat_text: str, card_name: str) -> str:
+  """Converts the EffectRepeat cell into an `effect_repeat { ... }` block."""
+  text = repeat_text.strip()
+  if not text:
+    return None
+
+  if text == "Matching tag on card above":
+    return "  effect_repeat {\n    matching_tag_on_card_above {}\n  }\n"
+
+  m = _REPEAT_DIE_VALUE_RE.match(text)
+  if m:
+    color, value = m.group(1).upper(), m.group(2)
+
+    # The matcher is always evaluated against a DieRoll{ die, roll } object,
+    # so even the color-agnostic "Wild" case has to go through
+    # message_matcher -- it just omits the `die` FieldMatcher entirely
+    # (an empty AND'ed field list is trivially satisfied for that
+    # dimension), rather than matching a bare int.
+    fields_block = _die_roll_value_field_block(value, "        ")
+    if color != "WILD":
+      fields_block = (
+                         "        fields {\n"
+                         f"          field_name: \"{DIE_ROLL_COLOR_FIELD}\"\n"
+                         "          matcher {\n"
+                         + _color_matcher_body(color, "            ")
+                         + "          }\n"
+                           "        }\n"
+                     ) + fields_block
+
+    return (
+        "  effect_repeat {\n"
+        "    matching_die {\n"
+        "      message_matcher {\n"
+        f"        message_type_name: \"{DIE_ROLL_MESSAGE_TYPE}\"\n"
+        + fields_block +
+        "      }\n"
+        "    }\n"
+        "  }\n"
+    )
+
+  UNSUPPORTED_REPEATS.append((card_name, text))
+  return f'  # TODO(skill.proto): no repeat mapping for "{text}"\n'
 
 
 # =====================================================================
@@ -462,6 +508,16 @@ def process_skill_cards_pipeline():
         )
         initialized_files.add(target_filepath)
 
+      # Card type: "Starter" File -> starter deck card, "Shop" File -> a
+      # purchasable upgrade card.
+      file_lower = file_target.lower()
+      if file_lower == "starter":
+        skill_card_type = "SKILL_CARD_TYPE_STARTER"
+      elif file_lower == "shop":
+        skill_card_type = "SKILL_CARD_TYPE_UPGRADE"
+      else:
+        skill_card_type = "SKILL_CARD_TYPE_UNKNOWN"
+
       # Process dice
       green_dice = sum(1 for i in range(1, 4) if get_safe_cell_value(row, header_map, f"Die {i}").lower() == "green")
       blue_dice = sum(1 for i in range(1, 4) if get_safe_cell_value(row, header_map, f"Die {i}").lower() == "blue")
@@ -482,17 +538,21 @@ def process_skill_cards_pipeline():
       category_raw = get_safe_cell_value(row, header_map, "EffectTiming").upper()
       category_map = {
         "PLAY": "EFFECT_CATEGORY_PLAY",
-        "FIRST": "EFFECT_CATEGORY_FIRST",
-        "LAST": "EFFECT_CATEGORY_LAST",
-        "PASS": "EFFECT_CATEGORY_PASS",
+        "REST": "EFFECT_CATEGORY_REST",
+        "RIDE": "EFFECT_CATEGORY_RIDE",
         "LIFT": "EFFECT_CATEGORY_LIFT",
+        "FINALE": "EFFECT_CATEGORY_FINALE",
       }
       proto_category = category_map.get(category_raw, "EFFECT_CATEGORY_UNSET")
 
-      effect_text = get_safe_cell_value(row, header_map, "EffectText")
-      if effect_text == "0":
-        effect_text = ""
-      effect_blocks = build_effect_blocks(effect_text, name) if effect_text else []
+      cond_text = get_safe_cell_value(row, header_map, "EffectCost/Condition")
+      condition_block, cost_block = build_condition_and_cost_blocks(cond_text, cost, name)
+
+      effect_value_text = get_safe_cell_value(row, header_map, "EffectValue")
+      effect_action_blocks = build_effect_action_blocks(effect_value_text, name) if effect_value_text else []
+
+      repeat_text = get_safe_cell_value(row, header_map, "EffectRepeat")
+      repeat_block = build_repeat_block(repeat_text, name) if repeat_text else None
 
       flavor_text = get_safe_cell_value(row, header_map, "FlavorText")
 
@@ -503,6 +563,8 @@ def process_skill_cards_pipeline():
       if filename_field:
         card_block += f'  filename: "{escape_proto_string(filename_field)}"\n'
       card_block += f'  name: "{escape_proto_string(name)}"\n'
+      if skill_card_type != "SKILL_CARD_TYPE_UNKNOWN":
+        card_block += f'  type: {skill_card_type}\n'
       card_block += f'  cost: {cost}\n'
       card_block += f'  green_dice: {green_dice}\n'
       card_block += f'  blue_dice: {blue_dice}\n'
@@ -514,8 +576,16 @@ def process_skill_cards_pipeline():
       if proto_category != "EFFECT_CATEGORY_UNSET":
         card_block += f'  category: {proto_category}\n'
 
-      for effect_block in effect_blocks:
+      if condition_block:
+        card_block += condition_block
+      if cost_block:
+        card_block += cost_block
+
+      for effect_block in effect_action_blocks:
         card_block += effect_block
+
+      if repeat_block:
+        card_block += repeat_block
 
       if flavor_text and flavor_text != "0":
         card_block += f'  flavor_text: "{escape_proto_string(flavor_text)}"\n'
@@ -524,9 +594,22 @@ def process_skill_cards_pipeline():
       append_blocks_to_proto(target_filepath, card_block, num_copies)
 
   if UNSUPPORTED_EFFECTS:
-    print("Warning: the following effects have no corresponding field in "
-          "skill.proto yet and were emitted as comments only:")
+    print("Warning: the following EffectValue phrases have no corresponding "
+          "field in skill.proto yet and were emitted as comments only:")
     for card_name, text in UNSUPPORTED_EFFECTS:
+      print(f'  - {card_name}: "{text}"')
+
+  if UNSUPPORTED_CONDITIONS:
+    print("Warning: the following EffectCost/Condition phrases have no "
+          "corresponding field in skill.proto yet and were emitted as "
+          "comments only:")
+    for card_name, text in UNSUPPORTED_CONDITIONS:
+      print(f'  - {card_name}: "{text}"')
+
+  if UNSUPPORTED_REPEATS:
+    print("Warning: the following EffectRepeat phrases have no "
+          "corresponding mapping and were emitted as comments only:")
+    for card_name, text in UNSUPPORTED_REPEATS:
       print(f'  - {card_name}: "{text}"')
 
   print("Skill Cards processing finished successfully.")
