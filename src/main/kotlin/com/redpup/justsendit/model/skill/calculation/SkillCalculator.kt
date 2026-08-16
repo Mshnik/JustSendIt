@@ -38,6 +38,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   fun updateComputedFields() {
     println("Processing: $path")
     var cards = readerWriter()
+    resolvedValues.update(cards)
     println("Found ${cards.size} cards")
     for (iteration in 0 until resolutionIterations) {
       println("  Iteration $iteration")

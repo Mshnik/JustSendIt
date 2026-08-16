@@ -2,11 +2,11 @@
 # proto-message: SkillCardComputationValuesList
 
 values {
-  cardDraw: NaN
-  cardFilter2: NaN
-  cardFilter3: NaN
+  cardDraw: 4.949464677284492
+  cardFilter2: 2.7914980779884533
+  cardFilter3: 4.187247116982681
   trashCard: 1.972240652
-  effect: NaN
+  effect: -0.21635350453369206
   icons: 0.3713636363636365
-  average_cost: 1.8181818181818181
+  average_cost: 3.5272727272727273
 }
