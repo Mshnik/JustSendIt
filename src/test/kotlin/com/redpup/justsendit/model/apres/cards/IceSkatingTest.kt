@@ -7,6 +7,7 @@ import com.redpup.justsendit.control.PlayerController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
@@ -36,9 +37,9 @@ class IceSkatingTest {
 
   @Test
   fun `first player gets points for blue cards`() {
-    val green = skillFactory.create(skillCard { greenDice = 1 })
-    val blue = skillFactory.create(skillCard { blueDice = 1 })
-    val black = skillFactory.create(skillCard { blackDice = 1 })
+    val green = skillFactory.create(skillCard { dice += Die.DIE_GREEN })
+    val blue = skillFactory.create(skillCard { dice += Die.DIE_BLUE })
+    val black = skillFactory.create(skillCard { dice += Die.DIE_BLACK })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, true, gameModel, random) }
     assertThat(player.points).isEqualTo(15) // 3 blues * 5
@@ -46,9 +47,9 @@ class IceSkatingTest {
 
   @Test
   fun `other player gets points for blue cards`() {
-    val green = skillFactory.create(skillCard { greenDice = 1 })
-    val blue = skillFactory.create(skillCard { blueDice = 1 })
-    val black = skillFactory.create(skillCard { blackDice = 1 })
+    val green = skillFactory.create(skillCard { dice += Die.DIE_GREEN })
+    val blue = skillFactory.create(skillCard { dice += Die.DIE_BLUE })
+    val black = skillFactory.create(skillCard { dice += Die.DIE_BLACK })
     player.skillDiscard.addAll(listOf(green, green, green, blue, blue, blue, black, black, black))
     runBlocking { iceSkating.apply(player, false, gameModel, random) }
     assertThat(player.points).isEqualTo(9) // 3 blues * 3

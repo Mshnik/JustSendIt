@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.apres.ApresGameEvent
 import com.redpup.justsendit.model.apres.StockpilingBaseApres.Companion.NON_STOCKPILE_POINTS
 import com.redpup.justsendit.model.apres.proto.apresCard
 import com.redpup.justsendit.model.player.MutablePlayer
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandom
 import com.redpup.justsendit.model.supply.proto.skillCard
@@ -21,7 +22,7 @@ class FireworksTest {
   private val handler: PlayerController = mock()
   private val gameModel: GameModel = mock()
   private val random: Random = FakeRandom()
-  
+
   @BeforeEach
   fun setUp() {
     player = MutablePlayer(handler)
@@ -31,14 +32,23 @@ class FireworksTest {
 
   @Test
   fun `stockpile increases on playing a black die card`() {
-    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { blackDice = 1 }), gameModel)
+    fireworks.handleGameEvent(
+      ApresGameEvent.PlayerPlayedCard(skillCard { dice += Die.DIE_BLACK }),
+      gameModel
+    )
     assertThat(fireworks.stockpile).isEqualTo(2)
   }
 
   @Test
   fun `stockpile does not increase on playing a non-black die card`() {
-    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { greenDice = 1 }), gameModel)
-    fireworks.handleGameEvent(ApresGameEvent.PlayerPlayedCard(skillCard { blueDice = 1 }), gameModel)
+    fireworks.handleGameEvent(
+      ApresGameEvent.PlayerPlayedCard(skillCard { dice += Die.DIE_GREEN }),
+      gameModel
+    )
+    fireworks.handleGameEvent(
+      ApresGameEvent.PlayerPlayedCard(skillCard { dice += Die.DIE_BLUE }),
+      gameModel
+    )
     assertThat(fireworks.stockpile).isEqualTo(0)
   }
 

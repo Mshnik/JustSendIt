@@ -18,6 +18,7 @@ import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.player.testing.FakePlayerFactory
 import com.redpup.justsendit.model.player.testing.FakePlayerModule
 import com.redpup.justsendit.model.proto.Day
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.random.Random
 import com.redpup.justsendit.model.random.testing.FakeRandomModule
 import com.redpup.justsendit.model.skill.SkillFactory
@@ -73,10 +74,16 @@ class GameModelTest {
     ).injectMembers(this)
 
     repeat(10) {
-      (starterDeck as FakeSkillDeck).add(skillCard { name = "Starter $it"; greenDice = 1 })
+      (starterDeck as FakeSkillDeck).add(skillCard {
+        name = "Starter $it"
+        dice += Die.DIE_GREEN
+      })
     }
     repeat(10) {
-      (shopDeck as FakeSkillDeck).add(skillCard { name = "Shop $it"; blueDice = 1 })
+      (shopDeck as FakeSkillDeck).add(skillCard {
+        name = "Shop $it"
+        dice += Die.DIE_BLUE
+      })
     }
 
     playerDeck.add(playerCard {

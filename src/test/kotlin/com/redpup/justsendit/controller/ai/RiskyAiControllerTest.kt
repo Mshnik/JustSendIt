@@ -8,6 +8,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.proto.slopeTile
 import com.redpup.justsendit.model.player.Player
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.skill.BaseSkill
 import com.redpup.justsendit.model.skill.Skill
@@ -25,8 +26,15 @@ class RiskyAiControllerTest {
     val location = HexPoint.getDefaultInstance()
     val slope = slopeTile { difficulty = 5 }
 
-    val skill1 = BaseSkill(skillCard { name = "Weak"; greenDice = 1 }) // EV: 2.5
-    val skill2 = BaseSkill(skillCard { name = "Strong"; blackDice = 2 }) // EV: 9.0
+    val skill1 = BaseSkill(skillCard {
+      name = "Weak"
+      dice += Die.DIE_GREEN
+    }) // EV: 2.5
+    val skill2 = BaseSkill(skillCard {
+      name = "Strong"
+      dice += Die.DIE_BLACK
+      dice += Die.DIE_BLACK
+    }) // EV: 9.0
 
     val player = mock<Player> {
       on { this.location } doReturn location
@@ -54,8 +62,15 @@ class RiskyAiControllerTest {
     val location = HexPoint.getDefaultInstance()
     val slope = slopeTile { difficulty = 2 }
 
-    val skill1 = BaseSkill(skillCard { name = "Weak"; greenDice = 1 }) // EV: 2.5
-    val skill2 = BaseSkill(skillCard { name = "Strong"; blackDice = 2 }) // EV: 9.0
+    val skill1 = BaseSkill(skillCard {
+      name = "Weak"
+      dice += Die.DIE_GREEN
+    }) // EV: 2.5
+    val skill2 = BaseSkill(skillCard {
+      name = "Strong"
+      dice += Die.DIE_BLACK
+      dice += Die.DIE_BLACK
+    }) // EV: 9.0
 
     val player = mock<Player> {
       on { this.location } doReturn location

@@ -12,6 +12,7 @@ import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
+import com.redpup.justsendit.model.random.Dice.averageValue
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.justsendit.model.supply.proto.SkillCard
@@ -134,7 +135,7 @@ class SimpleAiController(override val name: String) : PlayerController {
     card: SkillCard,
     slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
   ): Double {
-    val diceValue = (card.greenDice * 3.5) + (card.blueDice * 3.5) + (card.blackDice * 3.5)
+    val diceValue = card.diceList.sumOf { it.averageValue }
     val iconValue = card.iconsList.count { it.matches(slope) }.toDouble()
     return diceValue + iconValue
   }

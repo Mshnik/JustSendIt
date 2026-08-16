@@ -12,6 +12,8 @@ import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
 import com.redpup.justsendit.model.player.proto.MountainDecision
 import com.redpup.justsendit.model.proto.SkillCardZone
+import com.redpup.justsendit.model.random.Dice.averageValue
+import com.redpup.justsendit.model.random.Dice.variance
 import com.redpup.justsendit.model.skill.Skill
 import com.redpup.justsendit.model.skill.SkillEffect
 import com.redpup.justsendit.model.supply.proto.SkillCard
@@ -167,15 +169,14 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
   private fun calculateHandStrength(player: Player): Double {
     return player.hand.sumOf { card ->
-      val sc = card.skillCard
-      (sc.greenDice * 2.5) + (sc.blueDice * 3.5) + (sc.blackDice * 4.5) + sc.iconsCount
+      card.skillCard.diceList.sumOf { it.averageValue } + card.skillCard.iconsCount
     }
   }
 
   private fun calculateExpectedValue(
     card: SkillCard, slope: SlopeTile,
   ): Double {
-    return (card.greenDice * 2.5) + (card.blueDice * 3.5) + (card.blackDice * 4.5) + card.iconsList.count {
+    return card.diceList.sumOf { it.averageValue } + card.iconsList.count {
       it.matches(
         slope
       )
@@ -188,7 +189,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
     needed: Int,
   ): Double {
     val mean = calculateExpectedValue(card, slope)
-    val variance = (card.greenDice * 1.25) + (card.blueDice * 2.92) + (card.blackDice * 5.25)
+    val variance = card.diceList.sumOf { it.variance }
     val stdDev = sqrt(variance).coerceAtLeast(0.001)
 
     val z = (needed - 0.5 - mean) / stdDev // Continuity correction

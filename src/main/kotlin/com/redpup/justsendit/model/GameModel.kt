@@ -118,13 +118,8 @@ class MutableGameModel @Inject constructor(
     skills: List<Skill>,
     slope: SlopeTile,
   ): SkiRideAttempt {
-    val dice = buildList {
-      skills.forEach {
-        repeat(it.skillCard.greenDice) { add(Die.DIE_GREEN) }
-        repeat(it.skillCard.blueDice) { add(Die.DIE_BLUE) }
-        repeat(it.skillCard.blackDice) { add(Die.DIE_BLACK) }
-      }
-    }.map {
+    // TODO: Update to one skill roll at a time.
+    val dice = skills.flatMap { it.skillCard.diceList }.map {
       DieRoll.newBuilder().setDie(it).addRoll(it.roll(random))
     }
 

@@ -1,10 +1,8 @@
 package com.redpup.justsendit.model.skill.calculation
 
-import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
-import com.redpup.justsendit.model.random.Dice.maxValue
-import com.redpup.justsendit.model.skill.calculation.Constants.EFFECT_REPEAT_FACTOR
+import com.redpup.justsendit.model.random.Dice.averageValue
 import com.redpup.justsendit.model.skill.calculation.Constants.LIFT_PASS_COMPARISON_FACTOR
 import com.redpup.justsendit.model.skill.calculation.Constants.MAX_UPGRADE_COST
 import com.redpup.justsendit.model.skill.calculation.Constants.MIN_UPGRADE_COST
@@ -75,13 +73,9 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   /**
    * Equivalent to the sheet's DGET-against-a-lookup-table approach, but computed directly:
    * for n dice of a given color, wobble chance sums 1/sides per die, expected roll sums
-   * (sides+1)/2 per die, and the combined value is expectedValue * (3 - expectedWobbles) / 3.
+   * (sides+1)/2 per die.
    */
-  private fun diceExpectedValue(card: SkillCard): Double = buildList {
-    repeat(card.greenDice) { add(Die.DIE_GREEN) }
-    repeat(card.blueDice) { add(Die.DIE_BLUE) }
-    repeat(card.blackDice) { add(Die.DIE_BLACK) }
-  }.sumOf { (it.maxValue + 1.0) / 2.0 }
+  private fun diceExpectedValue(card: SkillCard): Double = card.diceList.sumOf { it.averageValue }
 
   /** Sum of values of icons on [card]. */
   private fun iconExpectedValue(card: SkillCard): Double =
