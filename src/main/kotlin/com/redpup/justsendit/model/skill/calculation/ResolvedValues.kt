@@ -1,5 +1,8 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.proto.Die
+import com.redpup.justsendit.model.random.Dice.averageValue
+import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardEffectCondition.ConditionCase
 import com.redpup.justsendit.model.supply.proto.SkillCardEffectCost.CostCase
@@ -16,12 +19,18 @@ class ResolvedValues {
       SkillCardComputationValuesList.Builder::addAllValues,
     )
 
+  private var totalCards = 0
+  private var cardCosts = mapOf<Int, Int>()
+
   private val parameters = parametersList().first().toBuilder()
 
   operator fun invoke(): SkillCardComputationValuesOrBuilder = parameters
 
   /** Updates the values in this based on [cards]. */
   fun update(cards: List<SkillCard>): SkillCardComputationValues {
+    totalCards = cards.size
+    cardCosts = cards.groupingBy { it.computed.suggestedCost }.eachCount()
+
     val computed = cards.map { it.computed }
     val current = parameters.build()
     with(parameters) {
@@ -45,20 +54,24 @@ class ResolvedValues {
     get() =
       when (costCase) {
         CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
-        CostCase.REMOVE_DIE -> TODO()
+        CostCase.REMOVE_DIE -> -(removeDie?.dieColorOrWild()?.averageValue
+          ?: (Die.DIE_BLUE.averageValue * Constants.WILD_DIE_PICK_FACTOR))
+
         CostCase.COST_NOT_SET -> 0.0
         null -> throw IllegalStateException()
       }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
-  val SkillCardEffectCondition.effectFactor: Double
-    get() = when (conditionCase) {
-      ConditionCase.SUCCESS -> 0.8
-      ConditionCase.FAILURE -> 0.2
-      ConditionCase.CONDITION_NOT_SET -> 0.0
-      ConditionCase.NEXT_CARD_COST -> TODO()
-      null -> throw IllegalStateException()
-    }
+  fun SkillCardEffectCondition.effectFactor(card: SkillCard): Double = when (conditionCase) {
+    ConditionCase.SUCCESS -> 0.8
+    ConditionCase.FAILURE -> 0.2
+    ConditionCase.CONDITION_NOT_SET -> 0.0
+    ConditionCase.NEXT_CARD_COST ->
+      cardCosts.entries.filter { it.key > card.computed.suggestedCost }
+        .sumOf { it.value } / totalCards.toDouble()
+
+    null -> throw IllegalStateException()
+  }
 
   companion object {
     /**

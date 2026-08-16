@@ -1,13 +1,22 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.proto.Die
+import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.matchers.proto.Matcher
 
 /** Extra [Matcher] utilities for calculating skill card values. */
 internal object MatcherUtilities {
 
+  /** Returns the frequency [0,1] of a matcher matching a roll of a die. Returns null for wild dice. */
   fun Matcher.coloredDieFrequency(): Double? {
-    TODO("Extract frequency of target, e.g. Green 4.")
+    check(hasMessageMatcher())
+    check(messageMatcher.messageTypeName == DieRoll.getDescriptor().fullName)
+
+    return messageMatcher.fieldsList.firstOrNull { it.fieldName == "die" || it.fieldNumber == DieRoll.DIE_FIELD_NUMBER }
+      ?.matcher
+      ?.dieColorOrWild()
+      ?.let { 1.0 / it.maxValue }
   }
 
   /**
@@ -15,16 +24,13 @@ internal object MatcherUtilities {
    * = true` matcher, e.g. "Reroll Wild" / "Slide Wild").
    */
   fun Matcher.dieColorOrWild(): Die? {
-    if (hasConstantMatcher() && constantMatcher) {
-      return null
-    } else if (!hasEnumMatcher()) {
+    if (hasConstantMatcher()) {
+      check(constantMatcher)
       return null
     }
 
     val enumMatcher = enumMatcher
-    if (enumMatcher.enumTypeName != Die.getDescriptor().fullName) {
-      return null
-    }
+    check(enumMatcher.enumTypeName == Die.getDescriptor().fullName)
 
     if (enumMatcher.nameMatcher.hasStringMatcher()) {
       return runCatching {
@@ -36,6 +42,6 @@ internal object MatcherUtilities {
       }.getOrNull()
     }
 
-    return null
+    throw IllegalArgumentException()
   }
 }

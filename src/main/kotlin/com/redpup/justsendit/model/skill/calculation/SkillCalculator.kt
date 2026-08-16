@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.proto.SkillCardZone
 import com.redpup.justsendit.model.random.Dice.averageValue
@@ -9,6 +10,7 @@ import com.redpup.justsendit.model.skill.calculation.Constants.MIN_UPGRADE_COST
 import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.WILD_DIE_PICK_FACTOR
 import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.filterHand
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.isZero
@@ -36,6 +38,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   fun updateComputedFields() {
     println("Processing: $path")
     var cards = readerWriter()
+    println("Found ${cards.size} cards")
     for (iteration in 0 until resolutionIterations) {
       println("  Iteration $iteration")
       cards = cards.map { it.copy { computed = it.compute() } }.let { computeCosts(it) }
@@ -136,26 +139,29 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     effect: SkillCardEffect,
   ): Double =
     with(resolvedValues) {
-      effect.baseEffectValue(card) * condition.effectFactor + cost.effectCost
+      effect.baseEffectValue(card) * condition.effectFactor(card) + cost.effectCost
     }
 
   /** Computes the value of the effect alone (ignoring repeat factor and cost). */
   private fun SkillCardEffect.baseEffectValue(card: SkillCard): Double = when (effectCase) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(alterDie)
-    SkillCardEffect.EffectCase.GAIN -> gainValue(gain)
+    SkillCardEffect.EffectCase.GAIN -> gain.gainValue()
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> Constants.PREVENT_WOBBLE
     SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues().effect
     SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues().filterHand
     SkillCardEffect.EffectCase.REPLENISH_SHOP -> Constants.REFRESH_SHOP
     SkillCardEffect.EffectCase.EXTRA_TURN -> Constants.ADDITIONAL_TURN
-    SkillCardEffect.EffectCase.CARD_EFFECT -> singleCardEffectValue(cardEffect)
-    SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
+    SkillCardEffect.EffectCase.CARD_EFFECT -> cardEffect.singleCardEffectValue()
     SkillCardEffect.EffectCase.GAIN_OWN_TAGS -> card.iconExpectedValue()
     SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> resolvedValues().icons
     SkillCardEffect.EffectCase.DRAW_FROM_PLAY -> resolvedValues().cardDraw
     SkillCardEffect.EffectCase.MOVE_TILE -> Constants.MOVE_TILE
     SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> resolvedValues().averageCost * Constants.POINTS
-    SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED -> TODO()
+    SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED ->
+      card.effectCost.removeDie.dieColorOrWild()?.averageValue
+        ?: (Die.DIE_BLUE.averageValue * WILD_DIE_PICK_FACTOR)
+
+    SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
   }
 
   /** Returns the computed value of the given [AlterDieEffect]. */
@@ -169,19 +175,18 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   }
 
   /** Value of the given [gain] effect. */
-  private fun gainValue(gain: GainEffect): Double = when (gain.gainCase) {
-    GainEffect.GainCase.SKILL -> gain.skill.toDouble()
-    GainEffect.GainCase.POINTS -> gain.points.toDouble() * Constants.POINTS
-    GainEffect.GainCase.BUYS -> gain.buys.toDouble() * Constants.BUY
-    GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues().trashCard
+  private fun GainEffect.gainValue(): Double = when (gainCase) {
+    GainEffect.GainCase.SKILL -> skill.toDouble()
+    GainEffect.GainCase.POINTS -> points.toDouble() * Constants.POINTS
+    GainEffect.GainCase.BUYS -> buys.toDouble() * Constants.BUY
+    GainEffect.GainCase.TRASHES -> trashes.toDouble() * resolvedValues().trashCard
+    GainEffect.GainCase.DIE -> die.averageValue
     GainEffect.GainCase.GAIN_NOT_SET, null -> throw IllegalStateException()
-    GainEffect.GainCase.DIE -> TODO()
   }
 
-
-  private fun singleCardEffectValue(cardEffect: CardEffect): Double =
-    if (cardEffect.sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && cardEffect.destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND) {
-      resolvedValues().cardDraw * cardEffect.count
+  private fun CardEffect.singleCardEffectValue(): Double =
+    if (sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND) {
+      resolvedValues().cardDraw * count
     } else {
       throw IllegalArgumentException()
     }

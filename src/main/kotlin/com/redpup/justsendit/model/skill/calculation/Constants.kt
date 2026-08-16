@@ -33,6 +33,9 @@ object Constants {
   /** C38 "Fun" (Points): value of one point of `GainEffect.fun`. */
   const val POINTS = 1.2
 
+  /** Multiplicative value of getting to pick any kind of die. */
+  const val WILD_DIE_PICK_FACTOR = 1.5
+
   /** Factor to apply to [SkillCard] effect values based on [category]. */
   val SkillCard.TIMING_FACTOR: Double
     get() = when (category) {
@@ -44,25 +47,6 @@ object Constants {
       EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
 
-  /** Factor applied to a [GainEffect]'s value based on its [EFFECT_REPEAT_FACTOR]. */
-  val SkillCardEffectRepeat.EFFECT_REPEAT_FACTOR: Double
-    get() = when (repeatCase) {
-      SkillCardEffectRepeat.RepeatCase.SKILL_CARD_BELOW -> 1.0
-      SkillCardEffectRepeat.RepeatCase.SKILL_CARD_ABOVE -> 1.0
-      SkillCardEffectRepeat.RepeatCase.WOBBLE -> 1.0
-      SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_CARD_ABOVE -> TODO()
-      SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> when (matchingDie.dieColorOrWild()) {
-        Die.DIE_GREEN -> 0.5
-        Die.DIE_BLUE -> 0.4
-        Die.DIE_BLACK -> 0.3
-        // Null is wild.
-        null -> 0.8
-        else -> throw IllegalStateException("Unexpected die type.")
-    }
-
-      else -> 1.0
-    }
-
   /** Value of rerolling a die. */
   val Die?.REROLL_VALUE: Double
     get() = when (this) {
@@ -70,7 +54,7 @@ object Constants {
       Die.DIE_BLUE -> 2.0
       Die.DIE_BLACK -> 2.666666667
       // Unset die in a reroll effect is wild.
-      else -> 3.0
+      else -> 2.0 * WILD_DIE_PICK_FACTOR
     }
 
   /** Value of nudging a die. */
@@ -79,9 +63,9 @@ object Constants {
       Die.DIE_GREEN -> 1.5
       Die.DIE_BLUE -> 1.5
       Die.DIE_BLACK -> 1.5
-      else -> 2.0
+      else -> 1.5 * WILD_DIE_PICK_FACTOR
     }
 
   /** Value of moving a tile on the map. */
-  val MOVE_TILE: Double = 1.0
+  const val MOVE_TILE: Double = 1.0
 }

@@ -19,8 +19,14 @@ cards {
     }
   }
   flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.7
+    effect_expected_value: 0.0
+    total_expected_value: 3.45
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Pizza Party"
   type: SKILL_CARD_TYPE_STARTER
@@ -30,8 +36,14 @@ cards {
     grade: GRADE_GREEN
   }
   flavor_text: "Slow and wide, easy-cheesy"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Falling Leaf"
   type: SKILL_CARD_TYPE_STARTER
@@ -41,8 +53,14 @@ cards {
     grade: GRADE_GREEN
   }
   flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Falling Leaf"
   type: SKILL_CARD_TYPE_STARTER
@@ -52,8 +70,14 @@ cards {
     condition: CONDITION_GROOMED
   }
   flavor_text: "Heel side, so you can enjoy the view"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 2.9
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Wild Ride"
   type: SKILL_CARD_TYPE_STARTER
@@ -62,9 +86,15 @@ cards {
   icons {
     condition: CONDITION_GROOMED
   }
-  flavor_text: "You'll never believe how far you'll go"
+  flavor_text: "You\'ll never believe how far you\'ll go"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 2.9
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Just Send It"
   type: SKILL_CARD_TYPE_STARTER
@@ -72,9 +102,15 @@ cards {
   dice: DIE_GREEN
   dice: DIE_GREEN
   dice: DIE_GREEN
-  flavor_text: "If you don't know..."
+  flavor_text: "If you don\'t know..."
+  computed {
+    dice_expected_value: 7.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 7.5
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Bold Beginnings"
   type: SKILL_CARD_TYPE_STARTER
@@ -87,16 +123,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Lean forward and let the adventure begin"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 2.5
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Still Standing"
   type: SKILL_CARD_TYPE_STARTER
@@ -109,32 +154,53 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Standing still never felt so good"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 2.5
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Skill Up"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_BLUE
   flavor_text: "Every run teaches you something new"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.5
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Stroke of Genius"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_BLACK
   flavor_text: "Practice, meet perfect"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.0
+    effect_expected_value: 0.0
+    total_expected_value: 4.5
+    suggested_cost: 0
+  }
 }
-
 cards {
   name: "Pass Holder"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -151,8 +217,14 @@ cards {
     }
   }
   flavor_text: "You know the shortest lines and the slickest runs"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 6.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Mountain Local"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -168,9 +240,15 @@ cards {
       points: 2
     }
   }
-  flavor_text: "You're as ever-present as the snow"
+  flavor_text: "You\'re as ever-present as the snow"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.35
+    effect_expected_value: 0.0
+    total_expected_value: 6.35
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Trees Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -189,11 +267,18 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "Aim for the gaps, avoid the trunks"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.55
+    effect_expected_value: 0.0
+    total_expected_value: 4.05
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Cliffs Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -212,11 +297,18 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "The first 90% is skill, the second 90% is nerve"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.5
+    effect_expected_value: 0.0
+    total_expected_value: 4.0
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Private Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -235,11 +327,18 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "One-on-one, no distractions"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.39999999999999997
+    effect_expected_value: 0.0
+    total_expected_value: 3.9
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Scope the Line"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -265,7 +364,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_GREEN" }
+                string_matcher {
+                  value: "DIE_GREEN"
+                }
               }
             }
           }
@@ -275,7 +376,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 4 }
+                value_matcher {
+                  int32_value: 4
+                }
               }
             }
           }
@@ -283,9 +386,15 @@ cards {
       }
     }
   }
-  flavor_text: "See what's coming before you commit"
+  flavor_text: "See what\'s coming before you commit"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 5.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Read the Mountain"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -311,7 +420,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_GREEN" }
+                string_matcher {
+                  value: "DIE_GREEN"
+                }
               }
             }
           }
@@ -321,7 +432,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 4 }
+                value_matcher {
+                  int32_value: 4
+                }
               }
             }
           }
@@ -330,8 +443,14 @@ cards {
     }
   }
   flavor_text: "Know your run before you drop in"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 6.4
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Plan the Descent"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -357,7 +476,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_BLUE" }
+                string_matcher {
+                  value: "DIE_BLUE"
+                }
               }
             }
           }
@@ -367,7 +488,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 6 }
+                value_matcher {
+                  int32_value: 6
+                }
               }
             }
           }
@@ -376,8 +499,14 @@ cards {
     }
   }
   flavor_text: "Every good run starts with a good look"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 7.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Second Act"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -403,7 +532,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_BLUE" }
+                string_matcher {
+                  value: "DIE_BLUE"
+                }
               }
             }
           }
@@ -413,7 +544,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 6 }
+                value_matcher {
+                  int32_value: 6
+                }
               }
             }
           }
@@ -422,8 +555,14 @@ cards {
     }
   }
   flavor_text: "Do it again, just because you can"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 7.25
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Encore"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -449,7 +588,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_BLACK" }
+                string_matcher {
+                  value: "DIE_BLACK"
+                }
               }
             }
           }
@@ -459,7 +600,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 8 }
+                value_matcher {
+                  int32_value: 8
+                }
               }
             }
           }
@@ -468,8 +611,14 @@ cards {
     }
   }
   flavor_text: "They just keep wanting more"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 8.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Rerun"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -495,7 +644,9 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher { value: "DIE_BLACK" }
+                string_matcher {
+                  value: "DIE_BLACK"
+                }
               }
             }
           }
@@ -505,7 +656,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 8 }
+                value_matcher {
+                  int32_value: 8
+                }
               }
             }
           }
@@ -514,8 +667,14 @@ cards {
     }
   }
   flavor_text: "You could go all day like this"
+  computed {
+    dice_expected_value: 9.0
+    icon_expected_value: 0.35
+    effect_expected_value: 0.0
+    total_expected_value: 9.35
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Day Tripper"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -540,7 +699,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 1 }
+                value_matcher {
+                  int32_value: 1
+                }
               }
             }
           }
@@ -549,8 +710,14 @@ cards {
     }
   }
   flavor_text: "Rental gear, borrowed confidence"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 7.0
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Weekend Warrior"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -578,7 +745,9 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher { int32_value: 1 }
+                value_matcher {
+                  int32_value: 1
+                }
               }
             }
           }
@@ -587,8 +756,14 @@ cards {
     }
   }
   flavor_text: "For two days a month, this is home"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 7.4
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Combo Starter"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -621,8 +796,14 @@ cards {
     }
   }
   flavor_text: "Linking two moves without thinking twice..."
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Combo Builder"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -655,8 +836,14 @@ cards {
     }
   }
   flavor_text: "... adding one more, just to see if you can ..."
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.35
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Full Combo"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -688,9 +875,15 @@ cards {
       count: 1
     }
   }
-  flavor_text: "... until it's everything you know, all at once"
+  flavor_text: "... until it\'s everything you know, all at once"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Beginner Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -723,8 +916,14 @@ cards {
     }
   }
   flavor_text: "Baby steps on the bunny hill"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.15
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Intermediate Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -750,8 +949,14 @@ cards {
     }
   }
   flavor_text: "Getting comfortable with a little speed"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.25
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Advanced Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -777,8 +982,14 @@ cards {
     }
   }
   flavor_text: "Time to trust your instincts"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Expert Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -806,9 +1017,15 @@ cards {
       count: 2
     }
   }
-  flavor_text: "There's nothing left to teach you"
+  flavor_text: "There\'s nothing left to teach you"
+  computed {
+    dice_expected_value: 9.0
+    icon_expected_value: 0.15000000000000002
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Groomer Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -820,7 +1037,8 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     card_effect {
@@ -830,8 +1048,14 @@ cards {
     }
   }
   flavor_text: "Corduroy makes everyone look good"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.4
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Powder Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -843,7 +1067,8 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     card_effect {
@@ -852,9 +1077,15 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Float, don't fight it"
+  flavor_text: "Float, don\'t fight it"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.35
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Ice Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -866,7 +1097,8 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     card_effect {
@@ -876,8 +1108,14 @@ cards {
     }
   }
   flavor_text: "Edges are your best friend today"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Moguls Lesson"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -892,7 +1130,8 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     card_effect {
@@ -902,8 +1141,14 @@ cards {
     }
   }
   flavor_text: "Less bracing, more bouncing"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Reading the Snow"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -925,11 +1170,18 @@ cards {
     }
   }
   effects {
-    gain_own_tags {}
+    gain_own_tags {
+    }
   }
   flavor_text: "You can tell just by looking now"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.7
+    effect_expected_value: 0.0
+    total_expected_value: 3.2
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Trust the Line"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -952,11 +1204,18 @@ cards {
     }
   }
   effects {
-    gain_own_tags {}
+    gain_own_tags {
+    }
   }
-  flavor_text: "No second-guessing where you're headed"
+  flavor_text: "No second-guessing where you\'re headed"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.6499999999999999
+    effect_expected_value: 0.0
+    total_expected_value: 5.65
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Second Nature"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -979,11 +1238,18 @@ cards {
     }
   }
   effects {
-    gain_own_tags {}
+    gain_own_tags {
+    }
   }
-  flavor_text: "You don't think about it anymore"
+  flavor_text: "You don\'t think about it anymore"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.55
+    effect_expected_value: 0.0
+    total_expected_value: 6.55
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Gut Check"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1006,11 +1272,18 @@ cards {
     }
   }
   effects {
-    gain_own_tags {}
+    gain_own_tags {
+    }
   }
-  flavor_text: "That wasn't your best, and you know it"
+  flavor_text: "That wasn\'t your best, and you know it"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 1.1
+    effect_expected_value: 0.0
+    total_expected_value: 8.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Muscle Memory"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1022,11 +1295,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_fun_equal_to_next_card_cost {}
+    gain_fun_equal_to_next_card_cost {
+    }
   }
   flavor_text: "Your body knows before your brain does"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 5.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Feel It Coming"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1038,11 +1318,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_fun_equal_to_next_card_cost {}
+    gain_fun_equal_to_next_card_cost {
+    }
   }
-  flavor_text: "You know what's next before it happens"
+  flavor_text: "You know what\'s next before it happens"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 6.4
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Pure Instinct"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1054,11 +1341,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_fun_equal_to_next_card_cost {}
+    gain_fun_equal_to_next_card_cost {
+    }
   }
   flavor_text: "No thought. Just reaction."
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 7.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "In Your Bones"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1071,11 +1365,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_fun_equal_to_next_card_cost {}
+    gain_fun_equal_to_next_card_cost {
+    }
   }
   flavor_text: "This mountain is part of you now"
+  computed {
+    dice_expected_value: 9.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 9.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Cascade"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1087,11 +1388,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {}
+    gain_tags_below {
+    }
   }
   flavor_text: "Small at first, bigger by the bottom"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.15
+    effect_expected_value: 0.0
+    total_expected_value: 5.15
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Avalanche"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1103,11 +1411,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {}
+    gain_tags_below {
+    }
   }
   flavor_text: "What started small is now unstoppable"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 6.25
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Head Start"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1119,11 +1434,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {}
+    gain_tags_below {
+    }
   }
   flavor_text: "Getting ahead of the pack early"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.35
+    effect_expected_value: 0.0
+    total_expected_value: 7.35
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "First Tracks"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1135,11 +1457,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {}
+    gain_tags_below {
+    }
   }
   flavor_text: "Signing your name on untouched canvas"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 0.05
+    effect_expected_value: 0.0
+    total_expected_value: 8.05
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Point Man"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1150,11 +1479,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
   flavor_text: "Leading the way, come what may"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Second Chances"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1165,11 +1501,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
   flavor_text: "One do-over? Take two"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "No Regrets"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1180,11 +1523,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
   flavor_text: "Every attempt deserves one more shot"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Steady Nerves"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1196,11 +1546,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {}
+    filter_hand {
+    }
   }
   flavor_text: "A little shake never stopped anyone"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.1
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Stone Cold"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1214,11 +1571,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "Cool and calm, even on the sketchy stuff"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.55
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Catch Your Balance"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1232,11 +1596,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "A shaky moment, quickly corrected"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.7
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Find Your Footing"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1250,11 +1621,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "Recover before anyone notices"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.55
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Shake It Off"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1268,11 +1646,18 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {}
+    reactivate_following {
+    }
   }
   flavor_text: "That one absolutely should not have worked"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.44999999999999996
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Steady on the Edge"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1288,16 +1673,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "Ice can't take you down today"
+  flavor_text: "Ice can\'t take you down today"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Unshakeable"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1313,16 +1707,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Nothing rattles you"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.35
+    effect_expected_value: 0.0
+    total_expected_value: 3.85
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Prove It"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1338,16 +1741,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Talk is cheap. Show them instead."
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.15
+    effect_expected_value: 0.0
+    total_expected_value: 4.65
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Just for Fun"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1363,16 +1775,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Who cares about the score"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Thrill Seeker"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1388,16 +1809,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "The more, the merrier"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 3.9
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "No Excuses"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1413,16 +1843,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "This time, nothing but results"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.25
+    effect_expected_value: 0.0
+    total_expected_value: 4.75
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Powder Day Grin"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1438,16 +1877,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "You can't stop smiling"
+  flavor_text: "You can\'t stop smiling"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Peak Experience"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1463,16 +1911,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "This is exactly why you do this"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.1
+    effect_expected_value: 0.0
+    total_expected_value: 3.6
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Leap of Faith"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1488,16 +1945,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "No guarantees. Just hope, and a shove."
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.05
+    effect_expected_value: 0.0
+    total_expected_value: 4.55
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Best Day Ever"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1515,12 +1981,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Nothing tops a day like this"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.6
+    effect_expected_value: 0.0
+    total_expected_value: 3.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Momentum"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1538,12 +2011,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Success breeds more success"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.6
+    effect_expected_value: 0.0
+    total_expected_value: 4.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Course Correct"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1561,12 +2041,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
-  flavor_text: "Adjusting before it's too late"
+  flavor_text: "Adjusting before it\'s too late"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.4
+    effect_expected_value: 0.0
+    total_expected_value: 4.9
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "On a Roll"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1583,11 +2070,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1596,16 +2086,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "One good run leads to another"
+  computed {
+    dice_expected_value: 9.0
+    icon_expected_value: 0.1
+    effect_expected_value: 0.0
+    total_expected_value: 9.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Trade Up"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1622,11 +2121,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1635,16 +2137,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Ditch the dead weight"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 7.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Lighten the Load"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1661,11 +2172,14 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1674,16 +2188,25 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Less baggage, more speed"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 5.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Gut Feeling"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1702,7 +2225,8 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1710,12 +2234,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Something felt right about that one"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.65
+    effect_expected_value: 0.0
+    total_expected_value: 6.65
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Rock Solid"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1734,7 +2265,8 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1742,12 +2274,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "Nothing shakes this stance"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.75
+    effect_expected_value: 0.0
+    total_expected_value: 7.75
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Gentle Nudge"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1766,7 +2305,8 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effects {
@@ -1774,12 +2314,19 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   flavor_text: "A small push in the right direction"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 0.6
+    effect_expected_value: 0.0
+    total_expected_value: 8.6
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Cut Your Losses"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1792,7 +2339,8 @@ cards {
   }
   category: EFFECT_CATEGORY_RIDE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -1800,8 +2348,14 @@ cards {
     }
   }
   flavor_text: "Sometimes less is more"
+  computed {
+    dice_expected_value: 0.0
+    icon_expected_value: 0.55
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "All In"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1814,7 +2368,8 @@ cards {
   }
   category: EFFECT_CATEGORY_RIDE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -1822,8 +2377,14 @@ cards {
     }
   }
   flavor_text: "No plan B. There never was"
+  computed {
+    dice_expected_value: 0.0
+    icon_expected_value: 0.55
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "New Perspective"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1836,7 +2397,8 @@ cards {
   }
   category: EFFECT_CATEGORY_RIDE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -1844,8 +2406,14 @@ cards {
     }
   }
   flavor_text: "Out with the old, in with the new"
+  computed {
+    dice_expected_value: 0.0
+    icon_expected_value: 0.55
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Fresh Start"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1860,7 +2428,9 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_GREEN" }
+          string_matcher {
+            value: "DIE_GREEN"
+          }
         }
       }
     }
@@ -1871,8 +2441,14 @@ cards {
     }
   }
   flavor_text: "The whole mountain, wide open again"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.25
+    effect_expected_value: -2.0
+    total_expected_value: 0.75
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Whoops"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1887,7 +2463,9 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_BLUE" }
+          string_matcher {
+            value: "DIE_BLUE"
+          }
         }
       }
     }
@@ -1897,9 +2475,15 @@ cards {
       die: DIE_BLACK
     }
   }
-  flavor_text: "That definitely didn't go as planned"
+  flavor_text: "That definitely didn\'t go as planned"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.05
+    effect_expected_value: -2.8000000000000003
+    total_expected_value: 0.7499999999999996
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Take Two"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1914,7 +2498,9 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_BLACK" }
+          string_matcher {
+            value: "DIE_BLACK"
+          }
         }
       }
     }
@@ -1930,8 +2516,14 @@ cards {
     }
   }
   flavor_text: "The second attempt usually goes better"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.15
+    effect_expected_value: -7.2
+    total_expected_value: -2.55
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Nailed It"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1946,17 +2538,26 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_GREEN" }
+          string_matcher {
+            value: "DIE_GREEN"
+          }
         }
       }
     }
   }
   effects {
-    gain_fun_equal_to_value_rolled {}
+    gain_fun_equal_to_value_rolled {
+    }
   }
   flavor_text: "Eventually, everyone gets it right"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: -2.0
+    total_expected_value: 0.7999999999999998
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Recalculate"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1971,17 +2572,26 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_BLUE" }
+          string_matcher {
+            value: "DIE_BLUE"
+          }
         }
       }
     }
   }
   effects {
-    gain_fun_equal_to_value_rolled {}
+    gain_fun_equal_to_value_rolled {
+    }
   }
   flavor_text: "Trust the new plan, not the old one"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.3
+    effect_expected_value: -2.8000000000000003
+    total_expected_value: 0.9999999999999996
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Clean Break"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1996,17 +2606,26 @@ cards {
       enum_matcher {
         enum_type_name: "com.redpup.justsendit.model.Die"
         name_matcher {
-          string_matcher { value: "DIE_BLACK" }
+          string_matcher {
+            value: "DIE_BLACK"
+          }
         }
       }
     }
   }
   effects {
-    gain_fun_equal_to_value_rolled {}
+    gain_fun_equal_to_value_rolled {
+    }
   }
   flavor_text: "Whatever just happened, forget it"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.3
+    effect_expected_value: -3.6
+    total_expected_value: 1.1999999999999997
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "No Looking Back"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2023,11 +2642,18 @@ cards {
     }
   }
   effects {
-    gain_fun_equal_to_value_rolled {}
+    gain_fun_equal_to_value_rolled {
+    }
   }
-  flavor_text: "Once you commit, that's the only way now"
+  flavor_text: "Once you commit, that\'s the only way now"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.1
+    effect_expected_value: -4.2
+    total_expected_value: 1.8999999999999995
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "High Stakes"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2043,19 +2669,29 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_GREEN" }
+            string_matcher {
+              value: "DIE_GREEN"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "Everything comes down to this one shot"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 2.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Against the Odds"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2071,19 +2707,29 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLUE" }
+            string_matcher {
+              value: "DIE_BLUE"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "Somehow, against everything, it works"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 3.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Light Touch"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2099,19 +2745,29 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher { value: "DIE_BLACK" }
+            string_matcher {
+              value: "DIE_BLACK"
+            }
           }
         }
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "Barely touching the snow"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 4.8
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Soft Landing"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2127,15 +2783,23 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {}
+      reroll {
+      }
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {}
+    matching_tag_on_card_above {
+    }
   }
   flavor_text: "Right when you need it, the snow forgives"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.1
+    effect_expected_value: 0.0
+    total_expected_value: 7.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Steady Push"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2163,8 +2827,14 @@ cards {
     }
   }
   flavor_text: "Adjusting your line mid-run"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.55
+    effect_expected_value: 0.0
+    total_expected_value: 6.55
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Smooth Correction"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2192,8 +2862,14 @@ cards {
     }
   }
   flavor_text: "Just a little correction"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.6499999999999999
+    effect_expected_value: 0.0
+    total_expected_value: 7.65
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Fine Tune"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2221,8 +2897,14 @@ cards {
     }
   }
   flavor_text: "Dialing it in on the fly"
+  computed {
+    dice_expected_value: 8.0
+    icon_expected_value: 1.1
+    effect_expected_value: 0.0
+    total_expected_value: 9.1
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Total Control"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2236,7 +2918,8 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -2244,8 +2927,14 @@ cards {
     }
   }
   flavor_text: "Small tweaks, big difference"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.5
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Ricochet"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2259,7 +2948,8 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -2267,8 +2957,14 @@ cards {
     }
   }
   flavor_text: "Change your line without losing speed"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.5
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Big Push"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2282,7 +2978,8 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {}
+    discard_card {
+    }
   }
   effects {
     gain {
@@ -2290,8 +2987,14 @@ cards {
     }
   }
   flavor_text: "Forcing your way to a better line"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.39999999999999997
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Brief Respite"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2300,7 +3003,8 @@ cards {
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {}
+    success {
+    }
   }
   effects {
     card_effect {
@@ -2310,8 +3014,14 @@ cards {
     }
   }
   flavor_text: "A moment to reset before the next run"
+  computed {
+    dice_expected_value: 5.0
+    icon_expected_value: 0.0
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Deep Breath"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2320,7 +3030,8 @@ cards {
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {}
+    success {
+    }
   }
   effects {
     card_effect {
@@ -2329,9 +3040,15 @@ cards {
       count: 1
     }
   }
-  flavor_text: "In... and out. You've got this"
+  flavor_text: "In... and out. You\'ve got this"
+  computed {
+    dice_expected_value: 6.0
+    icon_expected_value: 0.0
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Two for One"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2340,7 +3057,8 @@ cards {
   dice: DIE_BLUE
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {}
+    success {
+    }
   }
   effects {
     card_effect {
@@ -2350,8 +3068,14 @@ cards {
     }
   }
   flavor_text: "Gotta buy one to get the free one"
+  computed {
+    dice_expected_value: 7.0
+    icon_expected_value: 0.0
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Close Call"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2372,8 +3096,14 @@ cards {
     }
   }
   flavor_text: "Thankfully more near than miss"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.4
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Treat Yourself"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2393,9 +3123,15 @@ cards {
       count: 1
     }
   }
-  flavor_text: "You've earned a little something extra"
+  flavor_text: "You\'ve earned a little something extra"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.3
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Nail Biter"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2416,8 +3152,14 @@ cards {
     }
   }
   flavor_text: "Just a bit touch and just enough go"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.2
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Trail Map"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2433,8 +3175,14 @@ cards {
     }
   }
   flavor_text: "Studying every route before you pick one"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 3.85
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Pick Your Line"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2450,8 +3198,14 @@ cards {
     }
   }
   flavor_text: "Three routes, one choice, no do-overs"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 4.95
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Fresh Inventory"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2467,8 +3221,14 @@ cards {
     }
   }
   flavor_text: "New gear just dropped, and yes, you need it"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 1.0
+    effect_expected_value: 0.0
+    total_expected_value: 6.05
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Grand Reopening"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2482,11 +3242,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {}
+    replenish_shop {
+    }
   }
   flavor_text: "The whole shop, better than before"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.44999999999999996
+    effect_expected_value: 0.0
+    total_expected_value: 3.2
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Keep Riding"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2500,11 +3267,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {}
+    replenish_shop {
+    }
   }
-  flavor_text: "Why stop when you're on a roll"
+  flavor_text: "Why stop when you\'re on a roll"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.55
+    effect_expected_value: 0.0
+    total_expected_value: 4.4
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "No Stopping Now"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2518,11 +3292,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {}
+    replenish_shop {
+    }
   }
-  flavor_text: "One run just wasn't enough"
+  flavor_text: "One run just wasn\'t enough"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.35
+    effect_expected_value: 0.0
+    total_expected_value: 5.3
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Gear Check"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2536,11 +3317,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    draw_from_play {}
+    draw_from_play {
+    }
   }
-  flavor_text: "Swap out what isn't working before the next run"
+  flavor_text: "Swap out what isn\'t working before the next run"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.6
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Fresh Legs"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2554,11 +3342,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    draw_from_play {}
+    draw_from_play {
+    }
   }
   flavor_text: "A few minutes on the chair resets everything"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.4
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Take It All In"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2572,11 +3367,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    draw_from_play {}
+    draw_from_play {
+    }
   }
   flavor_text: "The view alone is worth the ticket"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.4
+    effect_expected_value: NaN
+    total_expected_value: NaN
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Heart to Heart"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2587,11 +3389,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {}
+    move_tile {
+    }
   }
   flavor_text: "A warm conversation against the chilling air"
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 3.05
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Spring Cleaning"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2602,11 +3411,18 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {}
+    move_tile {
+    }
   }
   flavor_text: "Time to lighten your pack"
+  computed {
+    dice_expected_value: 3.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 4.15
+    suggested_cost: 2
+  }
 }
-
 cards {
   name: "Pack Light"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -2617,8 +3433,15 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {}
+    move_tile {
+    }
   }
-  flavor_text: "Extra layers you'll never wear, gone"
+  flavor_text: "Extra layers you\'ll never wear, gone"
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.3
+    effect_expected_value: 0.0
+    total_expected_value: 5.25
+    suggested_cost: 2
+  }
 }
-
