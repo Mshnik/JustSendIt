@@ -6,6 +6,10 @@ import com.redpup.matchers.proto.Matcher
 /** Extra [Matcher] utilities for calculating skill card values. */
 internal object MatcherUtilities {
 
+  fun Matcher.coloredDieFrequency(): Double? {
+    TODO("Extract frequency of target, e.g. Green 4.")
+  }
+
   /**
    * Returns which die color a this targets, or `null` for "wild"/any (a `constant_matcher
    * = true` matcher, e.g. "Reroll Wild" / "Slide Wild").

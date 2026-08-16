@@ -44,6 +44,7 @@ class ResolvedValues {
     get() =
       when (costCase) {
         CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
+        CostCase.REMOVE_DIE -> TODO()
         CostCase.COST_NOT_SET -> 0.0
         null -> throw IllegalStateException()
       }
@@ -53,7 +54,6 @@ class ResolvedValues {
     get() = when (conditionCase) {
       ConditionCase.SUCCESS -> 0.8
       ConditionCase.FAILURE -> 0.2
-      ConditionCase.MATCHING_ICON -> matchingIcon.frequency
       ConditionCase.CONDITION_NOT_SET -> 0.0
       ConditionCase.NEXT_CARD_COST -> TODO()
       null -> throw IllegalStateException()

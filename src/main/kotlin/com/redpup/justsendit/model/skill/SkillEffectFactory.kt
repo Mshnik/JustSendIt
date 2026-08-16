@@ -37,6 +37,7 @@ class SkillEffectFactoryImpl @Inject constructor(private val random: Random) : S
         when (gainCase) {
           GainEffect.GainCase.SKILL -> GainSkillEffect(card) // TODO: repeat
           GainEffect.GainCase.POINTS -> GainPointsEffect(card)
+          GainEffect.GainCase.DIE -> TODO()
           GainEffect.GainCase.BUYS -> TODO()
           GainEffect.GainCase.TRASHES -> TODO()
           GainEffect.GainCase.GAIN_NOT_SET, null -> {}
@@ -49,6 +50,12 @@ class SkillEffectFactoryImpl @Inject constructor(private val random: Random) : S
       SkillCardEffect.EffectCase.REPLENISH_SHOP -> TODO()
       SkillCardEffect.EffectCase.EXTRA_TURN -> TODO()
       SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> TODO()
+      SkillCardEffect.EffectCase.GAIN_OWN_TAGS -> TODO()
+      SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> TODO()
+      SkillCardEffect.EffectCase.DRAW_FROM_PLAY -> TODO()
+      SkillCardEffect.EffectCase.MOVE_TILE -> TODO()
+      SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> TODO()
+      SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED -> TODO()
     }
 
     throw IllegalArgumentException("Unhangled SkillCardEffect: $card")

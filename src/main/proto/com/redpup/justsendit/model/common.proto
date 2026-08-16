@@ -57,14 +57,14 @@ enum Grade {
   GRADE_DOUBLE_BLACK = 4;
 }
 
-/** The category of effect on a skill card or player card. */
+/** Timing at which a skill effect fires. */
 enum EffectCategory {
   EFFECT_CATEGORY_UNSET = 0;
   EFFECT_CATEGORY_PLAY = 1;
-  EFFECT_CATEGORY_FIRST = 2;
-  EFFECT_CATEGORY_LAST = 3;
-  EFFECT_CATEGORY_PASS = 4;
-  EFFECT_CATEGORY_LIFT = 5;
+  EFFECT_CATEGORY_REST = 2;
+  EFFECT_CATEGORY_RIDE = 3;
+  EFFECT_CATEGORY_LIFT = 4;
+  EFFECT_CATEGORY_FINALE = 5;
 }
 
 /** Places that skill cards can be. */

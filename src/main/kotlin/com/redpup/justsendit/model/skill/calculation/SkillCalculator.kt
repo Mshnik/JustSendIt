@@ -121,15 +121,15 @@ class SkillCalculator(private val path: String, private val resolutionIterations
         effectExpectedValue
       ) + (nonTextEv + effectExpectedValue) * LIFT_PASS_COMPARISON_FACTOR
 
-      EffectCategory.EFFECT_CATEGORY_PASS -> maxOf(
+      EffectCategory.EFFECT_CATEGORY_REST -> maxOf(
         diceExpectedValue,
         effectExpectedValue
       ) + (diceExpectedValue + effectExpectedValue) * LIFT_PASS_COMPARISON_FACTOR +
         iconExpectedValue
 
       EffectCategory.EFFECT_CATEGORY_PLAY,
-      EffectCategory.EFFECT_CATEGORY_FIRST,
-      EffectCategory.EFFECT_CATEGORY_LAST,
+      EffectCategory.EFFECT_CATEGORY_RIDE,
+      EffectCategory.EFFECT_CATEGORY_FINALE,
       EffectCategory.EFFECT_CATEGORY_UNSET,
       -> effectExpectedValue + nonTextEv
 
@@ -158,6 +158,12 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     SkillCardEffect.EffectCase.EXTRA_TURN -> Constants.ADDITIONAL_TURN
     SkillCardEffect.EffectCase.CARD_EFFECT -> singleCardEffectValue(cardEffect)
     SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
+    SkillCardEffect.EffectCase.GAIN_OWN_TAGS -> TODO()
+    SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> TODO()
+    SkillCardEffect.EffectCase.DRAW_FROM_PLAY -> TODO()
+    SkillCardEffect.EffectCase.MOVE_TILE -> TODO()
+    SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> TODO()
+    SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED -> TODO()
   }
 
   /** Returns the computed value of the given [AlterDieEffect]. */
@@ -177,7 +183,8 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     GainEffect.GainCase.BUYS -> gain.buys.toDouble() * Constants.BUY
     GainEffect.GainCase.TRASHES -> gain.trashes.toDouble() * resolvedValues().trashCard
     GainEffect.GainCase.GAIN_NOT_SET, null -> throw IllegalStateException()
-  } * gain.EFFECT_REPEAT_FACTOR
+    GainEffect.GainCase.DIE -> TODO()
+  }
 
 
   private fun singleCardEffectValue(cardEffect: CardEffect): Double =

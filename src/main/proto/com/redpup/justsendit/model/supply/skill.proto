@@ -47,9 +47,10 @@ message SkillCard {
   SkillCardEffectCondition effect_condition = 10;
   SkillCardEffectCost effect_cost = 12;
   repeated SkillCardEffect effects = 13;
+  SkillCardEffectRepeat effect_repeat = 14;
 
   // Flavor text of this card.
-  string flavor_text = 14;
+  string flavor_text = 15;
 
   // Computed attributes of this card.
   message Computed {
@@ -66,37 +67,81 @@ message SkillCard {
     // cards
     uint32 suggested_cost = 5;
   }
-  Computed computed = 15;
+  Computed computed = 16;
 }
 
 /** Condition for skill card effects to activate. */
 message SkillCardEffectCondition {
   oneof condition {
+    // Matches when you succeed a tile.
     google.protobuf.Empty success = 1;
+    // Matches when you fail a tile.
     google.protobuf.Empty failure = 2;
-    Icon matching_icon = 3;
-    matchers.Matcher next_card_cost = 4;
+    // Checks if the next card's cost matches this matcher.
+    // Does nothing if there is no next card.
+    matchers.Matcher next_card_cost = 3;
   }
 }
 
 /** Cost for skill card effects to activate. */
 message SkillCardEffectCost {
   oneof cost {
+    // Discard a card from your hand.
     google.protobuf.Empty discard_card = 1;
+    // Remove (pay) a die matching this matcher as a cost. Use
+    // `constant_matcher: true` for "any color" (Remove Wild).
+    matchers.Matcher remove_die = 2;
   }
 }
 
 /** One of the effects on a skill card. */
 message SkillCardEffect {
+  // The action performed when the condition (if any) is met.
   oneof effect {
     AlterDieEffect alter_die = 1;
     GainEffect gain = 2;
     google.protobuf.Empty ignore_wobble = 3 [deprecated = true];
     CardEffect card_effect = 4;
+    // Activate the effect of the card played directly below this one an
+    // additional time.
     google.protobuf.Empty reactivate_following = 5;
+    // Discard any number of cards from hand, then draw that many.
     google.protobuf.Empty filter_hand = 6;
+    // Replenish the shop's face-up offerings.
     google.protobuf.Empty replenish_shop = 7;
+    // Take an additional turn after this one.
     google.protobuf.Empty extra_turn = 8;
+    // Gain this card's own icon tags an additional time.
+    google.protobuf.Empty gain_own_tags = 9;
+    // Gain the icon tags of the card played directly below this one an
+    // additional time.
+    google.protobuf.Empty gain_tags_below = 10;
+    // At the end of the turn, draw a different card from the play area back to
+    // hand.
+    google.protobuf.Empty draw_from_play = 11;
+    // Move one board tile in any direction.
+    google.protobuf.Empty move_tile = 12;
+    // Gain Fun equal to the cost of the next card (engine-defined "next").
+    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 13;
+    // Gain Fun equal to the value rolled, corresponding to the die removed
+    // for the cost paid.
+    google.protobuf.Empty gain_fun_equal_to_value_rolled = 14;
+  }
+}
+
+/** Governs how many times a SkillEffect's action is repeated. */
+message SkillCardEffectRepeat {
+  oneof repeat {
+    // Once per skill card below this one.
+    google.protobuf.Empty skill_card_below = 1;
+    // Once per skill card above this one.
+    google.protobuf.Empty skill_card_above = 2;
+    // Once per Wobble token.
+    google.protobuf.Empty wobble = 3;
+    // Once per icon tag on cards above that also appear on this card.
+    google.protobuf.Empty matching_tag_on_card_above = 4;
+    // Once per die showing a specific value and matching the given color.
+    matchers.Matcher matching_die = 5;
   }
 }
 
@@ -120,13 +165,7 @@ message GainEffect {
     uint32 points = 2;
     uint32 buys = 3;
     uint32 trashes = 4;
-  }
-
-  oneof repeat {
-    google.protobuf.Empty skill_card_below = 5;
-    google.protobuf.Empty skill_card_above = 6;
-    google.protobuf.Empty wobble = 7 [deprecated = true];
-    redpup.matchers.Matcher matching_die = 8;
+    Die die = 5;
   }
 }
 
