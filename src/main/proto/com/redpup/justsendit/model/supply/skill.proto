@@ -184,8 +184,12 @@ message SkillCardComputationValues {
   double cardFilter3 = 3;
   // Value of trashing a card.
   double trashCard = 4;
-  // Value of activating an effect again.
-  double reactivate = 5;
+  // Value of an average effect
+  double effect = 5;
+  // Value of an average icons
+  double icons = 6;
+  // Average cost across all cards.
+  double average_cost = 7;
 }
 
 /** List of SkillCardComputationValues for library interop. */

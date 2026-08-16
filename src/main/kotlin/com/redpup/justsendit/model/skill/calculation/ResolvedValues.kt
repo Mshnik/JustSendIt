@@ -1,6 +1,5 @@
 package com.redpup.justsendit.model.skill.calculation
 
-import com.redpup.justsendit.model.skill.calculation.Icons.frequency
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardEffectCondition.ConditionCase
 import com.redpup.justsendit.model.supply.proto.SkillCardEffectCost.CostCase
@@ -26,8 +25,10 @@ class ResolvedValues {
     val computed = cards.map { it.computed }
     val current = parameters.build()
     with(parameters) {
+      averageCost = computed.map { it.suggestedCost }.average()
       cardDraw = computed.map { it.totalExpectedValue }.average()
-      reactivate = computed.map { it.effectExpectedValue }.average()
+      effect = computed.map { it.effectExpectedValue }.average()
+      icons = computed.map { it.iconExpectedValue }.average()
       cardFilter2 = 0.564 * cardDraw
       cardFilter3 = 0.846 * cardDraw
     }
@@ -88,8 +89,10 @@ class ResolvedValues {
     operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {
       val self = this
       return skillCardComputationValues {
+        this.averageCost = (self.averageCost - other.averageCost).round(6)
         this.cardDraw = (self.cardDraw - other.cardDraw).round(6)
-        this.reactivate = (self.reactivate - other.reactivate).round(6)
+        this.effect = (self.effect - other.effect).round(6)
+        this.icons = (self.icons - other.icons).round(6)
         this.cardFilter2 = (self.cardFilter2 - other.cardFilter2).round(6)
         this.cardFilter3 = (self.cardFilter3 - other.cardFilter3).round(6)
       }
@@ -97,6 +100,11 @@ class ResolvedValues {
 
     /** Returns true if all values in this are 0. */
     fun SkillCardComputationValues.isZero() =
-      cardDraw == 0.0 && reactivate == 0.0 && cardFilter2 == 0.0 && cardFilter3 == 0.0
+      averageCost == 0.0 &&
+        cardDraw == 0.0 &&
+        effect == 0.0 &&
+        icons == 0.0 &&
+        cardFilter2 == 0.0 &&
+        cardFilter3 == 0.0
   }
 }

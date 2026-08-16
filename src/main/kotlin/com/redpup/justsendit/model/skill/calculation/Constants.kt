@@ -81,4 +81,7 @@ object Constants {
       Die.DIE_BLACK -> 1.5
       else -> 2.0
     }
+
+  /** Value of moving a tile on the map. */
+  val MOVE_TILE: Double = 1.0
 }
