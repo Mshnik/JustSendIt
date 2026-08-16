@@ -53,7 +53,7 @@ class ResolvedValues {
   val SkillCardEffectCost.effectCost: Double
     get() =
       when (costCase) {
-        CostCase.DISCARD_CARD -> -this@ResolvedValues().cardDraw
+        CostCase.DISCARD_CARD -> -(this@ResolvedValues().cardDraw * 0.8)
         CostCase.REMOVE_DIE -> -(removeDie?.dieColorOrWild()?.averageValue
           ?: (Die.DIE_BLUE.averageValue * Constants.WILD_DIE_PICK_FACTOR))
 
@@ -63,9 +63,9 @@ class ResolvedValues {
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
   fun SkillCardEffectCondition.effectFactor(card: SkillCard): Double = when (conditionCase) {
+    ConditionCase.CONDITION_NOT_SET -> 1.0 // No condition is always active.
     ConditionCase.SUCCESS -> 0.8
     ConditionCase.FAILURE -> 0.2
-    ConditionCase.CONDITION_NOT_SET -> 0.0
     ConditionCase.NEXT_CARD_COST ->
       cardCosts.entries.filter { it.key > card.computed.suggestedCost }
         .sumOf { it.value } / totalCards.toDouble()
