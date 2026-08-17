@@ -267,16 +267,16 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "Aim for the gaps, avoid the trunks"
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.55
-    effect_expected_value: 3.5999999999999996
-    total_expected_value: 7.6499999999999995
-    suggested_cost: 4
+    effect_expected_value: 0.7527272727272726
+    total_expected_value: 4.802727272727273
+    suggested_cost: 3
   }
 }
 cards {
@@ -297,16 +297,16 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "The first 90% is skill, the second 90% is nerve"
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.5
-    effect_expected_value: 3.5999999999999996
-    total_expected_value: 7.6
-    suggested_cost: 4
+    effect_expected_value: 0.8181818181818181
+    total_expected_value: 4.818181818181818
+    suggested_cost: 3
   }
 }
 cards {
@@ -327,16 +327,16 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "One-on-one, no distractions"
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.39999999999999997
-    effect_expected_value: 3.5999999999999996
-    total_expected_value: 7.5
-    suggested_cost: 4
+    effect_expected_value: 0.8181818181818181
+    total_expected_value: 4.718181818181818
+    suggested_cost: 3
   }
 }
 cards {
@@ -390,8 +390,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.3
-    effect_expected_value: 1.92
-    total_expected_value: 7.22
+    effect_expected_value: 0.48
+    total_expected_value: 5.779999999999999
     suggested_cost: 4
   }
 }
@@ -446,8 +446,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.4
-    effect_expected_value: 1.92
-    total_expected_value: 8.32
+    effect_expected_value: 0.48
+    total_expected_value: 6.880000000000001
     suggested_cost: 4
   }
 }
@@ -502,9 +502,9 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.3
-    effect_expected_value: 2.88
-    total_expected_value: 10.18
-    suggested_cost: 5
+    effect_expected_value: 0.4799999999999999
+    total_expected_value: 7.779999999999999
+    suggested_cost: 4
   }
 }
 cards {
@@ -558,9 +558,9 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.25
-    effect_expected_value: 2.88
-    total_expected_value: 10.129999999999999
-    suggested_cost: 5
+    effect_expected_value: 0.4799999999999999
+    total_expected_value: 7.7299999999999995
+    suggested_cost: 4
   }
 }
 cards {
@@ -614,9 +614,9 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.3
-    effect_expected_value: 3.84
-    total_expected_value: 12.14
-    suggested_cost: 5
+    effect_expected_value: 0.48
+    total_expected_value: 8.780000000000001
+    suggested_cost: 4
   }
 }
 cards {
@@ -670,8 +670,8 @@ cards {
   computed {
     dice_expected_value: 9.0
     icon_expected_value: 0.35
-    effect_expected_value: 3.84
-    total_expected_value: 13.19
+    effect_expected_value: 0.48
+    total_expected_value: 9.83
     suggested_cost: 5
   }
 }
@@ -713,8 +713,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 1.0
-    effect_expected_value: 1.92
-    total_expected_value: 8.92
+    effect_expected_value: 0.48
+    total_expected_value: 7.48
     suggested_cost: 4
   }
 }
@@ -759,8 +759,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.4
-    effect_expected_value: 1.92
-    total_expected_value: 9.32
+    effect_expected_value: 0.48
+    total_expected_value: 7.880000000000001
     suggested_cost: 4
   }
 }
@@ -799,8 +799,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.3
-    effect_expected_value: 6.179358851555381
-    total_expected_value: 11.47935885155538
+    effect_expected_value: 5.884654271833095
+    total_expected_value: 11.184654271833095
     suggested_cost: 5
   }
 }
@@ -839,8 +839,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.35
-    effect_expected_value: 6.179358851555381
-    total_expected_value: 12.52935885155538
+    effect_expected_value: 5.884654271833095
+    total_expected_value: 12.234654271833094
     suggested_cost: 5
   }
 }
@@ -879,8 +879,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.3
-    effect_expected_value: 6.179358851555381
-    total_expected_value: 13.47935885155538
+    effect_expected_value: 5.884654271833095
+    total_expected_value: 13.184654271833095
     suggested_cost: 5
   }
 }
@@ -919,8 +919,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.15
-    effect_expected_value: 6.179358851555381
-    total_expected_value: 13.32935885155538
+    effect_expected_value: 5.884654271833095
+    total_expected_value: 13.034654271833094
     suggested_cost: 5
   }
 }
@@ -952,8 +952,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.25
-    effect_expected_value: 8.239145135407174
-    total_expected_value: 15.489145135407174
+    effect_expected_value: 7.846205695777459
+    total_expected_value: 15.09620569577746
     suggested_cost: 6
   }
 }
@@ -985,8 +985,8 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.3
-    effect_expected_value: 8.239145135407174
-    total_expected_value: 16.539145135407175
+    effect_expected_value: 7.846205695777459
+    total_expected_value: 16.14620569577746
     suggested_cost: 6
   }
 }
@@ -1021,9 +1021,9 @@ cards {
   computed {
     dice_expected_value: 9.0
     icon_expected_value: 0.15000000000000002
-    effect_expected_value: 8.239145135407174
-    total_expected_value: 17.389145135407176
-    suggested_cost: 6
+    effect_expected_value: 7.846205695777459
+    total_expected_value: 16.99620569577746
+    suggested_cost: 7
   }
 }
 cards {
@@ -1051,8 +1051,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.4
-    effect_expected_value: 1.4608413360651014
-    total_expected_value: 6.860841336065102
+    effect_expected_value: 1.3911712226555775
+    total_expected_value: 6.791171222655578
     suggested_cost: 4
   }
 }
@@ -1081,8 +1081,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.35
-    effect_expected_value: 1.4608413360651014
-    total_expected_value: 7.810841336065101
+    effect_expected_value: 1.3911712226555775
+    total_expected_value: 7.741171222655577
     suggested_cost: 4
   }
 }
@@ -1111,8 +1111,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.3
-    effect_expected_value: 1.4608413360651014
-    total_expected_value: 8.760841336065102
+    effect_expected_value: 1.3911712226555775
+    total_expected_value: 8.691171222655576
     suggested_cost: 4
   }
 }
@@ -1144,8 +1144,8 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.3
-    effect_expected_value: 1.4608413360651014
-    total_expected_value: 9.760841336065102
+    effect_expected_value: 1.3911712226555775
+    total_expected_value: 9.691171222655578
     suggested_cost: 5
   }
 }
@@ -1177,8 +1177,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.7
-    effect_expected_value: 0.42
-    total_expected_value: 3.62
+    effect_expected_value: 0.3945454545454545
+    total_expected_value: 3.5945454545454547
     suggested_cost: 3
   }
 }
@@ -1211,8 +1211,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.6499999999999999
-    effect_expected_value: 0.1654545454545454
-    total_expected_value: 5.815454545454545
+    effect_expected_value: 0.1536363636363636
+    total_expected_value: 5.803636363636364
     suggested_cost: 4
   }
 }
@@ -1245,8 +1245,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.55
-    effect_expected_value: 0.13999999999999999
-    total_expected_value: 6.6899999999999995
+    effect_expected_value: 0.13
+    total_expected_value: 6.68
     suggested_cost: 4
   }
 }
@@ -1279,8 +1279,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 1.1
-    effect_expected_value: 0.27999999999999997
-    total_expected_value: 8.379999999999999
+    effect_expected_value: 0.26
+    total_expected_value: 8.36
     suggested_cost: 4
   }
 }
@@ -1302,8 +1302,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.3
-    effect_expected_value: 4.352727272727273
-    total_expected_value: 9.652727272727272
+    effect_expected_value: 4.298181818181818
+    total_expected_value: 9.598181818181818
     suggested_cost: 5
   }
 }
@@ -1325,8 +1325,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.4
-    effect_expected_value: 4.352727272727273
-    total_expected_value: 10.752727272727274
+    effect_expected_value: 4.298181818181818
+    total_expected_value: 10.69818181818182
     suggested_cost: 5
   }
 }
@@ -1348,8 +1348,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.3
-    effect_expected_value: 4.352727272727273
-    total_expected_value: 11.652727272727272
+    effect_expected_value: 4.298181818181818
+    total_expected_value: 11.598181818181818
     suggested_cost: 5
   }
 }
@@ -1372,8 +1372,8 @@ cards {
   computed {
     dice_expected_value: 9.5
     icon_expected_value: 0.3
-    effect_expected_value: 4.352727272727273
-    total_expected_value: 14.152727272727272
+    effect_expected_value: 4.298181818181818
+    total_expected_value: 14.098181818181818
     suggested_cost: 6
   }
 }
@@ -1486,8 +1486,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.3
-    effect_expected_value: 10.298931419258967
-    total_expected_value: 13.098931419258967
+    effect_expected_value: 9.807757119721824
+    total_expected_value: 12.607757119721825
     suggested_cost: 5
   }
 }
@@ -1508,8 +1508,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.3
-    effect_expected_value: 10.298931419258967
-    total_expected_value: 14.098931419258967
+    effect_expected_value: 9.807757119721824
+    total_expected_value: 13.607757119721825
     suggested_cost: 6
   }
 }
@@ -1530,8 +1530,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.3
-    effect_expected_value: 10.298931419258967
-    total_expected_value: 15.098931419258967
+    effect_expected_value: 9.807757119721824
+    total_expected_value: 14.607757119721825
     suggested_cost: 6
   }
 }
@@ -1553,9 +1553,9 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.1
-    effect_expected_value: 10.298931419258967
-    total_expected_value: 17.398931419258965
-    suggested_cost: 7
+    effect_expected_value: 9.807757119721824
+    total_expected_value: 16.907757119721822
+    suggested_cost: 6
   }
 }
 cards {
@@ -1578,8 +1578,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.55
-    effect_expected_value: 2.296975948428925
-    total_expected_value: 5.346975948428925
+    effect_expected_value: 1.947653442548898
+    total_expected_value: 4.997653442548898
     suggested_cost: 3
   }
 }
@@ -1603,8 +1603,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.7
-    effect_expected_value: 2.296975948428925
-    total_expected_value: 6.496975948428926
+    effect_expected_value: 1.947653442548898
+    total_expected_value: 6.147653442548898
     suggested_cost: 4
   }
 }
@@ -1628,8 +1628,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.55
-    effect_expected_value: 2.296975948428925
-    total_expected_value: 6.346975948428925
+    effect_expected_value: 1.947653442548898
+    total_expected_value: 5.997653442548898
     suggested_cost: 4
   }
 }
@@ -1653,8 +1653,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.44999999999999996
-    effect_expected_value: 2.296975948428925
-    total_expected_value: 7.246975948428926
+    effect_expected_value: 1.947653442548898
+    total_expected_value: 6.897653442548898
     suggested_cost: 4
   }
 }
@@ -2324,7 +2324,7 @@ cards {
     icon_expected_value: 0.6
     effect_expected_value: 4.800000000000001
     total_expected_value: 13.4
-    suggested_cost: 5
+    suggested_cost: 6
   }
 }
 cards {
@@ -2351,8 +2351,8 @@ cards {
   computed {
     dice_expected_value: 0.0
     icon_expected_value: 0.55
-    effect_expected_value: -2.6746922754083267
-    total_expected_value: -2.124692275408327
+    effect_expected_value: -2.4517479124978503
+    total_expected_value: -1.9017479124978502
     suggested_cost: 2
   }
 }
@@ -2380,8 +2380,8 @@ cards {
   computed {
     dice_expected_value: 0.0
     icon_expected_value: 0.55
-    effect_expected_value: -1.8746922754083266
-    total_expected_value: -1.3246922754083266
+    effect_expected_value: -1.65174791249785
+    total_expected_value: -1.10174791249785
     suggested_cost: 2
   }
 }
@@ -2409,8 +2409,8 @@ cards {
   computed {
     dice_expected_value: 0.0
     icon_expected_value: 0.55
-    effect_expected_value: -1.0746922754083266
-    total_expected_value: -0.5246922754083265
+    effect_expected_value: -0.8517479124978501
+    total_expected_value: -0.30174791249785005
     suggested_cost: 2
   }
 }
@@ -2680,15 +2680,15 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "Everything comes down to this one shot"
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.3
-    effect_expected_value: 1.0666666664
-    total_expected_value: 3.8666666663999996
+    effect_expected_value: 0.15515151511272726
+    total_expected_value: 2.955151515112727
     suggested_cost: 3
   }
 }
@@ -2718,15 +2718,15 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "Somehow, against everything, it works"
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.3
-    effect_expected_value: 1.6
-    total_expected_value: 5.4
+    effect_expected_value: 0.26181818181818184
+    total_expected_value: 4.0618181818181816
     suggested_cost: 3
   }
 }
@@ -2756,16 +2756,16 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "Barely touching the snow"
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.3
-    effect_expected_value: 2.1333333336
-    total_expected_value: 6.9333333336
-    suggested_cost: 4
+    effect_expected_value: 0.3296969697381818
+    total_expected_value: 5.129696969738181
+    suggested_cost: 3
   }
 }
 cards {
@@ -2788,15 +2788,15 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_card_above {
+    matching_tag_on_cards_above {
     }
   }
   flavor_text: "Right when you need it, the snow forgives"
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.1
-    effect_expected_value: 2.4000000000000004
-    total_expected_value: 9.5
+    effect_expected_value: 0.24000000000000005
+    total_expected_value: 7.34
     suggested_cost: 4
   }
 }
@@ -2830,8 +2830,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.55
-    effect_expected_value: 0.509090909090909
-    total_expected_value: 7.059090909090909
+    effect_expected_value: 0.4727272727272728
+    total_expected_value: 7.0227272727272725
     suggested_cost: 4
   }
 }
@@ -2865,8 +2865,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.6499999999999999
-    effect_expected_value: 0.7127272727272728
-    total_expected_value: 8.362727272727273
+    effect_expected_value: 0.6618181818181819
+    total_expected_value: 8.311818181818182
     suggested_cost: 4
   }
 }
@@ -2900,9 +2900,9 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 1.1
-    effect_expected_value: 0.9163636363636363
-    total_expected_value: 10.016363636363636
-    suggested_cost: 5
+    effect_expected_value: 0.26181818181818184
+    total_expected_value: 9.361818181818181
+    suggested_cost: 4
   }
 }
 cards {
@@ -2930,8 +2930,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.5
-    effect_expected_value: -0.6746922754083265
-    total_expected_value: 2.3253077245916733
+    effect_expected_value: -0.45174791249785007
+    total_expected_value: 2.54825208750215
     suggested_cost: 3
   }
 }
@@ -2960,8 +2960,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.5
-    effect_expected_value: -0.6746922754083265
-    total_expected_value: 3.3253077245916733
+    effect_expected_value: -0.45174791249785007
+    total_expected_value: 3.54825208750215
     suggested_cost: 3
   }
 }
@@ -2990,8 +2990,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.39999999999999997
-    effect_expected_value: -0.6746922754083265
-    total_expected_value: 4.225307724591674
+    effect_expected_value: -0.45174791249785007
+    total_expected_value: 4.4482520875021505
     suggested_cost: 3
   }
 }
@@ -3017,8 +3017,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.0
-    effect_expected_value: 4.674692275408327
-    total_expected_value: 9.674692275408326
+    effect_expected_value: 4.45174791249785
+    total_expected_value: 9.45174791249785
     suggested_cost: 5
   }
 }
@@ -3044,8 +3044,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.0
-    effect_expected_value: 4.674692275408327
-    total_expected_value: 10.674692275408326
+    effect_expected_value: 4.45174791249785
+    total_expected_value: 10.45174791249785
     suggested_cost: 5
   }
 }
@@ -3071,8 +3071,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.0
-    effect_expected_value: 4.674692275408327
-    total_expected_value: 11.674692275408326
+    effect_expected_value: 4.45174791249785
+    total_expected_value: 11.45174791249785
     suggested_cost: 5
   }
 }
@@ -3099,8 +3099,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.4
-    effect_expected_value: 1.460841336065102
-    total_expected_value: 3.3360841336065103
+    effect_expected_value: 1.3911712226555781
+    total_expected_value: 3.329117122265558
     suggested_cost: 3
   }
 }
@@ -3127,8 +3127,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.3
-    effect_expected_value: 1.460841336065102
-    total_expected_value: 4.32608413360651
+    effect_expected_value: 1.3911712226555781
+    total_expected_value: 4.319117122265558
     suggested_cost: 3
   }
 }
@@ -3155,8 +3155,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.2
-    effect_expected_value: 1.460841336065102
-    total_expected_value: 5.316084133606511
+    effect_expected_value: 1.3911712226555781
+    total_expected_value: 5.309117122265558
     suggested_cost: 3
   }
 }
@@ -3324,8 +3324,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.6
-    effect_expected_value: 5.843365344260408
-    total_expected_value: 7.2777018786864485
+    effect_expected_value: 5.5646848906223125
+    total_expected_value: 6.9711533796845435
     suggested_cost: 4
   }
 }
@@ -3349,8 +3349,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.4
-    effect_expected_value: 5.843365344260408
-    total_expected_value: 7.17770187868645
+    effect_expected_value: 5.5646848906223125
+    total_expected_value: 6.871153379684545
     suggested_cost: 4
   }
 }
@@ -3374,8 +3374,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.4
-    effect_expected_value: 5.843365344260408
-    total_expected_value: 7.277701878686449
+    effect_expected_value: 5.5646848906223125
+    total_expected_value: 6.971153379684544
     suggested_cost: 4
   }
 }

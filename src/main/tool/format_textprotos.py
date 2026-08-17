@@ -410,7 +410,7 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
     return None
 
   if text == "Matching tag on card above":
-    return "  effect_repeat {\n    matching_tag_on_card_above {}\n  }\n"
+    return "  effect_repeat {\n    matching_tag_on_cards_above {}\n  }\n"
 
   m = _REPEAT_DIE_VALUE_RE.match(text)
   if m:

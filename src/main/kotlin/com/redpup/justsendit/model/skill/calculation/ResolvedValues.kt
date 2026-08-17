@@ -2,6 +2,8 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.random.Dice.averageValue
+import com.redpup.justsendit.model.random.Dice.maxValue
+import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.coloredDieFrequency
 import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardEffectCondition.ConditionCase
@@ -21,6 +23,7 @@ class ResolvedValues {
 
   private var totalCards = 0
   private var cardCosts = mapOf<Int, Int>()
+  private var cardIcons = mapOf<Icon, Int>()
 
   private val parameters = parametersList().first().toBuilder()
 
@@ -30,6 +33,7 @@ class ResolvedValues {
   fun update(cards: List<SkillCard>): SkillCardComputationValues {
     totalCards = cards.size
     cardCosts = cards.groupingBy { it.computed.suggestedCost }.eachCount()
+    cardIcons = cards.flatMap { it.iconsList }.groupingBy { it }.eachCount()
 
     val computed = cards.map { it.computed }
     val current = parameters.build()
@@ -62,16 +66,17 @@ class ResolvedValues {
       }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
-  fun SkillCardEffectCondition.effectConditionFactor(card: SkillCard): Double = when (conditionCase) {
-    ConditionCase.CONDITION_NOT_SET -> 1.0 // No condition is always active.
-    ConditionCase.SUCCESS -> 0.8
-    ConditionCase.FAILURE -> 0.2
-    ConditionCase.NEXT_CARD_COST ->
-      cardCosts.entries.filter { it.key > card.computed.suggestedCost }
-        .sumOf { it.value } / totalCards.toDouble()
+  fun SkillCardEffectCondition.effectConditionFactor(card: SkillCard): Double =
+    when (conditionCase) {
+      ConditionCase.CONDITION_NOT_SET -> 1.0 // No condition is always active.
+      ConditionCase.SUCCESS -> 0.8
+      ConditionCase.FAILURE -> 0.2
+      ConditionCase.NEXT_CARD_COST ->
+        cardCosts.entries.filter { it.key > card.computed.suggestedCost }
+          .sumOf { it.value } / totalCards.toDouble()
 
-    null -> throw IllegalStateException()
-  }
+      null -> throw IllegalStateException()
+    }
 
   /** Factor to apply to a [SkillCardEffect] value based on [repeatCase]. */
   fun SkillCardEffectRepeat.effectRepeatFactor(card: SkillCard): Double = when (repeatCase) {
@@ -80,8 +85,12 @@ class ResolvedValues {
     SkillCardEffectRepeat.RepeatCase.SKILL_CARD_BELOW -> TODO()
     SkillCardEffectRepeat.RepeatCase.SKILL_CARD_ABOVE -> TODO()
     SkillCardEffectRepeat.RepeatCase.WOBBLE -> 1.0
-    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_CARD_ABOVE -> TODO()
-    SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> TODO()
+    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_CARDS_ABOVE -> card.iconsList.sumOf {
+      cardIcons[it] ?: 0
+    } / totalCards.toDouble()
+
+    SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> matchingDie.coloredDieFrequency()
+      ?: (Constants.WILD_DIE_PICK_FACTOR / Die.DIE_BLUE.maxValue)
 
     null -> throw IllegalStateException()
   }

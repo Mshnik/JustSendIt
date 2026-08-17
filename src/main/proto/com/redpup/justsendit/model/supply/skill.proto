@@ -137,7 +137,7 @@ message SkillCardEffectRepeat {
     // Once per Wobble token.
     google.protobuf.Empty wobble = 3 [deprecated = true];
     // Once per icon tag on cards above that also appear on this card.
-    google.protobuf.Empty matching_tag_on_card_above = 4;
+    google.protobuf.Empty matching_tag_on_cards_above = 4;
     // Once per die showing a specific value and matching the given color.
     matchers.Matcher matching_die = 5;
   }
