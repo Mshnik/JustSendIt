@@ -16,14 +16,19 @@ import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.fi
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.isZero
 import com.redpup.justsendit.model.supply.proto.*
 import com.redpup.justsendit.model.supply.proto.SkillCardKt.computed
+import com.redpup.justsendit.util.TextProtoReaderImpl
 import com.redpup.justsendit.util.TextProtoReaderWriterImpl
+import java.io.File
 
 /** TODO: Description. */
 fun main() {
-  SkillCalculator("src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards.textproto").updateComputedFields()
+  val textproto = "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards.textproto"
+  val csv = "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards_computed.csv"
+  SkillCalculator(textproto).updateComputedFields()
+  SkillCsvWriter(textproto, csv).write()
 }
 
-/** TODO: Description */
+/** Computation class that resolves [SkillCard.Computed] for all skill cards in [path]. */
 class SkillCalculator(private val path: String, private val resolutionIterations: Int = 20) {
   private val readerWriter = TextProtoReaderWriterImpl(
     path,
@@ -231,5 +236,26 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     }
     val percentile = (card.computed.totalExpectedValue - minValue) / (maxValue - minValue)
     return (percentile * (MAX_UPGRADE_COST - MIN_UPGRADE_COST)).toInt() + MIN_UPGRADE_COST
+  }
+}
+
+/** Output writer for writing computed skill content back to Csv. */
+class SkillCsvWriter(private val input: String, private val output: String) {
+  private val reader = TextProtoReaderImpl(
+    input,
+    SkillCardList::newBuilder,
+    SkillCardList.Builder::getCardsList
+  )
+
+  fun write() {
+    val cards = reader()
+    File(output).writer().use { writer ->
+      writer.write("Name,Cost,ExpectedValue\n")
+      cards.map { "${it.name},${it.computed.suggestedCost},${it.computed.totalExpectedValue}" }
+        .forEach {
+          writer.write(it)
+          writer.write("\n")
+        }
+    }
   }
 }

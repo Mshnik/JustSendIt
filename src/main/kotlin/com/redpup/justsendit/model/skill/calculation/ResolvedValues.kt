@@ -111,14 +111,14 @@ class ResolvedValues {
      *   TOPDECK -> HAND (count 2),
      *   HAND -> TOPDECK (count 2).
      */
-    val SkillCardComputationValuesOrBuilder.draw2Topdeck2: Double get() = 2 * cardFilter2
+    val SkillCardComputationValuesOrBuilder.draw2Topdeck2: Double get() = cardFilter3
 
     /**
      * Flat value for `filter_hand` ("discard any number of cards, then draw that many"). The
      * sheet's version wasn't scaled by hand size (C16 + C17), and per your direction this stays
      * flat rather than becoming hand-size-aware.
      */
-    val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter2 + cardFilter3
+    val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter3
 
     /** Returns the difference between this and [other] as a [SkillCardComputationValues]. */
     operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {

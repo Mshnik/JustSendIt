@@ -2,7 +2,6 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
-import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.supply.proto.*
 
 /**

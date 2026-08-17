@@ -171,6 +171,7 @@ UNSUPPORTED_REPEATS = []       # (card_name, EffectRepeat text)
 
 _SIMPLE_DIE_EFFECT_RE = re.compile(r'^Reroll\s+(Green|Blue|Black|Wild)$')
 _GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
+_GAIN_DICE_RE = re.compile(r'^Gain (Green|Blue|Black), Gain (Green|Blue|Black)$')
 _GAIN_DIE_RE = re.compile(r'^Gain (Green|Blue|Black)$')
 _GAIN_DIE_AND_FUN_RE = re.compile(r'^Gain (Green|Blue|Black) and \+(\d+) Fun$')
 _REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)$')
@@ -233,6 +234,15 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     return [
       f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n",
       f"  effects {{\n    gain {{\n      points: {value}\n    }}\n  }}\n",
+    ]
+
+  # "Gain <Color>, Gain <Color>" -- two independent gains, in order.
+  m = _GAIN_DICE_RE.match(text)
+  if m:
+    color1, color2 = m.group(1).upper(), m.group(2).upper()
+    return [
+      f"  effects {{\n    gain {{\n      die: DIE_{color1}\n    }}\n  }}\n",
+      f"  effects {{\n    gain {{\n      die: DIE_{color2}\n    }}\n  }}\n",
     ]
 
   # "Gain <Color>" -- gain a die of that color.
