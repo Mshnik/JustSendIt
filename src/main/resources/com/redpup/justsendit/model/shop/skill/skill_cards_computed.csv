@@ -1,111 +1,108 @@
-Name,Cost,ExpectedValue
-Pizza Party,0,3.5460000000000003
-Pizza Party,0,2.8
-Falling Leaf,0,2.8
-Falling Leaf,0,2.9
-Wild Ride,0,2.9
-Just Send It,0,7.5
-Bold Beginnings,0,3.5666666663999997
-Still Standing,0,3.5666666663999997
-Skill Up,0,3.5
-Stroke of Genius,0,4.5
-Pass Holder,4,8.7
-Mountain Local,4,8.75
-Trees Lesson,2,4.77
-Cliffs Lesson,2,4.752727272727273
-Private Lesson,2,4.718181818181818
-Scope the Line,3,5.779999999999999
-Read the Mountain,3,6.880000000000001
-Plan the Descent,4,7.779999999999999
-Second Act,4,7.7299999999999995
-Encore,4,8.780000000000001
-Rerun,4,9.83
-Day Tripper,3,7.48
-Weekend Warrior,4,7.880000000000001
-Combo Starter,5,11.031462392820087
-Combo Builder,5,12.081462392820086
-Full Combo,6,13.031462392820087
-Beginner Lesson,6,12.981462392820088
-Intermediate Lesson,6,12.981462392820088
-Advanced Lesson,6,14.031462392820089
-Expert Lesson,7,14.881462392820087
-Groomer Lesson,3,6.754955648420824
-Powder Lesson,4,7.704955648420824
-Ice Lesson,4,8.654955648420824
-Moguls Lesson,4,9.654955648420824
-Reading the Snow,2,3.639090909090909
-Trust the Line,3,5.874545454545455
-Second Nature,3,6.74
-Gut Check,4,8.27
-Muscle Memory,4,8.943636363636363
-Feel It Coming,5,10.043636363636363
-Pure Instinct,5,10.943636363636363
-In Your Bones,6,13.443636363636363
-Cascade,3,5.515454545454546
-Avalanche,3,6.615454545454545
-Head Start,4,7.715454545454545
-First Tracks,4,8.415454545454546
-Point Man,4,8.531462392820087
-Second Chances,4,9.531462392820087
-No Regrets,5,10.531462392820087
-Steady Nerves,6,12.831462392820086
-Stone Cold,2,4.794727633567041
-Catch Your Balance,3,5.944727633567041
-Find Your Footing,3,5.794727633567041
-Shake It Off,3,6.694727633567041
-Steady on the Edge,2,3.8666666663999996
-Unshakeable,2,4.9166666664
-Prove It,3,5.7166666664
-Just for Fun,2,4.4
-Thrill Seeker,3,5.5
-No Excuses,3,6.35
-Powder Day Grin,2,4.9333333336
-Peak Experience,3,5.7333333336
-Leap of Faith,3,6.6833333336
-Best Day Ever,3,5.5
-Momentum,3,6.5
-Course Correct,3,7.300000000000001
-On a Roll,5,11.766666666399999
-Trade Up,5,10.5
-Lighten the Load,4,9.0333333336
-Gut Feeling,5,11.450000000000001
-Rock Solid,6,12.55
-Gentle Nudge,6,13.4
-Cut Your Losses,2,3.5999999999999996
-All In,2,4.6
-New Perspective,2,3.4399999999999995
-Fresh Start,2,3.55
-Whoops,2,4.35
-Take Two,2,3.29
-Nailed It,2,2.8
-Recalculate,2,3.8
-Clean Break,2,4.8
-No Looking Back,3,6.1
-High Stakes,2,2.955151515112727
-Against the Odds,2,4.0618181818181816
-Light Touch,3,5.129696969738181
-Soft Landing,3,7.34
-Steady Push,3,7.24090909090909
-Smooth Correction,4,8.082727272727274
-Fine Tune,4,9.656363636363636
-Total Control,2,2.664141925053362
-Ricochet,2,3.664141925053362
-Big Push,2,4.564141925053362
-Brief Respite,3,6.835858074946638
-Deep Breath,4,7.835858074946638
-Two for One,4,8.835858074946639
-Close Call,2,3.3254955648420825
-Treat Yourself,2,4.315495564842082
-Nail Biter,3,5.305495564842083
-Trail Map,2,3.85
-Pick Your Line,2,4.95
-Fresh Inventory,3,6.05
-Grand Reopening,2,3.2640000000000002
-Keep Riding,2,4.464
-No Stopping Now,3,5.364
-Gear Check,3,6.811804853051628
-Fresh Legs,3,6.711804853051628
-Take It All In,3,6.811804853051628
-Heart to Heart,2,3.13
-Spring Cleaning,2,4.23
-Pack Light,3,5.33
+Name,ExpectedValue,SuggestedCost
+Hot Cocoa Break,4.246,1
+First Turns,3.1,1
+Warm-Up Lap,3.3,1
+Just Send It,8.268,1
+Do-Over,3.5666666663999997,1
+Blue Skies Ahead,3.5,1
+No Sweat,4.5,1
+Corduroy Confidence,7.699999999999999,3
+Blue Bird Day,9.0,4
+Face Shots,9.1,4
+Glade Groove,5.45090909090909,3
+Chatter Line,5.252727272727273,2
+Float and Fly,5.15090909090909,2
+Clean Landing,6.08,3
+Stuck It,7.279999999999999,3
+Textbook Form,8.08,4
+Sharp Edges,7.9799999999999995,4
+Perfect Score,9.08,4
+Off the Charts,10.18,4
+Technically a Trick,8.48,4
+That Somehow Counted,8.28,4
+Scope It Out,11.87624045720802,5
+Read the Line,12.976240457208021,5
+Call the Line,13.87624045720802,6
+Know the Mountain,13.776240457208022,6
+Steady Hands,13.776240457208022,6
+No Looking Back,14.87624045720802,6
+Nothing Left to Prove,15.576240457208023,7
+Fresh Corduroy,7.283744788938066,3
+Untouched,8.183744788938068,4
+Swap Meet,9.083744788938066,4
+Cut Bait,10.083744788938066,4
+First Building Block,4.8545454545454545,2
+Stepping Stone,6.808181818181818,3
+Leveling Up,7.529999999999999,3
+Mastery Unlocked,9.54,4
+Muscle Memory,9.472727272727273,4
+Feel It Coming,10.672727272727272,5
+Pure Instinct,11.472727272727273,5
+In Your Bones,13.972727272727273,6
+Cascade,6.050000000000001,3
+Avalanche,7.250000000000001,3
+Head Start,8.450000000000001,4
+First Tracks,8.85,4
+Rethink It,9.376240457208022,4
+New Read,10.37624045720802,4
+Calling an Audible,11.37624045720802,5
+Full Recalculation,13.476240457208021,6
+Echo,5.706620020060138,3
+Double Take,7.006620020060138,3
+Encore,6.706620020060138,3
+Back-to-Back,7.506620020060138,3
+Wobble,5.2333333328,2
+Recover the Line,6.8666666664000005,3
+Thread the Trees,8.0,4
+Reset,5.7666666664,3
+Dial It In,7.5,3
+Hold the Edge,8.7333333336,4
+Catch Yourself,6.300000000000001,3
+Save It,7.4333333336,3
+No Yard Sale,8.8666666672,4
+Mulligan,7.1666666664,3
+Second Wind,8.7,4
+Full Reset,9.833333333599999,4
+Rewrite the Run,11.866666666399999,5
+Start From Scratch,10.8,5
+Blank Canvas,9.333333333599999,4
+Buzzer Beater,12.100000000000001,5
+Last Call,13.3,6
+Down to the Wire,14.0,6
+Trade Up,4.7,2
+Outgrow It,4.6,2
+Next Level,5.699999999999999,3
+Step It Up,5.2,2
+Full Send,6.699999999999999,3
+No Turning Back,6.4,3
+Ride Switch,4.54,2
+Little Air,5.54,3
+Playing to the Crowd,6.54,3
+All For Show,8.24,4
+High Stakes,3.409090909090909,2
+Against the Odds,4.583636363636363,2
+Light Touch,5.6890909090909085,3
+Airborne,3.2485950413223144,2
+Threading the Gap,4.545785123966943,2
+Skim the Bumps,5.299173553719008,2
+Total Control,2.752016675398187,2
+Ricochet,3.752016675398187,2
+Big Push,4.552016675398186,2
+Style Points,7.2479833246018135,3
+Crowd Pleaser,8.247983324601813,4
+Legend Status,9.247983324601813,4
+Lift Line Intel,3.7783744788938067,2
+Chairlift Chatter,4.658374478893807,2
+Bird's-Eye View,5.538374478893807,3
+Trade-In,4.95,2
+Retire the Skis,6.05,3
+Deadweight,7.15,3
+New Kit,3.714,2
+Upgrade Time,5.014,2
+Fully Loaded,5.714,3
+Gear Check,5.1320610682287064,2
+Fresh Legs,4.9847328243844276,2
+Take It All In,6.084732824384427,3
+Short Hike,4.23,2
+Off the Map,5.23,2
+Secret Stash,5.93,3

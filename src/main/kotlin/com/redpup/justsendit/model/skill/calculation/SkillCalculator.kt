@@ -10,6 +10,7 @@ import com.redpup.justsendit.model.skill.calculation.Constants.MIN_UPGRADE_COST
 import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
+import com.redpup.justsendit.model.skill.calculation.Constants.VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.WILD_DIE_PICK_FACTOR
 import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.dieColorOrWild
 import com.redpup.justsendit.model.skill.calculation.ResolvedValues.Companion.filterHand
@@ -88,7 +89,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   private fun SkillCard.iconExpectedValue(): Double =
     with(Icons) {
       iconsList.sumOf { it.frequency }
-    }
+    } * Constants.ICON
 
   /** Total value of [this] effects. 0 if there are no effects. */
   private fun SkillCard.effectExpectedValue(): Double {
@@ -163,7 +164,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   /** Computes the value of the effect alone (ignoring repeat factor and cost). */
   private fun SkillCardEffect.baseEffectValue(card: SkillCard): Double = when (effectCase) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(alterDie)
-    SkillCardEffect.EffectCase.GAIN -> gain.gainValue()
+    SkillCardEffect.EffectCase.GAIN -> gain.gainValue(card)
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> Constants.PREVENT_WOBBLE
     SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues().effect
     SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues().filterHand
@@ -172,13 +173,15 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     SkillCardEffect.EffectCase.CARD_EFFECT -> cardEffect.singleCardEffectValue()
     SkillCardEffect.EffectCase.GAIN_OWN_TAGS -> card.iconExpectedValue()
     SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> resolvedValues().icons
-    SkillCardEffect.EffectCase.DRAW_FROM_PLAY -> resolvedValues().cardDraw
     SkillCardEffect.EffectCase.MOVE_TILE -> Constants.MOVE_TILE
     SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> resolvedValues().averageCost * Constants.POINTS
     SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED ->
       card.effectCost.removeDie.dieColorOrWild()?.averageValue
         ?: (Die.DIE_BLUE.averageValue * WILD_DIE_PICK_FACTOR)
 
+    SkillCardEffect.EffectCase.REPLACE_DICE -> replaceDice.VALUE
+    SkillCardEffect.EffectCase.BUY_TO_TOPDECK -> resolvedValues.buyToTopdeck
+    SkillCardEffect.EffectCase.IGNORE_HAZARD -> with(resolvedValues) { ignoreHazard.ignoreValue }
     SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
   }
 
@@ -193,12 +196,23 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   }
 
   /** Value of the given [gain] effect. */
-  private fun GainEffect.gainValue(): Double = when (gainCase) {
+  private fun GainEffect.gainValue(card: SkillCard): Double = when (gainCase) {
     GainEffect.GainCase.SKILL -> skill.toDouble()
     GainEffect.GainCase.POINTS -> points.toDouble() * Constants.POINTS
     GainEffect.GainCase.BUYS -> buys.toDouble() * Constants.BUY
     GainEffect.GainCase.TRASHES -> trashes.toDouble() * resolvedValues().trashCard
     GainEffect.GainCase.DIE -> die.averageValue
+    GainEffect.GainCase.POINTS_LINKED -> Constants.POINTS *
+      if (card.effectCondition.hasNextCardCostLinked()) {
+        resolvedValues().averageCost
+      } else if (card.effectCost.hasRemoveDie()) {
+        with(resolvedValues) {
+          -card.effectCost.effectCost
+        }
+      } else {
+        throw IllegalArgumentException("No linked condition")
+      }
+
     GainEffect.GainCase.GAIN_NOT_SET, null -> throw IllegalStateException()
   }
 
@@ -232,7 +246,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     maxValue: Double,
   ): Int {
     if (card.type == SkillCardType.SKILL_CARD_TYPE_STARTER) {
-      return 0
+      return 1
     }
     val percentile = (card.computed.totalExpectedValue - minValue) / (maxValue - minValue)
     return (percentile * (MAX_UPGRADE_COST - MIN_UPGRADE_COST)).toInt() + MIN_UPGRADE_COST
@@ -250,8 +264,9 @@ class SkillCsvWriter(private val input: String, private val output: String) {
   fun write() {
     val cards = reader()
     File(output).writer().use { writer ->
-      writer.write("Name,Cost,ExpectedValue\n")
-      cards.map { "${it.name},${it.computed.suggestedCost},${it.computed.totalExpectedValue}" }
+      writer.write("Name,ExpectedValue,SuggestedCost\n")
+      cards.map { "${it.name},${it.computed.totalExpectedValue},${it.computed.suggestedCost}" }
+        .distinct()
         .forEach {
           writer.write(it)
           writer.write("\n")

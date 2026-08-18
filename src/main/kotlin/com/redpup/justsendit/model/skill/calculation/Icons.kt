@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileList
 import com.redpup.justsendit.model.supply.proto.Icon

@@ -1,5 +1,6 @@
 package com.redpup.justsendit.model.skill.calculation
 
+import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.random.Dice.averageValue
 import com.redpup.justsendit.model.random.Dice.maxValue
@@ -24,6 +25,7 @@ class ResolvedValues {
   private var totalCards = 0
   private var cardCosts = mapOf<Int, Int>()
   private var cardIcons = mapOf<Icon, Int>()
+  private var cardsImpactedByHazards = mapOf<Hazard, Int>()
 
   private val parameters = parametersList().first().toBuilder()
 
@@ -34,6 +36,14 @@ class ResolvedValues {
     totalCards = cards.size
     cardCosts = cards.groupingBy { it.computed.suggestedCost }.eachCount()
     cardIcons = cards.flatMap { it.iconsList }.groupingBy { it }.eachCount()
+    cardsImpactedByHazards = buildMap {
+      this[Hazard.HAZARD_MOGULS] =
+        cards.count { card -> card.effectsList.any { it.alterDie.hasReroll() } }
+      this[Hazard.HAZARD_TREES] =
+        cards.count { card -> card.diceList.any { it == Die.DIE_BLUE } }
+      this[Hazard.HAZARD_CLIFFS] =
+        cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
+    }
 
     val computed = cards.map { it.computed }
     val current = parameters.build()
@@ -75,6 +85,7 @@ class ResolvedValues {
         cardCosts.entries.filter { it.key > card.computed.suggestedCost }
           .sumOf { it.value } / totalCards.toDouble()
 
+      ConditionCase.NEXT_CARD_COST_LINKED -> 1.0
       null -> throw IllegalStateException()
     }
 
@@ -94,6 +105,18 @@ class ResolvedValues {
 
     null -> throw IllegalStateException()
   }
+
+
+  /** The value of ignoring the given hazard. */
+  val Hazard.ignoreValue: Double
+    get() {
+      val mapFrequency = with(Icons) { icon { hazard = this@ignoreValue }.frequency }
+      val cardFrequency = (cardsImpactedByHazards[this] ?: 0).toDouble() / totalCards
+      return cardFrequency * mapFrequency * Constants.HAZARD_IGNORE_VALUE
+    }
+
+  /** Value of putting a card you bought on top of your deck. */
+  val buyToTopdeck: Double get() = parameters.cardFilter2
 
   companion object {
     /**

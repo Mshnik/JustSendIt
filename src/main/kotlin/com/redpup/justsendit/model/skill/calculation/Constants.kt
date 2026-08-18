@@ -26,6 +26,9 @@ object Constants {
   /** C75 "Additional immediate turn": value of `extra_turn`. */
   const val ADDITIONAL_TURN = 1.5
 
+  /** Value of a matching icon. */
+  const val ICON = 2.0
+
   /** C47 "Buy": value of one point of `GainEffect.buys`. */
   const val BUY = 1.0
 
@@ -34,6 +37,9 @@ object Constants {
 
   /** Multiplicative value of getting to pick any kind of die. */
   const val WILD_DIE_PICK_FACTOR = 1.5
+
+  /** Base value of being able to ignore a hazard. */
+  const val HAZARD_IGNORE_VALUE = 4.0
 
   /** Factor to apply to [SkillCard] effect values based on [category]. */
   val SkillCard.TIMING_FACTOR: Double
@@ -64,6 +70,11 @@ object Constants {
       Die.DIE_BLACK -> 1.5
       else -> 1.5 * WILD_DIE_PICK_FACTOR
     }
+
+  /** Value of replacing dice. */
+  // TODO: Maybe this needs more logic? But a naive replacing on a random card
+  // is worse than what a player would do.
+  val ReplaceDiceEffect.VALUE: Double get() = 2.0
 
   /** Value of moving a tile on the map. */
   const val MOVE_TILE: Double = 1.0
