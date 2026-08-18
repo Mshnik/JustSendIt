@@ -5,6 +5,7 @@ package com.redpup.justsendit.model.supply;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.supply.proto";
 
+import "com/redpup/justsendit/model/board/tile/slope.proto";
 import "com/redpup/justsendit/model/supply/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
 import "com/redpup/matchers/matcher.proto";
@@ -78,6 +79,8 @@ message SkillCardEffectCondition {
     // Checks if the next card's cost matches this matcher.
     // Does nothing if there is no next card.
     matchers.Matcher next_card_cost = 3;
+    // Checks the next card's cost
+    google.protobuf.Empty next_card_cost_linked = 4;
   }
 }
 
@@ -97,33 +100,35 @@ message SkillCardEffect {
   // The action performed when the condition (if any) is met.
   oneof effect {
     AlterDieEffect alter_die = 1;
-    GainEffect gain = 2;
-    google.protobuf.Empty ignore_wobble = 3 [deprecated = true];
-    CardEffect card_effect = 4;
+    ReplaceDiceEffect replace_dice = 2;
+    GainEffect gain = 3;
+    google.protobuf.Empty ignore_wobble = 4 [deprecated = true];
+    CardEffect card_effect = 5;
     // Activate the effect of the card played directly below this one an
     // additional time.
-    google.protobuf.Empty reactivate_following = 5;
+    google.protobuf.Empty reactivate_following = 6;
     // Discard any number of cards from hand, then draw that many.
-    google.protobuf.Empty filter_hand = 6;
+    google.protobuf.Empty filter_hand = 7;
     // Replenish the shop's face-up offerings.
-    google.protobuf.Empty replenish_shop = 7;
+    google.protobuf.Empty replenish_shop = 8;
     // Take an additional turn after this one.
-    google.protobuf.Empty extra_turn = 8;
+    google.protobuf.Empty extra_turn = 9;
     // Gain this card's own icon tags an additional time.
-    google.protobuf.Empty gain_own_tags = 9;
+    google.protobuf.Empty gain_own_tags = 10;
     // Gain the icon tags of the card played directly below this one an
     // additional time.
-    google.protobuf.Empty gain_tags_below = 10;
-    // At the end of the turn, draw a different card from the play area back to
-    // hand.
-    google.protobuf.Empty draw_from_play = 11;
+    google.protobuf.Empty gain_tags_below = 11;
+    // Put the card you buy on top of your deck instead of into your discard.
+    google.protobuf.Empty buy_to_topdeck = 12;
     // Move one board tile in any direction.
-    google.protobuf.Empty move_tile = 12;
+    google.protobuf.Empty move_tile = 13;
     // Gain Fun equal to the cost of the next card (engine-defined "next").
-    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 13;
+    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 14;
     // Gain Fun equal to the value rolled, corresponding to the die removed
     // for the cost paid.
-    google.protobuf.Empty gain_fun_equal_to_value_rolled = 14;
+    google.protobuf.Empty gain_fun_equal_to_value_rolled = 15;
+    // Ignore the listed hazard on this tile.
+    board.tile.Hazard ignore_hazard = 16;
   }
 }
 
@@ -143,7 +148,7 @@ message SkillCardEffectRepeat {
   }
 }
 
-/** An effect that alters a die. */
+/** An effect that alters a die chosen by the player. */
 message AlterDieEffect {
   // Matcher for dice that are allowed to be selected for this altering.
   matchers.Matcher die_matcher = 1;
@@ -156,6 +161,12 @@ message AlterDieEffect {
   }
 }
 
+/** An effect that alters all dice by replacing `from` with `to`. */
+message ReplaceDiceEffect {
+  Die from = 1;
+  Die to = 2;
+}
+
 /** An effect that causes gaining some value. */
 message GainEffect {
   oneof gain {
@@ -164,6 +175,8 @@ message GainEffect {
     uint32 buys = 3;
     uint32 trashes = 4;
     Die die = 5;
+    // Gain an amount of points linked to the cost/condition.
+    google.protobuf.Empty points_linked = 6;
   }
 }
 

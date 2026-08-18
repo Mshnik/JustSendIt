@@ -174,8 +174,10 @@ _GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
 _GAIN_DICE_RE = re.compile(r'^Gain (Green|Blue|Black), Gain (Green|Blue|Black)$')
 _GAIN_DIE_RE = re.compile(r'^Gain (Green|Blue|Black)$')
 _GAIN_DIE_AND_FUN_RE = re.compile(r'^Gain (Green|Blue|Black) and \+(\d+) Fun$')
-_REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)$')
+_REPLACE_DICE_RE = re.compile(r'^Replace all (Green|Blue|Black) with (Green|Blue|Black)$')
+_REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)( X)?$')
 _REPEAT_DIE_VALUE_RE = re.compile(r'^(Green|Blue|Black|Wild) (\d+)$')
+_IGNORE_HAZARD_RE = re.compile(r'^Ignore (.*) on this tile$')
 
 
 def _color_matcher_body(color: str, indent: str) -> str:
@@ -251,6 +253,15 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     color = m.group(1).upper()
     return [f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n"]
 
+  # "Replace <Color> with <Color>" -- replace all dice of a color with another color.
+  m = _REPLACE_DICE_RE.match(text)
+  if m:
+    color1 = m.group(1).upper()
+    color2 = m.group(2).upper()
+    return [
+      f"  effects {{\n    replace_dice {{\n      from: DIE_{color1}\n      to: DIE_{color2}\n    }}\n  }}\n"
+    ]
+
   # "Gain +N Skill/Fun"
   m = _GAIN_STAT_RE.match(text)
   if m:
@@ -258,8 +269,14 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     field = "skill" if kind == "Skill" else "points"
     return [f"  effects {{\n    gain {{\n      {field}: {value}\n    }}\n  }}\n"]
 
-  if text == "Gain Fun equal to next card's cost":
-    return ["  effects {\n    gain_fun_equal_to_next_card_cost {}\n  }\n"]
+  # "Ignore <Hazard> on this tile"
+  m = _IGNORE_HAZARD_RE.match(text)
+  if m:
+    hazard = m.group(1).upper()
+    return [f"  effects {{\n    ignore_hazard: HAZARD_{hazard}\n  }}\n"]
+
+  if text == "Gain +X Fun":
+    return [f"  effects {{\n    gain {{\n      points_linked: {{}}\n    }}\n  }}\n"]
 
   if text == "Gain Fun equal to value rolled":
     return ["  effects {\n    gain_fun_equal_to_value_rolled {}\n  }\n"]
@@ -267,10 +284,10 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Gain tags of this card an additional time":
     return ["  effects {\n    gain_own_tags {}\n  }\n"]
 
-  if text == "Gain tags of card below an additional time":
+  if text == "Gain tags an additional time":
     return ["  effects {\n    gain_tags_below {}\n  }\n"]
 
-  if text == "Activate the effect of the card below an additional time":
+  if text == "Activate the effect an additional time":
     return ["  effects {\n    reactivate_following {}\n  }\n"]
 
   if text == "Discard any number of cards, then draw that many cards.":
@@ -338,10 +355,10 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Replenish the shop. You may play additional cards below this.":
     return ["  effects {\n    replenish_shop {}\n  }\n"]
 
-  if text == "At the end of your turn, draw another card from play.":
-    return ["  effects {\n    draw_from_play {}\n  }\n"]
+  if text == "Put the card you buy on top of your deck instead of into your discard.":
+    return ["  effects {\n    buy_to_topdeck {}\n  }\n"]
 
-  if text == "Move one tile in any direction":
+  if text == "At the end of your turn, move one tile in any direction":
     return ["  effects {\n    move_tile {}\n  }\n"]
 
   # Nothing matched: this EffectValue has no representation in skill.proto
@@ -363,7 +380,10 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
   if text == "Success":
     return "  effect_condition {\n    success {}\n  }\n", None
 
-  if text == "If card below costs greater":
+  if text == "Next card costs X":
+    return "  effect_condition {\n    next_card_cost_linked {}\n  }\n", None
+
+  if text == "Next card costs greater":
     # No explicit threshold is given in the sheet -- interpreted as "the
     # card below costs more than THIS card's own cost", which we already
     # know, so we bake it into the matcher as a literal comparison.
@@ -391,6 +411,9 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
         + "    }\n"
           "  }\n"
     )
+
+  if text == "Next card":
+    return None, ""
 
   UNSUPPORTED_CONDITIONS.append((card_name, text))
   return f'  # TODO(skill.proto): no condition/cost mapping for "{text}"\n', None
