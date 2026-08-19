@@ -1,108 +1,108 @@
 Name,ExpectedValue,SuggestedCost
-Hot Cocoa Break,4.246,1
-First Turns,3.1,1
-Warm-Up Lap,3.3,1
-Just Send It,8.268,1
-Do-Over,3.5666666663999997,1
-Blue Skies Ahead,3.5,1
-No Sweat,4.5,1
-Corduroy Confidence,7.699999999999999,3
-Blue Bird Day,9.0,4
-Face Shots,9.1,4
-Glade Groove,5.45090909090909,3
-Chatter Line,5.252727272727273,2
-Float and Fly,5.15090909090909,2
-Clean Landing,6.08,3
-Stuck It,7.279999999999999,3
-Textbook Form,8.08,4
-Sharp Edges,7.9799999999999995,4
-Perfect Score,9.08,4
-Off the Charts,10.18,4
-Technically a Trick,8.48,4
-That Somehow Counted,8.28,4
-Scope It Out,11.87624045720802,5
-Read the Line,12.976240457208021,5
-Call the Line,13.87624045720802,6
-Know the Mountain,13.776240457208022,6
-Steady Hands,13.776240457208022,6
-No Looking Back,14.87624045720802,6
-Nothing Left to Prove,15.576240457208023,7
-Fresh Corduroy,7.283744788938066,3
-Untouched,8.183744788938068,4
-Swap Meet,9.083744788938066,4
-Cut Bait,10.083744788938066,4
-First Building Block,4.8545454545454545,2
-Stepping Stone,6.808181818181818,3
-Leveling Up,7.529999999999999,3
-Mastery Unlocked,9.54,4
-Muscle Memory,9.472727272727273,4
-Feel It Coming,10.672727272727272,5
-Pure Instinct,11.472727272727273,5
-In Your Bones,13.972727272727273,6
-Cascade,6.050000000000001,3
-Avalanche,7.250000000000001,3
-Head Start,8.450000000000001,4
-First Tracks,8.85,4
-Rethink It,9.376240457208022,4
-New Read,10.37624045720802,4
-Calling an Audible,11.37624045720802,5
-Full Recalculation,13.476240457208021,6
-Echo,5.706620020060138,3
-Double Take,7.006620020060138,3
-Encore,6.706620020060138,3
-Back-to-Back,7.506620020060138,3
-Wobble,5.2333333328,2
-Recover the Line,6.8666666664000005,3
-Thread the Trees,8.0,4
-Reset,5.7666666664,3
-Dial It In,7.5,3
-Hold the Edge,8.7333333336,4
-Catch Yourself,6.300000000000001,3
-Save It,7.4333333336,3
-No Yard Sale,8.8666666672,4
-Mulligan,7.1666666664,3
-Second Wind,8.7,4
-Full Reset,9.833333333599999,4
-Rewrite the Run,11.866666666399999,5
-Start From Scratch,10.8,5
-Blank Canvas,9.333333333599999,4
-Buzzer Beater,12.100000000000001,5
-Last Call,13.3,6
-Down to the Wire,14.0,6
-Trade Up,4.7,2
-Outgrow It,4.6,2
-Next Level,5.699999999999999,3
-Step It Up,5.2,2
-Full Send,6.699999999999999,3
-No Turning Back,6.4,3
-Ride Switch,4.54,2
-Little Air,5.54,3
-Playing to the Crowd,6.54,3
-All For Show,8.24,4
-High Stakes,3.409090909090909,2
-Against the Odds,4.583636363636363,2
-Light Touch,5.6890909090909085,3
-Airborne,3.2485950413223144,2
-Threading the Gap,4.545785123966943,2
-Skim the Bumps,5.299173553719008,2
-Total Control,2.752016675398187,2
-Ricochet,3.752016675398187,2
-Big Push,4.552016675398186,2
-Style Points,7.2479833246018135,3
-Crowd Pleaser,8.247983324601813,4
-Legend Status,9.247983324601813,4
-Lift Line Intel,3.7783744788938067,2
-Chairlift Chatter,4.658374478893807,2
-Bird's-Eye View,5.538374478893807,3
-Trade-In,4.95,2
-Retire the Skis,6.05,3
-Deadweight,7.15,3
-New Kit,3.714,2
-Upgrade Time,5.014,2
-Fully Loaded,5.714,3
-Gear Check,5.1320610682287064,2
-Fresh Legs,4.9847328243844276,2
-Take It All In,6.084732824384427,3
-Short Hike,4.23,2
-Off the Map,5.23,2
-Secret Stash,5.93,3
+Fresh Legs,4.246,1
+Fresh Start,3.1,1
+First Tracks,3.3,1
+First Send,8.268,1
+Second Guess,3.5666666663999997,1
+Growing Pains,3.5,1
+Big Leagues,4.5,1
+Good Vibes,7.699999999999999,3
+Finding Flow,9.0,4
+Bottomless Bliss,10.1,4
+Perfect Sync,5.45090909090909,3
+Reading the Room,5.252727272727273,2
+Beginner’s Luck,5.15090909090909,2
+Easy Streak,6.08,3
+On a Roll,7.279999999999999,3
+In the Zone,8.08,4
+Steady Hands,7.9799999999999995,4
+Gutted It Out,9.08,4
+Weightless,10.18,4
+Needle Threader,8.48,4
+Wild Send,8.28,4
+Scope the Line,11.884777379734148,5
+Second Opinion,12.984777379734147,5
+Master Route,13.884777379734148,6
+Weighing Options,13.784777379734148,6
+Cold Read,13.784777379734148,6
+Game Plan,14.884777379734148,6
+Mind Reader,15.584777379734149,7
+Trade Up,7.285762973932422,3
+New Hand,8.185762973932423,4
+Quick Trade,9.085762973932422,4
+Sharp Exchange,10.085762973932422,4
+Silky Combo,4.8545454545454545,2
+Whiteout Chain,6.808181818181818,3
+Chain Reaction,7.529999999999999,3
+Snowball Effect,9.54,4
+Worth the Wait,9.472727272727273,4
+Even Trade,10.672727272727272,5
+Fair Shake,11.472727272727273,5
+Big Spender,13.972727272727273,6
+Two for One,6.050000000000001,3
+Double Take,7.250000000000001,3
+Whiteout Twofer,8.450000000000001,4
+Encore,8.85,4
+Fresh Deal,9.384777379734148,4
+Clean Sweep,10.384777379734148,4
+Total Reset,11.384777379734148,5
+Burn It Down,13.484777379734147,6
+Echo Turn,5.707739933443172,3
+Double Carve,7.0077399334431725,3
+Deja Vu,6.707739933443172,3
+Second Act,7.5077399334431725,3
+Take Two,5.2333333328,2
+Do Over,6.8666666664000005,3
+Second Wind,8.0,4
+Quick Bail,5.7666666664,3
+Recalculate,7.5,3
+Glass Save,8.7333333336,4
+Off Balance,6.300000000000001,3
+Steady Save,7.4333333336,3
+Air Save,8.8666666672,4
+Wild Wobble,7.1666666664,3
+Keep Your Cool,8.7,4
+Stone Cold,9.833333333599999,4
+Double Save,11.866666666399999,5
+Sharp Recovery,10.8,5
+Small Fix,9.333333333599999,4
+Double Gamble,12.100000000000001,5
+Double Down,13.3,6
+All In,14.0,6
+Curveball,4.7,2
+Ricochet,4.6,2
+Plot Twist,5.699999999999999,3
+Escalation,5.2,2
+Sudden Steep,6.699999999999999,3
+Rising Stakes,6.4,3
+Small Payout,4.54,2
+Steeper Payout,5.54,3
+Big Payout,6.54,3
+Jackpot,8.24,4
+Steady Streak,3.409090909090909,2
+Muscle Memory,4.583636363636363,2
+Old Habits,5.6890909090909085,3
+Edge Dodge,3.2485950413223144,2
+Weave Dodge,4.542809917355372,2
+Ghost Line,5.299173553719008,2
+Trim the Fat,2.7455584834162465,2
+Sharpen Up,3.7455584834162465,2
+Clean Cut,4.545558483416246,2
+Stuck It,7.2544415165837535,3
+Nailed It,8.254441516583753,4
+Perfect Finish,9.254441516583753,4
+Lift Line Chat,3.778576297393242,2
+Chairlift Scout,4.658576297393242,2
+Overhead View,5.538576297393242,3
+Gear Check,4.95,2
+Pack Light,6.05,3
+Full Purge,7.15,3
+Fresh Picks,3.714,2
+Restock Run,5.014,2
+Grand Reopening,5.714,3
+Save for Later,5.137069396110701,2
+Quick Stash,4.985188126919154,2
+Prime Placement,6.085188126919155,3
+Shift the Line,4.23,2
+Reroute,5.23,2
+Mountain Mover,5.93,3
