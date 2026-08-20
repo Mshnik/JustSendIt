@@ -2,7 +2,7 @@
 # proto-message: SkillCardList
 
 cards {
-  name: "Fresh Legs"
+  name: "Top of the World"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
@@ -18,85 +18,55 @@ cards {
       points: 1
     }
   }
-  flavor_text: "A short breather resets everything."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.4
-    effect_expected_value: 0.96
-    total_expected_value: 4.246
-    suggested_cost: 1
-  }
+  flavor_text: "Nowhere else you’d rather be."
 }
+
 cards {
-  name: "Fresh Start"
+  name: "Back Pocket"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
   icons {
     grade: GRADE_GREEN
   }
-  flavor_text: "Every run begins somewhere."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 0.0
-    total_expected_value: 3.1
-    suggested_cost: 1
-  }
+  flavor_text: "The basics never go out of style."
 }
+
 cards {
-  name: "Fresh Start"
+  name: "Back Pocket"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
   icons {
     grade: GRADE_GREEN
   }
-  flavor_text: "Every run begins somewhere."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 0.0
-    total_expected_value: 3.1
-    suggested_cost: 1
-  }
+  flavor_text: "The basics never go out of style."
 }
+
 cards {
-  name: "First Tracks"
+  name: "Old Faithful"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
   icons {
     condition: CONDITION_GROOMED
   }
-  flavor_text: "Nobody\342\200\231s smooth on lap one."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.8
-    effect_expected_value: 0.0
-    total_expected_value: 3.3
-    suggested_cost: 1
-  }
+  flavor_text: "Still works every single time."
 }
+
 cards {
-  name: "First Tracks"
+  name: "Old Faithful"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
   icons {
     condition: CONDITION_GROOMED
   }
-  flavor_text: "Nobody\342\200\231s smooth on lap one."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.8
-    effect_expected_value: 0.0
-    total_expected_value: 3.3
-    suggested_cost: 1
-  }
+  flavor_text: "Still works every single time."
 }
+
 cards {
-  name: "First Send"
+  name: "Full Send"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
@@ -104,25 +74,18 @@ cards {
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {
-    }
+    success {}
   }
   effects {
     gain {
       points: 1
     }
   }
-  flavor_text: "Landed it. Somehow."
-  computed {
-    dice_expected_value: 7.5
-    icon_expected_value: 0.0
-    effect_expected_value: 0.768
-    total_expected_value: 8.268
-    suggested_cost: 1
-  }
+  flavor_text: "Worry about the landing later!"
 }
+
 cards {
-  name: "Second Guess"
+  name: "Catch Yourself"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
@@ -133,27 +96,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Line looked better from up top."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.0
-    effect_expected_value: 1.0666666664
-    total_expected_value: 3.5666666663999997
-    suggested_cost: 1
-  }
+  flavor_text: "Caught it before it became a story."
 }
+
 cards {
-  name: "Second Guess"
+  name: "Catch Yourself"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_GREEN
@@ -164,53 +118,32 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Line looked better from up top."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.0
-    effect_expected_value: 1.0666666664
-    total_expected_value: 3.5666666663999997
-    suggested_cost: 1
-  }
+  flavor_text: "Caught it before it became a story."
 }
+
 cards {
-  name: "Growing Pains"
+  name: "Getting There"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_BLUE
-  flavor_text: "New gear, new confidence."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.0
-    effect_expected_value: 0.0
-    total_expected_value: 3.5
-    suggested_cost: 1
-  }
+  flavor_text: "Almost got the hang of it."
 }
+
 cards {
-  name: "Big Leagues"
+  name: "Muscle Memory"
   type: SKILL_CARD_TYPE_STARTER
   cost: 1
   dice: DIE_BLACK
-  flavor_text: "Suddenly the hill looks smaller."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.0
-    effect_expected_value: 0.0
-    total_expected_value: 4.5
-    suggested_cost: 1
-  }
+  flavor_text: "Getting closer to consistent."
 }
+
 cards {
   name: "Good Vibes"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -225,17 +158,11 @@ cards {
       points: 2
     }
   }
-  flavor_text: "Some days just click."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.8
-    effect_expected_value: 2.4
-    total_expected_value: 7.699999999999999
-    suggested_cost: 3
-  }
+  flavor_text: "Friends, fresh air, no complaints."
 }
+
 cards {
-  name: "Finding Flow"
+  name: "Living the Life"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -249,17 +176,11 @@ cards {
       points: 2
     }
   }
-  flavor_text: "Everything lines up just right."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.6
-    effect_expected_value: 2.4
-    total_expected_value: 9.0
-    suggested_cost: 4
-  }
+  flavor_text: "Every run feels like a bonus."
 }
+
 cards {
-  name: "Bottomless Bliss"
+  name: "On a Roll"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -273,107 +194,80 @@ cards {
       points: 2
     }
   }
-  flavor_text: "Float. Just float."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.7
-    effect_expected_value: 2.4
-    total_expected_value: 10.1
-    suggested_cost: 4
-  }
+  flavor_text: "Can’t wipe this grin off."
 }
+
 cards {
-  name: "Perfect Sync"
+  name: "Locked In"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
-  dice: DIE_BLUE
+  dice: DIE_GREEN
   icons {
-    condition: CONDITION_GROOMED
+    grade: GRADE_GREEN
   }
   icons {
     hazard: HAZARD_TREES
   }
-  category: EFFECT_CATEGORY_PLAY
+  category: EFFECT_CATEGORY_RIDE
   effects {
     gain {
-      points: 3
+      die: DIE_GREEN
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "Two lines, one rhythm."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.1
-    effect_expected_value: 0.8509090909090908
-    total_expected_value: 5.45090909090909
-    suggested_cost: 3
-  }
+  flavor_text: "Everything lining up just right."
 }
+
 cards {
-  name: "Reading the Room"
+  name: "In the Groove"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
   icons {
-    condition: CONDITION_ICE
+    grade: GRADE_BLUE
   }
   icons {
     hazard: HAZARD_MOGULS
   }
-  category: EFFECT_CATEGORY_PLAY
+  category: EFFECT_CATEGORY_RIDE
   effects {
     gain {
-      points: 3
+      die: DIE_BLUE
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "Matched the mood, matched the vibe."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.0
-    effect_expected_value: 0.7527272727272726
-    total_expected_value: 5.252727272727273
-    suggested_cost: 2
-  }
+  flavor_text: "Falling right into rhythm."
 }
+
 cards {
-  name: "Beginner\342\200\231s Luck"
+  name: "Read the Room"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
-  dice: DIE_BLUE
+  dice: DIE_BLACK
   icons {
-    condition: CONDITION_POWDER
+    grade: GRADE_BLACK
   }
   icons {
     hazard: HAZARD_CLIFFS
   }
-  category: EFFECT_CATEGORY_PLAY
+  category: EFFECT_CATEGORY_RIDE
   effects {
     gain {
-      points: 3
+      die: DIE_BLACK
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "Somehow it worked out."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.7999999999999999
-    effect_expected_value: 0.8509090909090908
-    total_expected_value: 5.15090909090909
-    suggested_cost: 2
-  }
+  flavor_text: "Reads the moment like it’s obvious."
 }
+
 cards {
-  name: "Easy Streak"
+  name: "Clean Line"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
@@ -397,9 +291,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_GREEN"
-                }
+                string_matcher { value: "DIE_GREEN" }
               }
             }
           }
@@ -409,9 +301,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 4
-                }
+                value_matcher { int32_value: 4 }
               }
             }
           }
@@ -419,17 +309,11 @@ cards {
       }
     }
   }
-  flavor_text: "Four easy turns, all smiles."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.6
-    effect_expected_value: 0.48
-    total_expected_value: 6.08
-    suggested_cost: 3
-  }
+  flavor_text: "Not a hair out of place."
 }
+
 cards {
-  name: "On a Roll"
+  name: "Textbook Turn"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -453,9 +337,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_GREEN"
-                }
+                string_matcher { value: "DIE_GREEN" }
               }
             }
           }
@@ -465,9 +347,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 4
-                }
+                value_matcher { int32_value: 4 }
               }
             }
           }
@@ -475,17 +355,11 @@ cards {
       }
     }
   }
-  flavor_text: "Four turns, not a single wobble."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.8
-    effect_expected_value: 0.48
-    total_expected_value: 7.279999999999999
-    suggested_cost: 3
-  }
+  flavor_text: "Straight out of the textbook."
 }
+
 cards {
-  name: "In the Zone"
+  name: "Nothing to It"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -509,9 +383,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_BLUE"
-                }
+                string_matcher { value: "DIE_BLUE" }
               }
             }
           }
@@ -521,9 +393,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 6
-                }
+                value_matcher { int32_value: 6 }
               }
             }
           }
@@ -531,17 +401,11 @@ cards {
       }
     }
   }
-  flavor_text: "Six turns, pure muscle memory."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 0.4799999999999999
-    total_expected_value: 8.08
-    suggested_cost: 4
-  }
+  flavor_text: "Makes the hard part look easy."
 }
+
 cards {
-  name: "Steady Hands"
+  name: "Sticking It"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -565,9 +429,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_BLUE"
-                }
+                string_matcher { value: "DIE_BLUE" }
               }
             }
           }
@@ -577,9 +439,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 6
-                }
+                value_matcher { int32_value: 6 }
               }
             }
           }
@@ -587,17 +447,11 @@ cards {
       }
     }
   }
-  flavor_text: "Six turns, not a flinch."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.5
-    effect_expected_value: 0.4799999999999999
-    total_expected_value: 7.9799999999999995
-    suggested_cost: 4
-  }
+  flavor_text: "A landing that never misses."
 }
+
 cards {
-  name: "Gutted It Out"
+  name: "Coldblooded"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
@@ -621,9 +475,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_BLACK"
-                }
+                string_matcher { value: "DIE_BLACK" }
               }
             }
           }
@@ -633,9 +485,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 8
-                }
+                value_matcher { int32_value: 8 }
               }
             }
           }
@@ -643,17 +493,11 @@ cards {
       }
     }
   }
-  flavor_text: "Eight turns, teeth gritted."
-  computed {
-    dice_expected_value: 8.0
-    icon_expected_value: 0.6
-    effect_expected_value: 0.48
-    total_expected_value: 9.08
-    suggested_cost: 4
-  }
+  flavor_text: "Handles chaos like it’s nothing."
 }
+
 cards {
-  name: "Weightless"
+  name: "Living Legend"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
@@ -677,9 +521,7 @@ cards {
             enum_matcher {
               enum_type_name: "com.redpup.justsendit.model.Die"
               name_matcher {
-                string_matcher {
-                  value: "DIE_BLACK"
-                }
+                string_matcher { value: "DIE_BLACK" }
               }
             }
           }
@@ -689,9 +531,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 8
-                }
+                value_matcher { int32_value: 8 }
               }
             }
           }
@@ -699,23 +539,20 @@ cards {
       }
     }
   }
-  flavor_text: "Eight turns, not a single sound."
-  computed {
-    dice_expected_value: 9.0
-    icon_expected_value: 0.7
-    effect_expected_value: 0.48
-    total_expected_value: 10.18
-    suggested_cost: 4
-  }
+  flavor_text: "The kind of run people talk about."
 }
+
 cards {
-  name: "Needle Threader"
+  name: "Blind Luck"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
-    wild: true
+    grade: GRADE_DOUBLE_BLACK
+  }
+  icons {
+    condition: CONDITION_ICE
   }
   category: EFFECT_CATEGORY_FINALE
   effects {
@@ -732,9 +569,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 1
-                }
+                value_matcher { int32_value: 1 }
               }
             }
           }
@@ -742,17 +577,11 @@ cards {
       }
     }
   }
-  flavor_text: "One perfect gap, one perfect line."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 2.0
-    effect_expected_value: 0.48
-    total_expected_value: 8.48
-    suggested_cost: 4
-  }
+  flavor_text: "Landed on nerve alone."
 }
+
 cards {
-  name: "Wild Send"
+  name: "Hail Mary"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -778,9 +607,7 @@ cards {
           matcher {
             collection_matcher {
               last {
-                value_matcher {
-                  int32_value: 1
-                }
+                value_matcher { int32_value: 1 }
               }
             }
           }
@@ -788,17 +615,11 @@ cards {
       }
     }
   }
-  flavor_text: "No plan, one shot, stuck it."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.8
-    effect_expected_value: 0.48
-    total_expected_value: 8.28
-    suggested_cost: 4
-  }
+  flavor_text: "Somehow, that actually worked."
 }
+
 cards {
-  name: "Scope the Line"
+  name: "Window Shopping"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
@@ -828,17 +649,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Eyeing every option downhill."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 11.884777379734148
-    suggested_cost: 5
-  }
+  flavor_text: "Scope it all before you commit."
 }
+
 cards {
-  name: "Second Opinion"
+  name: "Second Look"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -868,17 +683,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Better safe than sorry."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.7
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 12.984777379734147
-    suggested_cost: 5
-  }
+  flavor_text: "Look twice, then choose."
 }
+
 cards {
-  name: "Master Route"
+  name: "Cherry Picking"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLUE
@@ -908,17 +717,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Every option mapped, one chosen."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 13.884777379734148
-    suggested_cost: 6
-  }
+  flavor_text: "Only the best makes the cut!"
 }
+
 cards {
-  name: "Weighing Options"
+  name: "Weigh Your Odds"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 6
   dice: DIE_BLACK
@@ -948,17 +751,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Every choice gets a look."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.5
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 13.784777379734148
-    suggested_cost: 6
-  }
+  flavor_text: "Only one of these was ever right."
 }
+
 cards {
-  name: "Cold Read"
+  name: "Game Plan"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -981,17 +778,11 @@ cards {
       count: 2
     }
   }
-  flavor_text: "Two glances, two chances ahead."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.5
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 13.784777379734148
-    suggested_cost: 6
-  }
+  flavor_text: "Already knows what’s coming."
 }
+
 cards {
-  name: "Game Plan"
+  name: "One Step Ahead"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
@@ -1014,17 +805,11 @@ cards {
       count: 2
     }
   }
-  flavor_text: "Study the line before you drop."
-  computed {
-    dice_expected_value: 8.0
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 14.884777379734148
-    suggested_cost: 6
-  }
+  flavor_text: "Already planning the next move."
 }
+
 cards {
-  name: "Mind Reader"
+  name: "Master Plan"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 6
   dice: DIE_BLACK
@@ -1050,17 +835,11 @@ cards {
       count: 2
     }
   }
-  flavor_text: "Every move, already known."
-  computed {
-    dice_expected_value: 9.0
-    icon_expected_value: 0.30000000000000004
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 15.584777379734149
-    suggested_cost: 7
-  }
+  flavor_text: "Every move already accounted for."
 }
+
 cards {
-  name: "Trade Up"
+  name: "Dig Deep"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -1069,28 +848,23 @@ cards {
     condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_PLAY
-  effect_cost {
-    discard_card {
-    }
-  }
   effects {
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
       count: 1
     }
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 1
+    }
   }
-  flavor_text: "Ditch the dud, grab better."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.8
-    effect_expected_value: 1.485762973932422
-    total_expected_value: 7.285762973932422
-    suggested_cost: 3
-  }
+  flavor_text: "Let one go, grab something better."
 }
+
 cards {
-  name: "New Hand"
+  name: "Trade Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -1099,28 +873,23 @@ cards {
     condition: CONDITION_POWDER
   }
   category: EFFECT_CATEGORY_PLAY
-  effect_cost {
-    discard_card {
-    }
-  }
   effects {
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
       count: 1
     }
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 1
+    }
   }
-  flavor_text: "Wrong gear, right call."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.7
-    effect_expected_value: 1.485762973932422
-    total_expected_value: 8.185762973932423
-    suggested_cost: 4
-  }
+  flavor_text: "Swap the old for something better."
 }
+
 cards {
-  name: "Quick Trade"
+  name: "Fresh Start"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -1129,28 +898,23 @@ cards {
     grade: GRADE_BLUE
   }
   category: EFFECT_CATEGORY_PLAY
-  effect_cost {
-    discard_card {
-    }
-  }
   effects {
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
       count: 1
     }
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 1
+    }
   }
-  flavor_text: "One toss, one better pick."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 1.485762973932422
-    total_expected_value: 9.085762973932422
-    suggested_cost: 4
-  }
+  flavor_text: "Out with the old, in with the new."
 }
+
 cards {
-  name: "Sharp Exchange"
+  name: "Clean Sweep"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
@@ -1162,28 +926,23 @@ cards {
     hazard: HAZARD_CLIFFS
   }
   category: EFFECT_CATEGORY_PLAY
-  effect_cost {
-    discard_card {
-    }
-  }
   effects {
     card_effect {
       source_zone: SKILL_CARD_ZONE_TOPDECK
       destination_zone: SKILL_CARD_ZONE_HAND
       count: 1
     }
+    card_effect {
+      source_zone: SKILL_CARD_ZONE_HAND
+      destination_zone: SKILL_CARD_ZONE_DISCARD
+      count: 1
+    }
   }
-  flavor_text: "Cut the weak link, grab an edge."
-  computed {
-    dice_expected_value: 8.0
-    icon_expected_value: 0.6
-    effect_expected_value: 1.485762973932422
-    total_expected_value: 10.085762973932422
-    suggested_cost: 4
-  }
+  flavor_text: "Wipes it all and starts fresh."
 }
+
 cards {
-  name: "Silky Combo"
+  name: "Warm Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -1203,20 +962,13 @@ cards {
     }
   }
   effects {
-    gain_own_tags {
-    }
+    gain_own_tags {}
   }
-  flavor_text: "Easy line, double the good vibes."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.4
-    effect_expected_value: 0.9545454545454544
-    total_expected_value: 4.8545454545454545
-    suggested_cost: 2
-  }
+  flavor_text: "Just a warm-up for what’s coming."
 }
+
 cards {
-  name: "Whiteout Chain"
+  name: "Upping the Ante"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
@@ -1237,20 +989,13 @@ cards {
     }
   }
   effects {
-    gain_own_tags {
-    }
+    gain_own_tags {}
   }
-  flavor_text: "One good turn leads to two."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 1.2999999999999998
-    effect_expected_value: 0.5081818181818182
-    total_expected_value: 6.808181818181818
-    suggested_cost: 3
-  }
+  flavor_text: "Bigger risk, bigger payoff, always."
 }
+
 cards {
-  name: "Chain Reaction"
+  name: "Double Down"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -1271,29 +1016,22 @@ cards {
     }
   }
   effects {
-    gain_own_tags {
-    }
+    gain_own_tags {}
   }
-  flavor_text: "One steep move, twice the payoff."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 1.1
-    effect_expected_value: 0.43000000000000005
-    total_expected_value: 7.529999999999999
-    suggested_cost: 3
-  }
+  flavor_text: "Doubling down, and it pays off!"
 }
+
 cards {
-  name: "Snowball Effect"
+  name: "All In"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
-    wild: true
+    grade: GRADE_DOUBLE_BLACK
   }
   icons {
-    grade: GRADE_DOUBLE_BLACK
+    hazard: HAZARD_MOGULS
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
@@ -1305,22 +1043,15 @@ cards {
     }
   }
   effects {
-    gain_own_tags {
-    }
+    gain_own_tags {}
   }
-  flavor_text: "What started small keeps growing."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 2.2
-    effect_expected_value: 0.34
-    total_expected_value: 9.54
-    suggested_cost: 4
-  }
+  flavor_text: "Holding nothing back this time."
 }
+
 cards {
-  name: "Worth the Wait"
+  name: "Buy In"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   dice: DIE_GREEN
   icons {
@@ -1328,28 +1059,25 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
-    next_card_cost_linked {
+    next_card_cost {
+      comparison_matcher {
+        comparison: COMPARISON_GT
+        int32_value: 2
+      }
     }
   }
   effects {
     gain {
-      points_linked {
-      }
+      points: 3
     }
   }
-  flavor_text: "Patience pays exactly what\342\200\231s owed."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.6
-    effect_expected_value: 3.872727272727272
-    total_expected_value: 9.472727272727273
-    suggested_cost: 4
-  }
+  flavor_text: "Why go halfway."
 }
+
 cards {
-  name: "Even Trade"
+  name: "Go Big"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -1357,28 +1085,25 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
-    next_card_cost_linked {
+    next_card_cost {
+      comparison_matcher {
+        comparison: COMPARISON_GT
+        int32_value: 3
+      }
     }
   }
   effects {
     gain {
-      points_linked {
-      }
+      points: 4
     }
   }
-  flavor_text: "Cost matched, fun delivered."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.8
-    effect_expected_value: 3.872727272727272
-    total_expected_value: 10.672727272727272
-    suggested_cost: 5
-  }
+  flavor_text: "Bet big and cashed out bigger."
 }
+
 cards {
-  name: "Fair Shake"
+  name: "High Roller"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -1386,56 +1111,49 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
-    next_card_cost_linked {
+    next_card_cost {
+      comparison_matcher {
+        comparison: COMPARISON_GT
+        int32_value: 4
+      }
     }
   }
   effects {
     gain {
-      points_linked {
-      }
+      points: 5
     }
   }
-  flavor_text: "Steep price, steeper payoff."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 3.872727272727272
-    total_expected_value: 11.472727272727273
-    suggested_cost: 5
-  }
+  flavor_text: "Every bit of it comes back around."
 }
+
 cards {
-  name: "Big Spender"
+  name: "Sky’s the Limit"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 5
+  dice: DIE_BLACK
   dice: DIE_BLUE
-  dice: DIE_BLUE
-  dice: DIE_GREEN
   icons {
     grade: GRADE_BLACK
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
-    next_card_cost_linked {
+    next_card_cost {
+      comparison_matcher {
+        comparison: COMPARISON_GT
+        int32_value: 5
+      }
     }
   }
   effects {
     gain {
-      points_linked {
-      }
+      points: 6
     }
   }
-  flavor_text: "Priciest bill, biggest thrill."
-  computed {
-    dice_expected_value: 9.5
-    icon_expected_value: 0.6
-    effect_expected_value: 3.872727272727272
-    total_expected_value: 13.972727272727273
-    suggested_cost: 6
-  }
+  flavor_text: "No ceiling on what this could be."
 }
+
 cards {
-  name: "Two for One"
+  name: "Chain Reaction"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -1445,20 +1163,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {
-    }
+    gain_tags_below {}
   }
-  flavor_text: "Every move counts twice."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.3
-    effect_expected_value: 0.7500000000000006
-    total_expected_value: 6.050000000000001
-    suggested_cost: 3
-  }
+  flavor_text: "One good move sets up the next."
 }
+
 cards {
-  name: "Double Take"
+  name: "Domino Effect"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -1468,20 +1179,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {
-    }
+    gain_tags_below {}
   }
-  flavor_text: "Every bump, felt twice."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.5
-    effect_expected_value: 0.7500000000000006
-    total_expected_value: 7.250000000000001
-    suggested_cost: 3
-  }
+  flavor_text: "Just needed the first one to fall."
 }
+
 cards {
-  name: "Whiteout Twofer"
+  name: "Riding the Wave"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -1491,20 +1195,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {
-    }
+    gain_tags_below {}
   }
-  flavor_text: "Fresh snow, doubled up."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.7
-    effect_expected_value: 0.7500000000000006
-    total_expected_value: 8.450000000000001
-    suggested_cost: 4
-  }
+  flavor_text: "Momentum feeding right into more."
 }
+
 cards {
-  name: "Encore"
+  name: "One Good Turn"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
@@ -1514,20 +1211,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    gain_tags_below {
-    }
+    gain_tags_below {}
   }
-  flavor_text: "One drop, felt like two."
-  computed {
-    dice_expected_value: 8.0
-    icon_expected_value: 0.1
-    effect_expected_value: 0.7500000000000006
-    total_expected_value: 8.85
-    suggested_cost: 4
-  }
+  flavor_text: "Earns itself a second act."
 }
+
 cards {
-  name: "Fresh Deal"
+  name: "Clean Slate"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
@@ -1536,20 +1226,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {
-    }
+    filter_hand {}
   }
-  flavor_text: "Clear the deck, start clean."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 9.384777379734148
-    suggested_cost: 4
-  }
+  flavor_text: "Scraps the plan and starts clean."
 }
+
 cards {
-  name: "Clean Sweep"
+  name: "Fresh Eyes"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -1558,18 +1241,11 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {
-    }
+    filter_hand {}
   }
-  flavor_text: "Toss it all, draw it better."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 10.384777379734148
-    suggested_cost: 4
-  }
+  flavor_text: "A second look changes everything."
 }
+
 cards {
   name: "Total Reset"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1580,18 +1256,11 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {
-    }
+    filter_hand {}
   }
-  flavor_text: "Everything gone, everything new."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.6
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 11.384777379734148
-    suggested_cost: 5
-  }
+  flavor_text: "Nothing left of the old plan."
 }
+
 cards {
   name: "Burn It Down"
   type: SKILL_CARD_TYPE_UPGRADE
@@ -1603,20 +1272,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    filter_hand {
-    }
+    filter_hand {}
   }
-  flavor_text: "Nothing left to lose now."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.2
-    effect_expected_value: 6.284777379734148
-    total_expected_value: 13.484777379734147
-    suggested_cost: 6
-  }
+  flavor_text: "Burns it down, builds it better."
 }
+
 cards {
-  name: "Echo Turn"
+  name: "Do It Again"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -1628,20 +1290,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {
-    }
+    reactivate_following {}
   }
-  flavor_text: "One move, felt twice."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.1
-    effect_expected_value: 2.1077399334431717
-    total_expected_value: 5.707739933443172
-    suggested_cost: 3
-  }
+  flavor_text: "Good enough to happen twice!"
 }
+
 cards {
-  name: "Double Carve"
+  name: "Echo Effect"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -1653,20 +1308,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {
-    }
+    reactivate_following {}
   }
-  flavor_text: "Same turn, twice the flow."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.4
-    effect_expected_value: 2.1077399334431717
-    total_expected_value: 7.0077399334431725
-    suggested_cost: 3
-  }
+  flavor_text: "Loud enough to echo twice."
 }
+
 cards {
-  name: "Deja Vu"
+  name: "Encore"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -1678,20 +1326,13 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {
-    }
+    reactivate_following {}
   }
-  flavor_text: "Same bump, twice the fun."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.1
-    effect_expected_value: 2.1077399334431717
-    total_expected_value: 6.707739933443172
-    suggested_cost: 3
-  }
+  flavor_text: "Earns itself an encore."
 }
+
 cards {
-  name: "Second Act"
+  name: "Riding the Echo"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -1703,222 +1344,167 @@ cards {
   }
   category: EFFECT_CATEGORY_PLAY
   effects {
-    reactivate_following {
+    reactivate_following {}
+  }
+  flavor_text: "Good form carries right through."
+}
+
+cards {
+  name: "Steady Now"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 2
+  dice: DIE_GREEN
+  icons {
+    grade: GRADE_GREEN
+  }
+  category: EFFECT_CATEGORY_RIDE
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
     }
   }
-  flavor_text: "One drop, echoed twice as hard."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.8999999999999999
-    effect_expected_value: 2.1077399334431717
-    total_expected_value: 7.5077399334431725
-    suggested_cost: 3
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
   }
+  flavor_text: "Fixed before anyone even saw it."
 }
+
+cards {
+  name: "Second Chance"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 3
+  dice: DIE_BLUE
+  icons {
+    condition: CONDITION_POWDER
+  }
+  category: EFFECT_CATEGORY_RIDE
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Corrects itself before it matters."
+}
+
+cards {
+  name: "Recovery Mode"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 4
+  dice: DIE_BLACK
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_RIDE
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLACK" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Turns the mistake into nothing."
+}
+
+cards {
+  name: "Quick Fix"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 2
+  dice: DIE_GREEN
+  icons {
+    grade: GRADE_BLUE
+  }
+  category: EFFECT_CATEGORY_RIDE
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_BLUE" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  effects {
+    alter_die {
+      die_matcher {
+        enum_matcher {
+          enum_type_name: "com.redpup.justsendit.model.Die"
+          name_matcher {
+            string_matcher { value: "DIE_GREEN" }
+          }
+        }
+      }
+      reroll {}
+    }
+  }
+  flavor_text: "Fixes it before it slows you down."
+}
+
 cards {
   name: "Take Two"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
-  dice: DIE_GREEN
-  icons {
-    grade: GRADE_GREEN
-  }
-  category: EFFECT_CATEGORY_RIDE
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  flavor_text: "The second attempt goes smoother."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 2.1333333328
-    total_expected_value: 5.2333333328
-    suggested_cost: 2
-  }
-}
-cards {
-  name: "Do Over"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
-  dice: DIE_BLUE
-  icons {
-    condition: CONDITION_POWDER
-  }
-  category: EFFECT_CATEGORY_RIDE
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  flavor_text: "New plan, better plan."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.7
-    effect_expected_value: 2.6666666664
-    total_expected_value: 6.8666666664000005
-    suggested_cost: 3
-  }
-}
-cards {
-  name: "Second Wind"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
-  dice: DIE_BLACK
-  icons {
-    hazard: HAZARD_TREES
-  }
-  category: EFFECT_CATEGORY_RIDE
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  flavor_text: "Missed it once, not again."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.3
-    effect_expected_value: 3.2
-    total_expected_value: 8.0
-    suggested_cost: 4
-  }
-}
-cards {
-  name: "Quick Bail"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
-  dice: DIE_GREEN
-  icons {
-    grade: GRADE_BLUE
-  }
-  category: EFFECT_CATEGORY_RIDE
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  effects {
-    alter_die {
-      die_matcher {
-        enum_matcher {
-          enum_type_name: "com.redpup.justsendit.model.Die"
-          name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
-          }
-        }
-      }
-      reroll {
-      }
-    }
-  }
-  flavor_text: "Edge caught, edge saved."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 2.6666666664
-    total_expected_value: 5.7666666664
-    suggested_cost: 3
-  }
-}
-cards {
-  name: "Recalculate"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
   dice: DIE_BLUE
   icons {
     condition: CONDITION_GROOMED
@@ -1930,14 +1516,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -1946,29 +1529,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "New route, same destination."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.8
-    effect_expected_value: 3.2
-    total_expected_value: 7.5
-    suggested_cost: 3
-  }
+  flavor_text: "Runs it back, cleaner this time."
 }
+
 cards {
-  name: "Glass Save"
+  name: "Clutch Save"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 4
   dice: DIE_BLACK
   icons {
     condition: CONDITION_ICE
@@ -1980,14 +1554,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -1996,27 +1567,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Skate blade balance on slick glass."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.5
-    effect_expected_value: 3.7333333335999996
-    total_expected_value: 8.7333333336
-    suggested_cost: 4
-  }
+  flavor_text: "Two close calls, no blinking."
 }
+
 cards {
-  name: "Off Balance"
+  name: "Save It"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -2030,14 +1592,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2046,29 +1605,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Steep start, shaky legs."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 3.2
-    total_expected_value: 6.300000000000001
-    suggested_cost: 3
-  }
+  flavor_text: "Catches the wobble before it grows."
 }
+
 cards {
-  name: "Steady Save"
+  name: "Double Trouble"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLUE
   icons {
     grade: GRADE_DOUBLE_BLACK
@@ -2080,14 +1630,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2096,27 +1643,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Caught it before the drop."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.2
-    effect_expected_value: 3.7333333335999996
-    total_expected_value: 7.4333333336
-    suggested_cost: 3
-  }
+  flavor_text: "Erases a mistake without a trace."
 }
+
 cards {
-  name: "Air Save"
+  name: "Twice Blessed"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -2130,14 +1668,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2146,27 +1681,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Air time turned into a landing."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.1
-    effect_expected_value: 4.2666666672
-    total_expected_value: 8.8666666672
-    suggested_cost: 4
-  }
+  flavor_text: "Corrected twice, and still smooth."
 }
+
 cards {
-  name: "Wild Wobble"
+  name: "Two Birds"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
@@ -2182,8 +1708,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2192,29 +1717,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Anything could happen. It did."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.2
-    effect_expected_value: 3.4666666664
-    total_expected_value: 7.1666666664
-    suggested_cost: 3
-  }
+  flavor_text: "Keeps the flow even after a miss."
 }
+
 cards {
-  name: "Keep Your Cool"
+  name: "Both Barrels"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 4
   dice: DIE_BLUE
   icons {
     grade: GRADE_BLUE
@@ -2228,8 +1744,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2238,29 +1753,20 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Random line, steady hands."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.2
-    effect_expected_value: 4.0
-    total_expected_value: 8.7
-    suggested_cost: 4
-  }
+  flavor_text: "Back to back saves, no pause."
 }
+
 cards {
-  name: "Stone Cold"
+  name: "Nerves of Steel"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 5
   dice: DIE_BLACK
   icons {
     grade: GRADE_BLACK
@@ -2274,8 +1780,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2284,27 +1789,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Cool and calm, even in chaos."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.8
-    effect_expected_value: 4.5333333336
-    total_expected_value: 9.833333333599999
-    suggested_cost: 4
-  }
+  flavor_text: "Nothing rattles this run."
 }
+
 cards {
-  name: "Double Save"
+  name: "Nothing But Net"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 6
   dice: DIE_BLACK
@@ -2319,14 +1815,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2335,27 +1828,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Two mistakes, one clean save."
-  computed {
-    dice_expected_value: 9.0
-    icon_expected_value: 0.2
-    effect_expected_value: 2.6666666664
-    total_expected_value: 11.866666666399999
-    suggested_cost: 5
-  }
+  flavor_text: "Somehow saves it, twice over."
 }
+
 cards {
-  name: "Sharp Recovery"
+  name: "Ice Cold"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLUE
@@ -2370,14 +1854,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2386,27 +1867,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_GREEN"
-            }
+            string_matcher { value: "DIE_GREEN" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Steep line, sharp correction."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 3.2
-    total_expected_value: 10.8
-    suggested_cost: 5
-  }
+  flavor_text: "Barely flinched, fixed it twice."
 }
+
 cards {
-  name: "Small Fix"
+  name: "Beat the Odds"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_GREEN
@@ -2421,14 +1893,11 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLACK"
-            }
+            string_matcher { value: "DIE_BLACK" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2437,27 +1906,18 @@ cards {
         enum_matcher {
           enum_type_name: "com.redpup.justsendit.model.Die"
           name_matcher {
-            string_matcher {
-              value: "DIE_BLUE"
-            }
+            string_matcher { value: "DIE_BLUE" }
           }
         }
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Small slip, quick recovery."
-  computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.6
-    effect_expected_value: 3.7333333335999996
-    total_expected_value: 9.333333333599999
-    suggested_cost: 4
-  }
+  flavor_text: "Zero consequences, whatever breaks."
 }
+
 cards {
-  name: "Double Gamble"
+  name: "Buzzer Beater"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
@@ -2474,8 +1934,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2483,21 +1942,14 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Glass and silk, twice the gamble."
-  computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 1.3
-    effect_expected_value: 4.800000000000001
-    total_expected_value: 12.100000000000001
-    suggested_cost: 5
-  }
+  flavor_text: "Pulled it back right at the line."
 }
+
 cards {
-  name: "Double Down"
+  name: "Nick of Time"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLUE
@@ -2514,8 +1966,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2523,21 +1974,14 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Bet placed twice, paid twice."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 1.5
-    effect_expected_value: 4.800000000000001
-    total_expected_value: 13.3
-    suggested_cost: 6
-  }
+  flavor_text: "Right at the edge, and still clean."
 }
+
 cards {
-  name: "All In"
+  name: "Last Gasp"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 6
   dice: DIE_BLACK
@@ -2554,8 +1998,7 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
   effects {
@@ -2563,21 +2006,14 @@ cards {
       die_matcher {
         constant_matcher: true
       }
-      reroll {
-      }
+      reroll {}
     }
   }
-  flavor_text: "Every chip on the table, nailed."
-  computed {
-    dice_expected_value: 8.0
-    icon_expected_value: 1.2
-    effect_expected_value: 4.800000000000001
-    total_expected_value: 14.0
-    suggested_cost: 6
-  }
+  flavor_text: "Two miracles in one finish."
 }
+
 cards {
-  name: "Curveball"
+  name: "Leveling Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -2591,17 +2027,11 @@ cards {
       to: DIE_BLUE
     }
   }
-  flavor_text: "Easy line, steeper stakes."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 1.6
-    total_expected_value: 4.7
-    suggested_cost: 2
-  }
+  flavor_text: "Ready to push it further."
 }
+
 cards {
-  name: "Ricochet"
+  name: "Step It Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -2615,17 +2045,11 @@ cards {
       to: DIE_BLUE
     }
   }
-  flavor_text: "Change the line, keep the speed."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.5
-    effect_expected_value: 1.6
-    total_expected_value: 4.6
-    suggested_cost: 2
-  }
+  flavor_text: "Takes the same move further."
 }
+
 cards {
-  name: "Plot Twist"
+  name: "Raise the Bar"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -2639,17 +2063,11 @@ cards {
       to: DIE_BLUE
     }
   }
-  flavor_text: "Smooth run, sudden edge."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.6
-    effect_expected_value: 1.6
-    total_expected_value: 5.699999999999999
-    suggested_cost: 3
-  }
+  flavor_text: "Turns easy into a real test."
 }
+
 cards {
-  name: "Escalation"
+  name: "Kick It Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -2663,17 +2081,11 @@ cards {
       to: DIE_BLACK
     }
   }
-  flavor_text: "Drop just got scarier."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.1
-    effect_expected_value: 1.6
-    total_expected_value: 5.2
-    suggested_cost: 2
-  }
+  flavor_text: "Turns solid into serious."
 }
+
 cards {
-  name: "Sudden Steep"
+  name: "Next Level"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -2687,17 +2099,11 @@ cards {
       to: DIE_BLACK
     }
   }
-  flavor_text: "Calm line, sudden steep nerves."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.6
-    effect_expected_value: 1.6
-    total_expected_value: 6.699999999999999
-    suggested_cost: 3
-  }
+  flavor_text: "What was hard is now the real deal."
 }
+
 cards {
-  name: "Rising Stakes"
+  name: "No Half Measures"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -2711,17 +2117,11 @@ cards {
       to: DIE_BLACK
     }
   }
-  flavor_text: "Gaps tighten, nerves rise."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.3
-    effect_expected_value: 1.6
-    total_expected_value: 6.4
-    suggested_cost: 3
-  }
+  flavor_text: "Pushing past comfortable."
 }
+
 cards {
-  name: "Small Payout"
+  name: "Cash It In"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -2739,21 +2139,14 @@ cards {
   }
   effects {
     gain {
-      points_linked {
-      }
+      points_linked: {}
     }
   }
-  flavor_text: "Small risk, small reward."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.2
-    effect_expected_value: 0.8399999999999999
-    total_expected_value: 4.54
-    suggested_cost: 2
-  }
+  flavor_text: "Betting on chaos actually paid off."
 }
+
 cards {
-  name: "Steeper Payout"
+  name: "Wildcard Win"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -2771,21 +2164,14 @@ cards {
   }
   effects {
     gain {
-      points_linked {
-      }
+      points_linked: {}
     }
   }
-  flavor_text: "Steeper risk, sweeter payoff."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.2
-    effect_expected_value: 0.8399999999999999
-    total_expected_value: 5.54
-    suggested_cost: 3
-  }
+  flavor_text: "Shouldn’t have worked, but it did."
 }
+
 cards {
-  name: "Big Payout"
+  name: "Long Shot"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -2803,23 +2189,16 @@ cards {
   }
   effects {
     gain {
-      points_linked {
-      }
+      points_linked: {}
     }
   }
-  flavor_text: "Big risk, bigger grin."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 1.2
-    effect_expected_value: 0.8399999999999999
-    total_expected_value: 6.54
-    suggested_cost: 3
-  }
+  flavor_text: "The riskier bet, the bigger payoff."
 }
+
 cards {
   name: "Jackpot"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 5
   dice: DIE_BLACK
   dice: DIE_GREEN
   icons {
@@ -2836,26 +2215,22 @@ cards {
   }
   effects {
     gain {
-      points_linked {
-      }
+      points_linked: {}
     }
   }
-  flavor_text: "Max risk, max reward, stuck it."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.4
-    effect_expected_value: 0.8399999999999999
-    total_expected_value: 8.24
-    suggested_cost: 4
-  }
+  flavor_text: "Went all in on chance, and won big."
 }
+
 cards {
-  name: "Steady Streak"
+  name: "Stick to It"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
   icons {
     grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_RIDE
   effects {
@@ -2864,25 +2239,21 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "Same line, same result."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.6
-    effect_expected_value: 0.3090909090909091
-    total_expected_value: 3.409090909090909
-    suggested_cost: 2
-  }
+  flavor_text: "Sticking to what already works."
 }
+
 cards {
-  name: "Muscle Memory"
+  name: "In Your Element"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
   icons {
     grade: GRADE_BLUE
+  }
+  icons {
+    condition: CONDITION_ICE
   }
   category: EFFECT_CATEGORY_RIDE
   effects {
@@ -2891,25 +2262,21 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "The body already knows this line."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.6
-    effect_expected_value: 0.48363636363636364
-    total_expected_value: 4.583636363636363
-    suggested_cost: 2
-  }
+  flavor_text: "Consistency starts paying off."
 }
+
 cards {
-  name: "Old Habits"
+  name: "In the Zone"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLACK
   icons {
     grade: GRADE_BLACK
+  }
+  icons {
+    condition: CONDITION_POWDER
   }
   category: EFFECT_CATEGORY_RIDE
   effects {
@@ -2918,23 +2285,16 @@ cards {
     }
   }
   effect_repeat {
-    matching_tag_on_cards_above {
-    }
+    matching_tag_on_cards_above {}
   }
-  flavor_text: "Same steep, same swagger."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.6
-    effect_expected_value: 0.5890909090909091
-    total_expected_value: 5.6890909090909085
-    suggested_cost: 3
-  }
+  flavor_text: "Getting sharper with every run."
 }
+
 cards {
-  name: "Edge Dodge"
+  name: "Saw It Coming"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
-  dice: DIE_GREEN
+  cost: 2
+  dice: DIE_BLUE
   icons {
     grade: GRADE_BLACK
   }
@@ -2942,31 +2302,17 @@ cards {
     hazard: HAZARD_CLIFFS
   }
   category: EFFECT_CATEGORY_RIDE
-  effect_condition {
-    next_card_cost {
-      comparison_matcher {
-        comparison: COMPARISON_GT
-        int32_value: 3
-      }
-    }
-  }
   effects {
-    ignore_hazard: HAZARD_CLIFFS
+    replace_rerolls_with_gains {}
   }
-  flavor_text: "Drop ignored, line held."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.7
-    effect_expected_value: 0.04859504132231405
-    total_expected_value: 3.2485950413223144
-    suggested_cost: 2
-  }
+  flavor_text: "Saw it coming and dodged it clean."
 }
+
 cards {
-  name: "Weave Dodge"
+  name: "Two Steps Ahead"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
-  dice: DIE_BLUE
+  cost: 2
+  dice: DIE_GREEN
   icons {
     grade: GRADE_BLUE
   }
@@ -2974,30 +2320,16 @@ cards {
     hazard: HAZARD_TREES
   }
   category: EFFECT_CATEGORY_RIDE
-  effect_condition {
-    next_card_cost {
-      comparison_matcher {
-        comparison: COMPARISON_GT
-        int32_value: 4
-      }
-    }
-  }
   effects {
-    ignore_hazard: HAZARD_TREES
+    replace_rerolls_with_gains {}
   }
-  flavor_text: "Gaps blur past, untouched."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.8999999999999999
-    effect_expected_value: 0.14280991735537188
-    total_expected_value: 4.542809917355372
-    suggested_cost: 2
-  }
+  flavor_text: "Spotted trouble, stepped around it."
 }
+
 cards {
-  name: "Ghost Line"
+  name: "Called It"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 2
   dice: DIE_BLACK
   icons {
     grade: GRADE_DOUBLE_BLACK
@@ -3006,28 +2338,14 @@ cards {
     hazard: HAZARD_MOGULS
   }
   category: EFFECT_CATEGORY_RIDE
-  effect_condition {
-    next_card_cost {
-      comparison_matcher {
-        comparison: COMPARISON_GT
-        int32_value: 4
-      }
-    }
-  }
   effects {
-    ignore_hazard: HAZARD_MOGULS
+    replace_rerolls_with_gains {}
   }
-  flavor_text: "Bumps vanish beneath steady feet."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.7
-    effect_expected_value: 0.09917355371900827
-    total_expected_value: 5.299173553719008
-    suggested_cost: 2
-  }
+  flavor_text: "Clocked the danger before it hit."
 }
+
 cards {
-  name: "Trim the Fat"
+  name: "Last Push"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -3039,25 +2357,18 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {
-    }
+    discard_card {}
   }
   effects {
     gain {
       skill: 5
     }
   }
-  flavor_text: "Shed the extra, gain some poise."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.0
-    effect_expected_value: -0.7544415165837535
-    total_expected_value: 2.7455584834162465
-    suggested_cost: 2
-  }
+  flavor_text: "Left it all out there at the end."
 }
+
 cards {
-  name: "Sharpen Up"
+  name: "Empty the Tank"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
@@ -3069,25 +2380,18 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {
-    }
+    discard_card {}
   }
   effects {
     gain {
       skill: 5
     }
   }
-  flavor_text: "Cut clutter, carve cleaner."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.0
-    effect_expected_value: -0.7544415165837535
-    total_expected_value: 3.7455584834162465
-    suggested_cost: 2
-  }
+  flavor_text: "Not holding anything back now."
 }
+
 cards {
-  name: "Clean Cut"
+  name: "All Or Nothing"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLACK
@@ -3099,32 +2403,24 @@ cards {
   }
   category: EFFECT_CATEGORY_FINALE
   effect_cost {
-    discard_card {
-    }
+    discard_card {}
   }
   effects {
     gain {
       skill: 5
     }
   }
-  flavor_text: "Trim the pack, stick the drop."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.7999999999999999
-    effect_expected_value: -0.7544415165837535
-    total_expected_value: 4.545558483416246
-    suggested_cost: 2
-  }
+  flavor_text: "Everything spent to close it out."
 }
+
 cards {
-  name: "Stuck It"
+  name: "Riding the High"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {
-    }
+    success {}
   }
   effects {
     card_effect {
@@ -3133,24 +2429,17 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Landed clean, earned a bonus."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.0
-    effect_expected_value: 4.7544415165837535
-    total_expected_value: 7.2544415165837535
-    suggested_cost: 3
-  }
+  flavor_text: "Nailed it, and the rush carries on."
 }
+
 cards {
-  name: "Nailed It"
+  name: "Runner’s High"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
   dice: DIE_BLUE
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {
-    }
+    success {}
   }
   effects {
     card_effect {
@@ -3159,24 +2448,17 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Clean finish, extra reward."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.0
-    effect_expected_value: 4.7544415165837535
-    total_expected_value: 8.254441516583753
-    suggested_cost: 4
-  }
+  flavor_text: "Energy follows right after landing."
 }
+
 cards {
-  name: "Perfect Finish"
+  name: "Fueled Up"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 5
   dice: DIE_BLACK
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
-    success {
-    }
+    success {}
   }
   effects {
     card_effect {
@@ -3185,17 +2467,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Flawless run, well earned."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.0
-    effect_expected_value: 4.7544415165837535
-    total_expected_value: 9.254441516583753
-    suggested_cost: 4
-  }
+  flavor_text: "Finishes clean and wants more."
 }
+
 cards {
-  name: "Lift Line Chat"
+  name: "Breather"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -3213,17 +2489,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Bumpy talk on the way up."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.8
-    effect_expected_value: 1.485762973932423
-    total_expected_value: 3.778576297393242
-    suggested_cost: 2
-  }
+  flavor_text: "A minute to reset before more."
 }
+
 cards {
-  name: "Chairlift Scout"
+  name: "Second Wind"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -3241,17 +2511,11 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Eyeing the drop from up high."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.6
-    effect_expected_value: 1.485762973932423
-    total_expected_value: 4.658576297393242
-    suggested_cost: 2
-  }
+  flavor_text: "Energy back before you need it."
 }
+
 cards {
-  name: "Overhead View"
+  name: "Recharge"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -3269,22 +2533,16 @@ cards {
       count: 1
     }
   }
-  flavor_text: "Whole mountain, one long stare."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.4
-    effect_expected_value: 1.485762973932423
-    total_expected_value: 5.538576297393242
-    suggested_cost: 3
-  }
+  flavor_text: "Ready again before the next drop."
 }
+
 cards {
-  name: "Gear Check"
+  name: "Clear It Out"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
   icons {
-    wild: true
+    grade: GRADE_GREEN
   }
   category: EFFECT_CATEGORY_LIFT
   effects {
@@ -3292,22 +2550,16 @@ cards {
       trashes: 1
     }
   }
-  flavor_text: "Toss what you don\342\200\231t need."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 2.0
-    effect_expected_value: 0.0
-    total_expected_value: 4.95
-    suggested_cost: 2
-  }
+  flavor_text: "Finally rid of the dead weight."
 }
+
 cards {
-  name: "Pack Light"
+  name: "Cut the Fat"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
   icons {
-    wild: true
+    condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_LIFT
   effects {
@@ -3315,22 +2567,16 @@ cards {
       trashes: 1
     }
   }
-  flavor_text: "Less weight, more send."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 2.0
-    effect_expected_value: 0.0
-    total_expected_value: 6.05
-    suggested_cost: 3
-  }
+  flavor_text: "Making room for what works."
 }
+
 cards {
-  name: "Full Purge"
+  name: "Spring Cleaning"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
   icons {
-    wild: true
+    hazard: HAZARD_TREES
   }
   category: EFFECT_CATEGORY_LIFT
   effects {
@@ -3338,17 +2584,11 @@ cards {
       trashes: 1
     }
   }
-  flavor_text: "Clear the pack, ride lighter."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 2.0
-    effect_expected_value: 0.0
-    total_expected_value: 7.15
-    suggested_cost: 3
-  }
+  flavor_text: "Out with what’s dead, in with new."
 }
+
 cards {
-  name: "Fresh Picks"
+  name: "First Look"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -3360,20 +2600,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {
-    }
+    replenish_shop {}
   }
-  flavor_text: "New options at the lodge."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 0.8999999999999999
-    effect_expected_value: 0.6400000000000001
-    total_expected_value: 3.714
-    suggested_cost: 2
-  }
+  flavor_text: "Gets first look before anyone else."
 }
+
 cards {
-  name: "Restock Run"
+  name: "Know the Owner"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -3385,20 +2618,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {
-    }
+    replenish_shop {}
   }
-  flavor_text: "More gear, more choices."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.1
-    effect_expected_value: 0.6400000000000001
-    total_expected_value: 5.014
-    suggested_cost: 2
-  }
+  flavor_text: "Good to know someone at the shop."
 }
+
 cards {
-  name: "Grand Reopening"
+  name: "In the Know"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -3410,20 +2636,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    replenish_shop {
-    }
+    replenish_shop {}
   }
-  flavor_text: "Shelves refilled, options doubled."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.7
-    effect_expected_value: 0.6400000000000001
-    total_expected_value: 5.714
-    suggested_cost: 3
-  }
+  flavor_text: "Always first pick, no exceptions."
 }
+
 cards {
-  name: "Save for Later"
+  name: "Fresh Kit"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -3435,20 +2654,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    buy_to_topdeck {
-    }
+    buy_to_topdeck {}
   }
-  flavor_text: "Fresh gear, right on top."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.2
-    effect_expected_value: 3.351881269191546
-    total_expected_value: 5.137069396110701
-    suggested_cost: 2
-  }
+  flavor_text: "Straight to the top of the pile."
 }
+
 cards {
-  name: "Quick Stash"
+  name: "Fresh Gear"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -3460,20 +2672,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    buy_to_topdeck {
-    }
+    buy_to_topdeck {}
   }
-  flavor_text: "New gear, close at hand."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 0.8
-    effect_expected_value: 3.351881269191546
-    total_expected_value: 4.985188126919154
-    suggested_cost: 2
-  }
+  flavor_text: "Already has what’s needed, fresh."
 }
+
 cards {
-  name: "Prime Placement"
+  name: "First in Line"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -3485,20 +2690,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    buy_to_topdeck {
-    }
+    buy_to_topdeck {}
   }
-  flavor_text: "Best gear, first in line."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.8
-    effect_expected_value: 3.351881269191546
-    total_expected_value: 6.085188126919155
-    suggested_cost: 3
-  }
+  flavor_text: "Already holding the new gear."
 }
+
 cards {
-  name: "Shift the Line"
+  name: "Bootpack It"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_GREEN
@@ -3510,20 +2708,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {
-    }
+    move_tile {}
   }
-  flavor_text: "Nudge the mountain your way."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.4
-    effect_expected_value: 0.8
-    total_expected_value: 4.23
-    suggested_cost: 2
-  }
+  flavor_text: "Walks the skis to better ground."
 }
+
 cards {
-  name: "Reroute"
+  name: "Hike It Out"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLUE
@@ -3535,20 +2726,13 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {
-    }
+    move_tile {}
   }
-  flavor_text: "New path, better snow."
-  computed {
-    dice_expected_value: 3.5
-    icon_expected_value: 1.2999999999999998
-    effect_expected_value: 0.8
-    total_expected_value: 5.23
-    suggested_cost: 2
-  }
+  flavor_text: "Just a few steps to a better line."
 }
+
 cards {
-  name: "Mountain Mover"
+  name: "Earn Your Turns"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
   dice: DIE_BLACK
@@ -3560,15 +2744,8 @@ cards {
   }
   category: EFFECT_CATEGORY_REST
   effects {
-    move_tile {
-    }
+    move_tile {}
   }
-  flavor_text: "Shift the whole run to fit."
-  computed {
-    dice_expected_value: 4.5
-    icon_expected_value: 0.8999999999999999
-    effect_expected_value: 0.8
-    total_expected_value: 5.93
-    suggested_cost: 3
-  }
+  flavor_text: "Worth every step to get there!"
 }
+

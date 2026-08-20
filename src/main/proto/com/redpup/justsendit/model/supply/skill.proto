@@ -99,36 +99,43 @@ message SkillCardEffectCost {
 message SkillCardEffect {
   // The action performed when the condition (if any) is met.
   oneof effect {
+    // Allows the player to change a targeted die.
     AlterDieEffect alter_die = 1;
+    // Changes one kind of dice into another.
     ReplaceDiceEffect replace_dice = 2;
+    // Gains some values.
     GainEffect gain = 3;
-    google.protobuf.Empty ignore_wobble = 4 [deprecated = true];
-    CardEffect card_effect = 5;
+    // Switches rerolls of dice to gains of dice.
+    google.protobuf.Empty replace_rerolls_with_gains = 4;
+    // Ignores wobbles.
+    google.protobuf.Empty ignore_wobble = 5 [deprecated = true];
+    // Applies some movement of cards (drawing, discarding, etc).
+    CardEffect card_effect = 6;
     // Activate the effect of the card played directly below this one an
     // additional time.
-    google.protobuf.Empty reactivate_following = 6;
+    google.protobuf.Empty reactivate_following = 7;
     // Discard any number of cards from hand, then draw that many.
-    google.protobuf.Empty filter_hand = 7;
+    google.protobuf.Empty filter_hand = 8;
     // Replenish the shop's face-up offerings.
-    google.protobuf.Empty replenish_shop = 8;
+    google.protobuf.Empty replenish_shop = 9;
     // Take an additional turn after this one.
-    google.protobuf.Empty extra_turn = 9;
+    google.protobuf.Empty extra_turn = 10;
     // Gain this card's own icon tags an additional time.
-    google.protobuf.Empty gain_own_tags = 10;
+    google.protobuf.Empty gain_own_tags = 11;
     // Gain the icon tags of the card played directly below this one an
     // additional time.
-    google.protobuf.Empty gain_tags_below = 11;
+    google.protobuf.Empty gain_tags_below = 12;
     // Put the card you buy on top of your deck instead of into your discard.
-    google.protobuf.Empty buy_to_topdeck = 12;
+    google.protobuf.Empty buy_to_topdeck = 13;
     // Move one board tile in any direction.
-    google.protobuf.Empty move_tile = 13;
+    google.protobuf.Empty move_tile = 14;
     // Gain Fun equal to the cost of the next card (engine-defined "next").
-    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 14;
+    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 15;
     // Gain Fun equal to the value rolled, corresponding to the die removed
     // for the cost paid.
-    google.protobuf.Empty gain_fun_equal_to_value_rolled = 15;
+    google.protobuf.Empty gain_fun_equal_to_value_rolled = 16;
     // Ignore the listed hazard on this tile.
-    board.tile.Hazard ignore_hazard = 16;
+    board.tile.Hazard ignore_hazard = 17;
   }
 }
 

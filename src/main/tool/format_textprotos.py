@@ -14,6 +14,8 @@ SKILL_IMG_FILEPATH = "src/main/resources/com/redpup/justsendit/img/skill_cards/"
 
 TILE_INPUT_CSV = "../resources/com/redpup/justsendit/model/board/tile/Tiles.csv"
 TILE_FILE_PREFIX = "../resources/com/redpup/justsendit/model/board/tile/"
+
+
 # =====================================================================
 
 
@@ -165,16 +167,18 @@ DIE_ROLL_MESSAGE_TYPE = "com.redpup.justsendit.model.player.DieRoll"
 DIE_ROLL_COLOR_FIELD = "die"
 DIE_ROLL_VALUE_FIELD = "roll"
 
-UNSUPPORTED_EFFECTS = []       # (card_name, EffectValue text)
-UNSUPPORTED_CONDITIONS = []    # (card_name, EffectCost/Condition text)
-UNSUPPORTED_REPEATS = []       # (card_name, EffectRepeat text)
+UNSUPPORTED_EFFECTS = []  # (card_name, EffectValue text)
+UNSUPPORTED_CONDITIONS = []  # (card_name, EffectCost/Condition text)
+UNSUPPORTED_REPEATS = []  # (card_name, EffectRepeat text)
 
 _SIMPLE_DIE_EFFECT_RE = re.compile(r'^Reroll\s+(Green|Blue|Black|Wild)$')
 _GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
-_GAIN_DICE_RE = re.compile(r'^Gain (Green|Blue|Black), Gain (Green|Blue|Black)$')
+_GAIN_DICE_RE = re.compile(
+  r'^Gain (Green|Blue|Black), Gain (Green|Blue|Black)$')
 _GAIN_DIE_RE = re.compile(r'^Gain (Green|Blue|Black)$')
 _GAIN_DIE_AND_FUN_RE = re.compile(r'^Gain (Green|Blue|Black) and \+(\d+) Fun$')
-_REPLACE_DICE_RE = re.compile(r'^Replace all (Green|Blue|Black) with (Green|Blue|Black)$')
+_REPLACE_DICE_RE = re.compile(
+  r'^Replace all (Green|Blue|Black) with (Green|Blue|Black)$')
 _REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)( X)?$')
 _REPEAT_DIE_VALUE_RE = re.compile(r'^(Green|Blue|Black|Wild) (\d+)$')
 _IGNORE_HAZARD_RE = re.compile(r'^Ignore (.*) on this tile$')
@@ -222,8 +226,9 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   # "Reroll Black, Reroll Blue" each become their own entry, in order.
   parts = [p.strip() for p in text.split(",")]
   if len(parts) > 1 and all(_SIMPLE_DIE_EFFECT_RE.match(p) for p in parts):
-    return [_alter_die_effect_block(_SIMPLE_DIE_EFFECT_RE.match(p).group(1).upper())
-            for p in parts]
+    return [
+      _alter_die_effect_block(_SIMPLE_DIE_EFFECT_RE.match(p).group(1).upper())
+      for p in parts]
 
   m = _SIMPLE_DIE_EFFECT_RE.match(text)
   if m:
@@ -251,7 +256,12 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   m = _GAIN_DIE_RE.match(text)
   if m:
     color = m.group(1).upper()
-    return [f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n"]
+    return [
+      f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n"]
+
+  # "Replace all Reroll with Gain" -- replace all reroll effects with gain effects.
+  if text == "Replace all Reroll with Gain":
+    return [f"  effects {{\n    replace_rerolls_with_gains {{}}\n  }}\n"]
 
   # "Replace <Color> with <Color>" -- replace all dice of a color with another color.
   m = _REPLACE_DICE_RE.match(text)
@@ -267,7 +277,8 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if m:
     value, kind = m.groups()
     field = "skill" if kind == "Skill" else "points"
-    return [f"  effects {{\n    gain {{\n      {field}: {value}\n    }}\n  }}\n"]
+    return [
+      f"  effects {{\n    gain {{\n      {field}: {value}\n    }}\n  }}\n"]
 
   # "Ignore <Hazard> on this tile"
   m = _IGNORE_HAZARD_RE.match(text)
@@ -276,7 +287,8 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     return [f"  effects {{\n    ignore_hazard: HAZARD_{hazard}\n  }}\n"]
 
   if text == "Gain +X Fun":
-    return [f"  effects {{\n    gain {{\n      points_linked: {{}}\n    }}\n  }}\n"]
+    return [
+      f"  effects {{\n    gain {{\n      points_linked: {{}}\n    }}\n  }}\n"]
 
   if text == "Gain Fun equal to value rolled":
     return ["  effects {\n    gain_fun_equal_to_value_rolled {}\n  }\n"]
@@ -299,6 +311,22 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
       "    card_effect {\n"
       "      source_zone: SKILL_CARD_ZONE_TOPDECK\n"
       "      destination_zone: SKILL_CARD_ZONE_HAND\n"
+      "      count: 1\n"
+      "    }\n"
+      "  }\n"
+    ]
+
+  if text == "Draw a card, then discard a card":
+    return [
+      "  effects {\n"
+      "    card_effect {\n"
+      "      source_zone: SKILL_CARD_ZONE_TOPDECK\n"
+      "      destination_zone: SKILL_CARD_ZONE_HAND\n"
+      "      count: 1\n"
+      "    }\n"
+      "    card_effect {\n"
+      "      source_zone: SKILL_CARD_ZONE_HAND\n"
+      "      destination_zone: SKILL_CARD_ZONE_DISCARD\n"
       "      count: 1\n"
       "    }\n"
       "  }\n"
@@ -352,7 +380,7 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Trash an additional card":
     return ["  effects {\n    gain {\n      trashes: 1\n    }\n  }\n"]
 
-  if text == "Replenish the shop. You may play additional cards below this.":
+  if text == "Replenish the shop. You may play additional cards after this.":
     return ["  effects {\n    replenish_shop {}\n  }\n"]
 
   if text == "Put the card you buy on top of your deck instead of into your discard.":
@@ -366,7 +394,8 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   # design, and surface it in the end-of-run summary instead of failing
   # silently.
   UNSUPPORTED_EFFECTS.append((card_name, text))
-  return [f'  # TODO(skill.proto): no field represents this effect yet: "{text}"\n']
+  return [
+    f'  # TODO(skill.proto): no field represents this effect yet: "{text}"\n']
 
 
 def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
@@ -502,7 +531,8 @@ def process_skill_cards_pipeline():
     "SkillCardList"
   )
 
-  with open(SKILL_INPUT_CSV, mode='r', newline='', encoding='utf-8') as csv_file:
+  with open(SKILL_INPUT_CSV, mode='r', newline='',
+            encoding='utf-8') as csv_file:
     reader = csv.reader(csv_file)
     try:
       headers = next(reader)
@@ -557,7 +587,8 @@ def process_skill_cards_pipeline():
       cost_raw = get_safe_cell_value(row, header_map, "Cost")
       cost = int(cost_raw) if cost_raw.isdigit() else 0
 
-      category_raw = get_safe_cell_value(row, header_map, "EffectTiming").upper()
+      category_raw = get_safe_cell_value(row, header_map,
+                                         "EffectTiming").upper()
       category_map = {
         "PLAY": "EFFECT_CATEGORY_PLAY",
         "REST": "EFFECT_CATEGORY_REST",
@@ -568,13 +599,16 @@ def process_skill_cards_pipeline():
       proto_category = category_map.get(category_raw, "EFFECT_CATEGORY_UNSET")
 
       cond_text = get_safe_cell_value(row, header_map, "EffectCost/Condition")
-      condition_block, cost_block = build_condition_and_cost_blocks(cond_text, cost, name)
+      condition_block, cost_block = build_condition_and_cost_blocks(cond_text,
+                                                                    cost, name)
 
       effect_value_text = get_safe_cell_value(row, header_map, "EffectValue")
-      effect_action_blocks = build_effect_action_blocks(effect_value_text, name) if effect_value_text else []
+      effect_action_blocks = build_effect_action_blocks(effect_value_text,
+                                                        name) if effect_value_text else []
 
       repeat_text = get_safe_cell_value(row, header_map, "EffectRepeat")
-      repeat_block = build_repeat_block(repeat_text, name) if repeat_text else None
+      repeat_block = build_repeat_block(repeat_text,
+                                        name) if repeat_text else None
 
       flavor_text = get_safe_cell_value(row, header_map, "FlavorText")
 
@@ -689,7 +723,10 @@ def process_mountain_tiles_pipeline():
         difficulty = int(difficulty_raw) if difficulty_raw.isdigit() else 1
 
         proto_grade = clean_proto_enum_string("GRADE", grade_raw)
-        proto_condition = clean_proto_enum_string("CONDITION", get_safe_cell_value(row, header_map, "Terrain type"))
+        proto_condition = clean_proto_enum_string("CONDITION",
+                                                  get_safe_cell_value(row,
+                                                                      header_map,
+                                                                      "Terrain type"))
 
         hazards = []
         for i in range(1, 3):
