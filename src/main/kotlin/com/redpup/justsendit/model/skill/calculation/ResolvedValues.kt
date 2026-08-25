@@ -67,7 +67,7 @@ class ResolvedValues {
   val SkillCardEffectCost.effectCost: Double
     get() =
       when (costCase) {
-        CostCase.DISCARD_CARD -> -(this@ResolvedValues().cardDraw * 0.8)
+        CostCase.DISCARD_CARD -> -(this@ResolvedValues().cardDraw * Constants.DISCARD_FACTOR)
         CostCase.REMOVE_DIE -> -(removeDie?.dieColorOrWild()?.averageValue
           ?: (Die.DIE_BLUE.averageValue * Constants.WILD_DIE_PICK_FACTOR))
 

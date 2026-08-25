@@ -2,7 +2,8 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
-import com.redpup.justsendit.model.supply.proto.*
+import com.redpup.justsendit.model.supply.proto.ReplaceDiceEffect
+import com.redpup.justsendit.model.supply.proto.SkillCard
 
 /**
  * TODO: Description
@@ -78,4 +79,8 @@ object Constants {
 
   /** Value of moving a tile on the map. */
   const val MOVE_TILE: Double = 1.0
+
+  /** Relative cost of discarding compared to drawing. Less than one to account for player
+   * choice in discarding a worse card. */
+  const val DISCARD_FACTOR: Double = 0.8
 }

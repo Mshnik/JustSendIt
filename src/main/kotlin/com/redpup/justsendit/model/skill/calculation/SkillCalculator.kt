@@ -24,7 +24,7 @@ import java.io.File
 /** TODO: Description. */
 fun main() {
   val textproto = "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards.textproto"
-  val csv = "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards_computed.csv"
+  val csv = "src/main/resources/com/redpup/justsendit/model/shop/skill/skill_cards_computed.tsv"
   SkillCalculator(textproto).updateComputedFields()
   SkillCsvWriter(textproto, csv).write()
 }
@@ -165,6 +165,9 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   private fun SkillCardEffect.baseEffectValue(card: SkillCard): Double = when (effectCase) {
     SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(alterDie)
     SkillCardEffect.EffectCase.GAIN -> gain.gainValue(card)
+    SkillCardEffect.EffectCase.REPLACE_REROLLS_WITH_GAINS ->
+      (Die.DIE_BLUE.averageValue - Die.DIE_BLUE.REROLL_VALUE) * WILD_DIE_PICK_FACTOR
+
     SkillCardEffect.EffectCase.IGNORE_WOBBLE -> Constants.PREVENT_WOBBLE
     SkillCardEffect.EffectCase.REACTIVATE_FOLLOWING -> resolvedValues().effect
     SkillCardEffect.EffectCase.FILTER_HAND -> resolvedValues().filterHand
@@ -219,8 +222,10 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   private fun CardEffect.singleCardEffectValue(): Double =
     if (sourceZone == SkillCardZone.SKILL_CARD_ZONE_TOPDECK && destinationZone == SkillCardZone.SKILL_CARD_ZONE_HAND) {
       resolvedValues().cardDraw * count
+    } else if (sourceZone == SkillCardZone.SKILL_CARD_ZONE_HAND && destinationZone == SkillCardZone.SKILL_CARD_ZONE_DISCARD) {
+      -resolvedValues().cardDraw * count * Constants.DISCARD_FACTOR
     } else {
-      throw IllegalArgumentException()
+      throw IllegalArgumentException("Unsupported singleCardEffectValue: $this")
     }
 
   /** Updates the costs in all [SkillCard.Computed] sections on all [SkillCard]s. */
@@ -264,8 +269,8 @@ class SkillCsvWriter(private val input: String, private val output: String) {
   fun write() {
     val cards = reader()
     File(output).writer().use { writer ->
-      writer.write("Name,ExpectedValue,SuggestedCost\n")
-      cards.map { "${it.name},${it.computed.totalExpectedValue},${it.computed.suggestedCost}" }
+      writer.write("Name\tExpectedValue\tSuggestedCost\n")
+      cards.map { "${it.name}\t${it.computed.totalExpectedValue}\t${it.computed.suggestedCost}" }
         .distinct()
         .forEach {
           writer.write(it)
