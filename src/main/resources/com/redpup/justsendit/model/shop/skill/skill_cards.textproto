@@ -237,7 +237,7 @@ cards {
 cards {
   name: "Living the Life"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -261,7 +261,7 @@ cards {
 cards {
   name: "On a Roll"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLACK
   dice: DIE_GREEN
   icons {
@@ -367,15 +367,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.7
-    effect_expected_value: 0.9818181818181817
-    total_expected_value: 6.181818181818182
+    effect_expected_value: 1.0145454545454544
+    total_expected_value: 6.214545454545455
     suggested_cost: 3
   }
 }
 cards {
   name: "Clean Line"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   dice: DIE_GREEN
   icons {
@@ -431,7 +431,7 @@ cards {
 cards {
   name: "Textbook Turn"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -487,7 +487,7 @@ cards {
 cards {
   name: "Nothing to It"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -543,7 +543,7 @@ cards {
 cards {
   name: "Sticking It"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -599,7 +599,7 @@ cards {
 cards {
   name: "Coldblooded"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLACK
   dice: DIE_BLUE
   icons {
@@ -655,7 +655,7 @@ cards {
 cards {
   name: "Living Legend"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLACK
   dice: DIE_BLACK
   icons {
@@ -757,7 +757,7 @@ cards {
 cards {
   name: "Hail Mary"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLACK
   dice: DIE_GREEN
   icons {
@@ -803,7 +803,7 @@ cards {
 cards {
   name: "Window Shopping"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   dice: DIE_GREEN
   icons {
@@ -835,15 +835,15 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 11.563185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 11.57785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Second Look"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -875,15 +875,15 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.7
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 12.663185936046723
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 12.67785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Cherry Picking"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -915,15 +915,15 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 13.563185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 13.57785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Weigh Your Odds"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 4
   dice: DIE_BLACK
   dice: DIE_GREEN
   icons {
@@ -955,15 +955,15 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.5
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 13.463185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 13.47785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Game Plan"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -988,15 +988,15 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.5
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 13.463185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 13.47785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "One Step Ahead"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLACK
   dice: DIE_BLUE
   icons {
@@ -1021,15 +1021,15 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 14.563185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 14.57785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Master Plan"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 5
   dice: DIE_BLACK
   dice: DIE_BLACK
   icons {
@@ -1057,8 +1057,8 @@ cards {
   computed {
     dice_expected_value: 9.0
     icon_expected_value: 0.30000000000000004
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 15.263185936046723
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 15.277857753343831
     suggested_cost: 5
   }
 }
@@ -1083,8 +1083,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.8
-    effect_expected_value: -5.638946511628106
-    total_expected_value: 0.16105348837189393
+    effect_expected_value: -5.6528205705379015
+    total_expected_value: 0.14717942946209828
     suggested_cost: 2
   }
 }
@@ -1109,8 +1109,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.7
-    effect_expected_value: -5.638946511628106
-    total_expected_value: 1.0610534883718943
+    effect_expected_value: -5.6528205705379015
+    total_expected_value: 1.0471794294620986
     suggested_cost: 2
   }
 }
@@ -1135,8 +1135,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.6
-    effect_expected_value: -5.638946511628106
-    total_expected_value: 1.9610534883718937
+    effect_expected_value: -5.6528205705379015
+    total_expected_value: 1.947179429462098
     suggested_cost: 2
   }
 }
@@ -1164,48 +1164,15 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.6
-    effect_expected_value: -5.638946511628106
-    total_expected_value: 2.9610534883718937
-    suggested_cost: 2
-  }
-}
-cards {
-  name: "Warm Up"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
-  dice: DIE_GREEN
-  icons {
-    grade: GRADE_GREEN
-  }
-  icons {
-    condition: CONDITION_GROOMED
-  }
-  category: EFFECT_CATEGORY_PLAY
-  effect_condition {
-    next_card_cost {
-      comparison_matcher {
-        comparison: COMPARISON_GT
-        int32_value: 2
-      }
-    }
-  }
-  effects {
-    gain_own_tags {
-    }
-  }
-  flavor_text: "Just a warm-up for what\342\200\231s coming."
-  computed {
-    dice_expected_value: 2.5
-    icon_expected_value: 1.4
-    effect_expected_value: 1.0054545454545454
-    total_expected_value: 4.905454545454545
+    effect_expected_value: -5.6528205705379015
+    total_expected_value: 2.947179429462098
     suggested_cost: 2
   }
 }
 cards {
   name: "Upping the Ante"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   dice: DIE_GREEN
   icons {
@@ -1219,7 +1186,7 @@ cards {
     next_card_cost {
       comparison_matcher {
         comparison: COMPARISON_GT
-        int32_value: 3
+        int32_value: 2
       }
     }
   }
@@ -1239,7 +1206,7 @@ cards {
 cards {
   name: "Double Down"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -1253,7 +1220,7 @@ cards {
     next_card_cost {
       comparison_matcher {
         comparison: COMPARISON_GT
-        int32_value: 4
+        int32_value: 3
       }
     }
   }
@@ -1273,7 +1240,7 @@ cards {
 cards {
   name: "All In"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -1287,7 +1254,7 @@ cards {
     next_card_cost {
       comparison_matcher {
         comparison: COMPARISON_GT
-        int32_value: 5
+        int32_value: 4
       }
     }
   }
@@ -1305,13 +1272,13 @@ cards {
   }
 }
 cards {
-  name: "Buy In"
+  name: "Go Big"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 2
-  dice: DIE_GREEN
+  dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
-    grade: GRADE_GREEN
+    condition: CONDITION_GROOMED
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
@@ -1327,23 +1294,23 @@ cards {
       points: 3
     }
   }
-  flavor_text: "Why go halfway."
+  flavor_text: "Bet big and cashed out bigger."
   computed {
-    dice_expected_value: 5.0
-    icon_expected_value: 0.6
+    dice_expected_value: 6.0
+    icon_expected_value: 0.8
     effect_expected_value: 0.4581818181818181
-    total_expected_value: 6.058181818181818
+    total_expected_value: 7.258181818181818
     suggested_cost: 3
   }
 }
 cards {
-  name: "Go Big"
+  name: "High Roller"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 3
   dice: DIE_BLUE
-  dice: DIE_GREEN
+  dice: DIE_BLUE
   icons {
-    condition: CONDITION_GROOMED
+    grade: GRADE_BLUE
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
@@ -1359,23 +1326,23 @@ cards {
       points: 4
     }
   }
-  flavor_text: "Bet big and cashed out bigger."
+  flavor_text: "Every bit of it comes back around."
   computed {
-    dice_expected_value: 6.0
-    icon_expected_value: 0.8
+    dice_expected_value: 7.0
+    icon_expected_value: 0.6
     effect_expected_value: 0.6109090909090908
-    total_expected_value: 7.41090909090909
+    total_expected_value: 8.210909090909091
     suggested_cost: 3
   }
 }
 cards {
-  name: "High Roller"
+  name: "Sky\342\200\231s the Limit"
   type: SKILL_CARD_TYPE_UPGRADE
   cost: 4
-  dice: DIE_BLUE
+  dice: DIE_BLACK
   dice: DIE_BLUE
   icons {
-    grade: GRADE_BLUE
+    grade: GRADE_BLACK
   }
   category: EFFECT_CATEGORY_PLAY
   effect_condition {
@@ -1391,44 +1358,12 @@ cards {
       points: 5
     }
   }
-  flavor_text: "Every bit of it comes back around."
-  computed {
-    dice_expected_value: 7.0
-    icon_expected_value: 0.6
-    effect_expected_value: 0.7636363636363636
-    total_expected_value: 8.363636363636363
-    suggested_cost: 3
-  }
-}
-cards {
-  name: "Sky\342\200\231s the Limit"
-  type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
-  dice: DIE_BLACK
-  dice: DIE_BLUE
-  icons {
-    grade: GRADE_BLACK
-  }
-  category: EFFECT_CATEGORY_PLAY
-  effect_condition {
-    next_card_cost {
-      comparison_matcher {
-        comparison: COMPARISON_GT
-        int32_value: 5
-      }
-    }
-  }
-  effects {
-    gain {
-      points: 6
-    }
-  }
   flavor_text: "No ceiling on what this could be."
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.6
-    effect_expected_value: 0.9163636363636362
-    total_expected_value: 9.516363636363636
+    effect_expected_value: 0.7636363636363636
+    total_expected_value: 9.363636363636363
     suggested_cost: 3
   }
 }
@@ -1450,8 +1385,8 @@ cards {
   computed {
     dice_expected_value: 5.0
     icon_expected_value: 0.3
-    effect_expected_value: 0.7018181818181821
-    total_expected_value: 6.001818181818182
+    effect_expected_value: 0.7045454545454547
+    total_expected_value: 6.004545454545455
     suggested_cost: 3
   }
 }
@@ -1473,8 +1408,8 @@ cards {
   computed {
     dice_expected_value: 6.0
     icon_expected_value: 0.5
-    effect_expected_value: 0.7018181818181821
-    total_expected_value: 7.201818181818182
+    effect_expected_value: 0.7045454545454547
+    total_expected_value: 7.204545454545455
     suggested_cost: 3
   }
 }
@@ -1496,8 +1431,8 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.7
-    effect_expected_value: 0.7018181818181821
-    total_expected_value: 8.401818181818182
+    effect_expected_value: 0.7045454545454547
+    total_expected_value: 8.404545454545454
     suggested_cost: 3
   }
 }
@@ -1519,15 +1454,15 @@ cards {
   computed {
     dice_expected_value: 8.0
     icon_expected_value: 0.1
-    effect_expected_value: 0.7018181818181821
-    total_expected_value: 8.80181818181818
+    effect_expected_value: 0.7045454545454547
+    total_expected_value: 8.804545454545455
     suggested_cost: 3
   }
 }
 cards {
   name: "Clean Slate"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   icons {
     grade: GRADE_GREEN
@@ -1541,15 +1476,15 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 9.063185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 9.07785775334383
     suggested_cost: 3
   }
 }
 cards {
   name: "Fresh Eyes"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   icons {
     grade: GRADE_BLUE
@@ -1563,15 +1498,15 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 10.063185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 10.07785775334383
     suggested_cost: 3
   }
 }
 cards {
   name: "Total Reset"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLACK
   icons {
     grade: GRADE_BLACK
@@ -1585,15 +1520,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.6
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 11.063185936046722
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 11.07785775334383
     suggested_cost: 4
   }
 }
 cards {
   name: "Burn It Down"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 5
   dice: DIE_BLACK
   dice: DIE_GREEN
   icons {
@@ -1608,9 +1543,34 @@ cards {
   computed {
     dice_expected_value: 7.0
     icon_expected_value: 0.2
-    effect_expected_value: 5.963185936046722
-    total_expected_value: 13.163185936046723
+    effect_expected_value: 5.97785775334383
+    total_expected_value: 13.17785775334383
     suggested_cost: 4
+  }
+}
+cards {
+  name: "Warm Up"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 2
+  dice: DIE_GREEN
+  icons {
+    grade: GRADE_GREEN
+  }
+  icons {
+    condition: CONDITION_GROOMED
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    reactivate_following {
+    }
+  }
+  flavor_text: "Just a warm-up for what\342\200\231s coming."
+  computed {
+    dice_expected_value: 2.5
+    icon_expected_value: 1.4
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 5.766262784959295
+    suggested_cost: 3
   }
 }
 cards {
@@ -1633,8 +1593,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 1.1
-    effect_expected_value: 1.8470189474859293
-    total_expected_value: 5.44701894748593
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 5.466262784959296
     suggested_cost: 3
   }
 }
@@ -1658,8 +1618,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 1.4
-    effect_expected_value: 1.8470189474859293
-    total_expected_value: 6.7470189474859295
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 6.766262784959296
     suggested_cost: 3
   }
 }
@@ -1683,8 +1643,33 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 1.1
-    effect_expected_value: 1.8470189474859293
-    total_expected_value: 6.447018947485929
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 6.466262784959295
+    suggested_cost: 3
+  }
+}
+cards {
+  name: "Buy In"
+  type: SKILL_CARD_TYPE_UPGRADE
+  cost: 4
+  dice: DIE_BLACK
+  icons {
+    grade: GRADE_BLACK
+  }
+  icons {
+    hazard: HAZARD_TREES
+  }
+  category: EFFECT_CATEGORY_PLAY
+  effects {
+    reactivate_following {
+    }
+  }
+  flavor_text: "Why go halfway."
+  computed {
+    dice_expected_value: 4.5
+    icon_expected_value: 0.8999999999999999
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 7.266262784959296
     suggested_cost: 3
   }
 }
@@ -1708,8 +1693,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.8999999999999999
-    effect_expected_value: 1.8470189474859293
-    total_expected_value: 7.2470189474859295
+    effect_expected_value: 1.8662627849592957
+    total_expected_value: 7.266262784959296
     suggested_cost: 3
   }
 }
@@ -2304,7 +2289,7 @@ cards {
 cards {
   name: "Nothing But Net"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 4
   dice: DIE_BLACK
   dice: DIE_BLACK
   icons {
@@ -2355,7 +2340,7 @@ cards {
 cards {
   name: "Ice Cold"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -2406,7 +2391,7 @@ cards {
 cards {
   name: "Beat the Odds"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_GREEN
   dice: DIE_GREEN
   icons {
@@ -2457,7 +2442,7 @@ cards {
 cards {
   name: "Buzzer Beater"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   dice: DIE_GREEN
   icons {
@@ -2497,7 +2482,7 @@ cards {
 cards {
   name: "Nick of Time"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLUE
   dice: DIE_BLUE
   icons {
@@ -2537,7 +2522,7 @@ cards {
 cards {
   name: "Last Gasp"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 6
+  cost: 5
   dice: DIE_BLACK
   dice: DIE_BLUE
   icons {
@@ -2625,7 +2610,7 @@ cards {
 cards {
   name: "Raise the Bar"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLUE
   icons {
     grade: GRADE_BLUE
@@ -2649,7 +2634,7 @@ cards {
 cards {
   name: "Kick It Up"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLUE
   icons {
     hazard: HAZARD_CLIFFS
@@ -2673,7 +2658,7 @@ cards {
 cards {
   name: "Next Level"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLACK
   icons {
     grade: GRADE_BLACK
@@ -2697,7 +2682,7 @@ cards {
 cards {
   name: "No Half Measures"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLACK
   icons {
     hazard: HAZARD_TREES
@@ -2872,8 +2857,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 1.4
-    effect_expected_value: 0.6181818181818182
-    total_expected_value: 4.518181818181818
+    effect_expected_value: 0.6000000000000001
+    total_expected_value: 4.5
     suggested_cost: 2
   }
 }
@@ -2932,15 +2917,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 1.2999999999999998
-    effect_expected_value: 1.1127272727272728
-    total_expected_value: 6.912727272727272
+    effect_expected_value: 1.1454545454545455
+    total_expected_value: 6.945454545454545
     suggested_cost: 3
   }
 }
 cards {
   name: "Saw It Coming"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLUE
   icons {
     grade: GRADE_BLACK
@@ -2965,7 +2950,7 @@ cards {
 cards {
   name: "Two Steps Ahead"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_GREEN
   icons {
     grade: GRADE_BLUE
@@ -2990,7 +2975,7 @@ cards {
 cards {
   name: "Called It"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLACK
   icons {
     grade: GRADE_DOUBLE_BLACK
@@ -3037,8 +3022,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 1.0
-    effect_expected_value: -0.5111572093024848
-    total_expected_value: 2.9888427906975155
+    effect_expected_value: -0.5222564564303213
+    total_expected_value: 2.977743543569679
     suggested_cost: 2
   }
 }
@@ -3067,8 +3052,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 1.0
-    effect_expected_value: -0.5111572093024848
-    total_expected_value: 3.9888427906975155
+    effect_expected_value: -0.5222564564303213
+    total_expected_value: 3.977743543569679
     suggested_cost: 2
   }
 }
@@ -3097,15 +3082,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.7999999999999999
-    effect_expected_value: -0.5111572093024848
-    total_expected_value: 4.788842790697515
+    effect_expected_value: -0.5222564564303213
+    total_expected_value: 4.777743543569678
     suggested_cost: 2
   }
 }
 cards {
   name: "Riding the High"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
@@ -3123,15 +3108,15 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.0
-    effect_expected_value: 4.5111572093024845
-    total_expected_value: 7.0111572093024845
+    effect_expected_value: 4.522256456430322
+    total_expected_value: 7.022256456430322
     suggested_cost: 3
   }
 }
 cards {
   name: "Runner\342\200\231s High"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 4
+  cost: 3
   dice: DIE_BLUE
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
@@ -3149,15 +3134,15 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.0
-    effect_expected_value: 4.5111572093024845
-    total_expected_value: 8.011157209302485
+    effect_expected_value: 4.522256456430322
+    total_expected_value: 8.022256456430322
     suggested_cost: 3
   }
 }
 cards {
   name: "Fueled Up"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 5
+  cost: 4
   dice: DIE_BLACK
   category: EFFECT_CATEGORY_FINALE
   effect_condition {
@@ -3175,15 +3160,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.0
-    effect_expected_value: 4.5111572093024845
-    total_expected_value: 9.011157209302485
+    effect_expected_value: 4.522256456430322
+    total_expected_value: 9.022256456430322
     suggested_cost: 3
   }
 }
 cards {
   name: "Breather"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_GREEN
   icons {
     hazard: HAZARD_MOGULS
@@ -3203,15 +3188,15 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 0.8
-    effect_expected_value: 5.638946511628106
-    total_expected_value: 7.252841162790916
+    effect_expected_value: 5.6528205705379015
+    total_expected_value: 7.268102627591691
     suggested_cost: 3
   }
 }
 cards {
   name: "Second Wind"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLUE
   icons {
     hazard: HAZARD_MOGULS
@@ -3231,15 +3216,15 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.6
-    effect_expected_value: 5.638946511628106
-    total_expected_value: 7.152841162790916
+    effect_expected_value: 5.6528205705379015
+    total_expected_value: 7.168102627591692
     suggested_cost: 3
   }
 }
 cards {
   name: "Recharge"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 2
+  cost: 3
   dice: DIE_BLACK
   icons {
     hazard: HAZARD_TREES
@@ -3259,15 +3244,15 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.4
-    effect_expected_value: 5.638946511628106
-    total_expected_value: 7.052841162790917
+    effect_expected_value: 5.6528205705379015
+    total_expected_value: 7.068102627591692
     suggested_cost: 3
   }
 }
 cards {
   name: "Clear It Out"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_GREEN
   icons {
     grade: GRADE_GREEN
@@ -3294,7 +3279,7 @@ cards {
 cards {
   name: "Cut the Fat"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_BLUE
   icons {
     condition: CONDITION_GROOMED
@@ -3321,7 +3306,7 @@ cards {
 cards {
   name: "Spring Cleaning"
   type: SKILL_CARD_TYPE_UPGRADE
-  cost: 3
+  cost: 2
   dice: DIE_BLACK
   icons {
     hazard: HAZARD_TREES
@@ -3440,8 +3425,8 @@ cards {
   computed {
     dice_expected_value: 2.5
     icon_expected_value: 1.2
-    effect_expected_value: 3.180365832558252
-    total_expected_value: 4.948402415814077
+    effect_expected_value: 3.188190801783376
+    total_expected_value: 4.957009881961714
     suggested_cost: 2
   }
 }
@@ -3465,8 +3450,8 @@ cards {
   computed {
     dice_expected_value: 3.5
     icon_expected_value: 0.8
-    effect_expected_value: 3.180365832558252
-    total_expected_value: 4.968036583255825
+    effect_expected_value: 3.188190801783376
+    total_expected_value: 4.968819080178338
     suggested_cost: 2
   }
 }
@@ -3490,8 +3475,8 @@ cards {
   computed {
     dice_expected_value: 4.5
     icon_expected_value: 0.8
-    effect_expected_value: 3.180365832558252
-    total_expected_value: 6.068036583255825
+    effect_expected_value: 3.188190801783376
+    total_expected_value: 6.068819080178337
     suggested_cost: 3
   }
 }

@@ -2,10 +2,10 @@
 # proto-message: SkillCardComputationValuesList
 
 values {
-  cardDraw: 7.048682927171801
-  cardFilter2: 3.9754571709248956
-  cardFilter3: 5.963185756387343
-  effect: 1.8470187268250817
-  icons: 0.7018181818181821
-  average_cost: 2.7636363636363637
+  cardDraw: 7.066025792309983
+  cardFilter2: 3.98523854686283
+  cardFilter3: 5.977857820294245
+  effect: 1.8662628667815302
+  icons: 0.7045454545454547
+  average_cost: 2.772727272727273
 }
