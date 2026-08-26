@@ -377,7 +377,7 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
       "  }\n",
     ]
 
-  if text == "Trash an additional card":
+  if text == "Trash a card":
     return ["  effects {\n    gain {\n      trashes: 1\n    }\n  }\n"]
 
   if text == "Replenish the shop. You may play additional cards after this.":
