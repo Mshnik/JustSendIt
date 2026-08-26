@@ -13,7 +13,7 @@ object Constants {
   const val MIN_UPGRADE_COST = 2
 
   /** Maximum value an upgrade card can cost. */
-  const val MAX_UPGRADE_COST = 7
+  const val MAX_UPGRADE_COST = 5
 
   /** C98 "Lift/Pass Comparison Factor": used when combining dice/icon EV with effect EV. */
   const val LIFT_PASS_COMPARISON_FACTOR = 0.1
