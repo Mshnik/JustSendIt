@@ -50,6 +50,7 @@ object Constants {
       EffectCategory.EFFECT_CATEGORY_FINALE -> 0.8
       EffectCategory.EFFECT_CATEGORY_REST -> 0.8
       EffectCategory.EFFECT_CATEGORY_LIFT -> 0.2
+      EffectCategory.EFFECT_CATEGORY_NIGHT -> TODO()
       EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
 
@@ -83,4 +84,10 @@ object Constants {
   /** Relative cost of discarding compared to drawing. Less than one to account for player
    * choice in discarding a worse card. */
   const val DISCARD_FACTOR: Double = 0.8
+
+  /** Number of turns in an average game. */
+  const val GAME_TURNS = 12
+
+  /** Average number of rests per round. */
+  const val RESTS_PER_ROUND = 1.0
 }

@@ -103,6 +103,11 @@ class ResolvedValues {
     SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> matchingDie.coloredDieFrequency()
       ?: (Constants.WILD_DIE_PICK_FACTOR / Die.DIE_BLUE.maxValue)
 
+    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_OTHER_CARDS -> TODO()
+    SkillCardEffectRepeat.RepeatCase.SKILL_CARDS_IN_DECK -> TODO()
+    SkillCardEffectRepeat.RepeatCase.REROLL_ON_OTHER_CARDS -> TODO()
+    SkillCardEffectRepeat.RepeatCase.EFFECT_CATEGORY_SET -> TODO()
+
     null -> throw IllegalStateException()
   }
 

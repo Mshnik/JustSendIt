@@ -143,6 +143,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
       -> effectExpectedValue + nonTextEv
 
       EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
+      EffectCategory.EFFECT_CATEGORY_NIGHT -> TODO()
     }
   }
 
@@ -184,6 +185,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
 
     SkillCardEffect.EffectCase.REPLACE_DICE -> replaceDice.VALUE
     SkillCardEffect.EffectCase.BUY_TO_TOPDECK -> resolvedValues.buyToTopdeck
+    SkillCardEffect.EffectCase.RETURN_LATER_CARD -> TODO()
     SkillCardEffect.EffectCase.IGNORE_HAZARD -> with(resolvedValues) { ignoreHazard.ignoreValue }
     SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
   }

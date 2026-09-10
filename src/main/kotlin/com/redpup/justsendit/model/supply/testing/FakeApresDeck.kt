@@ -31,6 +31,6 @@ class FakeApresDeck @Inject constructor(
   }
 
   override fun tuck(apres: Apres) {
-    apresCards.addLast(apres.apresCard)
+    apresCards.add(apres.apresCard)
   }
 }
