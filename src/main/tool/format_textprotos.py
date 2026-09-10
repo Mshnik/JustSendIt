@@ -530,7 +530,33 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
   m = _DIE_TYPE_RE.match(text)
   if m:
     color = m.group(1).upper()
-    # TODO: Construct repeat of matcher with die color but no value.
+
+    # The matcher is always evaluated against a DieRoll{ die, roll } object,
+    # so even the color-agnostic "Wild" case has to go through
+    # message_matcher -- it just omits the `die` FieldMatcher entirely
+    # (an empty AND'ed field list is trivially satisfied for that
+    # dimension), rather than matching a bare int.
+    fields_block = ""
+    if color != "WILD":
+      fields_block = (
+                         "        fields {\n"
+                         f"          field_name: \"{DIE_ROLL_COLOR_FIELD}\"\n"
+                         "          matcher {\n"
+                         + _color_matcher_body(color, "            ")
+                         + "          }\n"
+                           "        }\n"
+                     )
+
+    return (
+        "  effect_repeat {\n"
+        "    matching_die {\n"
+        "      message_matcher {\n"
+        f"        message_type_name: \"{DIE_ROLL_MESSAGE_TYPE}\"\n"
+        + fields_block +
+        "      }\n"
+        "    }\n"
+        "  }\n"
+    )
 
   m = _CARDS_IN_DECK_RE.match(text)
   if m:

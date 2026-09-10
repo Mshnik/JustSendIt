@@ -2718,7 +2718,24 @@ cards {
       points: 2
     }
   }
-  # TODO(skill.proto): no repeat mapping for "Black die on other cards"
+  effect_repeat {
+    matching_die {
+      message_matcher {
+        message_type_name: "com.redpup.justsendit.model.player.DieRoll"
+        fields {
+          field_name: "die"
+          matcher {
+            enum_matcher {
+              enum_type_name: "com.redpup.justsendit.model.Die"
+              name_matcher {
+                string_matcher { value: "DIE_BLACK" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
   flavor_text: "Already planning the next day on the slopes."
 }
 
