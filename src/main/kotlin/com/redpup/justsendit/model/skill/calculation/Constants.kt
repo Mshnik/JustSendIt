@@ -9,6 +9,9 @@ import com.redpup.justsendit.model.supply.proto.SkillCard
  * TODO: Description
  */
 object Constants {
+  /** Standard hand size. */
+  const val HAND_SIZE = 5
+
   /** Minimum value an upgrade card can cost. */
   const val MIN_UPGRADE_COST = 2
 
@@ -90,4 +93,16 @@ object Constants {
 
   /** Average number of rests per round. */
   const val RESTS_PER_ROUND = 1.0
+
+  /** Average number of rests per game. */
+  const val AVERAGE_BUYS_PER_GAME = GAME_TURNS * RESTS_PER_ROUND
+
+  /** Starting cards in deck. */
+  const val STARTING_CARDS = 10
+
+  /** Average number of retires per game. */
+  const val AVERAGE_RETIRES = 3.0
+
+  /** Average final deck size at end of game. */
+  const val AVERAGE_FINAL_DECK_SIZE = STARTING_CARDS - AVERAGE_RETIRES + AVERAGE_BUYS_PER_GAME
 }

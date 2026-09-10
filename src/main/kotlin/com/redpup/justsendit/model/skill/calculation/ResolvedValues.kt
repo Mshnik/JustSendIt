@@ -2,6 +2,7 @@ package com.redpup.justsendit.model.skill.calculation
 
 import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.proto.Die
+import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.random.Dice.averageValue
 import com.redpup.justsendit.model.random.Dice.maxValue
 import com.redpup.justsendit.model.skill.calculation.MatcherUtilities.coloredDieFrequency
@@ -23,8 +24,10 @@ class ResolvedValues {
     )
 
   private var totalCards = 0
+  private var totalRerolls = 0
   private var cardCosts = mapOf<Int, Int>()
   private var cardIcons = mapOf<Icon, Int>()
+  private var cardEffectCategories = mapOf<EffectCategory, Int>()
   private var cardsImpactedByHazards = mapOf<Hazard, Int>()
 
   private val parameters = parametersList().first().toBuilder()
@@ -34,6 +37,7 @@ class ResolvedValues {
   /** Updates the values in this based on [cards]. */
   fun update(cards: List<SkillCard>): SkillCardComputationValues {
     totalCards = cards.size
+    totalRerolls = cards.sumOf { card -> card.effectsList.count { it.alterDie.hasReroll() } }
     cardCosts = cards.groupingBy { it.computed.suggestedCost }.eachCount()
     cardIcons = cards.flatMap { it.iconsList }.groupingBy { it }.eachCount()
     cardsImpactedByHazards = buildMap {
@@ -44,6 +48,7 @@ class ResolvedValues {
       this[Hazard.HAZARD_CLIFFS] =
         cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
     }
+    cardEffectCategories = cards.groupingBy { it.category }.eachCount()
 
     val computed = cards.map { it.computed }
     val current = parameters.build()
@@ -103,10 +108,19 @@ class ResolvedValues {
     SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> matchingDie.coloredDieFrequency()
       ?: (Constants.WILD_DIE_PICK_FACTOR / Die.DIE_BLUE.maxValue)
 
-    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_OTHER_CARDS -> TODO()
-    SkillCardEffectRepeat.RepeatCase.SKILL_CARDS_IN_DECK -> TODO()
-    SkillCardEffectRepeat.RepeatCase.REROLL_ON_OTHER_CARDS -> TODO()
-    SkillCardEffectRepeat.RepeatCase.EFFECT_CATEGORY_SET -> TODO()
+    SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_OTHER_CARDS -> card.iconsList.sumOf {
+      cardIcons[it] ?: 0
+    } / totalCards.toDouble() * Constants.AVERAGE_BUYS_PER_GAME
+
+    SkillCardEffectRepeat.RepeatCase.SKILL_CARDS_IN_DECK ->
+      Constants.AVERAGE_FINAL_DECK_SIZE / skillCardsInDeck.toDouble()
+
+    SkillCardEffectRepeat.RepeatCase.REROLL_ON_OTHER_CARDS ->
+      totalRerolls / totalCards.toDouble() * Constants.AVERAGE_BUYS_PER_GAME
+
+    SkillCardEffectRepeat.RepeatCase.EFFECT_CATEGORY_SET -> effectCategorySet.categoryList.sumOf {
+      (cardEffectCategories[it] ?: 0) / totalCards.toDouble()
+    } * Constants.AVERAGE_BUYS_PER_GAME / effectCategorySet.categoryCount
 
     null -> throw IllegalStateException()
   }
