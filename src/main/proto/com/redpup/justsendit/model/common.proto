@@ -65,6 +65,7 @@ enum EffectCategory {
   EFFECT_CATEGORY_RIDE = 3;
   EFFECT_CATEGORY_LIFT = 4;
   EFFECT_CATEGORY_FINALE = 5;
+  EFFECT_CATEGORY_NIGHT = 6;
 }
 
 /** Places that skill cards can be. */

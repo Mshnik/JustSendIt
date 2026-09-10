@@ -119,7 +119,7 @@ message SkillCardEffect {
     // Replenish the shop's face-up offerings.
     google.protobuf.Empty replenish_shop = 9;
     // Take an additional turn after this one.
-    google.protobuf.Empty extra_turn = 10;
+    ExtraTurnEffect extra_turn = 10;
     // Gain this card's own icon tags an additional time.
     google.protobuf.Empty gain_own_tags = 11;
     // Gain the icon tags of the card played directly below this one an
@@ -136,6 +136,8 @@ message SkillCardEffect {
     google.protobuf.Empty gain_fun_equal_to_value_rolled = 16;
     // Ignore the listed hazard on this tile.
     board.tile.Hazard ignore_hazard = 17;
+    // Return a later card to your hand.
+    google.protobuf.Empty return_later_card = 18;
   }
 }
 
@@ -152,6 +154,14 @@ message SkillCardEffectRepeat {
     google.protobuf.Empty matching_tag_on_cards_above = 4;
     // Once per die showing a specific value and matching the given color.
     matchers.Matcher matching_die = 5;
+    // Once per icon tag on other cards in deck
+    google.protobuf.Empty matching_tag_on_other_cards = 6;
+    // Once per k cards in deck, rounded down, counting this.
+    uint32 skill_cards_in_deck = 7;
+    // Once per reroll on other cards in deck.
+    google.protobuf.Empty reroll_on_other_cards = 8;
+    // Once per group of cards in deck matching the given set.
+    EffectCategorySet effect_category_set = 9;
   }
 }
 
@@ -185,6 +195,19 @@ message GainEffect {
     // Gain an amount of points linked to the cost/condition.
     google.protobuf.Empty points_linked = 6;
   }
+}
+
+/** An effect that lets you take an another turn. */
+enum ExtraTurnEffect {
+  /** An unrestricted extra turn. */
+  EXTRA_TURN_ANY = 0;
+  /** A rest-only extra turn. */
+  EXTRA_TURN_REST = 1;
+}
+
+/** A group of effect categories. */
+message EffectCategorySet {
+  repeated EffectCategory category = 1;
 }
 
 /** An effect that moves skill cards between zones. */

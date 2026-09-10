@@ -181,6 +181,8 @@ _REPLACE_DICE_RE = re.compile(
   r'^Replace all (Green|Blue|Black) with (Green|Blue|Black)$')
 _REMOVE_DIE_RE = re.compile(r'^Remove (Green|Blue|Black|Wild)( X)?$')
 _REPEAT_DIE_VALUE_RE = re.compile(r'^(Green|Blue|Black|Wild) (\d+)$')
+_DIE_TYPE_RE = re.compile(r'^(Green|Blue|Black|Wild) die on other cards$')
+_CARDS_IN_DECK_RE = re.compile(r'^(\d+) cards in your deck$')
 _IGNORE_HAZARD_RE = re.compile(r'^Ignore (.*) on this tile$')
 
 
@@ -380,8 +382,14 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Trash a card":
     return ["  effects {\n    gain {\n      trashes: 1\n    }\n  }\n"]
 
-  if text == "Replenish the shop. You may play additional cards after this.":
-    return ["  effects {\n    replenish_shop {}\n  }\n"]
+  if text == "Return a card after this to your hand.":
+    return ["  effects {\n    return_later_card {}\n  }\n"]
+
+  if text == "Replenish the shop. After this turn, you may take a rest turn.":
+    return [
+      "  effects {\n    replenish_shop {}\n  }\n"
+      "  effects {\n    extra_turn: EXTRA_TURN_REST \n  }\n"
+    ]
 
   if text == "Put the card you buy on top of your deck instead of into your discard.":
     return ["  effects {\n    buy_to_topdeck {}\n  }\n"]
@@ -474,6 +482,20 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
   if text == "Matching tag on card above":
     return "  effect_repeat {\n    matching_tag_on_cards_above {}\n  }\n"
 
+  if text == "Matching tag on other cards":
+    return "  effect_repeat {\n    matching_tag_on_other_cards {}\n  }\n"
+
+  if text == "Reroll on other cards":
+    return "  effect_repeat {\n    reroll_on_other_cards {}\n  }\n"
+
+  if text == "Set of Play / Ride / Finale / Rest":
+    return ("  effect_repeat {\n    effect_category_set {\n"
+            "      category: EFFECT_CATEGORY_PLAY\n"
+            "      category: EFFECT_CATEGORY_RIDE\n"
+            "      category: EFFECT_CATEGORY_FINALE\n"
+            "      category: EFFECT_CATEGORY_REST\n"
+            "    }\n  }\n")
+
   m = _REPEAT_DIE_VALUE_RE.match(text)
   if m:
     color, value = m.group(1).upper(), m.group(2)
@@ -504,6 +526,16 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
         "    }\n"
         "  }\n"
     )
+
+  m = _DIE_TYPE_RE.match(text)
+  if m:
+    color = m.group(1).upper()
+    # TODO: Construct repeat of matcher with die color but no value.
+
+  m = _CARDS_IN_DECK_RE.match(text)
+  if m:
+    count = m.group(1)
+    return f"  effect_repeat {{\n    skill_cards_in_deck: ${count}\n  }}\n"
 
   UNSUPPORTED_REPEATS.append((card_name, text))
   return f'  # TODO(skill.proto): no repeat mapping for "{text}"\n'
@@ -595,6 +627,7 @@ def process_skill_cards_pipeline():
         "RIDE": "EFFECT_CATEGORY_RIDE",
         "LIFT": "EFFECT_CATEGORY_LIFT",
         "FINALE": "EFFECT_CATEGORY_FINALE",
+        "NIGHT": "EFFECT_CATEGORY_NIGHT",
       }
       proto_category = category_map.get(category_raw, "EFFECT_CATEGORY_UNSET")
 
