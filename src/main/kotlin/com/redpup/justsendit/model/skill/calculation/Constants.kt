@@ -50,10 +50,10 @@ object Constants {
     get() = when (category) {
       EffectCategory.EFFECT_CATEGORY_PLAY -> 1.0
       EffectCategory.EFFECT_CATEGORY_RIDE -> 0.8
-      EffectCategory.EFFECT_CATEGORY_FINALE -> 0.8
+      EffectCategory.EFFECT_CATEGORY_FINALE -> 0.7
       EffectCategory.EFFECT_CATEGORY_REST -> 0.8
       EffectCategory.EFFECT_CATEGORY_LIFT -> 0.2
-      EffectCategory.EFFECT_CATEGORY_NIGHT -> TODO()
+      EffectCategory.EFFECT_CATEGORY_NIGHT -> 0.8
       EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
 

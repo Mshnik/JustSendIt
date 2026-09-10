@@ -19,6 +19,7 @@
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <kotlin.code.style>official</kotlin.code.style>
     <javafx.version>21</javafx.version>
+    <proto.version>4.36.1</proto.version>
     <proto.srcdir>src/main/proto</proto.srcdir>
     <proto.outdir>target/generated-sources</proto.outdir>
     <os.detected.classifier>osx-aarch_64</os.detected.classifier>
@@ -52,17 +53,17 @@
         <dependency>
           <groupId>com.google.protobuf</groupId>
           <artifactId>protobuf-java</artifactId>
-          <version>4.33.1</version>
+          <version>${proto.version}</version>
         </dependency>
         <dependency>
           <groupId>com.google.protobuf</groupId>
           <artifactId>protobuf-java-util</artifactId>
-          <version>4.33.1</version>
+          <version>${proto.version}</version>
         </dependency>
         <dependency>
           <groupId>com.google.protobuf</groupId>
           <artifactId>protoc</artifactId>
-          <version>4.33.1</version>
+          <version>${proto.version}</version>
           <type>pom</type>
         </dependency>
       </dependencies>

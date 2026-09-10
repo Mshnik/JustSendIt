@@ -162,6 +162,9 @@ class ResolvedValues {
      */
     val SkillCardComputationValuesOrBuilder.filterHand: Double get() = cardFilter3
 
+    /** Value for returning a card from play. */
+    val SkillCardComputationValuesOrBuilder.returnLaterCard: Double get() = cardDraw / 3
+
     /** Returns the difference between this and [other] as a [SkillCardComputationValues]. */
     operator fun SkillCardComputationValues.minus(other: SkillCardComputationValues): SkillCardComputationValues {
       val self = this

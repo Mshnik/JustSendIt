@@ -561,7 +561,7 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
   m = _CARDS_IN_DECK_RE.match(text)
   if m:
     count = m.group(1)
-    return f"  effect_repeat {{\n    skill_cards_in_deck: ${count}\n  }}\n"
+    return f"  effect_repeat {{\n    skill_cards_in_deck: {count}\n  }}\n"
 
   UNSUPPORTED_REPEATS.append((card_name, text))
   return f'  # TODO(skill.proto): no repeat mapping for "{text}"\n'
