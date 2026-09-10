@@ -27,10 +27,14 @@ internal object MatcherUtilities {
     if (hasConstantMatcher()) {
       check(constantMatcher)
       return null
+    } else if (hasMessageMatcher()) {
+      return messageMatcher.fieldsList.firstOrNull { it.fieldName == "die" || it.fieldNumber == DieRoll.DIE_FIELD_NUMBER }
+        ?.matcher
+        ?.dieColorOrWild()
     }
 
     val enumMatcher = enumMatcher
-    check(enumMatcher.enumTypeName == Die.getDescriptor().fullName)
+    check(enumMatcher.enumTypeName == Die.getDescriptor().fullName) { "Matcher: $enumMatcher" }
 
     if (enumMatcher.nameMatcher.hasStringMatcher()) {
       return runCatching {

@@ -26,6 +26,7 @@ class ResolvedValues {
   private var totalCards = 0
   private var totalRerolls = 0
   private var cardCosts = mapOf<Int, Int>()
+  private var cardDice = mapOf<Die, Int>()
   private var cardIcons = mapOf<Icon, Int>()
   private var cardEffectCategories = mapOf<EffectCategory, Int>()
   private var cardsImpactedByHazards = mapOf<Hazard, Int>()
@@ -39,14 +40,13 @@ class ResolvedValues {
     totalCards = cards.size
     totalRerolls = cards.sumOf { card -> card.effectsList.count { it.alterDie.hasReroll() } }
     cardCosts = cards.groupingBy { it.computed.suggestedCost }.eachCount()
+    cardDice = cards.flatMap { it.diceList }.groupingBy { it }.eachCount()
     cardIcons = cards.flatMap { it.iconsList }.groupingBy { it }.eachCount()
     cardsImpactedByHazards = buildMap {
       this[Hazard.HAZARD_MOGULS] =
         cards.count { card -> card.effectsList.any { it.alterDie.hasReroll() } }
-      this[Hazard.HAZARD_TREES] =
-        cards.count { card -> card.diceList.any { it == Die.DIE_BLUE } }
-      this[Hazard.HAZARD_CLIFFS] =
-        cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
+      this[Hazard.HAZARD_TREES] = cards.count { card -> card.diceList.any { it == Die.DIE_BLUE } }
+      this[Hazard.HAZARD_CLIFFS] = cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
     }
     cardEffectCategories = cards.groupingBy { it.category }.eachCount()
 
@@ -70,15 +70,14 @@ class ResolvedValues {
 
   /** Cost to add to [SkillCardEffect] value. Will be 0 if none or negative if present. */
   val SkillCardEffectCost.effectCost: Double
-    get() =
-      when (costCase) {
-        CostCase.DISCARD_CARD -> -(this@ResolvedValues().cardDraw * Constants.DISCARD_FACTOR)
-        CostCase.REMOVE_DIE -> -(removeDie?.dieColorOrWild()?.averageValue
-          ?: (Die.DIE_BLUE.averageValue * Constants.WILD_DIE_PICK_FACTOR))
+    get() = when (costCase) {
+      CostCase.DISCARD_CARD -> -(this@ResolvedValues().cardDraw * Constants.DISCARD_FACTOR)
+      CostCase.REMOVE_DIE -> -(removeDie?.dieColorOrWild()?.averageValue
+        ?: (Die.DIE_BLUE.averageValue * Constants.WILD_DIE_PICK_FACTOR))
 
-        CostCase.COST_NOT_SET -> 0.0
-        null -> throw IllegalStateException()
-      }
+      CostCase.COST_NOT_SET -> 0.0
+      null -> throw IllegalStateException()
+    }
 
   /** Factor to apply to a [SkillCardEffect] value based on [conditionCase]. */
   fun SkillCardEffectCondition.effectConditionFactor(card: SkillCard): Double =
@@ -86,9 +85,8 @@ class ResolvedValues {
       ConditionCase.CONDITION_NOT_SET -> 1.0 // No condition is always active.
       ConditionCase.SUCCESS -> 0.8
       ConditionCase.FAILURE -> 0.2
-      ConditionCase.NEXT_CARD_COST ->
-        cardCosts.entries.filter { it.key > card.computed.suggestedCost }
-          .sumOf { it.value } / totalCards.toDouble()
+      ConditionCase.NEXT_CARD_COST -> cardCosts.entries.filter { it.key > card.computed.suggestedCost }
+        .sumOf { it.value } / totalCards.toDouble()
 
       ConditionCase.NEXT_CARD_COST_LINKED -> 1.0
       null -> throw IllegalStateException()
@@ -105,18 +103,20 @@ class ResolvedValues {
       cardIcons[it] ?: 0
     } / totalCards.toDouble()
 
-    SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> matchingDie.coloredDieFrequency()
-      ?: (Constants.WILD_DIE_PICK_FACTOR / Die.DIE_BLUE.maxValue)
+    SkillCardEffectRepeat.RepeatCase.MATCHING_DIE -> if (card.category == EffectCategory.EFFECT_CATEGORY_NIGHT) {
+      (cardDice[matchingDie.dieColorOrWild()!!]
+        ?: 0) / totalCards.toDouble() * Constants.AVERAGE_FINAL_DECK_SIZE
+    } else {
+      matchingDie.coloredDieFrequency() ?: (Constants.WILD_DIE_PICK_FACTOR / Die.DIE_BLUE.maxValue)
+    }
 
     SkillCardEffectRepeat.RepeatCase.MATCHING_TAG_ON_OTHER_CARDS -> card.iconsList.sumOf {
       cardIcons[it] ?: 0
     } / totalCards.toDouble() * Constants.AVERAGE_BUYS_PER_GAME
 
-    SkillCardEffectRepeat.RepeatCase.SKILL_CARDS_IN_DECK ->
-      Constants.AVERAGE_FINAL_DECK_SIZE / skillCardsInDeck.toDouble()
+    SkillCardEffectRepeat.RepeatCase.SKILL_CARDS_IN_DECK -> Constants.AVERAGE_FINAL_DECK_SIZE / skillCardsInDeck.toDouble()
 
-    SkillCardEffectRepeat.RepeatCase.REROLL_ON_OTHER_CARDS ->
-      totalRerolls / totalCards.toDouble() * Constants.AVERAGE_BUYS_PER_GAME
+    SkillCardEffectRepeat.RepeatCase.REROLL_ON_OTHER_CARDS -> totalRerolls / totalCards.toDouble() * Constants.AVERAGE_BUYS_PER_GAME
 
     SkillCardEffectRepeat.RepeatCase.EFFECT_CATEGORY_SET -> effectCategorySet.categoryList.sumOf {
       (cardEffectCategories[it] ?: 0) / totalCards.toDouble()
@@ -180,11 +180,6 @@ class ResolvedValues {
 
     /** Returns true if all values in this are 0. */
     fun SkillCardComputationValues.isZero() =
-      averageCost == 0.0 &&
-        cardDraw == 0.0 &&
-        effect == 0.0 &&
-        icons == 0.0 &&
-        cardFilter2 == 0.0 &&
-        cardFilter3 == 0.0
+      averageCost == 0.0 && cardDraw == 0.0 && effect == 0.0 && icons == 0.0 && cardFilter2 == 0.0 && cardFilter3 == 0.0
   }
 }

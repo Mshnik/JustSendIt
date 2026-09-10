@@ -16,7 +16,7 @@ object Constants {
   const val MIN_UPGRADE_COST = 2
 
   /** Maximum value an upgrade card can cost. */
-  const val MAX_UPGRADE_COST = 5
+  const val MAX_UPGRADE_COST = 6
 
   /** C98 "Lift/Pass Comparison Factor": used when combining dice/icon EV with effect EV. */
   const val LIFT_PASS_COMPARISON_FACTOR = 0.1
@@ -53,7 +53,7 @@ object Constants {
       EffectCategory.EFFECT_CATEGORY_FINALE -> 0.7
       EffectCategory.EFFECT_CATEGORY_REST -> 0.8
       EffectCategory.EFFECT_CATEGORY_LIFT -> 0.2
-      EffectCategory.EFFECT_CATEGORY_NIGHT -> 0.8
+      EffectCategory.EFFECT_CATEGORY_NIGHT -> 1.2
       EffectCategory.EFFECT_CATEGORY_UNSET, EffectCategory.UNRECOGNIZED, null -> throw IllegalStateException()
     }
 
