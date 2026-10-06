@@ -173,6 +173,7 @@ UNSUPPORTED_REPEATS = []  # (card_name, EffectRepeat text)
 
 _SIMPLE_DIE_EFFECT_RE = re.compile(r'^Reroll\s+(Green|Blue|Black|Wild)$')
 _GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
+_GAIN_TAGS_RE = re.compile(r'^Gain tags x(\d+)$')
 _GAIN_DICE_RE = re.compile(
   r'^Gain (Green|Blue|Black), Gain (Green|Blue|Black)$')
 _GAIN_DIE_RE = re.compile(r'^Gain (Green|Blue|Black)$')
@@ -298,8 +299,10 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Gain tags of this card an additional time":
     return ["  effects {\n    gain_own_tags {}\n  }\n"]
 
-  if text == "Gain tags an additional time":
-    return ["  effects {\n    gain_tags_below {}\n  }\n"]
+  m = _GAIN_TAGS_RE.match(text)
+  if m:
+    value = m.group(1)
+    return [f"  effects {{\n    gain_tags_below: {value} \n  }}\n"]
 
   if text == "Activate the effect an additional time":
     return ["  effects {\n    reactivate_following {}\n  }\n"]
@@ -385,7 +388,7 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Return a card after this to your hand.":
     return ["  effects {\n    return_later_card {}\n  }\n"]
 
-  if text == "Replenish the shop. After this turn, you may take a rest turn.":
+  if text == "Replenish the shop. Take another turn.":
     return [
       "  effects {\n    replenish_shop {}\n  }\n"
       "  effects {\n    extra_turn: EXTRA_TURN_REST \n  }\n"
@@ -393,6 +396,9 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
 
   if text == "Put the card you buy on top of your deck instead of into your discard.":
     return ["  effects {\n    buy_to_topdeck {}\n  }\n"]
+
+  if text == "Put the card you buy into your hand instead of into your discard.":
+    return ["  effects {\n    buy_to_hand {}\n  }\n"]
 
   if text == "At the end of your turn, move one tile in any direction":
     return ["  effects {\n    move_tile {}\n  }\n"]

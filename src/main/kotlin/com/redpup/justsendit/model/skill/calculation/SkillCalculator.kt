@@ -177,7 +177,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
     SkillCardEffect.EffectCase.EXTRA_TURN -> Constants.ADDITIONAL_TURN
     SkillCardEffect.EffectCase.CARD_EFFECT -> cardEffect.singleCardEffectValue()
     SkillCardEffect.EffectCase.GAIN_OWN_TAGS -> card.iconExpectedValue()
-    SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> resolvedValues().icons
+    SkillCardEffect.EffectCase.GAIN_TAGS_BELOW -> resolvedValues().icons * (gainTagsBelow - 1)
     SkillCardEffect.EffectCase.MOVE_TILE -> Constants.MOVE_TILE
     SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> resolvedValues().averageCost * Constants.POINTS
     SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED ->
@@ -186,6 +186,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
 
     SkillCardEffect.EffectCase.REPLACE_DICE -> replaceDice.VALUE
     SkillCardEffect.EffectCase.BUY_TO_TOPDECK -> resolvedValues.buyToTopdeck
+    SkillCardEffect.EffectCase.BUY_TO_HAND -> resolvedValues.buyToHand
     SkillCardEffect.EffectCase.RETURN_LATER_CARD -> resolvedValues().returnLaterCard
     SkillCardEffect.EffectCase.IGNORE_HAZARD -> with(resolvedValues) { ignoreHazard.ignoreValue }
     SkillCardEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()

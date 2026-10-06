@@ -61,6 +61,7 @@ class SkillEffectFactoryImpl @Inject constructor(private val random: Random) : S
       SkillCardEffect.EffectCase.REPLACE_DICE -> TODO()
       SkillCardEffect.EffectCase.REPLACE_REROLLS_WITH_GAINS -> TODO()
       SkillCardEffect.EffectCase.RETURN_LATER_CARD -> TODO()
+      SkillCardEffect.EffectCase.BUY_TO_HAND -> TODO()
     }
 
     throw IllegalArgumentException("Unhangled SkillCardEffect: $card")

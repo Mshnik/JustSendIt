@@ -1,108 +1,98 @@
 Name	ExpectedValue	SuggestedCost
-Top of the World	4.246	1
+Top of the World	2.456	1
 S-Curve	3.1	1
 Falling Leaf	3.3	1
-Just Send It	8.172	1
+Just Send It	5.672	1
 Catch Yourself	3.5666666663999997	1
 Skill Up	3.5	1
 Just Right	4.5	1
 Good Vibes	7.699999999999999	3
-On a Roll	9.0	3
+On a Roll	9.0	4
 High Life	10.1	4
-Mini Combo	3.981818181818182	2
-Medium Combo	5.465454545454545	3
-Mega Combo	6.247272727272728	3
 Chatterbox	7.22	3
 Diamond Edge	7.92	3
 Avalanche	10.12	4
 Cleared It	6.02	3
 Nailed It	8.02	3
-Crushed It	9.02	3
+Crushed It	9.02	4
 Windmill	6.22	3
 Blind Luck	7.12	3
-Reconsider	11.902846894511177	4
-Double Take	13.002846894511176	4
-Cherry Pick	13.902846894511177	5
-Foresight	13.802846894511177	5
-One Step Ahead	14.902846894511177	5
-Gut Punch	0.7398610926608251	2
-Push Through	1.6398610926608246	2
-Bail Out	8.786712969113058	3
-Die Another Day	10.28671296911306	4
-Up the Ante	6.583636363636363	3
-Double Down	7.34	3
-All In	7.852727272727273	3
-High Roller	7.585454545454545	3
-Sky’s the Limit	8.647272727272727	3
-Diamond Hands	8.927272727272728	3
-Perfect Practice	6.015454545454546	3
-Muscle Memory	7.215454545454546	3
-Sixth Sense	8.415454545454546	3
-Clean Slate	9.402846894511177	4
-Fresh Eyes	10.402846894511177	4
-Hard Reset	11.402846894511177	4
-One-Two Punch	6.398783088216955	3
-Echo	7.398783088216956	3
-Double Dip	7.098783088216956	3
-Crescendo	7.898783088216956	3
-Mirror Image	7.898783088216956	3
-Steady Now	5.2333333328	3
+Reconsider	9.596756872586322	4
+Double Take	10.696756872586324	5
+Cherry Pick	11.596756872586322	5
+Clean Slate	9.796756872586322	4
+Fresh Eyes	10.496756872586323	4
+Chart a Course	11.596756872586322	5
+Bail Out	8.689719561506536	4
+Cut and Run	9.489719561506536	4
+Die Another Day	10.789719561506537	5
+Ragdoll	11.189719561506536	5
+Fasten Down	7.043	3
+Lock On	7.843	3
+Deja Vu	8.443	4
+Perfect Practice	6.7860000000000005	3
+Muscle Memory	7.986000000000001	3
+Sixth Sense	9.186	4
+One-Two Punch	5.973277289387337	3
+Echo	6.973277289387338	3
+Double Dip	7.673277289387337	3
+Double Down	5.773277289387337	3
+Crescendo	6.773277289387337	3
+Penultimatum	7.773277289387337	3
+Steady Now	5.2333333328	2
 Second Chance	6.8666666664000005	3
 Recovery Mode	8.0	3
 Quick Fix	5.7666666664	3
 Take Two	7.5	3
-Clutch Save	8.7333333336	3
+Clutch Save	8.7333333336	4
 Gear Shift	6.300000000000001	3
 Lean In	7.4333333336	3
-Do-Over	8.8666666672	3
+Do-Over	8.8666666672	4
 Punch It	7.1666666664	3
-Premonition	8.7	3
+Premonition	8.7	4
 Nerves of Steel	9.833333333599999	4
-Safety Net	8.866666666899999	3
+Safety Net	8.866666666899999	4
 Stone Cold	10.399999999999999	4
-Nothing But Net	11.5333333331	4
+Nothing But Net	11.5333333331	5
 Buzzer Beater	10.333333333099999	4
-Nick of Time	12.0	4
-Hail Mary	13.1666666669	4
+Nick of Time	12.0	5
+Hail Mary	13.1666666669	6
 Sudden Growth	4.7	2
 Step It Up	4.6	2
 Raise the Bar	5.699999999999999	3
-Kick It Up	5.2	3
+Kick It Up	5.2	2
 Shift Gear	6.699999999999999	3
 Level Up	6.4	3
-Side Hit	5.54	3
-Bob and Weave	6.54	3
-Long Shot	9.04	3
-Jackpot	9.24	4
-Back to Basics	4.5	2
-Tried and True	5.4399999999999995	3
-Can't Slow Down	6.9781818181818185	3
-Realization	5.2	3
+Mini Combo	4.02	2
+Medium Combo	5.4959999999999996	2
+Mega Combo	6.244	3
+Back to Basics	4.54	2
+Tried and True	5.468	2
+Can't Slow Down	6.9879999999999995	3
+Realization	5.2	2
 Brainblast	6.0	3
 Stroke of Genius	7.0	3
-Now or Never	2.8279027648625776	2
-Crunch Time	3.8279027648625776	2
-All or Nothing	4.6279027648625775	2
-Good Vibrations	7.272097235137423	3
-Runner’s High	8.172097235137421	3
-Adreneline Rush	8.772097235137423	3
-Breather	7.606152798073093	3
-Second Wind	7.506152798073092	3
-Pocket Snacks	7.406152798073093	3
+Foresight	5.3	2
+Flow State	6.3	3
+Perpetual Motion	7.1	3
+Good Vibrations	7.068411079163726	3
+Runner’s High	7.968411079163725	3
+Adreneline Rush	8.568411079163724	4
+Breather	7.286074552971568	3
+Second Wind	7.186074552971569	3
+Pocket Snacks	7.086074552971569	3
 Next Step	3.1	2
 Lesson Learned	4.3	2
-Spring Cleaning	4.8	2
-First Look	5.699999999999999	3
-Shop Connections	6.8999999999999995	3
-In the Know	7.5	3
-Demo Day	5.147670178113224	3
-Express Shipping	4.9861518343739295	3
-Secret Stash	6.086151834373929	3
+Breakaway	4.8	2
+Spring Cleaning	3.85	2
+Leg Day	4.95	2
+Third Eye	5.85	3
+First Look	4.688	2
+Shop Connections	5.888	3
+In the Know	6.488	3
+Demo Day	9.444647576909551	4
+Express Shipping	9.144647576909552	4
+Secret Stash	9.244647576909552	4
 Bootpack Line	4.23	2
-Hike It Out	5.23	3
+Hike It Out	5.23	2
 Earn Your Turns	5.93	3
-Photo Reel	14.28	5
-Jelly Legs	12.43890909090909	4
-Live Large	16.052	5
-Masterclass	17.513454545454547	6
-Larger than Life	11.139272727272726	4

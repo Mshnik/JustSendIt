@@ -137,6 +137,9 @@ class ResolvedValues {
   /** Value of putting a card you bought on top of your deck. */
   val buyToTopdeck: Double get() = parameters.cardFilter2
 
+  /** Value of putting a card you bought into your hand. */
+  val buyToHand: Double get() = parameters.cardDraw + parameters.cardFilter2 / 2
+
   companion object {
     /**
      * "Look at the top 3 cards of your deck, put 1 on top, discard the others" combo value
@@ -145,7 +148,7 @@ class ResolvedValues {
      *   REVEALED_TOPDECK -> DISCARD (count 2),
      *   REVEALED_TOPDECK -> TOPDECK (count 1).
      */
-    val SkillCardComputationValuesOrBuilder.lookAtTop3Keep1: Double get() = cardFilter3
+    val SkillCardComputationValuesOrBuilder.lookAtTop3Keep1: Double get() = cardFilter2
 
     /**
      * "Draw 2 cards, then put 2 cards on top of your deck" combo value (2 x C16). Recognized

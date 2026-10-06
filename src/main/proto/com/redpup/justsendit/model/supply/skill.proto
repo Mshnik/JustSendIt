@@ -122,22 +122,24 @@ message SkillCardEffect {
     ExtraTurnEffect extra_turn = 10;
     // Gain this card's own icon tags an additional time.
     google.protobuf.Empty gain_own_tags = 11;
-    // Gain the icon tags of the card played directly below this one an
-    // additional time.
-    google.protobuf.Empty gain_tags_below = 12;
+    // Gain the icon tags of the card played directly below this the given
+    // number of times. Should be > 1.
+    uint32 gain_tags_below = 12;
     // Put the card you buy on top of your deck instead of into your discard.
     google.protobuf.Empty buy_to_topdeck = 13;
+    // Put the card you buy into your hand instead of into your discard.
+    google.protobuf.Empty buy_to_hand = 14;
     // Move one board tile in any direction.
-    google.protobuf.Empty move_tile = 14;
+    google.protobuf.Empty move_tile = 15;
     // Gain Fun equal to the cost of the next card (engine-defined "next").
-    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 15;
+    google.protobuf.Empty gain_fun_equal_to_next_card_cost = 16;
     // Gain Fun equal to the value rolled, corresponding to the die removed
     // for the cost paid.
-    google.protobuf.Empty gain_fun_equal_to_value_rolled = 16;
+    google.protobuf.Empty gain_fun_equal_to_value_rolled = 17;
     // Ignore the listed hazard on this tile.
-    board.tile.Hazard ignore_hazard = 17;
+    board.tile.Hazard ignore_hazard = 18;
     // Return a later card to your hand.
-    google.protobuf.Empty return_later_card = 18;
+    google.protobuf.Empty return_later_card = 19;
   }
 }
 
