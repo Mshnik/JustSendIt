@@ -139,7 +139,9 @@ cards {
   cost: 0
   dice: DIE_GREEN
   category: EFFECT_CATEGORY_FINALE
-  # TODO(skill.proto): no condition/cost mapping for "Empty Hand"
+  effect_condition {
+    empty_hand {}
+  }
   effects {
     gain {
       die: DIE_GREEN
@@ -2697,8 +2699,12 @@ cards {
     hazard: HAZARD_TREES
   }
   category: EFFECT_CATEGORY_PLAY
-  # TODO(skill.proto): no condition/cost mapping for "Empty Hand"
-  # TODO(skill.proto): no field represents this effect yet: "Gain self tags"
+  effect_condition {
+    empty_hand {}
+  }
+  effects {
+    gain_own_tags {}
+  }
   flavor_text: "Slow your beating heart."
   computed {
     total_expected_value: 4.688
@@ -2718,8 +2724,12 @@ cards {
     hazard: HAZARD_MOGULS
   }
   category: EFFECT_CATEGORY_PLAY
-  # TODO(skill.proto): no condition/cost mapping for "Empty Hand"
-  # TODO(skill.proto): no field represents this effect yet: "Gain self tags"
+  effect_condition {
+    empty_hand {}
+  }
+  effects {
+    gain_own_tags {}
+  }
   flavor_text: "Loud world, inner quiet."
   computed {
     total_expected_value: 5.888
@@ -2739,8 +2749,12 @@ cards {
     hazard: HAZARD_CLIFFS
   }
   category: EFFECT_CATEGORY_PLAY
-  # TODO(skill.proto): no condition/cost mapping for "Empty Hand"
-  # TODO(skill.proto): no field represents this effect yet: "Gain self tags"
+  effect_condition {
+    empty_hand {}
+  }
+  effects {
+    gain_own_tags {}
+  }
   flavor_text: "Release the ego and simply be."
   computed {
     total_expected_value: 6.488

@@ -40,7 +40,16 @@ enum Condition {
   CONDITION_ICE = 3;
 }
 
-/** Types of hazards found on a ski trail. */
+/** Types of hazards. */
+enum HazardType {
+  HAZARD_UNSET = 0;
+  HAZARD_MOGULS = 1;
+  HAZARD_SLOW = 2;
+  HAZARD_TREES = 3;
+  HAZARD_CLIFFS = 4;
+}
+
+/** Hazards found on a ski trail. */
 message Hazard {
   enum Moguls {
     MOGULS_UNSET = 0;

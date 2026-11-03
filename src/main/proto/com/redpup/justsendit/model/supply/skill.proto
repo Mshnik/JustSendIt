@@ -80,6 +80,8 @@ message SkillCardEffectCondition {
     matchers.Matcher next_card_cost = 3;
     // Checks the next card's cost
     google.protobuf.Empty next_card_cost_linked = 4;
+    // Checks for an empty hand.
+    google.protobuf.Empty empty_hand = 5;
   }
 }
 

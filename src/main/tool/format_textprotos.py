@@ -225,7 +225,7 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "Gain Fun equal to value rolled":
     return ["  effects {\n    gain_fun_equal_to_value_rolled {}\n  }\n"]
 
-  if text == "Gain tags of this card an additional time":
+  if text == "Gain self tags":
     return ["  effects {\n    gain_own_tags {}\n  }\n"]
 
   m = _GAIN_TAGS_RE.match(text)
@@ -346,6 +346,9 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
 
   if text == "Failure":
     return "  effect_condition {\n    failure {}\n  }\n", None
+
+  if text == "Empty Hand":
+    return "  effect_condition {\n    empty_hand {}\n  }\n", None
 
   if text == "Next card costs X":
     return "  effect_condition {\n    next_card_cost_linked {}\n  }\n", None
