@@ -7,8 +7,10 @@ tiles {
   failure: 0
   grade: GRADE_GREEN
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_LARGE
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_LARGE
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -17,10 +19,12 @@ tiles {
   failure: 0
   grade: GRADE_GREEN
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_LARGE
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_draw: 1
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_LARGE
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_draw: 1
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -40,9 +44,11 @@ tiles {
   failure: 0
   grade: GRADE_GREEN
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -51,10 +57,12 @@ tiles {
   failure: 0
   grade: GRADE_GREEN
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_MEDIUM
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_draw: 1
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_MEDIUM
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_draw: 1
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -74,8 +82,10 @@ tiles {
   failure: 0
   grade: GRADE_GREEN
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -166,9 +176,11 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -177,10 +189,12 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_MEDIUM
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_draw: 1
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_MEDIUM
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_draw: 1
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -189,8 +203,10 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_ICE
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -199,8 +215,10 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_MEDIUM
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_MEDIUM
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -209,8 +227,10 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_POWDER
-  lift_size: LIFT_SIZE_MEDIUM
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_MEDIUM
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -241,8 +261,10 @@ tiles {
   failure: 0
   grade: GRADE_BLUE
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -322,9 +344,11 @@ tiles {
   failure: -1
   grade: GRADE_BLACK
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_retire: 1
+  }
 }
 
 tiles {
@@ -333,8 +357,10 @@ tiles {
   failure: -1
   grade: GRADE_BLACK
   condition: CONDITION_GROOMED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_TOP
+  }
 }
 
 tiles {
@@ -343,9 +369,11 @@ tiles {
   failure: -2
   grade: GRADE_BLACK
   condition: CONDITION_ICE
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_retire: 1
+  lift {
+    lift_size: LIFT_SIZE_SMALL
+    lift_direction: LIFT_DIRECTION_BOTTOM
+    lift_retire: 1
+  }
 }
 
 tiles {

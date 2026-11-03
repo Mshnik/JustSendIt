@@ -717,24 +717,29 @@ def process_mountain_tiles_pipeline():
           tile_block += f"    cliffs: {hazard_penalty}\n"
         tile_block += "  }\n"
 
-      if lift_type and lift_type.lower() != "nan":
-        lift_lower = lift_type.lower()
-        if "small" in lift_lower:
-          tile_block += "  lift_size: LIFT_SIZE_SMALL\n"
-        elif "medium" in lift_lower:
-          tile_block += "  lift_size: LIFT_SIZE_MEDIUM\n"
-        elif "large" in lift_lower:
-          tile_block += "  lift_size: LIFT_SIZE_LARGE\n"
+      if lift_type:
+        tile_block += "  lift {\n"
 
-      if lift_end and lift_end.lower() != "nan":
-        end_clean = lift_end.strip().upper()
-        if end_clean in ["TOP", "BOTTOM"]:
-          tile_block += f"  lift_direction: LIFT_DIRECTION_{end_clean}\n"
+        if lift_type.lower() != "nan":
+          lift_lower = lift_type.lower()
+          if "small" in lift_lower:
+            tile_block += "    lift_size: LIFT_SIZE_SMALL\n"
+          elif "medium" in lift_lower:
+            tile_block += "    lift_size: LIFT_SIZE_MEDIUM\n"
+          elif "large" in lift_lower:
+            tile_block += "    lift_size: LIFT_SIZE_LARGE\n"
 
-      if lift_draw.lower() == "true":
-        tile_block += "  lift_draw: 1\n"
-      if lift_retire.lower() == "true":
-        tile_block += "  lift_retire: 1\n"
+        if lift_end and lift_end.lower() != "nan":
+          end_clean = lift_end.strip().upper()
+          if end_clean in ["TOP", "BOTTOM"]:
+            tile_block += f"    lift_direction: LIFT_DIRECTION_{end_clean}\n"
+
+        if lift_draw.lower() == "true":
+          tile_block += "    lift_draw: 1\n"
+        if lift_retire.lower() == "true":
+          tile_block += "    lift_retire: 1\n"
+
+        tile_block += "  }\n"
 
       tile_block += "}\n"
       append_blocks_to_proto(target_filepath, tile_block, 1)

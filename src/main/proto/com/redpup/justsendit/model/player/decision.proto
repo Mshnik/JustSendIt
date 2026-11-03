@@ -6,7 +6,7 @@ option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.player.proto";
 
 import "com/redpup/justsendit/model/board/hex/hex_point.proto";
-import "com/redpup/justsendit/model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/board/tile/tile.proto";
 import "com/redpup/justsendit/model/common.proto";
 import "com/redpup/justsendit/model/supply/skill.proto";
 import "com/redpup/justsendit/model/player/die.proto";
@@ -23,7 +23,7 @@ enum MountainDecision {
 // A result of a player attempting to ski/ride a tile.
 message SkiRideAttempt {
   // The tile being skied/ridden.
-  model.board.tile.SlopeTile slope_tile = 1;
+  model.board.tile.MountainTile tile = 1;
   // The cards the player played.
   repeated model.supply.SkillCard cards = 2;
   // The dice rolled.

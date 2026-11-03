@@ -1,12 +1,12 @@
 package com.redpup.justsendit.control
 
-import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 
 /** Controller events related to skill cards. */
 sealed interface SkillEvent
 
 data class PlaySkillForSkiRideAttempt(
-  val slope: SlopeTile,
+  val slope: MountainTile,
   val totalWobbles: Int,
 ) : SkillEvent
 

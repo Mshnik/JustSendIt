@@ -77,11 +77,14 @@ message MountainTile {
   Hazard hazard = 6;
 
   // Lift.
-  LiftColor lift_color = 7;
-  LiftSize lift_size = 8;
-  LiftDirection lift_direction = 9;
-  uint32 lift_draw = 10;
-  uint32 lift_retire = 11;
+  message Lift {
+    LiftColor lift_color = 1;
+    LiftSize lift_size = 2;
+    LiftDirection lift_direction = 3;
+    uint32 lift_draw = 4;
+    uint32 lift_retire = 5;
+  }
+  Lift lift = 7;
 }
 
 /** A list of mountain tiles. */
