@@ -8,9 +8,11 @@ location {
     r: 0
   }
   grade: GRADE_GREEN
-  lift_direction: LIFT_DIRECTION_TOP
-  lift_size: LIFT_SIZE_SMALL
-  lift_color: LIFT_COLOR_GREY
+  lift {
+    direction: LIFT_DIRECTION_TOP
+    size: LIFT_SIZE_SMALL
+    color: LIFT_COLOR_GREY
+  }
 }
 location {
   point {
@@ -53,9 +55,11 @@ location {
     r: 6
   }
   grade: GRADE_GREEN
-  lift_direction: LIFT_DIRECTION_BOTTOM
-  lift_size: LIFT_SIZE_SMALL
-  lift_color: LIFT_COLOR_GREY
+  lift {
+    direction: LIFT_DIRECTION_BOTTOM
+    size: LIFT_SIZE_SMALL
+    color: LIFT_COLOR_GREY
+  }
 }
 
 # Left-1 Column
@@ -137,9 +141,12 @@ location {
     r: 6
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_RED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
+  lift {
+    color: LIFT_COLOR_RED
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+
 
 }
 
@@ -150,9 +157,12 @@ location {
     r: 3
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_RED
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    color: LIFT_COLOR_RED
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_TOP
+  }
+
 
 }
 location {
@@ -226,9 +236,12 @@ location {
     r: 8
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_PINK
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
+  lift {
+    color: LIFT_COLOR_PINK
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+
 
 }
 
@@ -239,9 +252,12 @@ location {
     r: 3
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_PINK
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    color: LIFT_COLOR_PINK
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_TOP
+  }
+
 
 }
 location {
@@ -359,9 +375,12 @@ location {
     r: 4
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_CYAN
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
+  lift {
+    color: LIFT_COLOR_CYAN
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+
 
 }
 
@@ -372,9 +391,12 @@ location {
     r: 0
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_CYAN
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    color: LIFT_COLOR_CYAN
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_TOP
+  }
+
 
 }
 location {
@@ -448,9 +470,12 @@ location {
     r: 4
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_YELLOW
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_BOTTOM
+  lift {
+    color: LIFT_COLOR_YELLOW
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_BOTTOM
+  }
+
 
 }
 
@@ -461,9 +486,12 @@ location {
     r: -2
   }
   grade: GRADE_GREEN
-  lift_color: LIFT_COLOR_YELLOW
-  lift_size: LIFT_SIZE_SMALL
-  lift_direction: LIFT_DIRECTION_TOP
+  lift {
+    color: LIFT_COLOR_YELLOW
+    size: LIFT_SIZE_SMALL
+    direction: LIFT_DIRECTION_TOP
+  }
+
 
 }
 location {

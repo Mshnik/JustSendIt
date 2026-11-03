@@ -1,5 +1,6 @@
 package com.redpup.justsendit.view.sidebar
 
+import com.redpup.justsendit.model.board.tile.proto.Hazard
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.util.toTitleCase
@@ -58,29 +59,24 @@ class InfoPanel(private val guiState: GuiState) : VBox() {
 
     hexInfoVBox.children.clear()
 
-    if (tile.hasSlope()) {
-      val info = StringBuilder()
-      info.append("Difficulty: ${tile.slope.difficulty}\n")
-      info.append("Grade: ${tile.slope.grade.name.removePrefix("GRADE_").toTitleCase()}\n")
+    val info = StringBuilder()
+    info.append("Difficulty: ${tile.difficulty}\n")
+    info.append("Grade: ${tile.grade.name.removePrefix("GRADE_").toTitleCase()}\n")
+    info.append(
+      "Condition: ${
+        tile.condition.name.removePrefix("CONDITION_").toTitleCase()
+      }\n"
+    )
+    if (tile.hazard.hazardCase != Hazard.HazardCase.HAZARD_NOT_SET) {
       info.append(
-        "Condition: ${
-          tile.slope.condition.name.removePrefix("CONDITION_").toTitleCase()
-        }\n"
+        "Hazards:  \n"
+        // tile.hazardsList.joinToString(", ") {
+        //   it.name.removePrefix("HAZARD_").toTitleCase()
+        // }
+
       )
-      if (tile.slope.hazardsList.isNotEmpty()) {
-        info.append(
-          "Hazards: ${
-            tile.slope.hazardsList.joinToString(", ") {
-              it.name.removePrefix("HAZARD_").toTitleCase()
-            }
-          }\n"
-        )
-      }
-      if (tile.slope.slow) {
-        info.append("Slow\n")
-      }
-      addInfoLabel(info.toString(), hexInfoVBox)
     }
+    addInfoLabel(info.toString(), hexInfoVBox)
     if (tile.hasLift()) {
       val info = StringBuilder()
       info.append("Lift Color: ${tile.lift.color.name.removePrefix("LIFT_COLOR_").toTitleCase()}\n")

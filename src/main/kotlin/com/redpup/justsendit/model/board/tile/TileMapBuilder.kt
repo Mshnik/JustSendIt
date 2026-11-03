@@ -11,7 +11,7 @@ class TileMapBuilder @Inject constructor(private val tileSupply: TileSupply) {
   /** Builds a hex grid map from a TileReader. */
   fun build(): HexGrid<MountainTile> {
     val grid = HexGrid<MountainTile>()
-    val slopesByGrade = tileSupply.tiles.filter { it.hasSlope() }.groupBy { it.slope.grade }
+    val slopesByGrade = tileSupply.tiles.groupBy { it.grade }
       .mapValues { it.value.shuffled().toMutableList() }
     val liftsByColorAndDirection =
       tileSupply.tiles.filter { it.hasLift() }.groupBy { Pair(it.lift.color, it.lift.direction) }
@@ -21,19 +21,21 @@ class TileMapBuilder @Inject constructor(private val tileSupply: TileSupply) {
         }.toMutableMap()
 
     /** Picks, returns, and removes a random tile matching [location]'s specifications. */
-    fun pickTile(location: MountainTileLocation): MountainTile = when (location.contentCase) {
-      MountainTileLocation.ContentCase.GRADE -> slopesByGrade[location.grade]?.removeFirst()
-        ?: throw IllegalArgumentException("No slope tile found with grade ${location.grade} in $slopesByGrade")
-
-      MountainTileLocation.ContentCase.LIFT -> liftsByColorAndDirection.remove(
-        Pair(
-          location.lift.color, location.lift.direction
-        )
-      )
-        ?: throw IllegalArgumentException("No lift tile found with parameters ${location.lift} in $liftsByColorAndDirection")
-
-      MountainTileLocation.ContentCase.CONTENT_NOT_SET, null -> throw IllegalArgumentException()
+    fun pickTile(location: MountainTileLocation): MountainTile {
+      TODO()
     }
+      // when (location.contentCase) {
+      // MountainTileLocation.ContentCase.GRADE -> slopesByGrade[location.grade]?.removeFirst()
+      //   ?: throw IllegalArgumentException("No slope tile found with grade ${location.grade} in $slopesByGrade")
+      //
+      // MountainTileLocation.ContentCase.LIFT -> liftsByColorAndDirection.remove(
+      //   Pair(
+      //     location.lift.color, location.lift.direction
+      //   )
+      // )
+      //   ?: throw IllegalArgumentException("No lift tile found with parameters ${location.lift} in $liftsByColorAndDirection")
+      //
+      // MountainTileLocation.ContentCase.CONTENT_NOT_SET, null -> throw IllegalArgumentException()
 
     for (location in tileSupply.locations) {
       grid[location.point] = pickTile(location)

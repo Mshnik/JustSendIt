@@ -116,7 +116,7 @@ class MutableGameModel @Inject constructor(
   private suspend fun resolveCards(
     player: MutablePlayer,
     skills: List<Skill>,
-    slope: SlopeTile,
+    slope: MountainTile,
   ): SkiRideAttempt {
     // TODO: Update to one skill roll at a time.
     val dice = skills.flatMap { it.skillCard.diceList }.map {
@@ -343,9 +343,10 @@ class MutableGameModel @Inject constructor(
     }
 
     // TODO: Reconsider slow effect in new rules.
-    val slope = destinationTile.slope
+    val slope = destinationTile
     // Slow check: can only enter if 2 or fewer skill cards in play.
-    if (slope.slow) {
+    // TODO: Fix.
+    if (slope.hazard.hasSlow()) {
       check(player.inPlay.size <= 2) { "Cannot enter slow tile with ${player.inPlay.size} cards in play" }
     }
 
@@ -411,7 +412,7 @@ class MutableGameModel @Inject constructor(
       player,
       PlaySkillForLift,
       player.hand,
-      Range.closed(tile.lift.minCards, tile.lift.maxCards),
+      Range.closed(1, 1),
       SkillCardZone.SKILL_CARD_ZONE_HAND
     )
 
@@ -481,15 +482,8 @@ class MutableGameModel @Inject constructor(
     val currentLocation = player.location ?: return total
     val tile = tileMap[currentLocation] ?: return total
 
-    if (tile.hasSlope()) {
-      val slope = tile.slope
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.matches(slope) }
-      }
-    } else if (tile.hasLift()) {
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.hasWild() && it.wild }
-      }
+    for (skill in player.hand) {
+      total += skill.skillCard.iconsList.count { it.matches(tile) }
     }
 
     return total
@@ -499,7 +493,8 @@ class MutableGameModel @Inject constructor(
     val location = player.location
     check(location != null) { "Player is off-map." }
     val tile = tileMap[location]!!
-    val link = tile.apresLink
+    // TODO: Fix.
+    val link = 123
     check(link > 0) { "Location $location does not have an exit" }
     playerMove {
       from = location

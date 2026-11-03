@@ -117,13 +117,14 @@ class RandomAiController(override val name: String) : PlayerController {
       options.add(MountainDecision.DECISION_SKI_RIDE)
     }
 
-    if (tile?.hasLift() == true && player.hand.size >= tile.lift.minCards) {
+    if (tile?.hasLift() == true && player.hand.isNotEmpty()) {
       options.add(MountainDecision.DECISION_LIFT)
     }
 
-    if (tile?.apresLink ?: 0 > 0) {
-      options.add(MountainDecision.DECISION_EXIT)
-    }
+    // TODO: support this again.
+    // if (tile?.apresLink ?: 0 > 0) {
+    //   options.add(MountainDecision.DECISION_EXIT)
+    // }
 
     return options.random()
   }
@@ -133,17 +134,9 @@ class RandomAiController(override val name: String) : PlayerController {
     val currentLocation = player.location ?: return total
     val tile = gameModel.tileMap[currentLocation] ?: return total
 
-    if (tile.hasSlope()) {
-      val slope = tile.slope
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.matches(slope) }
-      }
-    } else if (tile.hasLift()) {
-      for (skill in player.hand) {
-        total += skill.skillCard.iconsList.count { it.hasWild() && it.wild }
-      }
+    for (skill in player.hand) {
+      total += skill.skillCard.iconsList.count { it.matches(tile) }
     }
-
     return total
   }
 }

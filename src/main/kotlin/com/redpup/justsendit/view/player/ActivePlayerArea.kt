@@ -127,7 +127,8 @@ class ActivePlayerArea(
     skiButton.isDisable = !enabled || guiState.gameModel.getAvailableMoves(guiState.gameModel.currentPlayer).isEmpty()
     liftButton.isDisable = !enabled || tile?.hasLift() != true
     passButton.isDisable = !enabled
-    exitButton.isDisable = !enabled || (tile?.apresLink ?: 0) == 0
+    // TODO: Fix.
+    // exitButton.isDisable = !enabled || (tile?.apresLink ?: 0) == 0
 
     // Reset visual state
     skiButton.styleClass.remove("selected")

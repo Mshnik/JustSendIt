@@ -57,7 +57,6 @@ class SkillEffectFactoryImpl @Inject constructor(private val random: Random) : S
       SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_NEXT_CARD_COST -> TODO()
       SkillCardEffect.EffectCase.GAIN_FUN_EQUAL_TO_VALUE_ROLLED -> TODO()
       SkillCardEffect.EffectCase.BUY_TO_TOPDECK -> TODO()
-      SkillCardEffect.EffectCase.IGNORE_HAZARD -> TODO()
       SkillCardEffect.EffectCase.REPLACE_DICE -> TODO()
       SkillCardEffect.EffectCase.REPLACE_REROLLS_WITH_GAINS -> TODO()
       SkillCardEffect.EffectCase.RETURN_LATER_CARD -> TODO()

@@ -78,11 +78,11 @@ message MountainTile {
 
   // Lift.
   message Lift {
-    LiftColor lift_color = 1;
-    LiftSize lift_size = 2;
-    LiftDirection lift_direction = 3;
-    uint32 lift_draw = 4;
-    uint32 lift_retire = 5;
+    LiftColor color = 1;
+    LiftSize size = 2;
+    LiftDirection direction = 3;
+    uint32 draw = 4;
+    uint32 retire = 5;
   }
   Lift lift = 7;
 }

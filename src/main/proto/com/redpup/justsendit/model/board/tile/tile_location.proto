@@ -13,9 +13,12 @@ import "com/redpup/justsendit/model/common.proto";
 message MountainTileLocation {
   hex.HexPoint point = 1;
   Grade grade = 2;
-  LiftColor lift_color = 5;
-  LiftSize lift_size = 6;
-  LiftDirection lift_direction = 7;
+  message Lift {
+    LiftColor color = 1;
+    LiftSize size = 2;
+    LiftDirection direction = 3;
+  }
+  Lift lift = 3;
 }
 
 /** List of tile locations that make up the mountain.  */

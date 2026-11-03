@@ -723,21 +723,21 @@ def process_mountain_tiles_pipeline():
         if lift_type.lower() != "nan":
           lift_lower = lift_type.lower()
           if "small" in lift_lower:
-            tile_block += "    lift_size: LIFT_SIZE_SMALL\n"
+            tile_block += "    size: LIFT_SIZE_SMALL\n"
           elif "medium" in lift_lower:
-            tile_block += "    lift_size: LIFT_SIZE_MEDIUM\n"
+            tile_block += "    size: LIFT_SIZE_MEDIUM\n"
           elif "large" in lift_lower:
-            tile_block += "    lift_size: LIFT_SIZE_LARGE\n"
+            tile_block += "    size: LIFT_SIZE_LARGE\n"
 
         if lift_end and lift_end.lower() != "nan":
           end_clean = lift_end.strip().upper()
           if end_clean in ["TOP", "BOTTOM"]:
-            tile_block += f"    lift_direction: LIFT_DIRECTION_{end_clean}\n"
+            tile_block += f"    direction: LIFT_DIRECTION_{end_clean}\n"
 
         if lift_draw.lower() == "true":
-          tile_block += "    lift_draw: 1\n"
+          tile_block += "    draw: 1\n"
         if lift_retire.lower() == "true":
-          tile_block += "    lift_retire: 1\n"
+          tile_block += "    retire: 1\n"
 
         tile_block += "  }\n"
 

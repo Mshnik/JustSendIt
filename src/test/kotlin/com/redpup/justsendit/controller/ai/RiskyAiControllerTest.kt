@@ -6,7 +6,7 @@ import com.redpup.justsendit.control.PlaySkillForSkiRideAttempt
 import com.redpup.justsendit.control.ai.RiskyAiController
 import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
-import com.redpup.justsendit.model.board.tile.proto.slopeTile
+import com.redpup.justsendit.model.board.tile.proto.mountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.SkillCardZone
@@ -24,7 +24,7 @@ class RiskyAiControllerTest {
   fun chooseSkillCards_skiRide_lowRisk_picksSafeCard() = runBlocking {
     val controller = RiskyAiController("SafeAI", 0.0)
     val location = HexPoint.getDefaultInstance()
-    val slope = slopeTile { difficulty = 5 }
+    val slope = mountainTile { difficulty = 5 }
 
     val skill1 = BaseSkill(skillCard {
       name = "Weak"
@@ -60,7 +60,7 @@ class RiskyAiControllerTest {
   fun chooseSkillCards_skiRide_highRisk_picksWeakCardIfAcceptable() = runBlocking {
     val controller = RiskyAiController("RiskyAI", 1.0)
     val location = HexPoint.getDefaultInstance()
-    val slope = slopeTile { difficulty = 2 }
+    val slope = mountainTile { difficulty = 2 }
 
     val skill1 = BaseSkill(skillCard {
       name = "Weak"

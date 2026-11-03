@@ -6,7 +6,7 @@ import com.redpup.justsendit.model.GameModel
 import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.MountainTiles.matches
-import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
@@ -92,7 +92,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
     val evaluations = elements.map { point ->
       val destTile = gameModel.tileMap[point]!!
-      val difficulty = if (destTile.hasSlope()) destTile.slope.difficulty else 0
+      val difficulty = destTile.difficulty
       // Score: higher difficulty is "better" for risky players, but only if they can handle it.
       val score =
         (difficulty * risk) - (difficulty.toDouble() / handStrength.coerceAtLeast(1.0) * (1.0 - risk) * 5.0)
@@ -135,12 +135,12 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   ): MountainDecision {
     val location = player.location ?: return MountainDecision.DECISION_PASS
     val tile = gameModel.tileMap[location] ?: return MountainDecision.DECISION_PASS
+    //
+    // if (tile.apresLink > 0) {
+    //   return MountainDecision.DECISION_EXIT
+    // }
 
-    if (tile.apresLink > 0) {
-      return MountainDecision.DECISION_EXIT
-    }
-
-    if (tile.hasLift() && player.hand.size >= tile.lift.minCards) {
+    if (tile.hasLift() && player.hand.isNotEmpty()) {
       return MountainDecision.DECISION_LIFT
     }
 
@@ -151,7 +151,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
       val moveEvaluations = moves.map { (point, _) ->
         val destTile = gameModel.tileMap[point]!!
-        val difficulty = if (destTile.hasSlope()) destTile.slope.difficulty else 0
+        val difficulty = destTile.difficulty
         // Score: higher difficulty is "better" for risky players, but only if they can handle it.
         val score =
           (difficulty * risk) - (difficulty.toDouble() / handStrength.coerceAtLeast(1.0) * (1.0 - risk) * 5.0)
@@ -174,7 +174,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
   }
 
   private fun calculateExpectedValue(
-    card: SkillCard, slope: SlopeTile,
+    card: SkillCard, slope: MountainTile,
   ): Double {
     return card.diceList.sumOf { it.averageValue } + card.iconsList.count {
       it.matches(
@@ -185,7 +185,7 @@ class RiskyAiController(override val name: String, private val risk: Double) : P
 
   private fun estimateSuccessProbability(
     card: SkillCard,
-    slope: SlopeTile,
+    slope: MountainTile,
     needed: Int,
   ): Double {
     val mean = calculateExpectedValue(card, slope)

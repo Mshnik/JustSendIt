@@ -62,14 +62,16 @@ class HexGridViewer(
       val y = yNudge + hexSize * (pt.toY() - bounds.minY) + margin
 
       gameModel.tileMap[pt]?.let { tile ->
-        val image = if (tile.filename.isNotEmpty()) {
-          tileImageCache.getOrPut(tile.filename) {
-            Image(
-              javaClass.getResource("/com/redpup/justsendit/img/tiles/${tile.filename}")!!
-                .toExternalForm()
-            )
-          }
-        } else null
+        // TODO: Fix.
+        // if (tile.filename.isNotEmpty()) {
+        //   tileImageCache.getOrPut(tile.filename) {
+        //     Image(
+        //       javaClass.getResource("/com/redpup/justsendit/img/tiles/${tile.filename}")!!
+        //         .toExternalForm()
+        //     )
+        //   }
+        // }
+        val image = null
 
         gc.draw(image, x, y, pt in highlightedHexes)
       }

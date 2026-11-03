@@ -7,6 +7,7 @@ import com.redpup.justsendit.model.apres.Apres
 import com.redpup.justsendit.model.board.hex.proto.HexPoint
 import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.proto.LiftDirection
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.cards.PlayerCard
 import com.redpup.justsendit.model.player.proto.DieRollOrBuilder
@@ -109,14 +110,15 @@ class SimpleAiController(override val name: String) : PlayerController {
     val tile = gameModel.tileMap[location] ?: return MountainDecision.DECISION_PASS
 
     // 1. If on an exit tile, EXIT.
-    if (tile.apresLink > 0) {
-      return MountainDecision.DECISION_EXIT
-    }
+    // TODO
+    // if (tile.apresLink > 0) {
+    //   return MountainDecision.DECISION_EXIT
+    // }
 
     // 2. If on a bottom lift tile and has cards to discard, LIFT.
     if (tile.hasLift()
       && tile.lift.direction == LiftDirection.LIFT_DIRECTION_BOTTOM
-      && player.hand.size >= tile.lift.minCards
+      && player.hand.isNotEmpty()
     ) {
       return MountainDecision.DECISION_LIFT
     }
@@ -133,7 +135,7 @@ class SimpleAiController(override val name: String) : PlayerController {
 
   private fun calculateExpectedValue(
     card: SkillCard,
-    slope: com.redpup.justsendit.model.board.tile.proto.SlopeTile,
+    slope: MountainTile,
   ): Double {
     val diceValue = card.diceList.sumOf { it.averageValue }
     val iconValue = card.iconsList.count { it.matches(slope) }.toDouble()

@@ -1,6 +1,6 @@
 package com.redpup.justsendit.model.skill.calculation
 
-import com.redpup.justsendit.model.board.tile.proto.Hazard
+import com.redpup.justsendit.model.board.tile.proto.HazardType
 import com.redpup.justsendit.model.proto.Die
 import com.redpup.justsendit.model.proto.EffectCategory
 import com.redpup.justsendit.model.random.Dice.averageValue
@@ -29,7 +29,7 @@ class ResolvedValues {
   private var cardDice = mapOf<Die, Int>()
   private var cardIcons = mapOf<Icon, Int>()
   private var cardEffectCategories = mapOf<EffectCategory, Int>()
-  private var cardsImpactedByHazards = mapOf<Hazard, Int>()
+  private var cardsImpactedByHazards = mapOf<HazardType, Int>()
 
   private val parameters = parametersList().first().toBuilder()
 
@@ -43,10 +43,12 @@ class ResolvedValues {
     cardDice = cards.flatMap { it.diceList }.groupingBy { it }.eachCount()
     cardIcons = cards.flatMap { it.iconsList }.groupingBy { it }.eachCount()
     cardsImpactedByHazards = buildMap {
-      this[Hazard.HAZARD_MOGULS] =
+      this[HazardType.HAZARD_MOGULS] =
         cards.count { card -> card.effectsList.any { it.alterDie.hasReroll() } }
-      this[Hazard.HAZARD_TREES] = cards.count { card -> card.diceList.any { it == Die.DIE_BLUE } }
-      this[Hazard.HAZARD_CLIFFS] = cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
+      this[HazardType.HAZARD_TREES] =
+        cards.count { card -> card.diceList.any { it == Die.DIE_BLUE } }
+      this[HazardType.HAZARD_CLIFFS] =
+        cards.count { card -> card.diceList.any { it == Die.DIE_GREEN } }
     }
     cardEffectCategories = cards.groupingBy { it.category }.eachCount()
 
@@ -90,6 +92,7 @@ class ResolvedValues {
 
       ConditionCase.NEXT_CARD_COST_LINKED -> 1.0
       null -> throw IllegalStateException()
+      ConditionCase.EMPTY_HAND -> TODO()
     }
 
   /** Factor to apply to a [SkillCardEffect] value based on [repeatCase]. */
@@ -124,15 +127,6 @@ class ResolvedValues {
 
     null -> throw IllegalStateException()
   }
-
-
-  /** The value of ignoring the given hazard. */
-  val Hazard.ignoreValue: Double
-    get() {
-      val mapFrequency = with(Icons) { icon { hazard = this@ignoreValue }.frequency }
-      val cardFrequency = (cardsImpactedByHazards[this] ?: 0).toDouble() / totalCards
-      return cardFrequency * mapFrequency * Constants.HAZARD_IGNORE_VALUE
-    }
 
   /** Value of putting a card you bought on top of your deck. */
   val buyToTopdeck: Double get() = parameters.cardFilter2

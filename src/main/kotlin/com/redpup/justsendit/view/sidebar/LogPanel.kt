@@ -27,9 +27,9 @@ class LogPanel : ScrollPane(), Logger {
       } to ${playerMove.to.toString().replace("\n", " ").trim()}"
 
       Log.EventCase.SKI_RIDE_ATTEMPT -> "$playerName played ${skiRideAttempt.cardsList.map { it.name }}\n" +
-        "  Difficulty: ${skiRideAttempt.slopeTile.difficulty}\n" +
-        "  Condition: ${skiRideAttempt.slopeTile.condition}\n" +
-        "  Hazards: ${skiRideAttempt.slopeTile.hazardsList}\n" +
+        "  Difficulty: ${skiRideAttempt.tile.difficulty}\n" +
+        "  Condition: ${skiRideAttempt.tile.condition}\n" +
+        "  Hazard: ${skiRideAttempt.tile.hazard}\n" +
         "  Rolls: ${skiRideAttempt.rollsList.map { it.rollList }}\n" +
         "  Bonus: ${skiRideAttempt.computed.iconValue}\n" +
         "  Wobbles: ${skiRideAttempt.computed.wobbles}\n" +

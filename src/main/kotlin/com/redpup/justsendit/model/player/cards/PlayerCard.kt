@@ -1,7 +1,7 @@
 package com.redpup.justsendit.model.player.cards
 
 import com.redpup.justsendit.model.GameModel
-import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.MutablePlayer
 import com.redpup.justsendit.model.supply.proto.PlayerCard as PlayerCardProto
 
@@ -53,7 +53,7 @@ abstract class ActivatedPlayerCard(override val proto: PlayerCardProto) : BasePl
 sealed class PlayerGameEvent {
   data class PlayerSkiRide(
     val turn: Int,
-    val slope: SlopeTile,
+    val slope: MountainTile,
     val pointsOnSlope: Int,
     val skill: Int,
     val difficulty: Int,

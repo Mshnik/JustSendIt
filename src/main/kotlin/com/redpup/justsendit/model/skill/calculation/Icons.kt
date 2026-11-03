@@ -1,6 +1,7 @@
 package com.redpup.justsendit.model.skill.calculation
 
-import com.redpup.justsendit.model.board.tile.proto.Hazard
+import com.redpup.justsendit.model.board.tile.Hazards.type
+import com.redpup.justsendit.model.board.tile.proto.HazardType
 import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.board.tile.proto.MountainTileList
 import com.redpup.justsendit.model.supply.proto.Icon
@@ -16,14 +17,15 @@ object Icons {
       MountainTileList.Builder::getTilesList,
     )
 
-  private val allSlopes = tilesList().filter { it.hasSlope() }.map { it.slope }
+  private val allSlopes = tilesList()
 
   private val frequencyMap = allSlopes
-    .flatMap {
+    .flatMap { tile ->
       listOf(
-        icon { grade = it.grade },
-        icon { condition = it.condition },
-      ) + it.hazardsList.map { icon { hazard = it } }
+        icon { grade = tile.grade },
+        icon { condition = tile.condition },
+      ) + tile.hazard.type().takeUnless { it == HazardType.HAZARD_UNSET }
+        ?.let { icon { hazard = it } }
     }
     .groupingBy { it }
     .eachCount()

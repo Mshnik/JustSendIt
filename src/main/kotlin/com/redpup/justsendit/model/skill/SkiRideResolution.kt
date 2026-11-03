@@ -1,12 +1,12 @@
 package com.redpup.justsendit.model.skill
 
 import com.redpup.justsendit.model.MutableGameModel.Companion.CRASH_WOBBLES
-import com.redpup.justsendit.model.board.tile.MountainTiles.applyHazards
+import com.redpup.justsendit.model.board.tile.MountainTiles.applyHazard
 import com.redpup.justsendit.model.board.tile.MountainTiles.has
 import com.redpup.justsendit.model.board.tile.MountainTiles.matches
 import com.redpup.justsendit.model.board.tile.proto.Condition
 import com.redpup.justsendit.model.board.tile.proto.Hazard
-import com.redpup.justsendit.model.board.tile.proto.SlopeTile
+import com.redpup.justsendit.model.board.tile.proto.MountainTile
 import com.redpup.justsendit.model.player.Player
 import com.redpup.justsendit.model.player.proto.DieRoll
 import com.redpup.justsendit.model.player.proto.SkiRideAttempt
@@ -21,7 +21,7 @@ import com.redpup.justsendit.util.countDuplicates
 class SkiRideResolution(
   val player: Player,
   val skills: List<Skill>,
-  val slope: SlopeTile,
+  val slope: MountainTile,
   val rolls: List<DieRoll.Builder>,
   var bonus: Int = 0,
   var ignoreWobbles: Int = 0,
@@ -34,7 +34,8 @@ class SkiRideResolution(
       // Ice wobbles.
       if (slope has Condition.CONDITION_ICE) rolls.count { it.rollList.last() == 1 } else 0,
       // Mogul wobbles.
-      if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.rollList.last() }.countDuplicates() else 0,
+      // TODO Fix
+      // if (slope has Hazard.HAZARD_MOGULS) rolls.map { it.rollList.last() }.countDuplicates() else 0,
       // Ignore wobbles
       -ignoreWobbles
     ).sum().coerceAtLeast(0)
@@ -44,12 +45,12 @@ class SkiRideResolution(
     val wobbles = this.wobbles
     val iconValue = skills.first().skillCard.iconsList.count { it.matches(slope) }
     val skillSum =
-      rolls.sumOf { it.rollList.last().applyHazards(slope.hazardsList) } + iconValue + bonus
+      rolls.sumOf { it.rollList.last().applyHazard(slope.hazard) } + iconValue + bonus
 
     val success = skillSum >= slope.difficulty && (player.wobbles + wobbles) < CRASH_WOBBLES
 
     return skiRideAttempt {
-      this.slopeTile = slope
+      this.tile = slope
       this.cards += skills.map { it.skillCard }
       this.rolls += rolls
       computed = computed {
