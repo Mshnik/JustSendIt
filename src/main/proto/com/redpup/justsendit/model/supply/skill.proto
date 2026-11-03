@@ -5,7 +5,6 @@ package com.redpup.justsendit.model.supply;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.supply.proto";
 
-import "com/redpup/justsendit/model/board/tile/slope.proto";
 import "com/redpup/justsendit/model/supply/icon.proto";
 import "com/redpup/justsendit/model/common.proto";
 import "com/redpup/matchers/matcher.proto";
@@ -136,10 +135,8 @@ message SkillCardEffect {
     // Gain Fun equal to the value rolled, corresponding to the die removed
     // for the cost paid.
     google.protobuf.Empty gain_fun_equal_to_value_rolled = 17;
-    // Ignore the listed hazard on this tile.
-    board.tile.Hazard ignore_hazard = 18;
     // Return a later card to your hand.
-    google.protobuf.Empty return_later_card = 19;
+    google.protobuf.Empty return_later_card = 18;
   }
 }
 

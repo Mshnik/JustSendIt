@@ -14,8 +14,6 @@ SKILL_IMG_FILEPATH = "src/main/resources/com/redpup/justsendit/img/skill_cards/"
 
 TILE_INPUT_CSV = "../resources/com/redpup/justsendit/model/board/tile/Tiles.csv"
 TILE_FILE_PREFIX = "../resources/com/redpup/justsendit/model/board/tile/"
-
-
 # =====================================================================
 
 
@@ -76,8 +74,6 @@ def escape_proto_string(value: str) -> str:
 def format_icon_message(bonus_val: str) -> str:
   """Translates spreadsheet strings to a deep nested protobuf message oneof structure."""
   val_lower = bonus_val.strip().lower()
-  # Normalize whitespace to underscores so "Double Black" lines up with the
-  # Grade enum's GRADE_DOUBLE_BLACK value.
   val_key = re.sub(r'\s+', '_', val_lower)
 
   if val_key in ["green", "blue", "black", "double_black"]:
@@ -107,69 +103,18 @@ def clean_proto_enum_string(prefix: str, enum_value: str) -> str:
   return f"{prefix}_{sanitized}"
 
 
-def parse_lift_card_bounds(text_val: str) -> tuple:
-  """
-  Scrapes the text column for lift card capacities.
-  Returns a tuple containing (min_cards, max_cards).
-  - If format is a range 'X-Y' -> returns (X, Y)
-  - If format is a standalone number 'X' -> returns (X, X)
-  - Otherwise returns (0, 0)
-  """
-  if not text_val:
-    return 0, 0
-
-  # Match 'X-Y' range format (allowing potential whitespace around the hyphen)
-  range_match = re.match(r'^(\d+)\s*-\s*(\d+)$', text_val)
-  if range_match:
-    return int(range_match.group(1)), int(range_match.group(2))
-
-  # Match single digit format 'X'
-  if text_val.isdigit():
-    val = int(text_val)
-    return val, val
-
-  return 0, 0
-
-
 # =====================================================================
 # --- SKILL CARD TEXT -> STRUCTURED SkillCard TRANSLATION ---
 # =====================================================================
-#
-# The spreadsheet now splits an effect's timing (EffectTiming), its
-# cost/condition (EffectCost/Condition), its action(s) (EffectValue), and
-# its repeat clause (EffectRepeat) into four separate columns. This maps
-# directly onto SkillCard's new shape: `effect_condition` and `effect_cost`
-# are single, card-level fields (shared by every entry in `effects`), as is
-# `effect_repeat`. Only `effects` itself is repeated, to allow a single card
-# to perform several actions in order (e.g. "Reroll Black, Reroll Blue", or
-# "Gain Green and +4 Fun" which becomes two separate gain effects).
-#
-# Everything to the right of column S (EffectRepeat) is ignored, per
-# instructions -- those are spreadsheet-only EV/helper columns.
-# =====================================================================
 
 DIE_ENUM_TYPE = "com.redpup.justsendit.model.Die"
-
-# SkillCardEffectRepeat.matching_die is a plain matchers.Matcher evaluated
-# against a rolled die, represented at runtime by:
-#
-#   message DieRoll {
-#     Die die = 1;
-#     repeated int32 roll = 2;  // last element is the current value
-#   }
-#
-# To match both color and face value we use a message_matcher with two
-# FieldMatchers: one on `die` (color), one on `roll` (value). `roll` is a
-# repeated field, and we specifically want the CURRENT value (last element),
-# not any historical value -- so this uses collection_matcher's `last`
-# variant rather than `any`.
 DIE_ROLL_MESSAGE_TYPE = "com.redpup.justsendit.model.player.DieRoll"
 DIE_ROLL_COLOR_FIELD = "die"
 DIE_ROLL_VALUE_FIELD = "roll"
 
-UNSUPPORTED_EFFECTS = []  # (card_name, EffectValue text)
-UNSUPPORTED_CONDITIONS = []  # (card_name, EffectCost/Condition text)
-UNSUPPORTED_REPEATS = []  # (card_name, EffectRepeat text)
+UNSUPPORTED_EFFECTS = []
+UNSUPPORTED_CONDITIONS = []
+UNSUPPORTED_REPEATS = []
 
 _SIMPLE_DIE_EFFECT_RE = re.compile(r'^Reroll\s+(Green|Blue|Black|Wild)$')
 _GAIN_STAT_RE = re.compile(r'^Gain \+(\d+) (Skill|Fun)$')
@@ -188,7 +133,6 @@ _IGNORE_HAZARD_RE = re.compile(r'^Ignore (.*) on this tile$')
 
 
 def _color_matcher_body(color: str, indent: str) -> str:
-  """Body of a Matcher matching a specific die color, or any die (Wild)."""
   if color == "WILD":
     return f"{indent}constant_matcher: true\n"
   return (
@@ -202,7 +146,6 @@ def _color_matcher_body(color: str, indent: str) -> str:
 
 
 def _alter_die_effect_block(color: str) -> str:
-  """Builds one full `effects { alter_die { ... reroll ... } }` block."""
   return (
       "  effects {\n"
       "    alter_die {\n"
@@ -216,17 +159,10 @@ def _alter_die_effect_block(color: str) -> str:
 
 
 def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
-  """Converts one spreadsheet EffectValue cell into a list of fully-formed
-  `effects { ... }` textproto blocks (2-space indented, ready to be embedded
-  directly inside a `cards { ... }` block). These blocks contain only the
-  action itself -- condition/cost/repeat are card-level and handled
-  separately by build_condition_and_cost_blocks() / build_repeat_block()."""
   text = effect_value.strip()
   if not text:
     return []
 
-  # Multiple simple reroll effects joined with a comma, e.g.
-  # "Reroll Black, Reroll Blue" each become their own entry, in order.
   parts = [p.strip() for p in text.split(",")]
   if len(parts) > 1 and all(_SIMPLE_DIE_EFFECT_RE.match(p) for p in parts):
     return [
@@ -237,7 +173,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if m:
     return [_alter_die_effect_block(m.group(1).upper())]
 
-  # "Gain <Color> and +N Fun" -- two independent gains, in order.
   m = _GAIN_DIE_AND_FUN_RE.match(text)
   if m:
     color, value = m.group(1).upper(), m.group(2)
@@ -246,7 +181,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
       f"  effects {{\n    gain {{\n      points: {value}\n    }}\n  }}\n",
     ]
 
-  # "Gain <Color>, Gain <Color>" -- two independent gains, in order.
   m = _GAIN_DICE_RE.match(text)
   if m:
     color1, color2 = m.group(1).upper(), m.group(2).upper()
@@ -255,18 +189,15 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
       f"  effects {{\n    gain {{\n      die: DIE_{color2}\n    }}\n  }}\n",
     ]
 
-  # "Gain <Color>" -- gain a die of that color.
   m = _GAIN_DIE_RE.match(text)
   if m:
     color = m.group(1).upper()
     return [
       f"  effects {{\n    gain {{\n      die: DIE_{color}\n    }}\n  }}\n"]
 
-  # "Replace all Reroll with Gain" -- replace all reroll effects with gain effects.
   if text == "Replace all Reroll with Gain":
     return [f"  effects {{\n    replace_rerolls_with_gains {{}}\n  }}\n"]
 
-  # "Replace <Color> with <Color>" -- replace all dice of a color with another color.
   m = _REPLACE_DICE_RE.match(text)
   if m:
     color1 = m.group(1).upper()
@@ -275,7 +206,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
       f"  effects {{\n    replace_dice {{\n      from: DIE_{color1}\n      to: DIE_{color2}\n    }}\n  }}\n"
     ]
 
-  # "Gain +N Skill/Fun"
   m = _GAIN_STAT_RE.match(text)
   if m:
     value, kind = m.groups()
@@ -283,7 +213,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     return [
       f"  effects {{\n    gain {{\n      {field}: {value}\n    }}\n  }}\n"]
 
-  # "Ignore <Hazard> on this tile"
   m = _IGNORE_HAZARD_RE.match(text)
   if m:
     hazard = m.group(1).upper()
@@ -356,8 +285,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
     ]
 
   if text == "Look at the top 3 cards of your deck. Put 1 card on top and discard the others.":
-    # Reveal the top 3, discard 2 of them, and return the 1 that's kept to
-    # the top of the deck.
     return [
       "  effects {\n"
       "    card_effect {\n"
@@ -403,10 +330,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
   if text == "At the end of your turn, move one tile in any direction":
     return ["  effects {\n    move_tile {}\n  }\n"]
 
-  # Nothing matched: this EffectValue has no representation in skill.proto
-  # yet. Emit a comment so the generated file still records the intended
-  # design, and surface it in the end-of-run summary instead of failing
-  # silently.
   UNSUPPORTED_EFFECTS.append((card_name, text))
   return [
     f'  # TODO(skill.proto): no field represents this effect yet: "{text}"\n']
@@ -414,8 +337,6 @@ def build_effect_action_blocks(effect_value: str, card_name: str) -> list:
 
 def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
     card_name: str) -> tuple:
-  """Converts the EffectCost/Condition cell into (effect_condition_block,
-  effect_cost_block); exactly one of the two (or neither) is non-None."""
   text = cond_text.strip()
   if not text:
     return None, None
@@ -423,13 +344,13 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
   if text == "Success":
     return "  effect_condition {\n    success {}\n  }\n", None
 
+  if text == "Failure":
+    return "  effect_condition {\n    failure {}\n  }\n", None
+
   if text == "Next card costs X":
     return "  effect_condition {\n    next_card_cost_linked {}\n  }\n", None
 
   if text == "Next card costs greater":
-    # No explicit threshold is given in the sheet -- interpreted as "the
-    # card below costs more than THIS card's own cost", which we already
-    # know, so we bake it into the matcher as a literal comparison.
     return (
       "  effect_condition {\n"
       "    next_card_cost {\n"
@@ -463,8 +384,6 @@ def build_condition_and_cost_blocks(cond_text: str, own_cost: int,
 
 
 def _die_roll_value_field_block(value: str, indent: str) -> str:
-  """Body of a FieldMatcher on DieRoll.roll: matches if `value` equals the
-  current (last) rolled value."""
   return (
     f"{indent}fields {{\n"
     f"{indent}  field_name: \"{DIE_ROLL_VALUE_FIELD}\"\n"
@@ -480,7 +399,6 @@ def _die_roll_value_field_block(value: str, indent: str) -> str:
 
 
 def build_repeat_block(repeat_text: str, card_name: str) -> str:
-  """Converts the EffectRepeat cell into an `effect_repeat { ... }` block."""
   text = repeat_text.strip()
   if not text:
     return None
@@ -505,12 +423,6 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
   m = _REPEAT_DIE_VALUE_RE.match(text)
   if m:
     color, value = m.group(1).upper(), m.group(2)
-
-    # The matcher is always evaluated against a DieRoll{ die, roll } object,
-    # so even the color-agnostic "Wild" case has to go through
-    # message_matcher -- it just omits the `die` FieldMatcher entirely
-    # (an empty AND'ed field list is trivially satisfied for that
-    # dimension), rather than matching a bare int.
     fields_block = _die_roll_value_field_block(value, "        ")
     if color != "WILD":
       fields_block = (
@@ -536,23 +448,16 @@ def build_repeat_block(repeat_text: str, card_name: str) -> str:
   m = _DIE_TYPE_RE.match(text)
   if m:
     color = m.group(1).upper()
-
-    # The matcher is always evaluated against a DieRoll{ die, roll } object,
-    # so even the color-agnostic "Wild" case has to go through
-    # message_matcher -- it just omits the `die` FieldMatcher entirely
-    # (an empty AND'ed field list is trivially satisfied for that
-    # dimension), rather than matching a bare int.
     fields_block = ""
     if color != "WILD":
       fields_block = (
-                         "        fields {\n"
-                         f"          field_name: \"{DIE_ROLL_COLOR_FIELD}\"\n"
-                         "          matcher {\n"
-                         + _color_matcher_body(color, "            ")
-                         + "          }\n"
-                           "        }\n"
-                     )
-
+          "        fields {\n"
+          f"          field_name: \"{DIE_ROLL_COLOR_FIELD}\"\n"
+          "          matcher {\n"
+          + _color_matcher_body(color, "            ")
+          + "          }\n"
+            "        }\n"
+      )
     return (
         "  effect_repeat {\n"
         "    matching_die {\n"
@@ -585,8 +490,6 @@ def process_skill_cards_pipeline():
 
   ensure_directory_exists(SKILL_FILE_PREFIX)
   target_filepath = os.path.join(SKILL_FILE_PREFIX, SKILL_OUTPUT_FILENAME)
-
-  # Clean out ONLY this specific generated textproto file
   safe_delete_file(target_filepath)
 
   write_proto_file_header(
@@ -619,8 +522,6 @@ def process_skill_cards_pipeline():
       img_filename = get_safe_cell_value(row, header_map, "Img Filename")
       filename_field = f"{SKILL_IMG_FILEPATH.rstrip('/')}/{img_filename.lstrip('/')}" if img_filename else ""
 
-      # Card type: "Starter" File -> starter deck card, "Shop" File -> a
-      # purchasable upgrade card.
       file_lower = file_target.lower()
       if file_lower == "starter":
         skill_card_type = "SKILL_CARD_TYPE_STARTER"
@@ -629,7 +530,6 @@ def process_skill_cards_pipeline():
       else:
         skill_card_type = "SKILL_CARD_TYPE_UNKNOWN"
 
-      # Process dice
       dice_colors = [
         get_safe_cell_value(row, header_map, f"Die {i}").lower()
         for i in range(1, 4)
@@ -639,7 +539,6 @@ def process_skill_cards_pipeline():
         if color in ("green", "blue", "black")
       ]
 
-      # Process icons
       icon_blocks = []
       for i in range(1, 3):
         bonus_val = get_safe_cell_value(row, header_map, f"Bonus Type {i}")
@@ -676,9 +575,21 @@ def process_skill_cards_pipeline():
                                         name) if repeat_text else None
 
       flavor_text = get_safe_cell_value(row, header_map, "FlavorText")
-
       copies_raw = get_safe_cell_value(row, header_map, "Copies")
       num_copies = int(copies_raw) if copies_raw.isdigit() else 1
+
+      # Computed fields from CSV
+      dice_ev_str = get_safe_cell_value(row, header_map, "Dice EV")
+      bonus_ev_str = get_safe_cell_value(row, header_map, "Bonus EV")
+      effect_ev_str = get_safe_cell_value(row, header_map, "EffectEv")
+      total_ev_str = get_safe_cell_value(row, header_map, "ExpectedValue")
+      suggested_cost_str = get_safe_cell_value(row, header_map, "SuggestedCost")
+
+      dice_ev = float(dice_ev_str) if dice_ev_str and dice_ev_str not in ("#REF!", "NaN") else 0.0
+      bonus_ev = float(bonus_ev_str) if bonus_ev_str and bonus_ev_str not in ("#REF!", "NaN") else 0.0
+      effect_ev = float(effect_ev_str) if effect_ev_str and effect_ev_str not in ("#REF!", "NaN") else 0.0
+      total_ev = float(total_ev_str) if total_ev_str and total_ev_str not in ("#REF!", "NaN") else 0.0
+      suggested_cost = int(float(suggested_cost_str)) if suggested_cost_str and suggested_cost_str not in ("#REF!", "NaN") else 0
 
       card_block = "cards {\n"
       if filename_field:
@@ -709,28 +620,24 @@ def process_skill_cards_pipeline():
 
       if flavor_text and flavor_text != "0":
         card_block += f'  flavor_text: "{escape_proto_string(flavor_text)}"\n'
+
+      # Computed block
+      card_block += "  computed {\n"
+      if dice_ev != 0.0:
+        card_block += f"    dice_expected_value: {dice_ev}\n"
+      if bonus_ev != 0.0:
+        card_block += f"    icon_expected_value: {bonus_ev}\n"
+      if effect_ev != 0.0:
+        card_block += f"    effect_expected_value: {effect_ev}\n"
+      if total_ev != 0.0:
+        card_block += f"    total_expected_value: {total_ev}\n"
+      if suggested_cost > 0:
+        card_block += f"    suggested_cost: {suggested_cost}\n"
+      card_block += "  }\n"
+
       card_block += "}\n"
 
       append_blocks_to_proto(target_filepath, card_block, num_copies)
-
-  if UNSUPPORTED_EFFECTS:
-    print("Warning: the following EffectValue phrases have no corresponding "
-          "field in skill.proto yet and were emitted as comments only:")
-    for card_name, text in UNSUPPORTED_EFFECTS:
-      print(f'  - {card_name}: "{text}"')
-
-  if UNSUPPORTED_CONDITIONS:
-    print("Warning: the following EffectCost/Condition phrases have no "
-          "corresponding field in skill.proto yet and were emitted as "
-          "comments only:")
-    for card_name, text in UNSUPPORTED_CONDITIONS:
-      print(f'  - {card_name}: "{text}"')
-
-  if UNSUPPORTED_REPEATS:
-    print("Warning: the following EffectRepeat phrases have no "
-          "corresponding mapping and were emitted as comments only:")
-    for card_name, text in UNSUPPORTED_REPEATS:
-      print(f'  - {card_name}: "{text}"')
 
   print("Skill Cards processing finished successfully.")
 
@@ -743,8 +650,6 @@ def process_mountain_tiles_pipeline():
 
   ensure_directory_exists(TILE_FILE_PREFIX)
   target_filepath = os.path.join(TILE_FILE_PREFIX, "mountain_tiles.textproto")
-
-  # Clean out ONLY this specific generated textproto file
   safe_delete_file(target_filepath)
 
   write_proto_file_header(target_filepath,
@@ -764,83 +669,72 @@ def process_mountain_tiles_pipeline():
       if not row or len(row) < len(header_map):
         continue
 
-      tile_type = get_safe_cell_value(row, header_map, "Type").lower()
-      if tile_type not in ["slope", "lift"]:
-        continue
-
-      # Common MountainTile Root Properties
-      tile_filename = get_safe_cell_value(row, header_map, "Img Filename")
-      apres_raw = get_safe_cell_value(row, header_map, "Apres Link")
-      apres_link = int(apres_raw) if apres_raw.isdigit() else 0
-
-      copies_raw = get_safe_cell_value(row, header_map, "Copies")
-      num_copies = int(copies_raw) if copies_raw.isdigit() else 1
-
       tile_block = "tiles {\n"
+      difficulty_raw = get_safe_cell_value(row, header_map, "Difficulty")
+      success_raw = get_safe_cell_value(row, header_map, "Success")
+      failure_raw = get_safe_cell_value(row, header_map, "Failure")
+      grade_raw = get_safe_cell_value(row, header_map, "Grade")
+      terrain_raw = get_safe_cell_value(row, header_map, "Terrain type")
+      hazard_type = get_safe_cell_value(row, header_map, "Hazard Type")
+      penalty_raw = get_safe_cell_value(row, header_map, "Penalty")
 
-      # --- BRANCH 1: SLOPE TILE HANDLING ---
-      if tile_type == "slope":
-        grade_raw = get_safe_cell_value(row, header_map, "Grade")
-        slow_raw = get_safe_cell_value(row, header_map, "Slow").upper()
-        is_slow = "true" if slow_raw == "TRUE" else "false"
+      lift_type = get_safe_cell_value(row, header_map, "LiftType")
+      lift_end = get_safe_cell_value(row, header_map, "LiftEnd")
+      lift_draw = get_safe_cell_value(row, header_map, "LiftDraw")
+      lift_retire = get_safe_cell_value(row, header_map, "LiftRetire")
 
-        difficulty_raw = get_safe_cell_value(row, header_map, "Text")
-        difficulty = int(difficulty_raw) if difficulty_raw.isdigit() else 1
+      if difficulty_raw.isnumeric():
+        tile_block += f"  difficulty: {difficulty_raw}\n"
+      if success_raw.isnumeric():
+        tile_block += f"  success: {success_raw}\n"
+      if failure_raw.isnumeric() or (failure_raw.startswith("-") and failure_raw[1:].isnumeric()):
+        tile_block += f"  failure: {failure_raw}\n"
 
-        proto_grade = clean_proto_enum_string("GRADE", grade_raw)
-        proto_condition = clean_proto_enum_string("CONDITION",
-                                                  get_safe_cell_value(row,
-                                                                      header_map,
-                                                                      "Terrain type"))
+      proto_grade = clean_proto_enum_string("GRADE", grade_raw)
+      if proto_grade != "GRADE_UNSET":
+        tile_block += f"  grade: {proto_grade}\n"
 
-        hazards = []
-        for i in range(1, 3):
-          hazard_val = get_safe_cell_value(row, header_map, f"Hazard Type {i}")
-          if hazard_val and hazard_val.lower() != "none" and hazard_val != "0":
-            hazards.append(clean_proto_enum_string("HAZARD", hazard_val))
+      proto_condition = clean_proto_enum_string("CONDITION", terrain_raw)
+      if proto_condition != "CONDITION_UNSET":
+        tile_block += f"  condition: {proto_condition}\n"
 
-        tile_block += "  slope {\n"
-        tile_block += f"    difficulty: {difficulty}\n"
-        if proto_grade != "GRADE_UNSET":
-          tile_block += f"    grade: {proto_grade}\n"
-        if proto_condition != "CONDITION_UNSET":
-          tile_block += f"    condition: {proto_condition}\n"
-        for haz in hazards:
-          tile_block += f"    hazards: {haz}\n"
-        tile_block += f"    slow: {is_slow}\n"
+      if hazard_type and hazard_type.lower() != "nan":
+        hazard_penalty = int(penalty_raw) if penalty_raw and penalty_raw.lower() != "nan" else 1
+        tile_block += "  hazard {\n"
+        h_lower = hazard_type.lower()
+        if "moguls blue to green" in h_lower:
+          tile_block += "    moguls: MOGULS_BLUE_TO_GREEN\n"
+        elif "moguls black to blue" in h_lower:
+          tile_block += "    moguls: MOGULS_BLACK_TO_BLUE\n"
+        elif "slow" in h_lower:
+          tile_block += f"    slow: {hazard_penalty}\n"
+        elif "trees" in h_lower:
+          tile_block += f"    trees: {hazard_penalty}\n"
+        elif "cliffs" in h_lower:
+          tile_block += f"    cliffs: {hazard_penalty}\n"
         tile_block += "  }\n"
 
-      # --- BRANCH 2: LIFT TILE HANDLING ---
-      elif tile_type == "lift":
-        lift_color_raw = get_safe_cell_value(row, header_map, "LiftColor")
-        lift_dir_raw = get_safe_cell_value(row, header_map, "LiftEnd")
+      if lift_type and lift_type.lower() != "nan":
+        lift_lower = lift_type.lower()
+        if "small" in lift_lower:
+          tile_block += "  lift_size: LIFT_SIZE_SMALL\n"
+        elif "medium" in lift_lower:
+          tile_block += "  lift_size: LIFT_SIZE_MEDIUM\n"
+        elif "large" in lift_lower:
+          tile_block += "  lift_size: LIFT_SIZE_LARGE\n"
 
-        proto_lift_color = clean_proto_enum_string("LIFT_COLOR", lift_color_raw)
-        proto_lift_dir = clean_proto_enum_string("LIFT_DIRECTION", lift_dir_raw)
+      if lift_end and lift_end.lower() != "nan":
+        end_clean = lift_end.strip().upper()
+        if end_clean in ["TOP", "BOTTOM"]:
+          tile_block += f"  lift_direction: LIFT_DIRECTION_{end_clean}\n"
 
-        # Scrape and parse the 'Text' column dynamically for capacity ranges
-        text_column_val = get_safe_cell_value(row, header_map, "Text")
-        min_cards, max_cards = parse_lift_card_bounds(text_column_val)
+      if lift_draw.lower() == "true":
+        tile_block += "  lift_draw: 1\n"
+      if lift_retire.lower() == "true":
+        tile_block += "  lift_retire: 1\n"
 
-        tile_block += "  lift {\n"
-        if proto_lift_color != "LIFT_COLOR_UNSET":
-          tile_block += f"    color: {proto_lift_color}\n"
-        if proto_lift_dir != "LIFT_DIRECTION_UNSET":
-          tile_block += f"    direction: {proto_lift_dir}\n"
-        if min_cards > 0:
-          tile_block += f"    min_cards: {min_cards}\n"
-        if max_cards > 0:
-          tile_block += f"    max_cards: {max_cards}\n"
-        tile_block += "  }\n"
-
-      # --- ROOT assignment blocks ---
-      if apres_link > 0:
-        tile_block += f"  apres_link: {apres_link}\n"
-      if tile_filename:
-        tile_block += f'  filename: "{tile_filename}"\n'
       tile_block += "}\n"
-
-      append_blocks_to_proto(target_filepath, tile_block, num_copies)
+      append_blocks_to_proto(target_filepath, tile_block, 1)
 
   print("Mountain Tiles processing finished successfully.")
 

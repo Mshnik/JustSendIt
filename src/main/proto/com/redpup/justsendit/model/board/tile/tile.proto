@@ -5,20 +5,74 @@ package com.redpup.justsendit.model.board.tile;
 option java_multiple_files = true;
 option java_package = "com.redpup.justsendit.model.board.tile.proto";
 
-import "com/redpup/justsendit/model/board/tile/lift.proto";
-import "com/redpup/justsendit/model/board/tile/slope.proto";
+import "com/redpup/justsendit/model/common.proto";
+
+/** Colors of lift tiles. */
+enum LiftColor {
+  LIFT_COLOR_UNSET = 0;
+  LIFT_COLOR_RED = 1;
+  LIFT_COLOR_CYAN = 2;
+  LIFT_COLOR_YELLOW = 3;
+  LIFT_COLOR_PINK = 4;
+  LIFT_COLOR_GREY = 5;
+}
+
+/** Sizes of lifts. */
+enum LiftSize {
+  LIFT_SIZE_UNSET = 0;
+  LIFT_SIZE_SMALL = 1;
+  LIFT_SIZE_MEDIUM = 2;
+  LIFT_SIZE_LARGE = 3;
+}
+
+/** Pieces of a lift tile. */
+enum LiftDirection {
+  LIFT_DIRECTION_UNSET = 0;
+  LIFT_DIRECTION_BOTTOM = 1;
+  LIFT_DIRECTION_TOP = 2;
+}
+
+/** Snow conditions of a ski trail. */
+enum Condition {
+  CONDITION_UNSET = 0;
+  CONDITION_GROOMED = 1;
+  CONDITION_POWDER = 2;
+  CONDITION_ICE = 3;
+}
+
+/** Types of hazards found on a ski trail. */
+message Hazard {
+  enum Moguls {
+    MOGULS_UNSET = 0;
+    MOGULS_BLUE_TO_GREEN = 1;
+    MOGULS_BLACK_TO_BLUE = 2;
+  }
+
+  oneof hazard {
+    Moguls moguls = 1;
+    int32 slow = 2;
+    int32 trees = 3;
+    int32 cliffs = 4;
+  }
+}
 
 /** A wrapper of tile parameters for a tile on the mountain. */
 message MountainTile {
-  // Type of tile. Must be set.
-  oneof tile {
-    SlopeTile slope = 1;
-    LiftTile lift = 2;
-  }
+  // Slope.
+  uint32 difficulty = 1;
+  uint32 success = 2;
+  int32 failure = 3;
 
-  // Link to an apres slot. 0 if no apres linked.
-  int32 apres_link = 3;
-  string filename = 4;
+  model.Grade grade = 4;
+  Condition condition = 5;
+  Hazard hazard = 6;
+
+  // Lift.
+  LiftColor lift_color = 7;
+  LiftSize lift_size = 8;
+  LiftDirection lift_direction = 9;
+  uint32 lift_draw = 10;
+  uint32 lift_retire = 11;
 }
 
 /** A list of mountain tiles. */

@@ -7,10 +7,10 @@ location {
     q: 0
     r: 0
   }
-  lift {
-    direction: LIFT_DIRECTION_TOP
-    color: LIFT_COLOR_GREY
-  }
+  grade: GRADE_GREEN
+  lift_direction: LIFT_DIRECTION_TOP
+  lift_size: LIFT_SIZE_SMALL
+  lift_color: LIFT_COLOR_GREY
 }
 location {
   point {
@@ -52,10 +52,10 @@ location {
     q: 0
     r: 6
   }
-  lift {
-    direction: LIFT_DIRECTION_BOTTOM
-    color: LIFT_COLOR_GREY
-  }
+  grade: GRADE_GREEN
+  lift_direction: LIFT_DIRECTION_BOTTOM
+  lift_size: LIFT_SIZE_SMALL
+  lift_color: LIFT_COLOR_GREY
 }
 
 # Left-1 Column
@@ -136,10 +136,11 @@ location {
     q: -2
     r: 6
   }
-  lift {
-    color: LIFT_COLOR_RED
-    direction: LIFT_DIRECTION_BOTTOM
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_RED
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_BOTTOM
+
 }
 
 # Left-3 Column
@@ -148,10 +149,11 @@ location {
     q: -3
     r: 3
   }
-  lift {
-    color: LIFT_COLOR_RED
-    direction: LIFT_DIRECTION_TOP
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_RED
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_TOP
+
 }
 location {
   point {
@@ -223,10 +225,11 @@ location {
     q: -4
     r: 8
   }
-  lift {
-    color: LIFT_COLOR_PINK
-    direction: LIFT_DIRECTION_BOTTOM
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_PINK
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_BOTTOM
+
 }
 
 # Left-5 Column
@@ -235,10 +238,11 @@ location {
     q: -5
     r: 3
   }
-  lift {
-    color: LIFT_COLOR_PINK
-    direction: LIFT_DIRECTION_TOP
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_PINK
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_TOP
+
 }
 location {
   point {
@@ -354,10 +358,11 @@ location {
     q: 2
     r: 4
   }
-  lift {
-    color: LIFT_COLOR_CYAN
-    direction: LIFT_DIRECTION_BOTTOM
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_CYAN
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_BOTTOM
+
 }
 
 # Right-3 Column
@@ -366,10 +371,11 @@ location {
     q: 3
     r: 0
   }
-  lift {
-    color: LIFT_COLOR_CYAN
-    direction: LIFT_DIRECTION_TOP
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_CYAN
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_TOP
+
 }
 location {
   point {
@@ -441,10 +447,11 @@ location {
     q: 4
     r: 4
   }
-  lift {
-    color: LIFT_COLOR_YELLOW
-    direction: LIFT_DIRECTION_BOTTOM
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_YELLOW
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_BOTTOM
+
 }
 
 # Right-5 Column
@@ -453,10 +460,11 @@ location {
     q: 5
     r: -2
   }
-  lift {
-    color: LIFT_COLOR_YELLOW
-    direction: LIFT_DIRECTION_TOP
-  }
+  grade: GRADE_GREEN
+  lift_color: LIFT_COLOR_YELLOW
+  lift_size: LIFT_SIZE_SMALL
+  lift_direction: LIFT_DIRECTION_TOP
+
 }
 location {
   point {
