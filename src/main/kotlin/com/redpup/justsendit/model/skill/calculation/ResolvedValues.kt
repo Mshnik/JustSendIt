@@ -91,8 +91,8 @@ class ResolvedValues {
         .sumOf { it.value } / totalCards.toDouble()
 
       ConditionCase.NEXT_CARD_COST_LINKED -> 1.0
+      ConditionCase.EMPTY_HAND -> 0.8
       null -> throw IllegalStateException()
-      ConditionCase.EMPTY_HAND -> TODO()
     }
 
   /** Factor to apply to a [SkillCardEffect] value based on [repeatCase]. */
