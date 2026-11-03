@@ -7,7 +7,6 @@ import com.redpup.justsendit.model.random.Dice.averageValue
 import com.redpup.justsendit.model.skill.calculation.Constants.LIFT_PASS_COMPARISON_FACTOR
 import com.redpup.justsendit.model.skill.calculation.Constants.MAX_UPGRADE_COST
 import com.redpup.justsendit.model.skill.calculation.Constants.MIN_UPGRADE_COST
-import com.redpup.justsendit.model.skill.calculation.Constants.NUDGE_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.REROLL_VALUE
 import com.redpup.justsendit.model.skill.calculation.Constants.TIMING_FACTOR
 import com.redpup.justsendit.model.skill.calculation.Constants.VALUE
@@ -165,7 +164,7 @@ class SkillCalculator(private val path: String, private val resolutionIterations
 
   /** Computes the value of the effect alone (ignoring repeat factor and cost). */
   private fun SkillCardEffect.baseEffectValue(card: SkillCard): Double = when (effectCase) {
-    SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(alterDie)
+    SkillCardEffect.EffectCase.ALTER_DIE -> alterDieValue(card, alterDie)
     SkillCardEffect.EffectCase.GAIN -> gain.gainValue(card)
     SkillCardEffect.EffectCase.REPLACE_REROLLS_WITH_GAINS ->
       (Die.DIE_BLUE.averageValue - Die.DIE_BLUE.REROLL_VALUE) * WILD_DIE_PICK_FACTOR
@@ -192,12 +191,18 @@ class SkillCalculator(private val path: String, private val resolutionIterations
   }
 
   /** Returns the computed value of the given [AlterDieEffect]. */
-  private fun alterDieValue(alterDie: AlterDieEffect): Double {
+  private fun alterDieValue(card: SkillCard, alterDie: AlterDieEffect): Double {
     val color = alterDie.dieMatcher.dieColorOrWild()
+    val matchingDice = card.diceList.count { it == color }
+    val matchingAlterDice =
+      card.effectsList.count { it.hasAlterDie() && it.alterDie.dieMatcher.dieColorOrWild() == color }
+
+    val matchingDiceFactor = (matchingDice - 1) * 0.5
+    val matchingAlterDiceFactor = (matchingAlterDice - 1) * -0.25
     return when (alterDie.effectCase) {
-      AlterDieEffect.EffectCase.REROLL -> color.REROLL_VALUE
-      AlterDieEffect.EffectCase.NUDGE -> color.NUDGE_VALUE
-      AlterDieEffect.EffectCase.EFFECT_NOT_SET, null -> throw IllegalStateException()
+      AlterDieEffect.EffectCase.REROLL -> color.REROLL_VALUE * (1 + matchingDiceFactor) * (1 + matchingAlterDiceFactor)
+      AlterDieEffect.EffectCase.NUDGE, AlterDieEffect.EffectCase.EFFECT_NOT_SET, null,
+      -> throw IllegalStateException()
     }
   }
 
